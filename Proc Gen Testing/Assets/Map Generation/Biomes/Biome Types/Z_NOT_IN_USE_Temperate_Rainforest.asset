@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
+  m_Name: Z_NOT_IN_USE_Temperate_Rainforest
+  m_EditorClassIdentifier: 
+  <BiomeType>k__BackingField: 5
+  <BiomeName>k__BackingField: Temperate Rainforest
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: dc4da20d442c82a428eb99a0a565c36f, type: 2}
+  minAvgAnnualTemperature: 7
+  maxAvgAnnualTemperature: 20
+  minAnnualPrecipitation: 200
+  maxAnnualPrecipitation: 1000
+  treeDensity: 0
+  shrubDensity: 0
+  grassDensity: 0

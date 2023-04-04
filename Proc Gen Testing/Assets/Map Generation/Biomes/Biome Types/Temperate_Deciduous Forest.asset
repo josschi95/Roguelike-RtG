@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
+  m_Name: Temperate_Deciduous Forest
+  m_EditorClassIdentifier: 
+  <BiomeType>k__BackingField: 3
+  <BiomeName>k__BackingField: Deciduous Forest
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 20e1ef3129c7ec94a83181e0da792e19, type: 2}
+  minAvgAnnualTemperature: 7
+  maxAvgAnnualTemperature: 20
+  minAnnualPrecipitation: 85
+  maxAnnualPrecipitation: 200
+  treeDensity: 0
+  shrubDensity: 0
+  grassDensity: 0

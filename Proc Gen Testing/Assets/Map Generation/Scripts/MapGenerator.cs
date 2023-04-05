@@ -2,36 +2,6 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    #region - Map Constants -
-    //height and width are currently measured in Local Tiles = 0.01 km2 or 100x100 Unit Tiles
-    private const float minRainShadowAltitude = 0.7f;
-
-    private const int minuteMapSize = 200;
-    private const int minuteRiverCount = 25;
-    private const int minuteRainDrops = 40000;
-    private const int minuteTectonicPlates = 4;
-
-    private const int tinyMapSize = 400;
-    private const int tinyRiverCount = 50;
-    private const int tinyRainDrops = 80000;
-    private const int tinyTectonicPlates = 6;
-
-    private const int smallMapSize = 800;
-    private const int smallRiverCount = 75;
-    private const int smallRainDrops = 160000;
-    private const int smallTectonicPlates = 8;
-
-    private const int mediumMapSize = 1500;
-    private const int mediumRiverCount = 100;
-    private const int mediumRainDrops = 320000;
-    private const int mediumTectonicPlates = 10;
-
-    private const int largeMapSize = 3000;
-    private const int largeRiverCount = 125;
-    private const int largeRainDrops = 640000;
-    private const int largeTectonicPlates = 12;
-    #endregion
-
     public int mapSize { get; private set; }
     public Vector3Int origin { get; private set; }
     private float seaLevel = 0.4f;
@@ -40,8 +10,8 @@ public class MapGenerator : MonoBehaviour
     private MapDisplay mapDisplay;
     private RiverGenerator riverGenerator;
 
-    [SerializeField] private HeightGeneration heightGeneration;
-    [SerializeField] private MapDimensions dimensions;
+    [SerializeField] private MapFeatures mapFeatures;
+    [SerializeField] private WorldSize worldSize;
     [SerializeField] private bool randomSeed;
     [SerializeField] private bool useErosion;
     
@@ -62,7 +32,6 @@ public class MapGenerator : MonoBehaviour
 
     [Space]
 
-    [SerializeField] private TerrainType waterLevel;
     [SerializeField] private TerrainType[] terrainTypes;
     [SerializeField] private TemperatureZone[] temperatureZones;
     [SerializeField] private PrecipitationZone[] precipitationZones;
@@ -89,23 +58,21 @@ public class MapGenerator : MonoBehaviour
         worldMap = WorldMap.instance;
         mapDisplay = GetComponent<MapDisplay>();
         riverGenerator = GetComponent<RiverGenerator>();
-
-        GenerateMap();
     }
 
     public void GenerateMap()
     {
-        seaLevel = waterLevel.Height;
+        if (randomSeed) SetRandomSeed();
         rng = new System.Random(seed);
 
-        SetMapDimensions();
+        seaLevel = mapFeatures.SeaLevel;
+
+        mapSize = mapFeatures.MapSize(worldSize);
         origin = new Vector3Int(Mathf.FloorToInt(transform.position.x - mapSize / 2f), Mathf.FloorToInt(transform.position.y - mapSize / 2f));
         var go = new GameObject("Origin");
         go.transform.position = origin;
 
         worldMap.CreateGrid(mapSize, mapSize);
-
-        if (randomSeed) SetRandomSeed();
 
         float[,] heightMap = GetHeightMap();
 
@@ -121,10 +88,7 @@ public class MapGenerator : MonoBehaviour
 
         var ranges = MountainFinder.FindMountainRanges(mapSize);
 
-        if (NeedToRestart(ranges.ToArray())) Debug.LogWarning("Should probably restart.");
-
-        var rivers = riverGenerator.GenerateRivers(mapSize, ranges, GetRiverCount());
-
+        var rivers = riverGenerator.GenerateRivers(mapSize, ranges, mapFeatures.RiverCount(worldSize));
 
         AdjustTileValues(moistureMap);
 
@@ -135,125 +99,50 @@ public class MapGenerator : MonoBehaviour
         //Debug.Log("Complete. " + Time.realtimeSinceStartup);
     }
 
-    private void SetMapDimensions()
-    {
-        if (heightGeneration == HeightGeneration.DiamondSquare)
-        {
-            int n = 7 + (int)dimensions;
-            int size = Mathf.RoundToInt(Mathf.Pow(2, n) + 1);
-            mapSize = size;
-            return;
-        }
-        switch (dimensions)
-        {
-            case MapDimensions.Minute_200:
-                mapSize = minuteMapSize;
-                break;
-            case MapDimensions.Tiny_400:
-                mapSize = tinyMapSize;
-                break;
-            case MapDimensions.Small_800:
-                mapSize = smallMapSize;
-                break;
-            case MapDimensions.Medium_1500:
-                mapSize = mediumMapSize;
-                break;
-            case MapDimensions.Large_3000:
-                mapSize = largeMapSize;
-                break;
-            default:
-                mapSize = minuteMapSize;
-                break;
-        }
-    }
-
-    private int GetRainDropIterations()
-    {
-        switch (dimensions)
-        {
-            case MapDimensions.Minute_200: return minuteRainDrops;
-            case MapDimensions.Tiny_400: return tinyRainDrops;
-            case MapDimensions.Small_800: return smallRainDrops;
-            case MapDimensions.Medium_1500: return mediumRainDrops;
-            case MapDimensions.Large_3000:  return largeRainDrops;
-            default: return minuteRainDrops;
-        }
-    }
-
-    private int GetRiverCount()
-    {
-        switch (dimensions)
-        {
-            case MapDimensions.Minute_200: return minuteRiverCount;
-            case MapDimensions.Tiny_400: return tinyRiverCount;
-            case MapDimensions.Small_800: return smallRiverCount;
-            case MapDimensions.Medium_1500: return mediumRiverCount;
-            case MapDimensions.Large_3000: return largeRiverCount;
-            default: return minuteRiverCount;
-        }
-    }
-
-    private int GetTectonicPlateCount()
-    {
-        switch (dimensions)
-        {
-            case MapDimensions.Minute_200: return minuteTectonicPlates;
-            case MapDimensions.Tiny_400: return tinyTectonicPlates;
-            case MapDimensions.Small_800: return smallTectonicPlates;
-            case MapDimensions.Medium_1500: return mediumTectonicPlates;
-            case MapDimensions.Large_3000: return largeTectonicPlates;
-            default: return minuteTectonicPlates;
-        }
-    }
-
     private float[,] GetHeightMap()
     {
         float[,] heightMap = new float[mapSize, mapSize];
-        PlaceTectonicPoints(heightMap);
+        PlaceTectonicPlates(heightMap);
 
         float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
         for (int x = 0; x < perlinMap.GetLength(0); x++)
         {
             for (int y = 0; y < perlinMap.GetLength(1); y++)
             {
-                perlinMap[x, y] -= 0.1f;
+                perlinMap[x, y] -= 0.25f;
                 heightMap[x, y] = Mathf.Clamp(heightMap[x, y] + perlinMap[x, y], 0, 1);
             }
         }
 
-        //Debug.Log("Generating Height Map.");
-        if (heightGeneration == HeightGeneration.DiamondSquare)
-        {
-            heightMap = DiamondSquare.GetHeightMap(mapSize);
-            for (int x = 0; x < perlinMap.GetLength(0); x++)
-            {
-                for (int y = 0; y < perlinMap.GetLength(1); y++)
-                {
-                    perlinMap[x, y] -= 0.5f;
-                    heightMap[x, y] = Mathf.Clamp(heightMap[x, y] + perlinMap[x, y], 0, 1);
-                }
-            }
-        }
-
-        if (useErosion) return GetComponent<Erosion>().Erode(heightMap, GetRainDropIterations(), seed);
+        if (useErosion) return GetComponent<Erosion>().Erode(heightMap, mapFeatures.Raindrops(worldSize), seed);
         return heightMap;
     }
 
-    private void PlaceTectonicPoints(float[,] heightMap)
+    private void PlaceTectonicPlates(float[,] heightMap)
     {
         //place n tectonic points and increase the altitude of surrounding nodes within range r by  a flat-top gaussian
-        //tectonic points will also result in mountains, volcanoes? 
-        int count = GetTectonicPlateCount();
+        //tectonic points will also result in mountains, volcanoes? Fault lines?
+        //place fault lines using Voronoi polygons, this is where volcanoes and mountains will be added
 
+        int count = mapFeatures.TectonicPlates(worldSize);
+        int border = mapSize / 5;
         for (int points = 0; points < count; points++)
         {
             //select a random point on the map
             int nodeX = rng.Next(0, mapSize - 1);
             int nodeY = rng.Next(0, mapSize - 1);
-            Debug.Log("Tectonic Point placed at " + nodeX + "," + nodeY);
+
+            if (points < 4) //First four points will favor the center of the map
+            {
+                nodeX = rng.Next(border, mapSize - border - 1);
+                nodeY = rng.Next(border, mapSize - border - 1);
+            }
+
             TerrainNode tectonicNode = worldMap.GetNode(nodeX, nodeY);
-            float range = rng.Next(75, 150); //this will need some testing, probably also scaled for map size
-             //Definitely scale with map size
+            tectonicNode.isTectonicPoint = true;
+            float range = rng.Next(mapFeatures.MinPlateSize(worldSize), mapFeatures.MaxPlateSize(worldSize)); //this will need some testing, probably also scaled for map size
+            //could probably be a little bigger for a small map
+
 
             //Grab all nodes within range
             var nodesInRange = worldMap.GetNodesInRange(tectonicNode, (int)range);
@@ -261,20 +150,15 @@ public class MapGenerator : MonoBehaviour
             //Calculate their base height based on distance from the tectonic point
             for (int i = 0; i < nodesInRange.Count; i++)
             {
+                nodesInRange[i].isTectonicPoint = true;
                 //The relative distance from this node to the tectonic node
                 float x = worldMap.GetNodeDistance(tectonicNode, nodesInRange[i]) / range;
                 float n = 6; //affects the width of the flat-top on the gaussian
-                float pow = -10 * Mathf.Pow(x, n); 
                 float y = 0.5f * Mathf.Exp(-10 * Mathf.Pow(x, n)); //flat-top gaussian
-
-                heightMap[nodesInRange[i].x, nodesInRange[i].y] = y;
+                //Only set it to be y if the point is lower, so plates don't sink each other
+                if (heightMap[nodesInRange[i].x, nodesInRange[i].y] < y)
+                    heightMap[nodesInRange[i].x, nodesInRange[i].y] = y;
             }
-
-            //place a tectonic point there, should also store this
-
-            //using a flat-top gaussian function, set the base height for all nodes within range r of the point
-
-
         }
     }
 
@@ -433,20 +317,6 @@ public class MapGenerator : MonoBehaviour
         return moistureMap;
     }
 
-    //Method to check if there is just one giant mountain covering the whole map
-    private bool NeedToRestart(MountainRange[] mountains)
-    {
-        if (mountains.Length > 5) return false;
-        for (int i = 0; i < mountains.Length; i++)
-        {
-            if (mountains[i].Nodes.Count > 200)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void SetRandomSeed()
     {
         seed = Random.Range(-100000, 100000);
@@ -459,7 +329,6 @@ public class MapGenerator : MonoBehaviour
     }
 }
 
-public enum HeightGeneration { Perlin, DiamondSquare }
-public enum MapDimensions { Minute_200, Tiny_400, Small_800, Medium_1500, Large_3000 }
+public enum WorldSize { Tiny, Small, Medium, Large, Huge }
 public enum Direction { North, South, East, West}
 public enum SecondaryDirections { NorthEast, NorthWest, SouthEast, SouthWest }

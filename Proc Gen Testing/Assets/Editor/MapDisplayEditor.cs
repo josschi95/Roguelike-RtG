@@ -23,6 +23,7 @@ public class MapDisplayEditor : Editor
         display.highlightedBiome = (BiomeTypes)EditorGUILayout.EnumPopup("Highlight Biome", display.highlightedBiome);
         if (GUILayout.Button(BiomeButtonName(display.highlightedBiome))) display.HighlightBiome();
         if (GUILayout.Button("Highlight Mountains")) display.HighlightMountains();
+        if (GUILayout.Button("Highlight Tectonic Plates")) display.HighlightTectonicPlates();
 
     }
 

@@ -125,6 +125,25 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
+    public void HighlightTectonicPlates()
+    {
+        infoMap.ClearAllTiles();
+        var map = WorldMap.instance;
+
+        for (int x = 0; x < mapGenerator.mapSize; x++)
+        {
+            for (int y = 0; y < mapGenerator.mapSize; y++)
+            {
+                var tilePos = mapGenerator.origin + new Vector3Int(x, y);
+                var node = map.GetNode(x, y);
+                if (node.isTectonicPoint)
+                {
+                    infoMap.SetTile(tilePos, highlightTile);
+                }
+            }
+        }
+    }
+
     public void HighlightBiome()
     {
         infoMap.ClearAllTiles();

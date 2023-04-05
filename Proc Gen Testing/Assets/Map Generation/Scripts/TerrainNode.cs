@@ -8,6 +8,7 @@ public class TerrainNode
     public int y { get; private set; }
 
     #region - Altitude -
+    public bool isTectonicPoint { get; set; }
     public bool isLand { get; private set; }
     public float altitude { get; private set; }
     public TerrainType terrainType { get; private set; }

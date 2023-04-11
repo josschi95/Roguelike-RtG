@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3b4c856d766f34394238e6f643d6f5, type: 3}
+  m_Name: World Features
+  m_EditorClassIdentifier: 
+  <SeaLevel>k__BackingField: 0.4
+  <MountainHeight>k__BackingField: 0.8
+  <MaxIslandSize>k__BackingField: 250
+  tinyMap:
+    mapSize: 200
+    tectonicPlateCount: 4
+    tectonicPlateMinSize: 35
+    tectonicPlateMaxSize: 55
+    riverCount: 25
+    rainDrops: 40000
+    minSettlements: 0
+    maxSettlements: 0
+    hamletsPerTribe: 5
+    villagesPerTribe: 3
+    townsPerTribe: 2
+    citiesPerTribe: 1
+  smallMap:
+    mapSize: 400
+    tectonicPlateCount: 6
+    tectonicPlateMinSize: 100
+    tectonicPlateMaxSize: 125
+    riverCount: 75
+    rainDrops: 80000
+    minSettlements: 0
+    maxSettlements: 0
+    hamletsPerTribe: 10
+    villagesPerTribe: 6
+    townsPerTribe: 4
+    citiesPerTribe: 2
+  mediumMap:
+    mapSize: 800
+    tectonicPlateCount: 8
+    tectonicPlateMinSize: 125
+    tectonicPlateMaxSize: 150
+    riverCount: 100
+    rainDrops: 160000
+    minSettlements: 0
+    maxSettlements: 0
+    hamletsPerTribe: 15
+    villagesPerTribe: 10
+    townsPerTribe: 6
+    citiesPerTribe: 3
+  largeMap:
+    mapSize: 1500
+    tectonicPlateCount: 14
+    tectonicPlateMinSize: 300
+    tectonicPlateMaxSize: 350
+    riverCount: 125
+    rainDrops: 320000
+    minSettlements: 0
+    maxSettlements: 0
+    hamletsPerTribe: 20
+    villagesPerTribe: 15
+    townsPerTribe: 8
+    citiesPerTribe: 4
+  hugeMap:
+    mapSize: 3000
+    tectonicPlateCount: 16
+    tectonicPlateMinSize: 350
+    tectonicPlateMaxSize: 400
+    riverCount: 150
+    rainDrops: 640000
+    minSettlements: 0
+    maxSettlements: 0
+    hamletsPerTribe: 30
+    villagesPerTribe: 20
+    townsPerTribe: 10
+    citiesPerTribe: 5
+  altitudeZones:
+  - {fileID: 11400000, guid: 4d609885f08c1dc40a0d500d30a3ca14, type: 2}
+  - {fileID: 11400000, guid: dea729bd9dc37c343835fa45cd5f660d, type: 2}
+  - {fileID: 11400000, guid: 0d71b2213559866488dae54a30ff5372, type: 2}
+  - {fileID: 11400000, guid: bd34f96c88cd22f4e9a82cacae3331dd, type: 2}
+  - {fileID: 11400000, guid: cff4b02b7d42452459aafcd10b5c5e0f, type: 2}
+  temperatureZones:
+  - {fileID: 11400000, guid: 565781b67f70d9a449d76a088198bf47, type: 2}
+  - {fileID: 11400000, guid: f6c35e64dbc8a224fa0b9a54c794c4bc, type: 2}
+  - {fileID: 11400000, guid: 630ddead11bcebb4ca6375bae8c3c42b, type: 2}
+  - {fileID: 11400000, guid: 6bfcaed49d24ef34ba3a080d05e9f068, type: 2}
+  - {fileID: 11400000, guid: 1a19d19976b4bc342877aa3f15493437, type: 2}
+  - {fileID: 11400000, guid: 90ad05ff38ccd7442a672716478a4e4b, type: 2}
+  precipitationZones:
+  - {fileID: 11400000, guid: 54698192569e8c84188e04bd1f3b6cb6, type: 2}
+  - {fileID: 11400000, guid: 52047ecd35597fd47b68326735ab1acf, type: 2}
+  - {fileID: 11400000, guid: 2abf4f7e32810fa45a2cef845a9f4f72, type: 2}
+  - {fileID: 11400000, guid: 98602e5418ba20c47801f2bfc28054d9, type: 2}
+  - {fileID: 11400000, guid: 9ebe347fa0223e34295c040991810d04, type: 2}
+  - {fileID: 11400000, guid: 37d351710b8ac5b4b9bf8cb9f0e40ee9, type: 2}
+  biomes:
+  - {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
+  - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
+  - {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
+  - {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
+  - {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
+  - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
+  - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
+  - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
+  - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}

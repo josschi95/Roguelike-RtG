@@ -1,11 +1,11 @@
 using UnityEngine;
 using TMPro;
+using JS.WorldGeneration;
 
 public class NodeDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text nodeCoordinates;
     [SerializeField] private TMP_Text nodeElevation;
-    [SerializeField] private TMP_Text nodeTerrain;
     [SerializeField] private TMP_Text nodeBiome;
 
     [SerializeField] private TMP_Text nodeTemperature;
@@ -24,7 +24,6 @@ public class NodeDisplay : MonoBehaviour
 
         nodeCoordinates.text = "[X,Y] = " + node.x + "," + node.y;
         nodeElevation.text = "Elevation = " + node.altitude;
-        nodeTerrain.text = "Terrain: " + node.terrainType.TerrainName;
 
         if (node.biome != null) nodeBiome.text = "Biome: " + node.biome.BiomeName;
 

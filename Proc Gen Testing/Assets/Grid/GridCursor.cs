@@ -39,6 +39,7 @@ public class GridCursor : MonoBehaviour
 
     private void CheckNode()
     {
+        if (WorldMap.instance == null) return;
         var node = WorldMap.instance.GetNode(transform.position);
         nodeDisplay.DisplayNodeValues(node);
 

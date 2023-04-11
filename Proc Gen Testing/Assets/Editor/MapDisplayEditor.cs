@@ -14,17 +14,32 @@ public class MapDisplayEditor : Editor
         GUILayout.Space(10);
 
         if (GUILayout.Button("Clear Info")) display.ClearDisplay();
+
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Heat Map")) display.DisplayHeatMap();
         if (GUILayout.Button("Moisture Map")) display.DisplayMoistureMap();
         if (GUILayout.Button("Wind Map")) display.DisplayWindMap();
+        GUILayout.EndHorizontal();
+
 
         GUILayout.Space(10);
 
         display.highlightedBiome = (BiomeTypes)EditorGUILayout.EnumPopup("Highlight Biome", display.highlightedBiome);
         if (GUILayout.Button(BiomeButtonName(display.highlightedBiome))) display.HighlightBiome();
-        if (GUILayout.Button("Highlight Mountains")) display.HighlightMountains();
-        if (GUILayout.Button("Highlight Tectonic Plates")) display.HighlightTectonicPlates();
 
+        GUILayout.Space(10);
+
+        GUILayout.Label("Highlight Features");
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Mountains")) display.HighlightMountains();
+        if (GUILayout.Button("Islands")) display.HighlightIslands();
+        if (GUILayout.Button("Lakes")) display.HighlightLakes();
+        if (GUILayout.Button("Settlements")) display.HighlightSettlements();
+        if (GUILayout.Button("Tectonic Plates")) display.HighlightTectonicPlates();
+        GUILayout.EndHorizontal();
     }
 
     private string BiomeButtonName(BiomeTypes biome)

@@ -1,24 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
+using JS.EventSystem;
+using TMPro;
 
 namespace JS.WorldGeneration
 {
     public class WorldGenerator : MonoBehaviour
     {
         public System.Random rng { get; private set; }
+        public int seed { get; private set; }
 
-        [field: SerializeField] public int seed { get; private set; }
-
+        [SerializeField] private WorldSize worldSize;
+        [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainGenerator mapGenerator;
         [SerializeField] private SettlementGenerator settlementGenerator;
         //private FloraFaunaGenerator floraFaunaGenerator;
         //private ResourceGenerator resourceGenerator;
         //private HistoryGenerator historyGenerator
 
-        [SerializeField] private WorldGenerationParameters mapFeatures;
-        [SerializeField] private WorldSize worldSize;
+        [Space]
+
+        [SerializeField] private Image progressBar;
+        [SerializeField] private TMP_Text progressText;
+
+        [Header("Game Events")]
+        [SerializeField] private GameEvent worldGenerationCompleteEvent;
 
         //private void Awake() => SetRandomSeed();
 
@@ -46,13 +53,7 @@ namespace JS.WorldGeneration
         //Called from World Generation Settings Menu
         public void OnBeginWorldGeneration()
         {
-            rng = new System.Random(seed);
-
-            mapGenerator.SetInitialValues(worldSize, seed);
-            settlementGenerator.SetInitialValues(worldSize);
-
-            //Generate Map - Terrain and Biomes
-            mapGenerator.BeginGenerateTerrain();
+            StartCoroutine(GenerateWorld());
 
             //Generate Plant and Wildlife
 
@@ -61,6 +62,103 @@ namespace JS.WorldGeneration
             //Generate Settlements
 
             //Generate Historical Figures, Locations, Items, and Events
+        }
+
+        private IEnumerator GenerateWorld()
+        {
+            var initialTime = Time.realtimeSinceStartup;
+            progressText.text = "Loading";
+            progressBar.fillAmount = 0;
+            SetNewWorldValues();
+            //Debug.Log("SetNewWorldValues: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Tectonic Plates";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.PlaceTectonicPlates();
+            progressBar.fillAmount = 0.1f;
+            //Debug.Log("PlaceTectonicPlates: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Land Masses";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.GenerateHeightMap();
+            progressBar.fillAmount = 0.2f;
+            //Debug.Log("GenerateHeightMap: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Eroding Land Masses";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.ErodeLandMasses();
+            progressBar.fillAmount = 0.2f;
+            //Debug.Log("ErodeLandMasses: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Allocating Height Map";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.SetNodeAltitudeValues();
+            progressBar.fillAmount = 0.2f;
+            //Debug.Log("SetNodeAltitudeValues: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Identifying Mountains";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.IdentifyMountains();
+            progressBar.fillAmount = 0.3f;
+            //Debug.Log("IdentifyMountains: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Identifying Lakes";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            // !!! This method here is taking up the vast majority of generation time !!!
+            mapGenerator.IdentifyLakes();
+            progressBar.fillAmount = 0.3f;
+            Debug.Log("IdentifyLakes: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Identifying Islands";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.IdentifyIslands();
+            progressBar.fillAmount = 0.3f;
+            //Debug.Log("IdentifyIslands: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Rivers";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.GenerateRivers();
+            progressBar.fillAmount = 0.5f;
+            //Debug.Log("GenerateRivers: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Heat Map";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.GenerateHeatMap();
+            progressBar.fillAmount = 0.6f;
+            //Debug.Log("GenerateHeatMap: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Precipitation Map";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.GeneratePrecipitationMap();
+            progressBar.fillAmount = 0.7f;
+            //Debug.Log("GeneratePrecipitationMap: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Biomes";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            mapGenerator.GenerateBiomes();
+            progressBar.fillAmount = 0.8f;
+            //Debug.Log("GenerateBiomes: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Generating Settlements";
+            yield return new WaitForSeconds(0.01f);
+            initialTime = Time.realtimeSinceStartup;
+
+            settlementGenerator.GenerateSettlements();
+            progressBar.fillAmount = 0.9f;
+            //Debug.Log("GenerateSettlements: " + (Time.realtimeSinceStartup - initialTime));
+            yield return new WaitForSeconds(0.01f);
+
+            worldGenerationCompleteEvent?.Invoke();
         }
     }
 }

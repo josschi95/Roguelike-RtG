@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e888310cffed4a449b9aa45b71a656a, type: 3}
-  m_Name: StartNewGame
+  m_Script: {fileID: 11500000, guid: 35fc5d4bfae5f9347b99879c15d086fb, type: 3}
+  m_Name: World Map Data
   m_EditorClassIdentifier: 
-  EventEnabled: 1
+  terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}

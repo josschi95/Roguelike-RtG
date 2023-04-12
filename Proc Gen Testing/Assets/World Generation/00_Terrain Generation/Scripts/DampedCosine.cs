@@ -4,7 +4,7 @@ namespace JS.WorldGeneration
 {
     public static class DampedCosine
     {
-        public static float[,] GetMoistureMap(float[,] heightMap, float seaLevel)
+        public static float[,] GetMoistureMap(float[,] heightMap, float seaLevel, System.Random rng)
         {
             int width = heightMap.GetLength(0);
             int height = heightMap.GetLength(1);
@@ -27,7 +27,7 @@ namespace JS.WorldGeneration
                     {
                         moistureValue += (seaLevel * 2f) - heightMap[x, y];
                     }
-                    moistureValue += Random.Range(0, 0.1f);
+                    moistureValue += rng.Next(0, 1) * 0.1f;
 
                     moistureMap[x, y] = Mathf.Clamp(moistureValue, 0, 1);
                 }

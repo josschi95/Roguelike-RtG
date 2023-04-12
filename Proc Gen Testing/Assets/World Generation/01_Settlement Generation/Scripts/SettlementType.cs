@@ -5,8 +5,14 @@ using UnityEngine;
 public class SettlementType : ScriptableObject
 {
     [field: SerializeField] public int territorySize { get; private set; } = 1;
+
     [field: SerializeField] public int minPopulation { get; private set; }
     [field: SerializeField] public int maxPopulation { get; private set; }
 
     [field: SerializeField] public RuleTile settlementTile { get; private set; }
+
+    public int AreaOfInfluence()
+    {
+        return Mathf.RoundToInt(Mathf.Pow(territorySize + 1, 2));
+    }
 }

@@ -5,7 +5,9 @@ namespace JS.WorldGeneration
 {
     public class RiverGenerator : MonoBehaviour
     {
-        private WorldMap worldMap;
+        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldGenerator worldGenerator;
+        //private WorldMap worldMap;
 
         [SerializeField] private float MinRiverHeight = 0.6f;
 
@@ -22,9 +24,10 @@ namespace JS.WorldGeneration
         private List<River> rivers;
         private List<RiverGroup> riverGroups;
 
-        public List<River> GenerateRivers(int mapSize, List<MountainRange> mountains, int count)
+
+        public List<River> GenerateRivers(int mapSize, MountainRange[] mountains, int count)
         {
-            worldMap = WorldMap.instance;
+            //worldMap = WorldMap.instance;
 
             int attempts = 0;
             rivers = new List<River>();
@@ -38,8 +41,8 @@ namespace JS.WorldGeneration
                 //If attempts are at less than half of what is allowed, try to find an unoccupied mountain
                 var mountain = FindRiverSource(mountains, attempts < MaxRiverAttempts / 2);
                 TerrainNode node;
-                if (mountain != null) node = mountain.Nodes[Random.Range(0, mountain.Nodes.Count)];
-                else node = worldMap.GetNode(Random.Range(0, mapSize - 1), Random.Range(0, mapSize - 1));
+                if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
+                else node = worldMap.GetNode(worldGenerator.rng.Next(0, mapSize - 1), worldGenerator.rng.Next(0, mapSize - 1));
 
                 if (node.altitude < MinRiverHeight) continue;
                 //Maybe add an extra property for if Land/Water
@@ -83,16 +86,16 @@ namespace JS.WorldGeneration
             return rivers;
         }
 
-        private MountainRange FindRiverSource(List<MountainRange> mountains, bool riverLessMountain)
+        private MountainRange FindRiverSource(MountainRange[] mountains, bool riverLessMountain)
         {
-            if (mountains.Count == 0) return null;
-            if (!riverLessMountain) return mountains[Random.Range(0, mountains.Count)];
+            if (mountains.Length == 0) return null;
+            if (!riverLessMountain) return mountains[worldGenerator.rng.Next(0, mountains.Length)];
 
             var shuffledList = new List<MountainRange>(mountains);
             for (int i = 0; i < shuffledList.Count; i++)
             {
                 var temp = shuffledList[i];
-                int randomIndex = Random.Range(i, shuffledList.Count);
+                int randomIndex = worldGenerator.rng.Next(i, shuffledList.Count);
                 shuffledList[i] = shuffledList[randomIndex];
                 shuffledList[randomIndex] = temp;
             }
@@ -102,7 +105,7 @@ namespace JS.WorldGeneration
                 if (shuffledList[i].Rivers.Count == 0) return shuffledList[i];
             }
 
-            return mountains[Random.Range(0, mountains.Count)];
+            return mountains[worldGenerator.rng.Next(0, mountains.Length)];
         }
 
         private TerrainNode FindLowestNeighborNode(TerrainNode node)
@@ -371,7 +374,7 @@ namespace JS.WorldGeneration
             int counter = 0;
 
             // How wide are we digging this river?
-            int size = Random.Range(1, 5);
+            int size = worldGenerator.rng.Next(1, 5);
             river.Length = river.Nodes.Count;
 
             // randomize size change
@@ -386,25 +389,25 @@ namespace JS.WorldGeneration
             int fivemin = five / 3;
 
             // randomize lenght of each size
-            int count1 = Random.Range(fivemin, five);
+            int count1 = worldGenerator.rng.Next(fivemin, five);
             if (size < 4)
             {
                 count1 = 0;
             }
-            int count2 = count1 + Random.Range(fourmin, four);
+            int count2 = count1 + worldGenerator.rng.Next(fourmin, four);
             if (size < 3)
             {
                 count2 = 0;
                 count1 = 0;
             }
-            int count3 = count2 + Random.Range(threemin, three);
+            int count3 = count2 + worldGenerator.rng.Next(threemin, three);
             if (size < 2)
             {
                 count3 = 0;
                 count2 = 0;
                 count1 = 0;
             }
-            int count4 = count3 + Random.Range(twomin, two);
+            int count4 = count3 + worldGenerator.rng.Next(twomin, two);
 
             // Make sure we are not digging past the river path
             if (count4 > river.Length)

@@ -4,7 +4,7 @@ namespace JS.WorldGeneration
 {
     public static class TemperatureData
     {
-        public static float[,] GenerateHeatMap(float[,] heightMap, float seaLevel)
+        public static float[,] GenerateHeatMap(float[,] heightMap, float seaLevel, System.Random rng)
         {
             float[,] heatMap = new float[heightMap.GetLength(0), heightMap.GetLength(1)];
 
@@ -20,7 +20,7 @@ namespace JS.WorldGeneration
                     var heatValue = 1 - Mathf.Sin(distanceFromEquator) * distanceFromEquator * 1.4f;
 
                     if (heightMap[x, y] > seaLevel) heatValue -= Mathf.Abs(heightMap[x, y] - seaLevel);
-                    heatValue += Random.Range(-0.05f, 0.05f);
+                    heatValue += rng.Next(-5, 5) * 0.01f;
 
                     heatMap[x, y] = Mathf.Clamp(heatValue, 0, 1);
                 }

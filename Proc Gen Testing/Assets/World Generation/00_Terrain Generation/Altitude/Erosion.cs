@@ -4,6 +4,8 @@ namespace JS.WorldGeneration
 {
     public class Erosion : MonoBehaviour
     {
+        [SerializeField] private WorldMapData worldMap;
+
         [Range(2, 8)]
         public int erosionRadius = 3;
         [Range(0, 1)]
@@ -134,7 +136,8 @@ namespace JS.WorldGeneration
                         break;
                     }
                     // Stop simulating droplet if it has reach a body of water
-                    if (!WorldMap.instance.GetNode(nodeX, nodeY).isNotWater)
+                    //if (!WorldMap.instance.GetNode(nodeX, nodeY).isNotWater)
+                    if (!worldMap.GetNode(nodeX, nodeY).isNotWater)
                     {
                         break;
                     }

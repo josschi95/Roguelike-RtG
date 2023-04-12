@@ -1,30 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JS.WorldGeneration;
 
-public class WorldMap : MonoBehaviour
+[CreateAssetMenu(menuName = "Scriptable Objects/World Map Data")]
+public class WorldMapData : ScriptableObject
 {
-    public static WorldMap instance { get; private set; }
-    private Grid<TerrainNode> grid;
-
     [SerializeField] private TerrainData terrainData;
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-        instance = this;
-    }
+    private Grid<TerrainNode> grid;
 
     public void CreateGrid(int width, int height)
     {
         float halfWidth = width / 2f;
         float halfHeight = height / 2f;
-        Vector3 origin = new Vector3(- halfWidth, - halfHeight);
+        Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
         grid = new Grid<TerrainNode>(width, height, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
 
@@ -61,7 +50,7 @@ public class WorldMap : MonoBehaviour
         int size = data.mapSize;
         float halfWidth = size / 2f;
         float halfHeight = size / 2f;
-        Vector3 origin = new Vector3(- halfWidth, - halfHeight);
+        Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
         grid = new Grid<TerrainNode>(size, size, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
 
@@ -92,14 +81,24 @@ public class WorldMap : MonoBehaviour
         return grid.GetWorldPosition(node.x, node.y);
     }
 
-    public int GetNodePathDistance(TerrainNode fromNode, TerrainNode toNode)
+    public int GetNodeVerticalDistance(TerrainNode fromNode, TerrainNode toNode)
+    {
+        return Mathf.Abs(fromNode.y - toNode.y);
+    }
+
+    public int GetNodeHorizontalDistance(TerrainNode fromNode, TerrainNode toNode)
+    {
+        return Mathf.Abs(fromNode.x - toNode.x);
+    }
+
+    public int GetNodeDistance_Path(TerrainNode fromNode, TerrainNode toNode)
     {
         int x = Mathf.Abs(fromNode.x - toNode.x);
         int y = Mathf.Abs(fromNode.y - toNode.y);
         return x + y;
     }
 
-    public float GetNodeStraightDistance(TerrainNode fromNode, TerrainNode toNode)
+    public float GetNodeDistance_Straight(TerrainNode fromNode, TerrainNode toNode)
     {
 
         return Mathf.Sqrt(Mathf.Pow(fromNode.x - toNode.x, 2) + Mathf.Pow(fromNode.y - toNode.y, 2));
@@ -117,7 +116,7 @@ public class WorldMap : MonoBehaviour
                 if (y < 0 || y > grid.GetHeight() - 1) continue;
 
                 var toNode = grid.GetGridObject(x, y);
-                if (GetNodeStraightDistance(fromNode, toNode) <= range) nodes.Add(toNode);
+                if (GetNodeDistance_Straight(fromNode, toNode) <= range) nodes.Add(toNode);
             }
         }
         return nodes;
@@ -129,13 +128,13 @@ public class WorldMap : MonoBehaviour
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {
-            for (int y = fromNode.y - range;  y < fromNode.y + range + 1;  y++)
+            for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
             {
                 if (x < 0 || x > grid.GetWidth() - 1) continue;
                 if (y < 0 || y > grid.GetHeight() - 1) continue;
 
                 var node = grid.GetGridObject(x, y);
-                if (GetNodePathDistance(fromNode, node) <= range) nodes.Add(node);
+                if (GetNodeDistance_Path(fromNode, node) <= range) nodes.Add(node);
             }
         }
         return nodes;

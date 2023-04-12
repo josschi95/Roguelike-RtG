@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e888310cffed4a449b9aa45b71a656a, type: 3}
-  m_Name: SettlementGenerationCompleteEvent
+  m_Script: {fileID: 11500000, guid: 84d5cb1197fee034092f667366f57f65, type: 3}
+  m_Name: WorldMap
   m_EditorClassIdentifier: 
-  EventEnabled: 1
+  SceneFinishedLoadingEvent: {fileID: 11400000, guid: 3e7fe85d73c775545be45a2cf6fc2ac7, type: 2}
+  ScenePath: Assets/Scenes/Game Scenes/Gameplay/WorldMap.unity

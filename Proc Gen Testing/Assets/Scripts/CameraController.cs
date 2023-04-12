@@ -20,16 +20,30 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         pixelCam = GetComponent<PixelPerfectCamera>();
-        rightMouseButton.action.performed += i => BeginPanCamera();
+
+    }
+
+    private void OnEnable()
+    {
+        rightMouseButton.action.performed += BeginPanCamera;
+        //rightMouseButton.action.performed += i => BeginPanCamera();
         rightMouseButton.action.canceled += i => isPanning = false;
         mouseScroll.action.performed += i => ZoomCamera(i.ReadValue<Vector2>().y);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        rightMouseButton.action.performed -= i => BeginPanCamera();
+        rightMouseButton.action.performed -= BeginPanCamera;
+        //rightMouseButton.action.performed -= i => BeginPanCamera();
         rightMouseButton.action.canceled -= i => isPanning = false;
         mouseScroll.action.performed -= i => ZoomCamera(i.ReadValue<Vector2>().y);
+    }
+
+    private void BeginPanCamera(InputAction.CallbackContext obj)
+    {
+        dragOrigin = cam.ScreenToWorldPoint(mousePosition.action.ReadValue<Vector2>());
+        if (panCoroutine != null) StopCoroutine(panCoroutine);
+        panCoroutine = StartCoroutine(PanCamera());
     }
 
     private void BeginPanCamera()

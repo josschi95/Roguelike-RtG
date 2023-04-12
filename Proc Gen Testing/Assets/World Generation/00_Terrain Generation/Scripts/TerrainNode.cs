@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace JS.WorldGeneration
 {
-    //[System.Serializable]
+    //Do Not Serialize this class, results in a recursive serialization issue
     public class TerrainNode
     {
         private Grid<TerrainNode> grid;
@@ -126,9 +126,6 @@ namespace JS.WorldGeneration
             altitude = value;
             isNotWater = zone.isLand;
             altitudeZone = zone;
-            if (zone.isMountain) CheckNeighborMountains();
-            if (zone.isLand) CheckNeighborIslands();
-            else CheckNeighborLakes();
         }
 
         public void SetTemperatureValues(float value, TemperatureZone zone)
@@ -150,7 +147,7 @@ namespace JS.WorldGeneration
         #endregion
 
         #region - Mountains -
-        private void CheckNeighborMountains()
+        public void CheckNeighborMountains()
         {
             for (int i = 0; i < neighbors.Length; i++)
             {
@@ -181,7 +178,7 @@ namespace JS.WorldGeneration
         #endregion
 
         #region - Islands -
-        private void CheckNeighborIslands()
+        public void CheckNeighborIslands()
         {
             for (int i = 0; i < neighbors.Length; i++)
             {
@@ -211,7 +208,11 @@ namespace JS.WorldGeneration
         #endregion
 
         #region - Lakes -
-        private void CheckNeighborLakes()
+        //A possible alternative to this would be to only check if a neighbor is land
+        //This would tell me where a lake might be located, but would also give me the coast line
+        //I could check which neighbor is land, and then run in the opposite direction until I hit the edge/land again
+        //
+        public void CheckNeighborLakes()
         {
             for (int i = 0; i < neighbors.Length; i++)
             {

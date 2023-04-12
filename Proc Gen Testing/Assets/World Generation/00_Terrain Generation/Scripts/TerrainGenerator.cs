@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,13 +24,13 @@ namespace JS.WorldGeneration
         private float seaLevel = 0.4f;
 
         [SerializeField] private WorldGenerator worldGenerator;
-        private WorldMap worldMap;
-        private RiverGenerator riverGenerator;
-        private Erosion erosion;
+        [SerializeField] private RiverGenerator riverGenerator;
+        [SerializeField] private Erosion erosion;
+        //private WorldMap worldMap;
 
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
-        [SerializeField] private bool useErosion = true;
+        [SerializeField] private WorldMapData worldMap;
 
         [Header("Perlin Noise")]
         [SerializeField] private float noiseScale;
@@ -41,13 +42,6 @@ namespace JS.WorldGeneration
         [Tooltip("Controls increase in frequency of octaves")]
         [SerializeField] private float lacunarity = 2f;
         [SerializeField] private Vector2 offset;
-
-        [Header("Game Events")]
-        [SerializeField] private GameEvent heightMapGeneratedEvent;
-        [SerializeField] private GameEvent erosionEvent;
-        [SerializeField] private GameEvent heatMapGeneratedEvent;
-        [SerializeField] private GameEvent moistureMapGeneratedEvent;
-        [SerializeField] private GameEvent terrainGenerationCompleteEvent;
 
         private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
         //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
@@ -63,124 +57,31 @@ namespace JS.WorldGeneration
         {
             this.seed = seed;
             worldSize = size;
-        }
-
-        public async void BeginGenerateTerrainAsync()
-        {
-            worldMap = WorldMap.instance;
-            erosion = GetComponent<Erosion>();
-            riverGenerator = GetComponent<RiverGenerator>();
+            //worldMap = WorldMap.instance;
 
             terrainData.ClearData();
             seaLevel = mapFeatures.SeaLevel;
 
             mapSize = mapFeatures.MapSize(worldSize);
-            origin = new Vector3Int(Mathf.FloorToInt(transform.position.x - mapSize / 2f), Mathf.FloorToInt(transform.position.y - mapSize / 2f));
+            origin = new Vector3Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
             terrainData.SetMapSize(mapSize, origin);
 
             worldMap.CreateGrid(mapSize, mapSize);
-
-            //Create Height Map
-            await Task.Run(() => GenerateHeightMap());
-
-            var ranges = await Task.Run(() => MountainFinder.FindMountainRanges(mapSize));
-            terrainData.SetMountains(ranges.ToArray());
-        }
-
-        public void BeginGenerateTerrain()
-        {
-            worldMap = WorldMap.instance;
-            erosion = GetComponent<Erosion>();
-            riverGenerator = GetComponent<RiverGenerator>();
-
-            terrainData.ClearData();
-            seaLevel = mapFeatures.SeaLevel;
-
-            mapSize = mapFeatures.MapSize(worldSize);
-            origin = new Vector3Int(Mathf.FloorToInt(transform.position.x - mapSize / 2f), Mathf.FloorToInt(transform.position.y - mapSize / 2f));
-            terrainData.SetMapSize(mapSize, origin);
-
-            worldMap.CreateGrid(mapSize, mapSize);
-
-            //Create Height Map
-            float[,] heightMap = GenerateHeightMap();
-
-            //Identify Mountains
-            var ranges = MountainFinder.FindMountainRanges(mapSize);
-            terrainData.SetMountains(ranges.ToArray());
-
-            //Create rivers
-            var rivers = riverGenerator.GenerateRivers(mapSize, ranges, mapFeatures.RiverCount(worldSize));
-            terrainData.SetRivers(rivers.ToArray());
-
-            //Identify Lakes and Islands
-            IdentifyLakesAndIslands();  //I should join this in with the MountainFinder to something like TerrainFeatureFinder
-
-            //Create Heat Map
-            float[,] heatMap = GenerateHeatMap();
-
-            //Create Initial Moisture Map - !!!FLAWED!!!
-            float[,] moistureMap = GeneratePrecipitationMap(heightMap, ranges.ToArray());
-
-            GenerateBiomes();
-
-            terrainGenerationCompleteEvent?.Invoke();
         }
 
         #region - Altitude -
         /// <summary>
-        /// Generates a height map using randomly placed tectonic plates and Perlin Noise
-        /// </summary>
-        private float[,] GenerateHeightMap()
-        {
-            float[,] heightMap = new float[mapSize, mapSize];
-            PlaceTectonicPlates(heightMap);
-
-            float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
-            for (int x = 0; x < perlinMap.GetLength(0); x++)
-            {
-                for (int y = 0; y < perlinMap.GetLength(1); y++)
-                {
-                    perlinMap[x, y] -= 0.25f;
-                    heightMap[x, y] = Mathf.Clamp(heightMap[x, y] + perlinMap[x, y], 0, 1);
-                }
-            }
-
-            if (useErosion)
-            {
-                heightMap = erosion.Erode(heightMap, mapFeatures.Raindrops(worldSize), seed);
-                erosionEvent?.Invoke();
-            }
-
-            //This is doing nothing and is EXTREMELY FLAWED only taking into account altitude
-            float[,] airPressureMap = AirPressureData.GetAirPressureMap(heightMap);
-
-            //Pass height and air pressure values to nodes
-            for (int x = 0; x < mapSize; x++)
-            {
-                for (int y = 0; y < mapSize; y++)
-                {
-                    TerrainNode node = worldMap.GetNode(x, y);
-                    node.SetAltitude(heightMap[x, y], GetAltitude(heightMap[x, y]));
-                    node.airPressure = airPressureMap[x, y];
-                }
-            }
-            terrainData.heightMap = heightMap;
-            heightMapGeneratedEvent?.Invoke();
-            return heightMap;
-        }
-
-        /// <summary>
         /// Randomly places tectonic plates and raises the altitude of surrouning nodes
         /// </summary>
-        private void PlaceTectonicPlates(float[,] heightMap)
+        public void PlaceTectonicPlates()
         {
             //place n tectonic points and increase the altitude of surrounding nodes within range r by  a flat-top gaussian
             //tectonic points will also result in mountains, volcanoes? Fault lines?
             //place fault lines using Voronoi polygons, this is where volcanoes and mountains will be added
+            float[,] heightMap = new float[mapSize, mapSize];
 
             int count = mapFeatures.TectonicPlates(worldSize);
-            int border = mapSize / 5;
+            
             for (int points = 0; points < count; points++)
             {
                 
@@ -189,6 +90,7 @@ namespace JS.WorldGeneration
                 nodeY = worldGenerator.rng.Next(0, mapSize - 1);
                 /*if (points < count / 2) //First half points will favor the center of the map
                 {
+                    int border = mapSize / 5;
                     nodeX = worldGenerator.rng.Next(border, mapSize - border - 1);
                     nodeY = worldGenerator.rng.Next(border, mapSize - border - 1);
                 }
@@ -211,7 +113,7 @@ namespace JS.WorldGeneration
                     nodesInRange[i].isTectonicPoint = true; //Mark as tectonic node, mainly for visual referencing
 
                     //The relative distance from this node to the tectonic node
-                    float x = worldMap.GetNodeStraightDistance(tectonicNode, nodesInRange[i]) / range;
+                    float x = worldMap.GetNodeDistance_Straight(tectonicNode, nodesInRange[i]) / range;
 
                     float n = 6; //affects the width of the flat-top on the gaussian
                     float y = 0.5f * Mathf.Exp(-10 * Mathf.Pow(x, n)); //flat-top gaussian
@@ -221,6 +123,57 @@ namespace JS.WorldGeneration
                         heightMap[nodesInRange[i].x, nodesInRange[i].y] = y;
                 }
             }
+            terrainData.heightMap = heightMap;
+        }
+
+        /// <summary>
+        /// Generates a height map using randomly placed tectonic plates and Perlin Noise
+        /// </summary>
+        public void GenerateHeightMap()
+        {
+            float[,] heightMap = terrainData.heightMap;
+
+            float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            for (int x = 0; x < perlinMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < perlinMap.GetLength(1); y++)
+                {
+                    perlinMap[x, y] -= 0.25f;
+                    heightMap[x, y] = Mathf.Clamp(heightMap[x, y] + perlinMap[x, y], 0, 1);
+                }
+            }
+
+            terrainData.heightMap = heightMap;
+        }
+
+        /// <summary>
+        /// Simulates erosion on the height map using the Raindrop algorithm.
+        /// </summary>
+        public void ErodeLandMasses()
+        {
+            float[,] heightMap = terrainData.heightMap;
+            heightMap = erosion.Erode(heightMap, mapFeatures.Raindrops(worldSize), seed);
+            terrainData.heightMap = heightMap;
+        }
+
+        public void SetNodeAltitudeValues()
+        {
+            float[,] heightMap = terrainData.heightMap;
+
+            //This is doing nothing and is EXTREMELY FLAWED only taking into account altitude
+            //float[,] airPressureMap = AirPressureData.GetAirPressureMap(heightMap);
+
+            //Pass height and air pressure values to nodes
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    TerrainNode node = worldMap.GetNode(x, y);
+                    node.SetAltitude(heightMap[x, y], GetAltitude(heightMap[x, y]));
+                    //node.airPressure = airPressureMap[x, y];
+                }
+            }
+            terrainData.heightMap = heightMap;
         }
 
         /// <summary>
@@ -239,51 +192,74 @@ namespace JS.WorldGeneration
         }
         #endregion
 
-        private void IdentifyLakesAndIslands()
+        #region - Terrain Features -
+        /// <summary>
+        /// Identifies and registers Mountains.
+        /// </summary>
+        public void IdentifyMountains()
         {
-            var lakes = new List<Lake>();
-            var islands = new List<Island>();
-
             for (int x = 0; x < mapSize; x++)
             {
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    if (node.Island != null && !islands.Contains(node.Island))
-                    {
-                        if (node.Island.Nodes.Count > mapSize)
-                        {
-                            //Debug.Log("Island is too large! Deconstructing. " + node.Island.Nodes.Count);
-                            node.Island.DeconstrucIsland();
-                            continue;
-                        }
-
-                        node.Island.FinalizeValues(islands.Count);
-                        islands.Add(node.Island);
-                        //Debug.Log("New Island Identified! " + node.Island.ID);
-                    }
-                    else if (node.Lake != null && !lakes.Contains(node.Lake))
-                    {
-                        if (node.Lake.IsLandLocked(mapSize))
-                        {
-                            node.Lake.FinalizeValues(lakes.Count);
-                            lakes.Add(node.Lake);
-                            //Debug.Log("New Lake Identified! " + node.Lake.ID);
-                        }
-                        else node.Lake.DeconstructLake();
-                    }
+                    if (node.altitudeZone.isMountain) 
+                        node.CheckNeighborMountains();
                 }
             }
+            var ranges = Topography.FindMountainRanges(worldMap, mapSize);
+            terrainData.SetMountains(ranges.ToArray());
+        }
 
+        /// <summary>
+        /// Identifies and registers Lakes.
+        /// </summary>
+        public void IdentifyLakes()
+        {
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    TerrainNode node = worldMap.GetNode(x, y);
+                    if (!node.altitudeZone.isLand)
+                        node.CheckNeighborLakes();
+                }
+            }
+            var lakes = Topography.FindLakes(worldMap, mapSize);
             terrainData.SetLakes(lakes.ToArray());
+        }
+
+        /// <summary>
+        /// Identifies and registers Islands.
+        /// </summary>
+        public void IdentifyIslands()
+        {
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    TerrainNode node = worldMap.GetNode(x, y);
+                    if (node.altitudeZone.isLand)
+                        node.CheckNeighborIslands();
+                }
+            }
+            var islands = Topography.FindIslands(worldMap, mapSize);
             terrainData.SetIslands(islands.ToArray());
         }
 
+        public void GenerateRivers()
+        {
+            //Create rivers
+            var rivers = riverGenerator.GenerateRivers(mapSize, terrainData.Mountains, mapFeatures.RiverCount(worldSize));
+            terrainData.SetRivers(rivers.ToArray());
+        }
+        #endregion
+
         #region - Temperature -
-        private float[,] GenerateHeatMap()
+        public void GenerateHeatMap()
         {
             //Create Heat Map
-            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.heightMap, seaLevel);
+            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.heightMap, seaLevel, worldGenerator.rng);
 
             //Pass heat values to nodes
             for (int x = 0; x < mapSize; x++)
@@ -295,8 +271,8 @@ namespace JS.WorldGeneration
                 }
             }
 
-            heatMapGeneratedEvent?.Invoke();
-            return heatMap;
+            //probably pass this to terrainData
+            //return heatMap;
         }
 
         private TemperatureZone GetTemperatureZone(float heatValue)
@@ -313,8 +289,9 @@ namespace JS.WorldGeneration
         #endregion
 
         #region - Precipitation -
-        private float[,] GeneratePrecipitationMap(float[,] heightMap, MountainRange[] ranges)
+        public void GeneratePrecipitationMap()
         {
+            var heightMap = terrainData.heightMap;
             //Create Wind Map
             SecondaryDirections[,] windMap = AirPressureData.GetWindMap(heightMap);
             //Other factors that need to be taken into account
@@ -332,11 +309,11 @@ namespace JS.WorldGeneration
             }
 
             //Create Initial Moisture Map - !!!FLAWED!!!
-            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, seaLevel);
+            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, seaLevel, worldGenerator.rng);
             //This is entirely onteologic at the moment
 
             //Apply effects of prevailing winds to generate rain shadows
-            CreateRainShadows(ranges, windMap);
+            CreateRainShadows(terrainData.Mountains, windMap);
 
             //Pass precipitation values to nodes
             for (int x = 0; x < mapSize; x++)
@@ -348,8 +325,8 @@ namespace JS.WorldGeneration
                 }
             }
 
-            moistureMapGeneratedEvent?.Invoke();
-            return moistureMap;
+            //pass to terrain data
+            //return moistureMap;
         }
 
         private PrecipitationZone GetPrecipitationZone(float moistureValue)
@@ -383,7 +360,7 @@ namespace JS.WorldGeneration
         #endregion
 
         #region - Biomes -
-        private void GenerateBiomes()
+        public void GenerateBiomes()
         {
             for (int x = 0; x < mapSize; x++)
             {

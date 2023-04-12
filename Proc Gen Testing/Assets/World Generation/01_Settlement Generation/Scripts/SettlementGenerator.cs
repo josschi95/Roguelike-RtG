@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace JS.WorldGeneration
@@ -10,6 +8,7 @@ namespace JS.WorldGeneration
         [SerializeField] private WorldGenerator worldGenerator;
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
+        [SerializeField] private WorldMapData worldMap;
         private WorldSize worldSize;
 
         [Space]
@@ -30,8 +29,6 @@ namespace JS.WorldGeneration
 
         public void GenerateSettlements()
         {
-            Debug.Log("Beginning Settlement Generation");
-
             settlements = new List<Settlement>();
 
             GetSiteList();
@@ -52,7 +49,8 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapFeatures.MapSize(worldSize); y++)
                 {
-                    TerrainNode node = WorldMap.instance.GetNode(x, y);
+                    //TerrainNode node = WorldMap.instance.GetNode(x, y);
+                    TerrainNode node = worldMap.GetNode(x, y);
                     if (!node.isNotWater) continue; //Don't include water
                     if (node.Settlement != null) continue; //this shouldn't happen
 
@@ -160,7 +158,7 @@ namespace JS.WorldGeneration
                     continue;
                 }
                 if (tribe.opposedBiomes.Contains(availableNodes[i].biome)) continue;
-
+                if (TerritoriesOverlap(availableNodes[i], type.territorySize)) continue;
                 //Debug.Log("Found Preferred Home.");
                 PlaceSettlement(availableNodes[i], type, tribe);
                 return;
@@ -175,7 +173,7 @@ namespace JS.WorldGeneration
                     availableNodes.RemoveAt(i);
                     continue;
                 }
-
+                if (TerritoriesOverlap(availableNodes[i], type.territorySize)) continue;
                 //Debug.Log("Found A Home.");
                 PlaceSettlement(availableNodes[i], type, tribe);
                 return;
@@ -190,8 +188,9 @@ namespace JS.WorldGeneration
             {
                 for (int i = 0; i < mountain.Nodes.Count; i++)
                 {
-                    if (mountain.Nodes[i].Settlement != null) continue;
+                    //if (mountain.Nodes[i].Settlement != null) continue;
                     //Don't need to check biome because a mountain home would be underground
+                    if (TerritoriesOverlap(mountain.Nodes[i], type.territorySize)) continue;
 
                     //Found unclaimed mountain node
                     //Debug.Log("Found Mountain Home.");
@@ -208,8 +207,9 @@ namespace JS.WorldGeneration
             {
                 for (int i = 0; i < island.Nodes.Count; i++)
                 {
-                    if (island.Nodes[i].Settlement != null) continue;
+                    //if (island.Nodes[i].Settlement != null) continue;
                     if (tribe.opposedBiomes.Contains(island.Nodes[i].biome)) continue;
+                    if (TerritoriesOverlap(island.Nodes[i], type.territorySize)) continue;
 
                     //Found unclaimed island node
                     //Debug.Log("Found Island Home.");
@@ -241,7 +241,9 @@ namespace JS.WorldGeneration
                 if (group.biome != biome) continue;
                 for (int i = 0; i < group.Nodes.Count; i++)
                 {
-                    if (group.Nodes[i].Settlement != null) continue;
+                    //if (group.Nodes[i].Settlement != null) continue;
+                    if (TerritoriesOverlap(group.Nodes[i], type.territorySize)) continue;
+
                     siteList.Add(group.Nodes[i]);
                 }
             }
@@ -253,31 +255,66 @@ namespace JS.WorldGeneration
             return true;
         }
 
+        /// <summary>
+        /// Determines if the territory for a given settlement would overlap with territory of an existing settlement
+        /// </summary>
+        private bool TerritoriesOverlap(TerrainNode proposedSite, int range)
+        {
+            foreach (Settlement settlement in settlements)
+            {
+                //Returns false if the territory range of the proposed settlement site would overlap with territory of another settlement
+                if (Mathf.Abs(settlement.Node.x - proposedSite.x) <= settlement.settlementType.territorySize + range)
+                {
+                    //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
+                    return true;
+                }
+                if (Mathf.Abs(settlement.Node.y - proposedSite.y) <= settlement.settlementType.territorySize + range)
+                {
+                    //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Places a new settlement of the given type and tribe at the node and assigns territory and area of influence
+        /// </summary>
         private void PlaceSettlement(TerrainNode node, SettlementType type, HumanoidTribe tribe)
         {
             int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
-            var newSettlement = new Settlement(settlements.Count, node.x, node.y,
-                type, tribe, population);
+            var newSettlement = new Settlement(settlements.Count, node, type, tribe, population);
 
-            node.Settlement = newSettlement;
             availableNodes.Remove(node);
             settlements.Add(newSettlement);
 
-            var territory = WorldMap.instance.GetNodesInRange_Square(node, type.territorySize);
+            //var territory = WorldMap.instance.GetNodesInRange_Square(node, type.territorySize);
+            var territory = worldMap.GetNodesInRange_Square(node, type.territorySize);
             for (int i = 0; i < territory.Count; i++)
             {
-                territory[i].Settlement = newSettlement;
+                newSettlement.AddTerritory(territory[i]);
             }
-
+            var areaOfInfluence = worldMap.GetNodesInRange_Circle(node, type.AreaOfInfluence());
+            for (int i = 0; i < areaOfInfluence.Count; i++)
+            {
+                newSettlement.AddAreaOfInfluence(areaOfInfluence[i]);
+            }
             //Debug.Log(type.name + " settlement placed at " + node.x + "," + node.y + " belonging to " + tribe.name);
         }
         #endregion
 
         private void GetSettlementConnections()
         {
-            for (int i = 0; i < settlements.Count; i++)
+            foreach(Settlement settlement in settlements)
             {
+                for (int i = 0; i < settlement.areaOfInfluence.Count; i++)
+                {
+                    if (settlement.areaOfInfluence[i].Settlement != null)
+                    {
+                        if (settlement.areaOfInfluence[i].Settlement == settlement) continue;
 
+                    }
+                }
             }
         }
     }

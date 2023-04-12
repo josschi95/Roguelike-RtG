@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class GridCursor : MonoBehaviour
 {
     [SerializeField] private InputActionProperty mousePosition;
-
+    [SerializeField] private WorldMapData worldMap;
     [SerializeField] private NodeDisplay nodeDisplay;
 
     private Camera cam;
@@ -39,8 +39,9 @@ public class GridCursor : MonoBehaviour
 
     private void CheckNode()
     {
-        if (WorldMap.instance == null) return;
-        var node = WorldMap.instance.GetNode(transform.position);
+        //if (WorldMap.instance == null) return;
+        //var node = WorldMap.instance.GetNode(transform.position);
+        var node = worldMap.GetNode(transform.position);
         nodeDisplay.DisplayNodeValues(node);
 
         if (Input.GetMouseButtonDown(0))

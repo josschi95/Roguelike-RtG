@@ -5,9 +5,10 @@ public class Settlement
 {
     public TerrainNode Node { get; private set; }
 
+    public string name { get; private set; }
     public int ID { get; private set; }
-    public SettlementType settlementType { get; private set; }
-    public HumanoidTribe occupants { get; private set; }
+    public SettlementType type { get; private set; }
+    public HumanoidTribe tribe { get; private set; }
     public int population { get; private set; }
 
     public List<TerrainNode> territory;
@@ -16,13 +17,14 @@ public class Settlement
 
     private Dictionary<Settlement, int> foreignRelations;
 
-    public Settlement(int ID, TerrainNode node, SettlementType type, HumanoidTribe humanoids, int population)
+    public Settlement(string name, int ID, TerrainNode node, SettlementType type, HumanoidTribe humanoids, int population)
     {
+        this.name = name;
         this.ID = ID;
         Node = node;
 
-        settlementType = type;
-        occupants = humanoids;
+        this.type = type;
+        tribe = humanoids;
         this.population = population;
 
         territory = new List<TerrainNode>();

@@ -59,7 +59,7 @@ public class MapDisplay : MonoBehaviour
 
                 if (node.Settlement != null && node.Settlement.Node == node)
                 {
-                    biomeMap.SetTile(tilePos, node.Settlement.settlementType.settlementTile);
+                    biomeMap.SetTile(tilePos, node.Settlement.type.settlementTile);
                     continue;
                 }
 

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef789cd7deb24ed4183e2958dd955940, type: 3}
+  m_Name: Tribal Relations
+  m_EditorClassIdentifier: 
+  <Relations>k__BackingField:
+  - tribeA: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
+    tribeB: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
+    disposition: 0
+  - tribeA: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
+    tribeB: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
+    disposition: -50
+  - tribeA: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
+    tribeB: {fileID: 11400000, guid: d25dd31f161b12c47831830d3d70380f, type: 2}
+    disposition: 10
+  - tribeA: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
+    tribeB: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
+    disposition: 0
+  - tribeA: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
+    tribeB: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
+    disposition: 0
+  - tribeA: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
+    tribeB: {fileID: 11400000, guid: d25dd31f161b12c47831830d3d70380f, type: 2}
+    disposition: 10
+  - tribeA: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
+    tribeB: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
+    disposition: -50
+  - tribeA: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
+    tribeB: {fileID: 11400000, guid: d25dd31f161b12c47831830d3d70380f, type: 2}
+    disposition: 10
+  - tribeA: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
+    tribeB: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
+    disposition: 10
+  - tribeA: {fileID: 11400000, guid: d25dd31f161b12c47831830d3d70380f, type: 2}
+    tribeB: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
+    disposition: 10

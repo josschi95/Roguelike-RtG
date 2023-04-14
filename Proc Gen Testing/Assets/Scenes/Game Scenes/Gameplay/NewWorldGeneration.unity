@@ -3122,7 +3122,8 @@ MonoBehaviour:
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  ancestries:
+  tribeRelations: {fileID: 11400000, guid: 5b5e601d5d7858f49bfef3e199366d25, type: 2}
+  tribes:
   - {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
   - {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
   - {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}

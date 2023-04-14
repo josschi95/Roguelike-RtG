@@ -16,3 +16,12 @@ MonoBehaviour:
   islandPreference: 0
   <preferredBiomes>k__BackingField: []
   <opposedBiomes>k__BackingField: []
+  tribalRelations:
+  - tribe: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
+    disposition: 0
+  - tribe: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
+    disposition: 0
+  - tribe: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
+    disposition: 0
+  - tribe: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
+    disposition: 0

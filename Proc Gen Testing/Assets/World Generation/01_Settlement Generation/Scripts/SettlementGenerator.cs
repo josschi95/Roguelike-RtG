@@ -9,11 +9,12 @@ namespace JS.WorldGeneration
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private TribalRelation tribeRelations;
         private WorldSize worldSize;
 
         [Space]
 
-        [SerializeField] private HumanoidTribe[] ancestries;
+        [SerializeField] private HumanoidTribe[] tribes;
         [SerializeField] private SettlementType city;
         [SerializeField] private SettlementType town;
         [SerializeField] private SettlementType village;
@@ -37,6 +38,8 @@ namespace JS.WorldGeneration
             GenerateTowns();
             GenerateVillages();
             GenerateHamlets();
+
+            GetSettlementConnections();
 
             //pass this data to the mapData 
         }
@@ -92,9 +95,9 @@ namespace JS.WorldGeneration
         {
             for (int round = 0; round < mapFeatures.CityCount(worldSize); round++)
             {
-                for (int ancestry = 0; ancestry < ancestries.Length; ancestry++)
+                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
                 {
-                    FindSettlementSite(city, ancestries[ancestry]);
+                    FindSettlementSite(city, tribes[ancestry]);
                 }
             }
         }
@@ -103,9 +106,9 @@ namespace JS.WorldGeneration
         {
             for (int round = 0; round < mapFeatures.TownCount(worldSize); round++)
             {
-                for (int ancestry = 0; ancestry < ancestries.Length; ancestry++)
+                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
                 {
-                    FindSettlementSite(town, ancestries[ancestry]);
+                    FindSettlementSite(town, tribes[ancestry]);
                 }
             }
         }
@@ -114,9 +117,9 @@ namespace JS.WorldGeneration
         {
             for (int round = 0; round < mapFeatures.VillageCount(worldSize); round++)
             {
-                for (int ancestry = 0; ancestry < ancestries.Length; ancestry++)
+                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
                 {
-                    FindSettlementSite(village, ancestries[ancestry]);
+                    FindSettlementSite(village, tribes[ancestry]);
                 }
             }
         }
@@ -125,9 +128,9 @@ namespace JS.WorldGeneration
         {
             for (int round = 0; round < mapFeatures.TribeCount(worldSize); round++)
             {
-                for (int ancestry = 0; ancestry < ancestries.Length; ancestry++)
+                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
                 {
-                    FindSettlementSite(hamlet, ancestries[ancestry]);
+                    FindSettlementSite(hamlet, tribes[ancestry]);
                 }
             }
         }
@@ -263,12 +266,12 @@ namespace JS.WorldGeneration
             foreach (Settlement settlement in settlements)
             {
                 //Returns false if the territory range of the proposed settlement site would overlap with territory of another settlement
-                if (Mathf.Abs(settlement.Node.x - proposedSite.x) <= settlement.settlementType.territorySize + range)
+                if (Mathf.Abs(settlement.Node.x - proposedSite.x) <= settlement.type.territorySize + range)
                 {
                     //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
                     return true;
                 }
-                if (Mathf.Abs(settlement.Node.y - proposedSite.y) <= settlement.settlementType.territorySize + range)
+                if (Mathf.Abs(settlement.Node.y - proposedSite.y) <= settlement.type.territorySize + range)
                 {
                     //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
                     return true;
@@ -283,7 +286,7 @@ namespace JS.WorldGeneration
         private void PlaceSettlement(TerrainNode node, SettlementType type, HumanoidTribe tribe)
         {
             int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
-            var newSettlement = new Settlement(settlements.Count, node, type, tribe, population);
+            var newSettlement = new Settlement("", settlements.Count, node, type, tribe, population);
 
             availableNodes.Remove(node);
             settlements.Add(newSettlement);
@@ -311,8 +314,16 @@ namespace JS.WorldGeneration
                 {
                     if (settlement.areaOfInfluence[i].Settlement != null)
                     {
-                        if (settlement.areaOfInfluence[i].Settlement == settlement) continue;
+                        var newSettlement = settlement.areaOfInfluence[i].Settlement;
+                        if (newSettlement == settlement) continue;
 
+                        var disposition = tribeRelations.GetDisposition(settlement.tribe, newSettlement.tribe);
+
+                        settlement.AddNewRelation(newSettlement, disposition);
+                        newSettlement.AddNewRelation(settlement, disposition);
+                        Debug.Log(settlement.tribe + " " + settlement.type + " at " + settlement.Node.x + "," + settlement.Node.y +
+                            " has encountered a " + newSettlement.tribe + " " + newSettlement.type + " at " +
+                            newSettlement.Node.x + "," + newSettlement.Node.y + ". They have a disposition of " + disposition);
                     }
                 }
             }

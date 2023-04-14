@@ -22,6 +22,13 @@ public class NodeDisplay : MonoBehaviour
         gameObject.SetActive(node != null);
         if (node == null) return;
 
+        if (node.Settlement != null)
+        {
+            DisplaySettlementInfo(node.Settlement);
+            mountainPanel.SetActive(false);
+            return;
+        }
+
         nodeCoordinates.text = "[X,Y] = " + node.x + "," + node.y;
         nodeElevation.text = "Elevation = " + node.altitude;
 
@@ -35,6 +42,17 @@ public class NodeDisplay : MonoBehaviour
         else nodeRiverText.text = "";
 
         MountainDisplay(node);
+    }
+
+    private void DisplaySettlementInfo(Settlement settlement)
+    {
+        nodeCoordinates.text = settlement.name;
+        nodeElevation.text = "[X,Y] = " + settlement.Node.x + "," + settlement.Node.y;
+        nodeBiome.text = "Tribe: " + settlement.tribe.name;
+        nodeTemperature.text = "Population: " + settlement.population.ToString();
+
+        nodePrecipitation.text = "";
+        nodeRiverText.text = "";
     }
 
     private void MountainDisplay(TerrainNode node)

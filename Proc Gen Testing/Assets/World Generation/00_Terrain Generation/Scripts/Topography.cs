@@ -7,7 +7,6 @@ namespace JS.WorldGeneration
         public static List<MountainRange> FindMountainRanges(WorldMapData worldMap, int mapSize, int minRangeSize = 4, float minMountainHeight = 0.7f)
         {
             //UnityEngine.Debug.Log("Finding Mountain Ranges. " + UnityEngine.Time.realtimeSinceStartup);
-
             //var worldMap = WorldMap.instance;
 
             var ranges = new List<MountainRange>();
@@ -29,11 +28,7 @@ namespace JS.WorldGeneration
                         ranges.Add(node.Mountain);
                         //UnityEngine.Debug.Log("New Mountian Added.");
                     }
-                    else
-                    {
-                        node.Mountain.DeconstructRange();
-                        //UnityEngine.Debug.Log("Mountain Removed.");
-                    }
+                    else node.Mountain.DeconstructRange();
                 }
             }
 
@@ -50,20 +45,40 @@ namespace JS.WorldGeneration
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    if (node.Lake != null && !lakes.Contains(node.Lake))
+                    if (node.Lake == null) continue;
+                    if (lakes.Contains(node.Lake)) continue;
+
+                    if (TryFindRegisteredLake(lakes, node, out Lake registeredLake))
                     {
-                        if (node.Lake.IsLandLocked(mapSize))
-                        {
-                            node.Lake.FinalizeValues(lakes.Count);
-                            lakes.Add(node.Lake);
-                            //Debug.Log("New Lake Identified! " + node.Lake.ID);
-                        }
-                        else node.Lake.DeconstructLake();
+                        node.Lake.MergeLakes(registeredLake);
+                        continue;
                     }
+
+                    if (node.Lake.IsLandLocked(mapSize))
+                    {
+                        node.Lake.FinalizeValues(lakes.Count);
+                        lakes.Add(node.Lake);
+                        //Debug.Log("New Lake Identified! " + node.Lake.ID);
+                    }
+                    else node.Lake.DeconstructLake();
                 }
             }
 
             return lakes;
+        }
+
+        private static bool TryFindRegisteredLake(List<Lake> oldLakes, TerrainNode node, out Lake registerdLake)
+        {
+            registerdLake = null;
+            for (int i = 0; i < oldLakes.Count; i++)
+            {
+                if (oldLakes[i].Nodes.Contains(node))
+                {
+                    registerdLake = oldLakes[i];
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static List<Island> FindIslands(WorldMapData worldMap, int mapSize)
@@ -76,23 +91,39 @@ namespace JS.WorldGeneration
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    if (node.Island != null && !islands.Contains(node.Island))
-                    {
-                        if (node.Island.Nodes.Count > mapSize)
-                        {
-                            //Debug.Log("Island is too large! Deconstructing. " + node.Island.Nodes.Count);
-                            node.Island.DeconstrucIsland();
-                            continue;
-                        }
+                    if (node.Island == null) continue;
+                    if (islands.Contains(node.Island)) continue;
 
+                    if (TryFindRegisteredIsland(islands, node, out Island registerdIsland))
+                    {
+                        node.Island.MergeIslands(registerdIsland);
+                        continue;
+                    }
+
+                    if (node.Island.Nodes.Count <= mapSize)
+                    {
                         node.Island.FinalizeValues(islands.Count);
                         islands.Add(node.Island);
-                        //Debug.Log("New Island Identified! " + node.Island.ID);
                     }
+                    else node.Island.DeconstrucIsland();
                 }
             }
 
             return islands;
+        }
+
+        private static bool TryFindRegisteredIsland(List<Island> islands, TerrainNode node, out Island registeredIsland)
+        {
+            registeredIsland = null;
+            for (int i = 0; i < islands.Count; i++)
+            {
+                if (islands[i].Nodes.Contains(node))
+                {
+                    registeredIsland = islands[i];
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

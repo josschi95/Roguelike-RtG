@@ -62,7 +62,7 @@ namespace JS.WorldGeneration
             }
         }
 
-        private Island island;
+        private Island island = null;
 
         public Island Island
         {
@@ -73,7 +73,7 @@ namespace JS.WorldGeneration
             }
         }
 
-        private Lake lake;
+        private Lake lake = null;
 
         public Lake Lake
         {
@@ -84,13 +84,23 @@ namespace JS.WorldGeneration
             }
         }
 
-        private Settlement settlement;
+        private Settlement settlement = null;
         public Settlement Settlement
         {
             get => settlement;
             set
             {
                 settlement = value;
+            }
+        }
+
+        private Settlement territory = null;
+        public Settlement Territory
+        {
+            get => territory;
+            set
+            {
+                territory = value;
             }
         }
         #endregion
@@ -180,63 +190,38 @@ namespace JS.WorldGeneration
         #region - Islands -
         public void CheckNeighborIslands()
         {
+            if (island != null) return;
+
             for (int i = 0; i < neighbors.Length; i++)
             {
                 if (neighbors[i].Island != null)
                 {
-                    SetIslandNode(neighbors[i].Island);
+                    neighbors[i].Island.Add(this);
                 }
             }
 
             if (island != null) return;
+
             var newIsland = new Island();
-            SetIslandNode(newIsland);
+            newIsland.Add(this);
         }
 
-        private void SetIslandNode(Island newIsland)
+        public void CheckNeighborWater()
         {
-            if (island != null)
-            {
-                if (newIsland == island) return;
-                else island.MergeIslands(newIsland);
-            }
+            if (lake != null) return;
 
-            island = newIsland;
-            if (!island.Nodes.Contains(this))
-                island.Nodes.Add(this);
-        }
-        #endregion
-
-        #region - Lakes -
-        //A possible alternative to this would be to only check if a neighbor is land
-        //This would tell me where a lake might be located, but would also give me the coast line
-        //I could check which neighbor is land, and then run in the opposite direction until I hit the edge/land again
-        //
-        public void CheckNeighborLakes()
-        {
             for (int i = 0; i < neighbors.Length; i++)
             {
                 if (neighbors[i].Lake != null)
                 {
-                    SetLakeNode(neighbors[i].lake);
+                    neighbors[i].Lake.Add(this);
                 }
             }
 
             if (lake != null) return;
-            var newIsland = new Lake();
-            SetLakeNode(newIsland);
-        }
 
-        private void SetLakeNode(Lake newLake)
-        {
-            if (lake != null)
-            {
-                if (newLake == lake) return;
-                else lake.MergeLakes(newLake);
-            }
-
-            lake = newLake;
-            lake.Add(this);
+            var newLake = new Lake();
+            newLake.Add(this);
         }
         #endregion
 

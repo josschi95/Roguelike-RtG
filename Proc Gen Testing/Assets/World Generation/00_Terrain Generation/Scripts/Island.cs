@@ -6,21 +6,64 @@ namespace JS.WorldGeneration
     public class Island
     {
         public int ID { get; private set; }
-        public List<TerrainNode> Nodes;
+        private List<TerrainNode> nodes;
+        public List<TerrainNode> Nodes => nodes;
+        private List<TerrainNode> openList;
 
         public Island()
         {
-            Nodes = new List<TerrainNode>();
+            nodes = new List<TerrainNode>();
+            openList = new List<TerrainNode>();
+        }
+
+        public void Add(TerrainNode node)
+        {
+            if (!nodes.Contains(node))
+            {
+                nodes.Add(node);
+                openList.Add(node);
+            }
+            node.Island = this;
+        }
+
+        public void AddRange(List<TerrainNode> newNodes)
+        {
+            for (int i = 0; i < newNodes.Count; i++)
+            {
+                Add(newNodes[i]);
+            }
         }
 
         public void MergeIslands(Island otherIsland)
         {
-            otherIsland.Nodes.AddRange(Nodes);
-            for (int i = 0; i < Nodes.Count; i++)
+            if (otherIsland == this) return;
+            otherIsland.AddRange(nodes);
+            nodes.Clear();
+        }
+
+        public bool IsExpanding()
+        {
+            if (openList.Count == 0) return false;
+
+            var nodesToAdd = new List<TerrainNode>();
+
+            for (int i = openList.Count - 1; i >= 0; i--)
             {
-                Nodes[i].Island = otherIsland;
+                for (int j = 0; j < openList[i].neighbors.Length; j++)
+                {
+                    var node = openList[i].neighbors[j];
+                    if (!node.isNotWater) continue;
+                    if (node.Island != null) continue;
+                    nodesToAdd.Add(node);
+                }
             }
-            Nodes.Clear();
+            openList.Clear();
+
+            if (nodesToAdd.Count == 0) return false;
+
+            AddRange(nodesToAdd);
+
+            return true;
         }
 
         public void FinalizeValues(int ID)
@@ -30,11 +73,11 @@ namespace JS.WorldGeneration
 
         public void DeconstrucIsland()
         {
-            for (int i = 0; i < Nodes.Count; i++)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                Nodes[i].Island = null;
+                nodes[i].Island = null;
             }
-            Nodes.Clear();
+            nodes.Clear();
         }
     }
 }

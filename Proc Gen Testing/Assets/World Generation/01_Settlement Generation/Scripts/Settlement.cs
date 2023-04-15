@@ -12,7 +12,6 @@ public class Settlement
     public int population { get; private set; }
 
     public List<TerrainNode> territory;
-
     public List<TerrainNode> areaOfInfluence;
 
     private Dictionary<Settlement, int> foreignRelations;
@@ -22,6 +21,7 @@ public class Settlement
         this.name = name;
         this.ID = ID;
         Node = node;
+        Node.Settlement = this;
 
         this.type = type;
         tribe = humanoids;
@@ -34,13 +34,17 @@ public class Settlement
 
     public void AddTerritory(TerrainNode node)
     {
+        if (territory.Contains(node)) return;
+
         territory.Add(node);
-        node.Settlement = this;
+        node.Territory = this;
     }
 
     public void RemoveTerritory(TerrainNode node)
     {
-        node.Settlement = null;
+        if (!territory.Contains(node)) return;
+
+        node.Territory = null;
         territory.Remove(node);
     }
 
@@ -53,7 +57,6 @@ public class Settlement
     {
         areaOfInfluence.Remove(node);
     }
-
 
     public void AddNewRelation(Settlement otherSettlement, int initialDisposition = 0)
     {

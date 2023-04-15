@@ -1008,7 +1008,7 @@ MonoBehaviour:
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  noiseScale: 100
+  noiseScale: 50
   octaves: 5
   persistence: 0.5
   lacunarity: 2

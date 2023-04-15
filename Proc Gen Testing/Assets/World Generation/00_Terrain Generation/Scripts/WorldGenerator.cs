@@ -106,21 +106,23 @@ namespace JS.WorldGeneration
             mapGenerator.IdentifyMountains();
             progressBar.fillAmount = 0.3f;
             //Debug.Log("IdentifyMountains: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Identifying Lakes";
+            progressText.text = "Identifying Bodies of Water";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
-
+            
             // !!! This method here is taking up the vast majority of generation time !!!
+            //yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
             mapGenerator.IdentifyLakes();
             progressBar.fillAmount = 0.3f;
-            Debug.Log("IdentifyLakes: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Identifying Islands";
+            Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = "Identifying Land Masses";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
-
+            
+            //yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
             mapGenerator.IdentifyIslands();
             progressBar.fillAmount = 0.3f;
-            //Debug.Log("IdentifyIslands: " + (Time.realtimeSinceStartup - initialTime));
+            Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Rivers";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
@@ -153,7 +155,8 @@ namespace JS.WorldGeneration
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
 
-            settlementGenerator.GenerateSettlements();
+            yield return StartCoroutine(settlementGenerator.ClaimTerritory());
+            //settlementGenerator.GenerateSettlements();
             progressBar.fillAmount = 0.9f;
             //Debug.Log("GenerateSettlements: " + (Time.realtimeSinceStartup - initialTime));
             yield return new WaitForSeconds(0.01f);

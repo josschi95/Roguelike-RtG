@@ -246,6 +246,12 @@ public class MapDisplay : MonoBehaviour
         infoMap.ClearAllTiles();
         //var worldMap = WorldMap.instance;
 
+        if (node.Settlement != null)
+        {
+            HighlightSettlement(node.Settlement);
+            return;
+        }
+
         var pos = worldMap.GetPosition(node);
         Vector3Int newPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
         infoMap.SetTile(newPos, highlightTile);
@@ -258,31 +264,15 @@ public class MapDisplay : MonoBehaviour
         }*/
     }
 
-    /*
-    private TerrainType GetTile(float height)
+    private void HighlightSettlement(Settlement settlement)
     {
-        for (int i = terrainTypes.Length - 1; i >= 0; i--)
-        {
-            if (height >= terrainTypes[i].Height)
-            {
-                return terrainTypes[i];
-            }
-        }
-        return null;
-    }
+        infoMap.ClearAllTiles();
 
-    private TerrainType GetUnderlyingTile(float height, int layer)
-    {
-        for (int i = terrainTypes.Length - 1; i >= 0; i--)
+        for (int i = 0; i < settlement.territory.Count; i++)
         {
-            if ((int)terrainTypes[i].layer != layer) continue;
-
-            if (height >= terrainTypes[i].Height)
-            {
-                return terrainTypes[i];
-            }
+            var pos = worldMap.GetPosition(settlement.territory[i]);
+            Vector3Int newPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
+            infoMap.SetTile(newPos, highlightTile);
         }
-        return null;
     }
-    */
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ namespace JS.WorldGeneration
             GenerateTowns();
             GenerateVillages();
             GenerateHamlets();
+            StartCoroutine(ClaimTerritory());
 
             GetSettlementConnections();
 
@@ -99,6 +101,29 @@ namespace JS.WorldGeneration
                 {
                     FindSettlementSite(city, tribes[ancestry]);
                 }
+            }
+        }
+
+        public IEnumerator ClaimTerritory()
+        {
+            settlements = new List<Settlement>();
+
+            GetSiteList();
+
+            GenerateCities();
+
+            var territoriesToExpand = new List<Settlement>();
+            territoriesToExpand.AddRange(settlements);
+
+            while(territoriesToExpand.Count > 0)
+            {
+                for (int i = territoriesToExpand.Count - 1; i >= 0; i--)
+                {
+                    if (!TryExpandTerritory2(territoriesToExpand[i]))
+                        territoriesToExpand.RemoveAt(i);
+                }
+
+                yield return null;
             }
         }
 
@@ -327,6 +352,36 @@ namespace JS.WorldGeneration
                     }
                 }
             }
+        }
+
+        private bool TryExpandTerritory2(Settlement settlement)
+        {
+            var territoryToAdd = new List<TerrainNode>();
+            for (int i = 0; i < settlement.territory.Count; i++)
+            {
+                for (int j = 0; j < settlement.territory[i].neighbors.Length; j++)
+                {
+                    var node = settlement.territory[i].neighbors[j];
+                    if (!node.isNotWater) continue;
+                    if (node.Settlement != null) continue;
+                    if (node.Territory != null) continue;
+                    if (territoryToAdd.Contains(node)) continue;
+                    territoryToAdd.Add(node);
+                }
+            }
+            if (territoryToAdd.Count == 0)
+            {
+                //Debug.Log("Settlement located at " + settlement.Node.x + "," + settlement.Node.y + " cannot expand");
+                return false;
+            }
+
+            for (int i = 0; i < territoryToAdd.Count; i++)
+            {
+                settlement.AddTerritory(territoryToAdd[i]);
+            }
+            //Debug.Log("Settlement located at " + settlement.Node.x + "," + settlement.Node.y + " can expand");
+
+            return true;
         }
     }
 }

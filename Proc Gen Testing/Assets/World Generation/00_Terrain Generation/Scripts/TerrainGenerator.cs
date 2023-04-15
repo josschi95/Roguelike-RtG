@@ -43,6 +43,11 @@ namespace JS.WorldGeneration
         [SerializeField] private float lacunarity = 2f;
         [SerializeField] private Vector2 offset;
 
+        private List<TerrainNode> water;
+        private List<TerrainNode> land;
+        private Lake currentLake;
+        private Island currentIsland;
+
         private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
         //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
         { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.Desert,                   BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYEST
@@ -61,6 +66,8 @@ namespace JS.WorldGeneration
 
             terrainData.ClearData();
             seaLevel = mapFeatures.SeaLevel;
+            water = new List<TerrainNode>();
+            land = new List<TerrainNode>();
 
             mapSize = mapFeatures.MapSize(worldSize);
             origin = new Vector3Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
@@ -169,7 +176,11 @@ namespace JS.WorldGeneration
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    node.SetAltitude(heightMap[x, y], GetAltitude(heightMap[x, y]));
+                    var altitude = GetAltitude(heightMap[x, y]);
+                    node.SetAltitude(heightMap[x, y], altitude);
+                    if (altitude.isLand) land.Add(node);
+                    else water.Add(node);
+
                     //node.airPressure = airPressureMap[x, y];
                 }
             }
@@ -213,7 +224,7 @@ namespace JS.WorldGeneration
 
         /// <summary>
         /// Identifies and registers Lakes.
-        /// </summary>
+        /// </summary>       
         public void IdentifyLakes()
         {
             for (int x = 0; x < mapSize; x++)
@@ -221,12 +232,12 @@ namespace JS.WorldGeneration
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    if (!node.altitudeZone.isLand)
-                        node.CheckNeighborLakes();
+                    if (!node.isNotWater) node.CheckNeighborWater();
                 }
             }
-            var lakes = Topography.FindLakes(worldMap, mapSize);
-            terrainData.SetLakes(lakes.ToArray());
+
+            //var lakes = Topography.FindLakes(worldMap, mapSize);
+            //terrainData.SetLakes(lakes.ToArray());
         }
 
         /// <summary>
@@ -239,10 +250,10 @@ namespace JS.WorldGeneration
                 for (int y = 0; y < mapSize; y++)
                 {
                     TerrainNode node = worldMap.GetNode(x, y);
-                    if (node.altitudeZone.isLand)
-                        node.CheckNeighborIslands();
+                    if (node.isNotWater) node.CheckNeighborIslands();
                 }
             }
+
             var islands = Topography.FindIslands(worldMap, mapSize);
             terrainData.SetIslands(islands.ToArray());
         }
@@ -493,7 +504,72 @@ public enum SecondaryDirections { NorthEast, NorthWest, SouthEast, SouthWest }
         }
  * 
  * 
+ *         public IEnumerator IdentifyLandMasses()
+        {
+            while(land.Count > 0)
+            {
+                var newIsland = new Island();
+                newIsland.Add(land[0]);
+                currentIsland = newIsland;
+
+                yield return StartCoroutine(ExpandCurrentLandMass());
+
+                yield return null;
+            }
+            var islands = Topography.FindIslands(worldMap, mapSize);
+            terrainData.SetIslands(islands.ToArray());
+        }
+
+        private IEnumerator ExpandCurrentLandMass()
+        {
+            if (currentIsland == null) yield break;
+
+            while (currentIsland.IsExpanding())
+            {
+                //Debug.Log("Expanding Current Landmass");
+                yield return null;
+            }
+
+            for (int i = 0; i < currentIsland.Nodes.Count; i++)
+            {
+                land.Remove(currentIsland.Nodes[i]);
+            }
+        }
  * 
  * 
  * 
+ * 
+ * 
+ *         public IEnumerator IdentifyBodiesOfWater()
+        {
+            while (water.Count > 0)
+            {
+                var newLake = new Lake();
+                newLake.Add(water[0]);
+                currentLake = newLake;
+
+                yield return StartCoroutine(ExpandCurrentLake());
+
+                //Debug.Log("Remaining Water Nodes: " + water.Count);
+                yield return null;
+            }
+            var lakes = Topography.FindLakes(worldMap, mapSize);
+            terrainData.SetLakes(lakes.ToArray());
+        }
+
+        private IEnumerator ExpandCurrentLake()
+        {
+            if (currentLake == null) yield break;
+
+            while (currentLake.IsExpanding())
+            {
+                //Debug.Log("Expanding Current Lake");
+                yield return null;
+            }
+
+            for (int i = 0; i < currentLake.Nodes.Count; i++)
+            {
+                water.Remove(currentLake.Nodes[i]);
+            }
+        }
  */

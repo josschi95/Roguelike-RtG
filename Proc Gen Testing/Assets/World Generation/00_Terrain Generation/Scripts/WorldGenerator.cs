@@ -66,6 +66,19 @@ namespace JS.WorldGeneration
 
         private IEnumerator GenerateWorld()
         {
+            yield return StartCoroutine(TerrainGeneration());
+
+            yield return StartCoroutine(settlementGenerator.PlaceSettlements());
+            //settlementGenerator.GenerateSettlements();
+            progressBar.fillAmount = 0.9f;
+            //Debug.Log("GenerateSettlements: " + (Time.realtimeSinceStartup - initialTime));
+            yield return new WaitForSeconds(0.01f);
+
+            worldGenerationCompleteEvent?.Invoke();
+        }
+
+        private IEnumerator TerrainGeneration()
+        {
             var initialTime = Time.realtimeSinceStartup;
             progressText.text = "Loading";
             progressBar.fillAmount = 0;
@@ -103,24 +116,23 @@ namespace JS.WorldGeneration
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
 
+            mapGenerator.IdentifyCoasts();
             mapGenerator.IdentifyMountains();
             progressBar.fillAmount = 0.3f;
             //Debug.Log("IdentifyMountains: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Bodies of Water";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
-            
+
             // !!! This method here is taking up the vast majority of generation time !!!
-            //yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
-            mapGenerator.IdentifyLakes();
+            yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
             progressBar.fillAmount = 0.3f;
             Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Land Masses";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
-            
-            //yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
-            mapGenerator.IdentifyIslands();
+
+            yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
             progressBar.fillAmount = 0.3f;
             Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Rivers";
@@ -154,14 +166,6 @@ namespace JS.WorldGeneration
             progressText.text = "Generating Settlements";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
-
-            yield return StartCoroutine(settlementGenerator.ClaimTerritory());
-            //settlementGenerator.GenerateSettlements();
-            progressBar.fillAmount = 0.9f;
-            //Debug.Log("GenerateSettlements: " + (Time.realtimeSinceStartup - initialTime));
-            yield return new WaitForSeconds(0.01f);
-
-            worldGenerationCompleteEvent?.Invoke();
         }
     }
 }

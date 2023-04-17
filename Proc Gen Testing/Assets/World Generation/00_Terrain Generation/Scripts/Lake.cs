@@ -9,13 +9,9 @@ namespace JS.WorldGeneration
         private List<TerrainNode> nodes;
         public List<TerrainNode> Nodes => nodes;
 
-        private List<TerrainNode> openList;
-
-
         public Lake()
         {
             nodes = new List<TerrainNode>();
-            openList = new List<TerrainNode>();
         }
 
         public void Add(TerrainNode node)
@@ -23,34 +19,8 @@ namespace JS.WorldGeneration
             if (!nodes.Contains(node))
             {
                 nodes.Add(node);
-                openList.Add(node);
             }
             node.Lake = this;
-        }
-
-        public bool IsExpanding()
-        {
-            if (openList.Count == 0) return false;
-
-            var nodesToAdd = new List<TerrainNode>();
-
-            for (int i = openList.Count - 1; i >= 0; i--)
-            {
-                for (int j = 0; j < openList[i].neighbors.Length; j++)
-                {
-                    var node = openList[i].neighbors[j];
-                    if (node.isNotWater) continue;
-                    if (node.Lake != null) continue;
-                    nodesToAdd.Add(node);
-                }
-            }
-            openList.Clear();
-
-            if (nodesToAdd.Count == 0) return false;
-
-            AddRange(nodesToAdd);
-
-            return true;
         }
 
         public void AddRange(List<TerrainNode> newNodes)
@@ -59,13 +29,6 @@ namespace JS.WorldGeneration
             {
                 Add(newNodes[i]);
             }
-        }
-
-        public void MergeLakes(Lake otherLake)
-        {
-            if (otherLake == this) return;
-            otherLake.AddRange(nodes);
-            nodes.Clear();
         }
 
         public bool IsLandLocked(int mapSize)
@@ -96,7 +59,7 @@ namespace JS.WorldGeneration
         {
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].Lake = null;
+                if (nodes[i].Lake == this) nodes[i].Lake = null;
             }
             nodes.Clear();
         }

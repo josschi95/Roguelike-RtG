@@ -22,6 +22,8 @@ public class NodeDisplay : MonoBehaviour
         gameObject.SetActive(node != null);
         if (node == null) return;
 
+        MountainDisplay(node);
+
         if (node.Settlement != null)
         {
             DisplaySettlementInfo(node.Settlement);
@@ -40,8 +42,6 @@ public class NodeDisplay : MonoBehaviour
 
         if (node.rivers.Count > 0) nodeRiverText.text = "River (" + node.rivers.Count + ")";
         else nodeRiverText.text = "";
-
-        MountainDisplay(node);
     }
 
     private void DisplaySettlementInfo(Settlement settlement)
@@ -49,9 +49,9 @@ public class NodeDisplay : MonoBehaviour
         nodeCoordinates.text = settlement.name;
         nodeElevation.text = "[X,Y] = " + settlement.Node.x + "," + settlement.Node.y;
         nodeBiome.text = "Tribe: " + settlement.tribe.name;
-        nodeTemperature.text = "Population: " + settlement.population.ToString();
+        nodeTemperature.text = "Population: " + settlement.population.ToString() + settlement.type.ToString();
 
-        nodePrecipitation.text = "";
+        nodePrecipitation.text = "Territory Size: " + settlement.territory.Count;
         nodeRiverText.text = "";
     }
 

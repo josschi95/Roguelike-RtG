@@ -45,8 +45,6 @@ namespace JS.WorldGeneration
 
         private List<TerrainNode> water;
         private List<TerrainNode> land;
-        private Lake currentLake;
-        private Island currentIsland;
 
         private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
         //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
@@ -205,6 +203,111 @@ namespace JS.WorldGeneration
 
         #region - Terrain Features -
         /// <summary>
+        /// Identifies and registers Lakes.
+        /// </summary>   
+        public IEnumerator IdentifyBodiesOfWater()
+        {
+            var lakes = new List<Lake>();
+            while(water.Count > 0)
+            {
+                var body = FloodFillRegion(water[0], false);
+                Lake newLake = new Lake();
+                newLake.AddRange(body);
+                if (newLake.IsLandLocked(mapSize))
+                {
+                    newLake.FinalizeValues(lakes.Count);
+                    lakes.Add(newLake);
+                }
+                else newLake.DeconstructLake();
+
+                for (int i = 0; i < body.Count; i++)
+                {
+                    water.Remove(body[i]);
+                }
+
+                yield return null;
+            }
+            terrainData.SetLakes(lakes.ToArray());
+        }
+
+        /// <summary>
+        /// Identifies and registers Islands.
+        /// </summary>
+        public IEnumerator IdentifyLandMasses()
+        {
+            var islands = new List<Island>();
+            while (land.Count > 0)
+            {
+                var body = FloodFillRegion(land[0], true);
+                if (body.Count <= mapSize)
+                {
+                    Island newIsland = new Island(islands.Count);
+                    newIsland.AddRange(body);
+                    islands.Add(newIsland);
+                }
+
+                for (int i = 0; i < body.Count; i++)
+                {
+                    land.Remove(body[i]);
+                }
+
+                yield return null;
+            }
+            terrainData.SetIslands(islands.ToArray());
+        }
+
+        /// <summary>
+        /// Flood Fill Algorithm to find all neighbor land/water tiles
+        /// </summary>
+        private List<TerrainNode> FloodFillRegion(TerrainNode startNode, bool isLand)
+        {
+            var tiles = new List<TerrainNode>();
+
+            if (startNode.isNotWater != isLand) throw new UnityException("Start Node does not align with given parameters!");
+
+            int[,] mapFlags = new int[mapSize, mapSize];
+
+            Queue<TerrainNode> queue = new Queue<TerrainNode>();
+            queue.Enqueue(startNode);
+
+            while(queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                tiles.Add(node);
+
+                for (int i = 0; i < node.neighbors.Length; i++)
+                {
+                    var neighbor = node.neighbors[i];
+                    if (mapFlags[neighbor.x, neighbor.y] == 0 && neighbor.isNotWater == isLand)
+                    {
+                        mapFlags[neighbor.x, neighbor.y] = 1;
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+            return tiles;
+        }
+
+        public void IdentifyCoasts()
+        {
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    TerrainNode node = worldMap.GetNode(x, y);
+                    if (!node.isNotWater) continue;
+                    for (int i = 0; i < node.neighbors.Length; i++)
+                    {
+                        if (!node.neighbors[i].isNotWater && node.rivers.Count == 0)
+                        {
+                            node.isCoast = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Identifies and registers Mountains.
         /// </summary>
         public void IdentifyMountains()
@@ -220,42 +323,6 @@ namespace JS.WorldGeneration
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
             terrainData.SetMountains(ranges.ToArray());
-        }
-
-        /// <summary>
-        /// Identifies and registers Lakes.
-        /// </summary>       
-        public void IdentifyLakes()
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
-                for (int y = 0; y < mapSize; y++)
-                {
-                    TerrainNode node = worldMap.GetNode(x, y);
-                    if (!node.isNotWater) node.CheckNeighborWater();
-                }
-            }
-
-            //var lakes = Topography.FindLakes(worldMap, mapSize);
-            //terrainData.SetLakes(lakes.ToArray());
-        }
-
-        /// <summary>
-        /// Identifies and registers Islands.
-        /// </summary>
-        public void IdentifyIslands()
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
-                for (int y = 0; y < mapSize; y++)
-                {
-                    TerrainNode node = worldMap.GetNode(x, y);
-                    if (node.isNotWater) node.CheckNeighborIslands();
-                }
-            }
-
-            var islands = Topography.FindIslands(worldMap, mapSize);
-            terrainData.SetIslands(islands.ToArray());
         }
 
         public void GenerateRivers()
@@ -488,88 +555,3 @@ namespace JS.WorldGeneration
 public enum WorldSize { Tiny, Small, Medium, Large, Huge }
 public enum Direction { North, South, East, West}
 public enum SecondaryDirections { NorthEast, NorthWest, SouthEast, SouthWest }
-
-
-/*
- *         private float[,] GetAdjustedMoistureMap(float[,] moistureMap)
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
-                for (int y = 0; y < mapSize; y++)
-                {
-                    moistureMap[x, y] = worldMap.GetNode(x, y).precipitationValue;
-                }
-            }
-            return moistureMap;
-        }
- * 
- * 
- *         public IEnumerator IdentifyLandMasses()
-        {
-            while(land.Count > 0)
-            {
-                var newIsland = new Island();
-                newIsland.Add(land[0]);
-                currentIsland = newIsland;
-
-                yield return StartCoroutine(ExpandCurrentLandMass());
-
-                yield return null;
-            }
-            var islands = Topography.FindIslands(worldMap, mapSize);
-            terrainData.SetIslands(islands.ToArray());
-        }
-
-        private IEnumerator ExpandCurrentLandMass()
-        {
-            if (currentIsland == null) yield break;
-
-            while (currentIsland.IsExpanding())
-            {
-                //Debug.Log("Expanding Current Landmass");
-                yield return null;
-            }
-
-            for (int i = 0; i < currentIsland.Nodes.Count; i++)
-            {
-                land.Remove(currentIsland.Nodes[i]);
-            }
-        }
- * 
- * 
- * 
- * 
- * 
- *         public IEnumerator IdentifyBodiesOfWater()
-        {
-            while (water.Count > 0)
-            {
-                var newLake = new Lake();
-                newLake.Add(water[0]);
-                currentLake = newLake;
-
-                yield return StartCoroutine(ExpandCurrentLake());
-
-                //Debug.Log("Remaining Water Nodes: " + water.Count);
-                yield return null;
-            }
-            var lakes = Topography.FindLakes(worldMap, mapSize);
-            terrainData.SetLakes(lakes.ToArray());
-        }
-
-        private IEnumerator ExpandCurrentLake()
-        {
-            if (currentLake == null) yield break;
-
-            while (currentLake.IsExpanding())
-            {
-                //Debug.Log("Expanding Current Lake");
-                yield return null;
-            }
-
-            for (int i = 0; i < currentLake.Nodes.Count; i++)
-            {
-                water.Remove(currentLake.Nodes[i]);
-            }
-        }
- */

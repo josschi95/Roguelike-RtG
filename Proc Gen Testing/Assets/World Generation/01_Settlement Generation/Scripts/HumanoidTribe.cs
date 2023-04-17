@@ -5,9 +5,9 @@ using JS.WorldGeneration;
 [CreateAssetMenu(fileName = "New Tribe", menuName = "World Generation/Settlements/Tribe")]
 public class HumanoidTribe : ScriptableObject
 {
-    [Range(0,1)]
+    [Range(-1,1)]
     [SerializeField] private float mountainPreference = 0f; 
-    [Range(0,1)]
+    [Range(-1,1)]
     [SerializeField] private float islandPreference = 0f;
 
     [field: SerializeField] public List<Biome> preferredBiomes { get; private set; } = new List<Biome>();
@@ -20,7 +20,7 @@ public class HumanoidTribe : ScriptableObject
     {
         if (mountainPreference + islandPreference > 1)
         {
-            Debug.LogWarning("Mountain Preference and Island Preference cannot exceed a total of 1");
+            //Debug.LogWarning("Mountain Preference and Island Preference cannot exceed a total of 1");
         }
     }
 }

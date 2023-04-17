@@ -9,6 +9,10 @@ public class WorldMapData : ScriptableObject
 
     private Grid<TerrainNode> grid;
 
+
+    public int Height => grid.GetHeight();
+    public int Width => grid.GetWidth();
+
     public void CreateGrid(int width, int height)
     {
         float halfWidth = width / 2f;
@@ -157,4 +161,167 @@ public class WorldMapData : ScriptableObject
         }
         return nodes;
     }
+
+
+    #region - Pathfinding -
+    private List<TerrainNode> openList; //nodes to search
+    private List<TerrainNode> closedList; //already searched
+    private const int MOVE_STRAIGHT_COST = 10;
+    private const int MOVE_DIAGONAL_COST = 14;
+    
+    public int GetPathCount(TerrainNode startNode, TerrainNode endNode, Settlement settlement = null)
+    {
+        return (FindNodePath(startNode.x, startNode.y, endNode.x, endNode.y, settlement)).Count;
+    }
+
+    //Returns a list of nodes that can be travelled to reach a target destination
+    public List<TerrainNode> FindNodePath(int startX, int startY, int endX, int endY, Settlement settlement = null)
+    {
+        TerrainNode startNode = grid.GetGridObject(startX, startY);
+        //Debug.Log("Start: " + startNode.x + "," + startNode.y);
+        TerrainNode endNode = grid.GetGridObject(endX, endY);
+        //Debug.Log("End: " + endNode.x + "," + endNode.y);
+
+        openList = new List<TerrainNode> { startNode };
+        closedList = new List<TerrainNode>();
+
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < grid.GetHeight(); y++)
+            {
+                TerrainNode pathNode = grid.GetGridObject(x, y);
+                pathNode.gCost = int.MaxValue;
+                pathNode.CalculateFCost();
+                pathNode.cameFromNode = null;
+            }
+        }
+
+        startNode.gCost = 0;
+        startNode.hCost = CalculateDistanceCost(startNode, endNode);
+        startNode.CalculateFCost();
+
+        while (openList.Count > 0)
+        {
+            TerrainNode currentNode = GetLowestFCostNode(openList);
+
+            if (currentNode == endNode)
+            {
+                //Reached final node
+                return CalculatePath(endNode);
+            }
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            foreach (TerrainNode neighbour in GetNeighbourList(currentNode))
+            {
+                if (closedList.Contains(neighbour)) continue;
+
+                if (!neighbour.isNotWater)// || neighbour.isOccupied)
+                {
+                    //Debug.Log("Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
+                    closedList.Add(neighbour);
+                    continue;
+                }
+                //Don't allow the passage of one settlement through another's territory
+                if (settlement != null && neighbour.Territory != null && neighbour.Territory != settlement)
+                {
+                    closedList.Add(neighbour);
+                    continue;
+                }
+
+                //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
+                int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour);
+
+                if (tentativeGCost < neighbour.gCost)
+                {
+                    //If it's lower than the cost previously stored on the neightbor, update it
+                    neighbour.cameFromNode = currentNode;
+                    neighbour.gCost = tentativeGCost;
+                    neighbour.hCost = CalculateDistanceCost(neighbour, endNode);
+                    neighbour.CalculateFCost();
+
+                    if (!openList.Contains(neighbour)) openList.Add(neighbour);
+                }
+            }
+        }
+
+        //Out of nodes on the openList
+        Debug.Log("Path could not be found");
+        return null;
+    }
+
+    private int CalculateDistanceCost(TerrainNode a, TerrainNode b)
+    {
+        int xDistance = Mathf.Abs(a.x - b.x);
+        int yDistance = Mathf.Abs(a.y - b.y);
+        int remaining = Mathf.Abs(xDistance - yDistance);
+        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
+        //return MOVE_STRAIGHT_COST * remaining;
+    }
+
+    private TerrainNode GetLowestFCostNode(List<TerrainNode> pathNodeList)
+    {
+        TerrainNode lowestFCostNode = pathNodeList[0];
+
+        for (int i = 0; i < pathNodeList.Count; i++)
+        {
+            if (pathNodeList[i].fCost < lowestFCostNode.fCost)
+                lowestFCostNode = pathNodeList[i];
+        }
+
+        return lowestFCostNode;
+    }
+
+    private List<TerrainNode> CalculatePath(TerrainNode endNode)
+    {
+        List<TerrainNode> path = new List<TerrainNode>();
+        path.Add(endNode);
+        TerrainNode currentNode = endNode;
+        while (currentNode.cameFromNode != null)
+        {
+            //Start at the end and work backwards
+            path.Add(currentNode.cameFromNode);
+            currentNode = currentNode.cameFromNode;
+        }
+        path.Reverse();
+        return path;
+    }
+
+    //Return a list of all neighbors, up/down/left/right
+    private List<TerrainNode> GetNeighbourList(TerrainNode currentNode)
+    {
+        List<TerrainNode> neighborList = new List<TerrainNode>();
+
+        //Up
+        if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x, currentNode.y + 1));
+        //Down
+        if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x, currentNode.y - 1));
+        //Left
+        if (currentNode.x - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y));
+        //Right
+        if (currentNode.x + 1 < grid.GetWidth()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y));
+
+        /*if (allowDiagonals)
+        {
+            if (currentNode.x - 1 >= 0)
+            {
+                //Left Down
+                if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y - 1));
+                //Left Up
+                if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y + 1));
+            }
+            if (currentNode.x + 1 < grid.GetWidth())
+            {
+                //Right Down
+                if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y - 1));
+                //Right Up
+                if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y + 1));
+            }
+        }*/
+
+        return neighborList;
+    }
+
+    #endregion
 }

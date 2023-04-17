@@ -8,6 +8,7 @@ namespace JS.WorldGeneration
         [field: SerializeField] public float SeaLevel { get; private set; } = 0.4f;
         [field: SerializeField] public float MountainHeight { get; private set; } = 0.8f;
         [field: SerializeField] public int MaxIslandSize { get; private set; } = 250;
+        [field: SerializeField] public int MaxStartingSettlementSize { get; private set; } = 750;
 
         [Header("Map Sizes")]
         [SerializeField] private WorldFeatures tinyMap;

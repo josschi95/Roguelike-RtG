@@ -37,7 +37,11 @@ public class MapDisplayEditor : Editor
         if (GUILayout.Button("Mountains")) display.HighlightMountains();
         if (GUILayout.Button("Islands")) display.HighlightIslands();
         if (GUILayout.Button("Lakes")) display.HighlightLakes();
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Settlements")) display.HighlightSettlements();
+        if (GUILayout.Button("Coasts")) display.HighlightCoasts();
         if (GUILayout.Button("Tectonic Plates")) display.HighlightTectonicPlates();
         GUILayout.EndHorizontal();
     }

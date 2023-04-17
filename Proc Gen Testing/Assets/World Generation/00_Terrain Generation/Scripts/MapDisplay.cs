@@ -241,6 +241,25 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
+    public void HighlightCoasts()
+    {
+        infoMap.ClearAllTiles();
+        //var worldMap = WorldMap.instance;
+
+        for (int x = 0; x < terrainData.mapSize; x++)
+        {
+            for (int y = 0; y < terrainData.mapSize; y++)
+            {
+                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var node = worldMap.GetNode(x, y);
+                if (node.isCoast)
+                {
+                    infoMap.SetTile(tilePos, highlightTile);
+                }
+            }
+        }
+    }
+
     public void HighlightNode(TerrainNode node)
     {
         infoMap.ClearAllTiles();

@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 274745063}
   - component: {fileID: 274745064}
+  - component: {fileID: 274745065}
   m_Layer: 0
   m_Name: MarkovTest
   m_TagString: Untagged
@@ -245,12 +246,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   n_gram: 3
   outputSize: 12
-  startText: to the Castle
+  startText: were in great
   randomStartText: 1
+  cleanText: 1
   textFiles:
+  - {fileID: 4900000, guid: 8d67247825dc7ad48b13c1db36edcd2b, type: 3}
   - {fileID: 4900000, guid: 8473f622be781e94495d0b1ac93bc6c3, type: 3}
   - {fileID: 4900000, guid: 8a54b8659cb40ba48870c28854f22e53, type: 3}
-  - {fileID: 4900000, guid: 8d67247825dc7ad48b13c1db36edcd2b, type: 3}
+  debugDictionary: 0
+--- !u!114 &274745065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274745062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e218392228254349aaa6a6d129f70a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syllables: 2
+  cleanText: 1
+  textFiles:
+  - {fileID: 4900000, guid: c1391f82ea547a04491a5f5373fa3f2d, type: 3}
+  debugDictionary: 1
 --- !u!1 &345412765
 GameObject:
   m_ObjectHideFlags: 0

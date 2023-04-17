@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using JS.WorldGeneration;
 
+[System.Obsolete]
 public class WorldMap : MonoBehaviour
 {
     public static WorldMap instance { get; private set; }
     private Grid<TerrainNode> grid;
+
+    public int Height => grid.GetHeight();
+    public int Width => grid.GetWidth();
 
     [SerializeField] private TerrainData terrainData;
 

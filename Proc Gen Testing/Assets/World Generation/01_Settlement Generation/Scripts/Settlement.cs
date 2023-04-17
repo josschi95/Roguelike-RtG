@@ -10,6 +10,8 @@ public class Settlement
     public SettlementType type { get; private set; }
     public HumanoidTribe tribe { get; private set; }
     public int population { get; private set; }
+    public bool isSeaFaring { get; private set; }
+    public bool isSubterranean { get; private set; }
 
     public List<TerrainNode> territory;
     public List<TerrainNode> areaOfInfluence;
@@ -23,6 +25,11 @@ public class Settlement
         Node = node;
         Node.Settlement = this;
 
+        //Set to a seafaring settlement if placed on an island
+        isSeaFaring = node.Island != null;
+        //Sets the settlement as subterranean if placed in a mountain
+        isSubterranean = node.Mountain != null;
+
         this.type = type;
         tribe = humanoids;
         this.population = population;
@@ -30,6 +37,19 @@ public class Settlement
         territory = new List<TerrainNode>();
         areaOfInfluence = new List<TerrainNode>();
         foreignRelations = new Dictionary<Settlement, int>();
+    }
+
+    public void Relocate(TerrainNode node)
+    {
+        Node.Settlement = null;
+        Node = node;
+        Node.Settlement = this;
+    }
+
+    public void AdjustSize(SettlementType type, int newPopulation)
+    {
+        this.type = type;
+        population = newPopulation;
     }
 
     public void AddTerritory(TerrainNode node)
@@ -80,5 +100,20 @@ public class Settlement
         {
             foreignRelations.Add(otherSettlement, dispositionChange);
         }
+    }
+
+    public void DeconstructSettlement()
+    {
+        if (Node != null && Node.Settlement == this) Node.Settlement = null;
+        Node = null;
+
+        for (int i = 0; i < territory.Count; i++)
+        {
+            if (territory[i].Territory == this) territory[i].Territory = null;
+        }
+        territory.Clear();
+        
+        areaOfInfluence.Clear();
+        foreignRelations.Clear();
     }
 }

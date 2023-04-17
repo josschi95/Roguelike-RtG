@@ -10,6 +10,17 @@ namespace JS.WorldGeneration
         public int x { get; private set; }
         public int y { get; private set; }
 
+        //pathfinding
+        public int gCost; //the movement cost to move from the start node to this node, following the existing path
+        public int hCost; //the estimated movement cost to move from this node to the end node
+        public int fCost; //the current best guess as to the cost of the path
+        public TerrainNode cameFromNode;
+
+        public void CalculateFCost()
+        {
+            fCost = gCost + hCost;
+        }
+
         #region - Altitude -
         public bool isTectonicPoint { get; set; }
         public bool isNotWater { get; private set; }
@@ -32,6 +43,7 @@ namespace JS.WorldGeneration
 
         public SecondaryDirections windDirection;// { get; private set; }
         public float airPressure; // { get; private set; }
+        public bool isCoast { get; set; }
 
         public TerrainNode[] neighbors { get; private set; }
 
@@ -184,44 +196,6 @@ namespace JS.WorldGeneration
             mountain = newMountain;
             if (!mountain.Nodes.Contains(this))
                 mountain.Nodes.Add(this);
-        }
-        #endregion
-
-        #region - Islands -
-        public void CheckNeighborIslands()
-        {
-            if (island != null) return;
-
-            for (int i = 0; i < neighbors.Length; i++)
-            {
-                if (neighbors[i].Island != null)
-                {
-                    neighbors[i].Island.Add(this);
-                }
-            }
-
-            if (island != null) return;
-
-            var newIsland = new Island();
-            newIsland.Add(this);
-        }
-
-        public void CheckNeighborWater()
-        {
-            if (lake != null) return;
-
-            for (int i = 0; i < neighbors.Length; i++)
-            {
-                if (neighbors[i].Lake != null)
-                {
-                    neighbors[i].Lake.Add(this);
-                }
-            }
-
-            if (lake != null) return;
-
-            var newLake = new Lake();
-            newLake.Add(this);
         }
         #endregion
 

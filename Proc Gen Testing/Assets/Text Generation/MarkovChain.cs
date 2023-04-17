@@ -1,7 +1,4 @@
-using System;
-using System.IO;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,24 +9,55 @@ public class MarkovChain : MonoBehaviour
     [SerializeField] private int outputSize = 100;
     [SerializeField] private string startText;
     [SerializeField] private bool randomStartText;
+    [SerializeField] private bool cleanText;
     [Space]
 
     [SerializeField] private TextAsset[] textFiles;
+    [SerializeField] private bool debugDictionary;
+
+    private string[] charactersToRemove = { "[", "]", "{", "}", "(", ")", ".", ",", "!", "?", ";", ":" };
 
     [ContextMenu("Generate")]
     public void Generate()
     {
-        var model = MakeMarkovModel();
-        Debug.Log(GenerateText(model));
+        Debug.Log(GenerateText());
+        //MakeUnweightedMarkovModel();
+        //var model = MakeWeightedMarkovModel();
+        //Debug.Log(GenerateText(model));
     }
 
+    private string[] GetText()
+    {
+        //pulls in the text from the given file
+        string body = "";
+        for (int i = 0; i < textFiles.Length; i++)
+        {
+            body += textFiles[i].text + " ";
+        }
+
+        if (cleanText)
+        {
+            for (int i = 0; i < charactersToRemove.Length; i++)
+            {
+                body.Replace(charactersToRemove[i], "");
+            }
+        }
+        //splits the text into an array of words
+        string[] words = body.Split(" ");
+
+        //Debug.Log(words.Length);
+
+        return words;
+    }
+
+    #region - Weighted Markov -
     private string GenerateText(Dictionary<string, Dictionary<string, float>> markovModel)
     {
         int n = 0;
         
         if (!markovModel.ContainsKey(startText) || randomStartText)
         {
-            var newText = markovModel.ElementAt(UnityEngine.Random.Range(0, markovModel.Count)).Key;
+            var newText = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
             startText = newText;
         }
         
@@ -53,7 +81,7 @@ public class MarkovChain : MonoBehaviour
 
     private string GetWeightedRandom(Dictionary<string, float> choices)
     {
-        var choice = UnityEngine.Random.value; //returns random value between 0 and 1
+        var choice = Random.value; //returns random value between 0 and 1
         float cumulative = 0;
         int option = 1;
         Debug.Log("Options: " + choices.Keys.Count);
@@ -67,26 +95,17 @@ public class MarkovChain : MonoBehaviour
             }
             option++;
         }
-        throw new Exception("Ya done fucked");
+        throw new UnityException("Ya done fucked");
     }
 
-    private Dictionary<string, Dictionary<string, float>> MakeMarkovModel()
+    private Dictionary<string, Dictionary<string, float>> MakeWeightedMarkovModel()
     {
-        //pulls in the text from the given file
-        string body = "";
-        for (int i = 0; i < textFiles.Length; i++)
-        {
-            body += textFiles[i].text + " ";
-        }
-        //splits the text into an array of words
-        string[] words = body.Split(" ");
-        //Debug.Log(words.Length);
+        string[] words = GetText();
         
         //Created a nested frequency table
         //the Key and Value of the nested dictionary represent how frequently that string follows the Key of the first dictionary
         var markovModel = new Dictionary<string, Dictionary<string, float>>();
 
-        //Loop through all words minus n_gram length - 2
         int length = words.Length - Mathf.RoundToInt(Mathf.Pow(n_gram, 2)) + 1;
         for (int i = 0; i < length; i++)
         {
@@ -102,9 +121,10 @@ public class MarkovChain : MonoBehaviour
 
             if (!markovModel.ContainsKey(currentState))
             {
-                markovModel.Add(currentState, new Dictionary<string, float>());
-                markovModel[currentState].Add(nextState, 1);
-                //markovModel[currentState][nextState] = 1;
+                markovModel[currentState] = new Dictionary<string, float>();
+                markovModel[currentState][nextState] = 1;
+                //markovModel.Add(currentState, new Dictionary<string, float>());
+                //markovModel[currentState].Add(nextState, 1);
             }
             else
             {
@@ -114,8 +134,8 @@ public class MarkovChain : MonoBehaviour
                 }
                 else
                 {
-                    markovModel[currentState].Add(nextState, 1);
-                    //markovModel[currentState][nextState] = 1;
+                    //markovModel[currentState].Add(nextState, 1);
+                    markovModel[currentState][nextState] = 1;
                 }
             }
         }
@@ -165,4 +185,90 @@ public class MarkovChain : MonoBehaviour
         Debug.Log(n + " single options out of " + original.Keys.Count + " states");
         return original;
     }
+    #endregion
+
+    private string GenerateText()
+    {
+        var markovModel = MakeUnweightedMarkovModel();
+
+        int n = 0;
+
+        if (!markovModel.ContainsKey(startText) || randomStartText)
+        {
+            var newText = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
+            startText = newText;
+        }
+
+        string currentState = startText;
+        string nextState;
+        string output = ""; output += currentState + " ";
+
+        while (n < outputSize)
+        {
+            Debug.Log(n + ": Current State: " + currentState);
+
+            int index = Random.Range(0, markovModel[currentState].Count);
+            nextState = markovModel[currentState][index];
+            Debug.Log(n + ": Next State: " + nextState);
+
+            output += nextState + " ";
+            
+            //
+            var newState = currentState.Split();
+            currentState = "";
+            for (int i = 1; i < n_gram; i++)
+            {
+                currentState += newState[i] + " ";
+            }
+            currentState += nextState;
+
+            n++;
+        }
+
+        return output;
+    }
+
+    private Dictionary<string, List<string>> MakeUnweightedMarkovModel()
+    {
+        string[] words = GetText();
+
+        //Created a nested frequency table
+        //the Key and Value of the nested dictionary represent how frequently that string follows the Key of the first dictionary
+        var markovModel = new Dictionary<string, List<string>>();
+
+        int length = words.Length - Mathf.RoundToInt(Mathf.Pow(n_gram, 2)) + 1;
+        for (int i = 0; i < length; i++)
+        {
+            string currentState = "";
+            for (int j = 0; j < n_gram; j++)
+            {
+                currentState += words[i + j] + " "; //This checks out
+            }
+
+            string nextState = words[i + n_gram]; //Just set it to the word immediately following the n_gram
+
+            currentState = currentState.Trim();
+            nextState = nextState.Trim();
+
+            if (!markovModel.ContainsKey(currentState))
+            {
+                markovModel[currentState] = new List<string>();
+            }
+
+            markovModel[currentState].Add(nextState);
+        }
+
+        foreach(var pair in markovModel)
+        {
+            
+            for (int i = 0; i < pair.Value.Count; i++)
+            {
+                if (debugDictionary) Debug.Log(pair.Key + ": " + pair.Value[i]);
+            }
+        }
+
+        return markovModel;
+    }
+
+
 }

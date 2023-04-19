@@ -6,16 +6,16 @@ namespace JS.WorldGeneration
     public class Island
     {
         public int ID { get; private set; }
-        private List<TerrainNode> nodes;
-        public List<TerrainNode> Nodes => nodes;
+        private List<WorldTile> nodes;
+        public List<WorldTile> Nodes => nodes;
 
         public Island(int ID)
         {
-            nodes = new List<TerrainNode>();
+            nodes = new List<WorldTile>();
             this.ID = ID;
         }
 
-        public void Add(TerrainNode node)
+        public void Add(WorldTile node)
         {
             if (!nodes.Contains(node))
             {
@@ -24,7 +24,7 @@ namespace JS.WorldGeneration
             node.Island = this;
         }
 
-        public void AddRange(List<TerrainNode> newNodes)
+        public void AddRange(List<WorldTile> newNodes)
         {
             for (int i = 0; i < newNodes.Count; i++)
             {

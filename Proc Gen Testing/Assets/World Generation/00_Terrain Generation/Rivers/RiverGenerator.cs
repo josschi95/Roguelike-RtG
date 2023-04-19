@@ -40,7 +40,7 @@ namespace JS.WorldGeneration
                 //Grab a random node from the foot of a random mountain
                 //If attempts are at less than half of what is allowed, try to find an unoccupied mountain
                 var mountain = FindRiverSource(mountains, attempts < MaxRiverAttempts / 2);
-                TerrainNode node;
+                WorldTile node;
                 if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
                 else node = worldMap.GetNode(worldGenerator.rng.Next(0, mapSize - 1), worldGenerator.rng.Next(0, mapSize - 1));
 
@@ -108,7 +108,7 @@ namespace JS.WorldGeneration
             return mountains[worldGenerator.rng.Next(0, mountains.Length)];
         }
 
-        private TerrainNode FindLowestNeighborNode(TerrainNode node)
+        private WorldTile FindLowestNeighborNode(WorldTile node)
         {
             var lowestNeighbor = node.neighbors[0];
             for (int i = 0; i < node.neighbors.Length; i++)
@@ -121,7 +121,7 @@ namespace JS.WorldGeneration
             return lowestNeighbor;
         }
 
-        private Direction FindLowestNeighborDirection(TerrainNode startNode)
+        private Direction FindLowestNeighborDirection(WorldTile startNode)
         {
             var lowestNeighbor = FindLowestNeighborNode(startNode);
             if (lowestNeighbor.y > startNode.y) return Direction.North;
@@ -131,7 +131,7 @@ namespace JS.WorldGeneration
             return Direction.South;
         }
 
-        private TerrainNode GetNeighbor(TerrainNode startNode, Direction dir)
+        private WorldTile GetNeighbor(WorldTile startNode, Direction dir)
         {
             switch (dir)
             {
@@ -147,7 +147,7 @@ namespace JS.WorldGeneration
             return null;
         }
 
-        private void FindPathToWater(TerrainNode node, Direction direction, River river)
+        private void FindPathToWater(WorldTile node, Direction direction, River river)
         {
             //may need to do some additional checks...
             if (node.rivers.Contains(river))
@@ -166,10 +166,10 @@ namespace JS.WorldGeneration
             river.AddNode(node);
 
             // get neighbors
-            TerrainNode north = GetNeighbor(node, Direction.North);
-            TerrainNode south = GetNeighbor(node, Direction.South);
-            TerrainNode east = GetNeighbor(node, Direction.East);
-            TerrainNode west = GetNeighbor(node, Direction.West);
+            WorldTile north = GetNeighbor(node, Direction.North);
+            WorldTile south = GetNeighbor(node, Direction.South);
+            WorldTile east = GetNeighbor(node, Direction.East);
+            WorldTile west = GetNeighbor(node, Direction.West);
 
             float northValue = GetNodeValue(north, river);
             float southValue = GetNodeValue(south, river);
@@ -250,7 +250,7 @@ namespace JS.WorldGeneration
             }
         }
 
-        private float GetNodeValue(TerrainNode node, River river)
+        private float GetNodeValue(WorldTile node, River river)
         {
             if (node == null) return int.MaxValue;
             float value = int.MaxValue;
@@ -271,7 +271,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
 
                     //node only has one or no river(s) running through it
                     if (node.rivers.Count <= 1) continue;
@@ -303,7 +303,7 @@ namespace JS.WorldGeneration
             }
         }
 
-        private RiverGroup FindExistingRiverGroup(TerrainNode node)
+        private RiverGroup FindExistingRiverGroup(WorldTile node)
         {
             RiverGroup group = null;
             for (int n = 0; n < node.rivers.Count; n++)
@@ -425,7 +425,7 @@ namespace JS.WorldGeneration
             // Dig it out
             for (int i = river.Nodes.Count - 1; i >= 0; i--)
             {
-                TerrainNode node = river.Nodes[i];
+                WorldTile node = river.Nodes[i];
 
                 if (counter < count1) node.DigRiver(river, 4, riverBiome);
                 else if (counter < count2) node.DigRiver(river, 3, riverBiome);

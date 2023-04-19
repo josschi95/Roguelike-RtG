@@ -16,61 +16,58 @@ namespace JS.WorldGeneration
         [Space]
 
         [SerializeField] private HumanoidTribe[] tribes;
-        [SerializeField] private SettlementType city;
-        [SerializeField] private SettlementType town;
-        [SerializeField] private SettlementType village;
-        [SerializeField] private SettlementType hamlet;
+        [SerializeField] private SettlementType[] settlementTypes;
+        private int[] settlementCount;
 
-        private List<TerrainNode> availableNodes;
+        private List<WorldTile> availableNodes;
         private List<Settlement> settlements;
-        private Dictionary<HumanoidTribe, List<TerrainNode>> tribeTerritories;
+        private Dictionary<HumanoidTribe, List<WorldTile>> tribeTerritories;
+        private Dictionary<Biome, List<WorldTile>> biomes;
 
         public void SetInitialValues(WorldSize size)
         {
             worldSize = size;
             settlements = new List<Settlement>();
-            
-            tribeTerritories = new Dictionary<HumanoidTribe, List<TerrainNode>>();
+
+            settlementCount = new int[4];
+            settlementCount[0] = mapFeatures.CityCount(worldSize) * tribes.Length;
+            settlementCount[1] = mapFeatures.TownCount(worldSize) * tribes.Length;
+            settlementCount[2] = mapFeatures.VillageCount(worldSize) * tribes.Length;
+            settlementCount[3] = mapFeatures.HamletCount(worldSize) * tribes.Length;
+
+            tribeTerritories = new Dictionary<HumanoidTribe, List<WorldTile>>();
             for (int i = 0; i < tribes.Length; i++)
             {
-                tribeTerritories[tribes[i]] = new List<TerrainNode>();
+                tribeTerritories[tribes[i]] = new List<WorldTile>();
+            }
+
+            biomes = new Dictionary<Biome, List<WorldTile>>();
+            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
+            {
+                biomes[mapFeatures.Biomes[i]] = new List<WorldTile>();
             }
         }
 
         #region - Settlement Placement -
         private void GetSiteList()
         {
-            availableNodes = new List<TerrainNode>();
+            availableNodes = new List<WorldTile>();
             for (int x = 0; x < mapFeatures.MapSize(worldSize); x++)
             {
                 for (int y = 0; y < mapFeatures.MapSize(worldSize); y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     if (!node.isNotWater) continue; //Don't include water
                     if (node.Settlement != null) continue; //this shouldn't happen
                     if (node.Territory != null) continue;
+
+                    biomes[node.PrimaryBiome].Add(node);
                     availableNodes.Add(node);
                 }
             }
-
-            //Shuffle List
-            availableNodes = ShuffleList(availableNodes);
         }
 
-        private List<TerrainNode> ShuffleList(List<TerrainNode> list)
-        {
-            var shuffledList = new List<TerrainNode>(list);
-            for (int i = 0; i < shuffledList.Count; i++)
-            {
-                var temp = shuffledList[i];
-                int randomIndex = worldGenerator.rng.Next(i, shuffledList.Count);
-                shuffledList[i] = shuffledList[randomIndex];
-                shuffledList[randomIndex] = temp;
-            }
-            return shuffledList;
-        }
-
-        private TerrainNode GetRandomSite()
+        private WorldTile GetRandomSite()
         {
             int index = worldGenerator.rng.Next(0, availableNodes.Count);
             var site = availableNodes[index];
@@ -78,61 +75,66 @@ namespace JS.WorldGeneration
 
             return site;
         }
-        
-        private List<Biome> ShuffleList(List<Biome> list)
-        {
-            var shuffledList = new List<Biome>(list);
-            for (int i = 0; i < shuffledList.Count; i++)
-            {
-                var temp = shuffledList[i];
-                int randomIndex = worldGenerator.rng.Next(i, shuffledList.Count);
-                shuffledList[i] = shuffledList[randomIndex];
-                shuffledList[randomIndex] = temp;
-            }
-            return shuffledList;
-        }
 
+        /// <summary>
+        /// Places a number of settlements of each type according to map size
+        /// </summary>
         public IEnumerator PlaceSettlements()
         {
             GetSiteList();
 
-            //Next step here is to start clamping the number of cities that can be produced
-            //Current report shows that the vast majority of settlements are cities, followed by hamlets
-            //and almost no towns or villages are being created
-            //This could be due to the size settings I have, but I think I also need to due some more factoring
-            //Maybe certain tribes will favor smaller settlements over larger, 
-            //I think I also need to start thinking more about the Local Map as well, since each World Tile can be zoomed in to a 200x200 Local Map
-
-            Debug.LogWarning("Pickup from here.");
-
-
-
-            while(availableNodes.Count > 0)
+            int tribeIndex = 0;
+            var nextSettlement = GetSettlementType();
+            while (nextSettlement != null)
             {
-                //Debug.Log("Available Nodes: " + availableNodes.Count);
-                var newSettlement = TerritoryDraft();
+                var initialTime = Time.realtimeSinceStartup;
+                //Debug.LogWarning("Starting new settlement search");
+                var tribe = tribes[tribeIndex];
+                var site = GetTribeSettlementSite(tribe);
+                if (site == null) break;
+                //Debug.LogWarning("Settlement found at " + (Time.realtimeSinceStartup - initialTime));
+                var newSettlement = PlaceSettlement(site, nextSettlement, tribe);
+                //var newSettlement = TerritoryDraft(nextSettlement);
 
+                initialTime = Time.realtimeSinceStartup;
                 ExpandTerritory(newSettlement);
-
+                //Debug.LogWarning("Expansion Complete: " + (Time.realtimeSinceStartup - initialTime));
+                
+                nextSettlement = GetSettlementType();
+                tribeIndex++;
+                if (tribeIndex >= tribes.Length) tribeIndex = 0;
                 yield return null;
             }
 
-            CenterSettlements();
+            //CenterSettlements();
 
-            CleanUpMinorSettlements();
-
-            SetSettlementSizes();
+            //CleanUpMinorSettlements();
 
             //Set Area of Influence
             //Based on settlement size
             //Probably use flood fill again
             //GetSettlementConnections();
 
-            GetTerritoryReport();
+            //GetTerritoryReport();
+
+            worldMap.SettlementData.AddSettlements(settlements.ToArray());
+        }
+
+        private SettlementType GetSettlementType()
+        {
+            for (int i = 0; i < settlementCount.Length; i++)
+            {
+                if (settlementCount[i] > 0)
+                {
+                    settlementCount[i]--;
+                    return settlementTypes[i];
+                }
+            }
+            return null;
         }
 
         //Grants a new settlement placed on a random node to the highest bidder
-        private Settlement TerritoryDraft()
+        private Settlement TerritoryDraft(SettlementType type)
         {
             var randomSite = GetRandomSite();
             if (randomSite.Territory != null)
@@ -144,7 +146,7 @@ namespace JS.WorldGeneration
             //Add all tribes to the current bid who aren't opposed to the biome
             for (int i = 0; i < tribes.Length; i++)
             {
-                if (!tribes[i].opposedBiomes.Contains(randomSite.biome))
+                if (!tribes[i].opposedBiomes.Contains(randomSite.PrimaryBiome))
                 {
                     tribesInDraft.Add(tribes[i]);
                 }
@@ -155,9 +157,9 @@ namespace JS.WorldGeneration
             for (int i = 0; i < tribesInDraft.Count; i++)
             {
                 tribeBids[i] = 1;
-                if (randomSite.Island != null) tribeBids[i] += tribesInDraft[i].IslandPreference;
-                if (randomSite.Mountain != null) tribeBids[i] += tribesInDraft[i].MountainPreference;
-                if (tribesInDraft[i].preferredBiomes.Contains(randomSite.biome)) tribeBids[i] += 1;
+                if (randomSite.Island != null && tribesInDraft[i].PrefersIslands) tribeBids[i] += 0.5f;
+                if (randomSite.Mountain != null && tribesInDraft[i].PrefersMountains) tribeBids[i] += 0.5f;
+                if (tribesInDraft[i].preferredBiomes.Contains(randomSite.PrimaryBiome)) tribeBids[i] += 1;
             }
 
             //Bid is divided by total number of nodes owned by that tribe
@@ -180,25 +182,143 @@ namespace JS.WorldGeneration
                 }
             }
 
-            //Place a hamelet on that site
-            var newSettlement = PlaceSettlement(randomSite, hamlet, winningTribe);
+            //Place a settlemetn of the given type on that site
+            var newSettlement = PlaceSettlement(randomSite, type, winningTribe);
             return newSettlement;
-            //expand territory based on tribe's preferences
-
-            //repeat
         }
+
+        private WorldTile GetTribeSettlementSite(HumanoidTribe tribe)
+        {
+            if (TryFindMountainNode(tribe, out WorldTile mountain)) return mountain;
+
+            if (TryFindIslandNode(tribe, out WorldTile island)) return island;
+
+            //This one here is hurting quite a bit compared to the others
+            var initialTime = Time.realtimeSinceStartup;
+            if (TryFindPreferredBiome(tribe, out WorldTile biome))
+            {
+                //Debug.LogWarning("Preferred biome found at " + (Time.realtimeSinceStartup - initialTime));
+                return biome;
+            }
+
+            if (TryFindUnopposedBiome(tribe, out WorldTile node)) return node;
+
+            if (TryFindAnyNode(out WorldTile lastNode)) return lastNode;
+
+            return null;
+        }
+
+        #region - Site Finding -
+        private bool TryFindMountainNode(HumanoidTribe tribe, out WorldTile node)
+        {
+            node = null;
+
+            var mountainPreference = 15;
+            if (tribe.PrefersMountains) mountainPreference = 75;
+            if (worldGenerator.rng.Next(0, 100) > mountainPreference) return false;
+
+            var allMountainNodes = new List<WorldTile>();
+            foreach (MountainRange mountain in terrainData.Mountains)
+            {
+                for (int i = 0; i < mountain.Nodes.Count; i++)
+                {
+                    if (!availableNodes.Contains(mountain.Nodes[i])) continue;
+                    allMountainNodes.Add(mountain.Nodes[i]);
+                }
+            }
+            if (allMountainNodes.Count == 0) return false;
+
+            int index = worldGenerator.rng.Next(0, allMountainNodes.Count);
+            Debug.Log("Found Mountain Home");
+            node = allMountainNodes[index];
+            return true;
+        }
+
+        private bool TryFindIslandNode(HumanoidTribe tribe, out WorldTile node)
+        {
+            node = null;
+
+            var islandPreference = 15;
+            if (tribe.PrefersIslands) islandPreference = 75;
+            if (worldGenerator.rng.Next(0, 100) > islandPreference) return false;
+
+            var allIslandNodes = new List<WorldTile>();
+            foreach (Island island in terrainData.Islands)
+            {
+                if (island.Nodes.Count < 5) continue; //ignore small islands
+                for (int i = 0; i < island.Nodes.Count; i++)
+                {
+                    if (!availableNodes.Contains(island.Nodes[i])) continue;
+                    if (tribe.opposedBiomes.Contains(island.Nodes[i].PrimaryBiome)) continue;
+                    allIslandNodes.Add(island.Nodes[i]);
+                }
+            }
+            if (allIslandNodes.Count == 0) return false;
+
+            int index = worldGenerator.rng.Next(0, allIslandNodes.Count);
+            Debug.Log("Found Island Home");
+            node = allIslandNodes[index];
+            return true;
+        }
+
+        private bool TryFindPreferredBiome(HumanoidTribe tribe, out WorldTile node)
+        {
+
+            node = null;
+            if (tribe.preferredBiomes.Count == 0) return false;
+            if (worldGenerator.rng.Next(0, 100) < 25) return false; //25% chance of not getting a preferred biome
+            Biome chosenBiome = tribe.preferredBiomes[worldGenerator.rng.Next(0, tribe.preferredBiomes.Count)];
+
+            if (biomes[chosenBiome].Count == 0) return false;
+            int index = worldGenerator.rng.Next(0, biomes[chosenBiome].Count);
+            node = biomes[chosenBiome][index];
+            return true;
+        }
+
+        private bool TryFindUnopposedBiome(HumanoidTribe tribe, out WorldTile node)
+        {
+            node = null;
+            var nodeList = new List<WorldTile>();
+
+            for (int i = 0; i < availableNodes.Count; i++)
+            {
+                if (tribe.opposedBiomes.Contains(availableNodes[i].PrimaryBiome)) continue;
+                nodeList.Add(availableNodes[i]);
+            }
+            if (nodeList.Count == 0) return false;
+
+            int index = worldGenerator.rng.Next(0, nodeList.Count);
+            Debug.Log("Found Unopposed Biome");
+            node = nodeList[index];
+            return true;
+        }
+
+        private bool TryFindAnyNode(out WorldTile node)
+        {
+            node = null;
+            if (availableNodes.Count == 0) return false;
+
+            int index = worldGenerator.rng.Next(0, availableNodes.Count);
+            Debug.Log("Found Any Site");
+            node = availableNodes[index];
+            return true;
+        }
+        #endregion
 
         private void ExpandTerritory(Settlement settlement)
         {
+            //clamp max size based on settlement size
+
+
             int[,] mapFlags = new int[worldMap.Width, worldMap.Height];
-            Queue<TerrainNode> queue = new Queue<TerrainNode>();
+            Queue<WorldTile> queue = new Queue<WorldTile>();
             queue.Enqueue(settlement.Node);
 
             //So this is going to repeat the same territory every single time, which seems a waste
             while(queue.Count > 0)// && territoryToAdd > 0)
             {
                 //Limit settlements from getting too large at the start
-                if (settlement.territory.Count > mapFeatures.MaxStartingSettlementSize) break;
+                if (settlement.territory.Count >= settlement.type.MaxTerritory) break;
 
                 var node = queue.Dequeue();
                 if (!settlement.territory.Contains(node))
@@ -215,11 +335,13 @@ namespace JS.WorldGeneration
                     mapFlags[neighbor.x, neighbor.y] = 1;
                     if (!neighbor.isNotWater) continue; //is water
                     if (settlement.isSubterranean != (neighbor.Mountain != null)) continue; //subterranean can't extend outside mountain, others can't extend into mountains
-                    if (settlement.tribe.opposedBiomes.Contains(neighbor.biome)) continue; //can't extend into opposed biomes
+                    if (settlement.tribe.opposedBiomes.Contains(neighbor.PrimaryBiome)) continue; //can't extend into opposed biomes
                     if (neighbor.Territory != null && neighbor.Territory != settlement) continue; //already claimed
 
                     //The distance in node path count from the settlement to the new territory
-                    if (worldMap.GetPathCount(settlement.Node, neighbor, settlement) > 50 + Random.Range(-10, 5)) continue;
+                    //Also need to take into account going around mountains instead of through them
+                    //if (worldMap.GetPathCount(settlement.Node, neighbor, settlement) > 50 + Random.Range(-10, 5)) continue;
+                    if (worldMap.GetNodeDistance_Straight(settlement.Node, neighbor) > 50 + Random.Range(-10, 5)) continue;
 
                     queue.Enqueue(neighbor);
                 }
@@ -229,12 +351,14 @@ namespace JS.WorldGeneration
         /// <summary>
         /// Places a new settlement of the given type and tribe at the node and assigns territory and area of influence
         /// </summary>
-        private Settlement PlaceSettlement(TerrainNode node, SettlementType type, HumanoidTribe tribe)
+        private Settlement PlaceSettlement(WorldTile node, SettlementType type, HumanoidTribe tribe)
         {
             int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
             var newSettlement = new Settlement("", settlements.Count, node, type, tribe, population);
 
             availableNodes.Remove(node);
+            biomes[node.PrimaryBiome].Remove(node);
+
             settlements.Add(newSettlement);
             tribeTerritories[tribe].Add(node);
 
@@ -242,10 +366,12 @@ namespace JS.WorldGeneration
         }
         #endregion
 
-        private void AssignTerritory(Settlement settlement, TerrainNode territory)
+        private void AssignTerritory(Settlement settlement, WorldTile territory)
         {
             settlement.AddTerritory(territory);
             availableNodes.Remove(territory);
+            biomes[territory.PrimaryBiome].Remove(territory);
+
             if (!tribeTerritories[settlement.tribe].Contains(territory))
                 tribeTerritories[settlement.tribe].Add(territory);
         }
@@ -271,7 +397,7 @@ namespace JS.WorldGeneration
                 else
                 {
                     float dist = int.MaxValue;
-                    TerrainNode nodeToMove = null;
+                    WorldTile nodeToMove = null;
                     for (int i = 0; i < settlement.territory.Count; i++)
                     {
                         var newDist = worldMap.GetNodeDistance_Straight(settlement.territory[i], newNode);
@@ -328,24 +454,6 @@ namespace JS.WorldGeneration
             return toSettlement;
         }
 
-        private void SetSettlementSizes()
-        {
-            for (int i = 0; i < settlements.Count; i++)
-            {
-                SettlementType type;
-
-                //Hamlet by default
-                if (settlements[i].territory.Count < 25) type = hamlet;
-                else if (settlements[i].territory.Count <= 50) type = village;
-                else if (settlements[i].territory.Count <= 75) type = town;
-                else if (settlements[i].territory.Count <= 150) type = city;
-                else type = city; //Capital?
-
-                int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
-                settlements[i].AdjustSize(type, population);
-            }
-        }
-
         private void GetSettlementConnections()
         {
             foreach (Settlement settlement in settlements)
@@ -379,10 +487,10 @@ namespace JS.WorldGeneration
                     if (settlements[j].tribe == tribes[i])
                     {
                         count++;
-                        if (settlements[j].type == hamlet) hamlets++;
-                        if (settlements[j].type == village) villages++;
-                        if (settlements[j].type == town) towns++;
-                        if (settlements[j].type == city) cities++;
+                        if (settlements[j].type == settlementTypes[0]) cities++;
+                        if (settlements[j].type == settlementTypes[1]) towns++;
+                        if (settlements[j].type == settlementTypes[2]) villages++;
+                        if (settlements[j].type == settlementTypes[3]) hamlets++;
                     }
                 }
                 Debug.Log(tribes[i].ToString() + ": " + count + " settlements, " + tribeTerritories[tribes[i]].Count + " nodes, " +
@@ -392,225 +500,9 @@ namespace JS.WorldGeneration
         }
 
         #region - Obsolete -
-        [System.Obsolete]
-        public void GenerateSettlements()
-        {
-            /*GetSiteList();
-
-            GenerateCities();
-            GenerateTowns();
-            GenerateVillages();
-            GenerateHamlets();
-            StartCoroutine(ClaimTerritory());
-
-            GetSettlementConnections();*/
-        }
-
-        [System.Obsolete]
-        public IEnumerator ClaimTerritory()
-        {
-            //GetSiteList();
-
-            //TerritoryDraft();
-
-
-            GetSiteList();
-
-            GenerateCities();
-
-            var territoriesToExpand = new List<Settlement>();
-            territoriesToExpand.AddRange(settlements);
-
-            while (territoriesToExpand.Count > 0)
-            {
-                for (int i = territoriesToExpand.Count - 1; i >= 0; i--)
-                {
-                    if (!TryExpandTerritory(territoriesToExpand[i]))
-                        territoriesToExpand.RemoveAt(i);
-                }
-
-                yield return null;
-            }
-
-            //GenerateTowns();
-
-            //Generate Villages();
-
-            //Generate Hamlets();
-
-            //GetSettlementConnections();
-        }
-
-        private void GenerateCities()
-        {
-            for (int round = 0; round < mapFeatures.CityCount(worldSize); round++)
-            {
-                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
-                {
-                    FindSettlementSite(city, tribes[ancestry]);
-                }
-            }
-        }
-        
-        private void GenerateTowns()
-        {
-            for (int round = 0; round < mapFeatures.TownCount(worldSize); round++)
-            {
-                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
-                {
-                    FindSettlementSite(town, tribes[ancestry]);
-                }
-            }
-        }
-
-        private void GenerateVillages()
-        {
-            for (int round = 0; round < mapFeatures.VillageCount(worldSize); round++)
-            {
-                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
-                {
-                    FindSettlementSite(village, tribes[ancestry]);
-                }
-            }
-        }
-
-        private void GenerateHamlets()
-        {
-            for (int round = 0; round < mapFeatures.TribeCount(worldSize); round++)
-            {
-                for (int ancestry = 0; ancestry < tribes.Length; ancestry++)
-                {
-                    FindSettlementSite(hamlet, tribes[ancestry]);
-                }
-            }
-        }
-
-        private void FindSettlementSite(SettlementType type, HumanoidTribe tribe)
-        {
-            var chance = worldGenerator.rng.Next(0, 100) * 0.01f;
-            if (chance < tribe.MountainPreference)
-            {
-                if (FoundMountainHome(type, tribe)) return;
-            }
-
-            if (chance < tribe.MountainPreference + tribe.IslandPreference)
-            {
-                if (FoundIslandHome(type, tribe)) return;
-            }
-
-            //Try to find an available biome that is preferred
-            if (FoundPreferredBiomeHome(type, tribe)) return;
-
-            availableNodes = ShuffleList(availableNodes);
-            //Unable to fit any previous preference, check all nodes but exclude opposed biomes
-            for (int i = availableNodes.Count - 1; i >= 0; i--)
-            {
-                if (availableNodes[i].Settlement != null)
-                {
-                    availableNodes.RemoveAt(i);
-                    continue;
-                }
-                if (tribe.opposedBiomes.Contains(availableNodes[i].biome)) continue;
-                if (TerritoriesOverlap(availableNodes[i], type.territorySize)) continue;
-                //Debug.Log("Found Preferred Home.");
-                PlaceSettlement(availableNodes[i], type, tribe);
-                return;
-            }
-
-            availableNodes = ShuffleList(availableNodes);
-            //Unable to fit ANY preference, just find what is available
-            for (int i = availableNodes.Count - 1; i >= 0; i--)
-            {
-                if (availableNodes[i].Settlement != null)
-                {
-                    availableNodes.RemoveAt(i);
-                    continue;
-                }
-                if (TerritoriesOverlap(availableNodes[i], type.territorySize)) continue;
-                //Debug.Log("Found A Home.");
-                PlaceSettlement(availableNodes[i], type, tribe);
-                return;
-            }
-
-            Debug.LogWarning("Unable to find any available spots for a settlement. Need to adjust parameters.");
-        }
-
-        private bool FoundMountainHome(SettlementType type, HumanoidTribe tribe)
-        {
-            foreach (MountainRange mountain in terrainData.Mountains)
-            {
-                for (int i = 0; i < mountain.Nodes.Count; i++)
-                {
-                    //if (mountain.Nodes[i].Settlement != null) continue;
-                    //Don't need to check biome because a mountain home would be underground
-                    if (TerritoriesOverlap(mountain.Nodes[i], type.territorySize)) continue;
-
-                    //Found unclaimed mountain node
-                    //Debug.Log("Found Mountain Home.");
-                    PlaceSettlement(mountain.Nodes[i], type, tribe);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool FoundIslandHome(SettlementType type, HumanoidTribe tribe)
-        {
-            foreach (Island island in terrainData.Islands)
-            {
-                for (int i = 0; i < island.Nodes.Count; i++)
-                {
-                    //if (island.Nodes[i].Settlement != null) continue;
-                    if (tribe.opposedBiomes.Contains(island.Nodes[i].biome)) continue;
-                    if (TerritoriesOverlap(island.Nodes[i], type.territorySize)) continue;
-
-                    //Found unclaimed island node
-                    //Debug.Log("Found Island Home.");
-                    PlaceSettlement(island.Nodes[i], type, tribe);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool FoundPreferredBiomeHome(SettlementType type, HumanoidTribe tribe)
-        {
-            var biomeList = new List<Biome>(tribe.preferredBiomes);
-            biomeList = ShuffleList(biomeList);
-
-            for (int i = 0; i < biomeList.Count; i++)
-            {
-                if (FoundPreferredBiomeHome(biomeList[i], type, tribe)) return true;
-            }
-
-            return false;
-        }
-
-        private bool FoundPreferredBiomeHome(Biome biome, SettlementType type, HumanoidTribe tribe)
-        {
-            var siteList = new List<TerrainNode>();
-            foreach (BiomeGroup group in terrainData.Biomes)
-            {
-                if (group.biome != biome) continue;
-                for (int i = 0; i < group.Nodes.Count; i++)
-                {
-                    //if (group.Nodes[i].Settlement != null) continue;
-                    if (TerritoriesOverlap(group.Nodes[i], type.territorySize)) continue;
-
-                    siteList.Add(group.Nodes[i]);
-                }
-            }
-            if (siteList.Count == 0) return false;
-            siteList = ShuffleList(siteList);
-
-            int index = worldGenerator.rng.Next(0, siteList.Count);
-            PlaceSettlement(siteList[index], type, tribe);
-            return true;
-        }
-
         private bool TryExpandTerritory(Settlement settlement)
         {
-            var territoryToAdd = new List<TerrainNode>();
+            var territoryToAdd = new List<WorldTile>();
             for (int i = 0; i < settlement.territory.Count; i++)
             {
                 for (int j = 0; j < settlement.territory[i].neighbors.Length; j++)
@@ -641,7 +533,7 @@ namespace JS.WorldGeneration
         /// <summary>
         /// Determines if the territory for a given settlement would overlap with territory of an existing settlement
         /// </summary>
-        private bool TerritoriesOverlap(TerrainNode proposedSite, int range)
+        private bool TerritoriesOverlap(WorldTile proposedSite, int range)
         {
             foreach (Settlement settlement in settlements)
             {

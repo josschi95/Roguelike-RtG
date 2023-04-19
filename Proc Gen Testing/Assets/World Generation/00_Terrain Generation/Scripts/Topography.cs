@@ -15,7 +15,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
 
                     //node is not part of a mountain
                     if (node.Mountain == null) continue;

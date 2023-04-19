@@ -10,25 +10,22 @@ public class TerrainData : ScriptableObject
     public float[,] heightMap;
     public float[,] heatMap;
 
-    [SerializeField] private MountainRange[] mountains;
-    [SerializeField] private Lake[] lakes;
-    [SerializeField] private River[] rivers;
-    [SerializeField] private BiomeGroup[] biomes;
-    [SerializeField] private Island[] islands;
+    public MountainRange[] Mountains { get; private set; }
+    public Lake[] Lakes { get; private set; }
+    public River[] Rivers { get; private set; }
+    public BiomeGroup[] Biomes { get; private set; }
+    public Island[] Islands { get; private set; }
 
-    public MountainRange[] Mountains => mountains;
-    public Lake[] Lakes => lakes;
-    public River[] Rivers => rivers;
-    public BiomeGroup[] Biomes => biomes;
-    public Island[] Islands => islands;
+
+    [field: SerializeField] public RuleTile RiverTile { get; private set; }
 
     public void ClearData()
     {
-        mountains = null;
-        lakes = null;
-        rivers = null;
-        biomes = null;
-        islands = null;
+        Mountains = null;
+        Lakes = null;
+        Rivers = null;
+        Biomes = null;
+        Islands = null;
     }
 
     public void SetMapSize(int size, Vector3Int origin)
@@ -39,26 +36,26 @@ public class TerrainData : ScriptableObject
 
     public void SetMountains(MountainRange[] mountains)
     {
-        this.mountains = mountains;
+        Mountains = mountains;
     }
 
     public void SetIslands(Island[] islands)
     {
-        this.islands = islands;
+        Islands = islands;
     }
 
     public void SetLakes(Lake[] lakes)
     {
-        this.lakes = lakes;
+        Lakes = lakes;
     }
 
     public void SetRivers(River[] rivers)
     {
-        this.rivers = rivers;
+        Rivers = rivers;
     }
 
     public void SetBiomes(BiomeGroup[] biomes)
     {
-        this.biomes = biomes;
+        Biomes = biomes;
     }
 }

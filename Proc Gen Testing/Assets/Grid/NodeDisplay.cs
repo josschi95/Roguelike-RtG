@@ -17,7 +17,7 @@ public class NodeDisplay : MonoBehaviour
     [SerializeField] private GameObject mountainPanel;
     [SerializeField] private TMP_Text nodeMountainRange;
 
-    public void DisplayNodeValues(TerrainNode node)
+    public void DisplayNodeValues(WorldTile node)
     {
         gameObject.SetActive(node != null);
         if (node == null) return;
@@ -27,14 +27,13 @@ public class NodeDisplay : MonoBehaviour
         if (node.Settlement != null)
         {
             DisplaySettlementInfo(node.Settlement);
-            mountainPanel.SetActive(false);
             return;
         }
 
         nodeCoordinates.text = "[X,Y] = " + node.x + "," + node.y;
         nodeElevation.text = "Elevation = " + node.altitude;
 
-        if (node.biome != null) nodeBiome.text = "Biome: " + node.biome.BiomeName;
+        if (node.PrimaryBiome != null) nodeBiome.text = "Biome: " + node.PrimaryBiome.BiomeName;
 
         nodeTemperature.text = "Temperature: " + node.temperatureZone.name + 
             " " + (node.avgAnnualTemperature_C).ToString("00") + "\u00B0" + "C";
@@ -55,7 +54,7 @@ public class NodeDisplay : MonoBehaviour
         nodeRiverText.text = "";
     }
 
-    private void MountainDisplay(TerrainNode node)
+    private void MountainDisplay(WorldTile node)
     {
         mountainPanel.SetActive(node.Mountain != null);
 

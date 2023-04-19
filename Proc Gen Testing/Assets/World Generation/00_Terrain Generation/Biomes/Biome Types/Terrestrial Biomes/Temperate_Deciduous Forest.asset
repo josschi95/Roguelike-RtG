@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Temperate_Deciduous Forest
   m_EditorClassIdentifier: 
-  <BiomeType>k__BackingField: 3
   <BiomeName>k__BackingField: Deciduous Forest
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 20e1ef3129c7ec94a83181e0da792e19, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 9ab6363eb01531e4ba86f21bfd172a61, type: 2}
   minAvgAnnualTemperature: 7
   maxAvgAnnualTemperature: 20
   minAnnualPrecipitation: 85
@@ -25,8 +24,6 @@ MonoBehaviour:
   foodAvailability: 0.75
   waterAvailability: 0
   lumberAvailability: 1
-  stoneAvailability: 0
-  mineralAvailability: 0
   vegetation:
   - deciduous trees
   - deciduous shrubs

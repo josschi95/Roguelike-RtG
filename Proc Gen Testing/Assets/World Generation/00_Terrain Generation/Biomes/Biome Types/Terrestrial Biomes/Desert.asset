@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Desert
   m_EditorClassIdentifier: 
-  <BiomeType>k__BackingField: 1
   <BiomeName>k__BackingField: Desert
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 065cd3b453604c546b971ee67e241d68, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 7f67a27062f6ce447b863f73065d1f01, type: 2}
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0
@@ -22,3 +21,10 @@ MonoBehaviour:
   treeDensity: 0
   shrubDensity: 0
   grassDensity: 0
+  foodAvailability: 0
+  waterAvailability: 0
+  lumberAvailability: 0
+  vegetation: []
+  animals: []
+  monsters: []
+  developerNotes: 

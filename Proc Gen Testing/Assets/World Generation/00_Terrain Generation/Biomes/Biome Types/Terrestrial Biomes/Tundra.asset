@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Tundra
   m_EditorClassIdentifier: 
-  <BiomeType>k__BackingField: 7
   <BiomeName>k__BackingField: Tundra
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 926745893f1879f49b414312266930e8, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 6ca1075a42ea2454c97b6b25d515d8b6, type: 2}
   minAvgAnnualTemperature: -100
   maxAvgAnnualTemperature: 0
   minAnnualPrecipitation: 0
@@ -22,6 +21,9 @@ MonoBehaviour:
   treeDensity: 0
   shrubDensity: 0
   grassDensity: 0
+  foodAvailability: 0
+  waterAvailability: 0
+  lumberAvailability: 0
   vegetation:
   - lichens
   - mosses

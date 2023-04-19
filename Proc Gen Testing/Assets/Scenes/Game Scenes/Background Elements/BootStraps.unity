@@ -244,14 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e51848266a63846a2194e73a9a5156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n_gram: 3
+  n_gram: 2
   outputSize: 12
-  startText: were in great
+  startText: father to
   randomStartText: 1
   cleanText: 1
   textFiles:
   - {fileID: 4900000, guid: 8d67247825dc7ad48b13c1db36edcd2b, type: 3}
-  - {fileID: 4900000, guid: 8473f622be781e94495d0b1ac93bc6c3, type: 3}
   - {fileID: 4900000, guid: 8a54b8659cb40ba48870c28854f22e53, type: 3}
   debugDictionary: 0
 --- !u!114 &274745065
@@ -270,7 +269,7 @@ MonoBehaviour:
   cleanText: 1
   textFiles:
   - {fileID: 4900000, guid: c1391f82ea547a04491a5f5373fa3f2d, type: 3}
-  debugDictionary: 1
+  debugDictionary: 0
 --- !u!1 &345412765
 GameObject:
   m_ObjectHideFlags: 0

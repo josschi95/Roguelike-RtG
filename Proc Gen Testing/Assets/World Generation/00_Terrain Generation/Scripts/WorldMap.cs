@@ -7,7 +7,7 @@ using JS.WorldGeneration;
 public class WorldMap : MonoBehaviour
 {
     public static WorldMap instance { get; private set; }
-    private Grid<TerrainNode> grid;
+    private Grid<WorldTile> grid;
 
     public int Height => grid.GetHeight();
     public int Width => grid.GetWidth();
@@ -30,7 +30,7 @@ public class WorldMap : MonoBehaviour
         float halfHeight = height / 2f;
         Vector3 origin = new Vector3(- halfWidth, - halfHeight);
 
-        grid = new Grid<TerrainNode>(width, height, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(width, height, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < width; x++)
         {
@@ -48,7 +48,7 @@ public class WorldMap : MonoBehaviour
         float halfHeight = size / 2f;
         Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-        grid = new Grid<TerrainNode>(size, size, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < size; x++)
         {
@@ -67,7 +67,7 @@ public class WorldMap : MonoBehaviour
         float halfHeight = size / 2f;
         Vector3 origin = new Vector3(- halfWidth, - halfHeight);
 
-        grid = new Grid<TerrainNode>(size, size, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < size; x++)
         {
@@ -81,37 +81,37 @@ public class WorldMap : MonoBehaviour
         }
     }
 
-    public TerrainNode GetNode(int x, int y)
+    public WorldTile GetNode(int x, int y)
     {
         return grid.GetGridObject(x, y);
     }
 
-    public TerrainNode GetNode(Vector3 worldPosition)
+    public WorldTile GetNode(Vector3 worldPosition)
     {
         return grid.GetGridObject(worldPosition);
     }
 
-    public Vector3 GetPosition(TerrainNode node)
+    public Vector3 GetPosition(WorldTile node)
     {
         return grid.GetWorldPosition(node.x, node.y);
     }
 
-    public int GetNodePathDistance(TerrainNode fromNode, TerrainNode toNode)
+    public int GetNodePathDistance(WorldTile fromNode, WorldTile toNode)
     {
         int x = Mathf.Abs(fromNode.x - toNode.x);
         int y = Mathf.Abs(fromNode.y - toNode.y);
         return x + y;
     }
 
-    public float GetNodeStraightDistance(TerrainNode fromNode, TerrainNode toNode)
+    public float GetNodeStraightDistance(WorldTile fromNode, WorldTile toNode)
     {
 
         return Mathf.Sqrt(Mathf.Pow(fromNode.x - toNode.x, 2) + Mathf.Pow(fromNode.y - toNode.y, 2));
     }
 
-    public List<TerrainNode> GetNodesInRange_Circle(TerrainNode fromNode, int range)
+    public List<WorldTile> GetNodesInRange_Circle(WorldTile fromNode, int range)
     {
-        var nodes = new List<TerrainNode>();
+        var nodes = new List<WorldTile>();
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {
@@ -127,9 +127,9 @@ public class WorldMap : MonoBehaviour
         return nodes;
     }
 
-    public List<TerrainNode> GetNodesInRange_Diamond(TerrainNode fromNode, int range)
+    public List<WorldTile> GetNodesInRange_Diamond(WorldTile fromNode, int range)
     {
-        var nodes = new List<TerrainNode>();
+        var nodes = new List<WorldTile>();
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {
@@ -145,9 +145,9 @@ public class WorldMap : MonoBehaviour
         return nodes;
     }
 
-    public List<TerrainNode> GetNodesInRange_Square(TerrainNode fromNode, int range)
+    public List<WorldTile> GetNodesInRange_Square(WorldTile fromNode, int range)
     {
-        var nodes = new List<TerrainNode>();
+        var nodes = new List<WorldTile>();
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {

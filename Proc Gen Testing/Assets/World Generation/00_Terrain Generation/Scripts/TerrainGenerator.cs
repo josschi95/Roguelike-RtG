@@ -43,18 +43,11 @@ namespace JS.WorldGeneration
         [SerializeField] private float lacunarity = 2f;
         [SerializeField] private Vector2 offset;
 
-        private List<TerrainNode> water;
-        private List<TerrainNode> land;
+        private List<WorldTile> water;
+        private List<WorldTile> land;
 
-        private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
-        //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.Desert,                   BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYEST
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.TemperateGrassland,       BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYER
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.Woodland,              BiomeTypes.Woodland,                 BiomeTypes.Savanna,                  BiomeTypes.Savanna },             //DRY
-        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.Woodland,                 BiomeTypes.TropicalSeasonalForest,   BiomeTypes.Savanna },             //WET
-        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.DeciduousForest,          BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest },  //WETTER
-        { BiomeTypes.BorealForest,  BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.TropicalSeasonalForest,   BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest }   //WETTEST
-        };
+        [SerializeField] private Biome Tundra, Taiga, TemperateGrassland, Shrubland, DeciduousForest, Desert, TropicalSeasonalForest, Savanna, Jungle;
+
 
         public void SetInitialValues(WorldSize size, int seed)
         {
@@ -64,8 +57,8 @@ namespace JS.WorldGeneration
 
             terrainData.ClearData();
             seaLevel = mapFeatures.SeaLevel;
-            water = new List<TerrainNode>();
-            land = new List<TerrainNode>();
+            water = new List<WorldTile>();
+            land = new List<WorldTile>();
 
             mapSize = mapFeatures.MapSize(worldSize);
             origin = new Vector3Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
@@ -105,7 +98,7 @@ namespace JS.WorldGeneration
                     nodeY = worldGenerator.rng.Next(0, mapSize - 1);
                 }*/
 
-                TerrainNode tectonicNode = worldMap.GetNode(nodeX, nodeY);
+                WorldTile tectonicNode = worldMap.GetNode(nodeX, nodeY);
                 tectonicNode.isTectonicPoint = true;
                 float range = worldGenerator.rng.Next(mapFeatures.MinPlateSize(worldSize), mapFeatures.MaxPlateSize(worldSize));
 
@@ -173,7 +166,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     var altitude = GetAltitude(heightMap[x, y]);
                     node.SetAltitude(heightMap[x, y], altitude);
                     if (altitude.isLand) land.Add(node);
@@ -259,15 +252,15 @@ namespace JS.WorldGeneration
         /// <summary>
         /// Flood Fill Algorithm to find all neighbor land/water tiles
         /// </summary>
-        private List<TerrainNode> FloodFillRegion(TerrainNode startNode, bool isLand)
+        private List<WorldTile> FloodFillRegion(WorldTile startNode, bool isLand)
         {
-            var tiles = new List<TerrainNode>();
+            var tiles = new List<WorldTile>();
 
             if (startNode.isNotWater != isLand) throw new UnityException("Start Node does not align with given parameters!");
 
             int[,] mapFlags = new int[mapSize, mapSize];
 
-            Queue<TerrainNode> queue = new Queue<TerrainNode>();
+            Queue<WorldTile> queue = new Queue<WorldTile>();
             queue.Enqueue(startNode);
 
             while(queue.Count > 0)
@@ -294,7 +287,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     if (!node.isNotWater) continue;
                     for (int i = 0; i < node.neighbors.Length; i++)
                     {
@@ -316,7 +309,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     if (node.altitudeZone.isMountain) 
                         node.CheckNeighborMountains();
                 }
@@ -344,7 +337,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     node.SetTemperatureValues(heatMap[x, y], GetTemperatureZone(heatMap[x, y]));
                 }
             }
@@ -381,7 +374,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     node.windDirection = windMap[x, y];
                 }
             }
@@ -398,7 +391,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     node.SetPrecipitationValues(moistureMap[x, y], GetPrecipitationZone(moistureMap[x, y]));
                 }
             }
@@ -444,13 +437,8 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    //50% chance of having no biome expressed...
-                    //if (worldGenerator.rng.Next(0, 100) < 50) continue;
-
-                    TerrainNode node = worldMap.GetNode(x, y);
-
-                    //if (node.isLand) node.SetBiome(GetWhittakerBiome(node));
-                    if (node.isNotWater) node.SetBiome(GetBiomeByTable(node));
+                    WorldTile node = worldMap.GetNode(x, y);
+                    if (node.isNotWater) node.SetBiome(GetWhittakerTableBiome(node));
                 }
             }
 
@@ -458,34 +446,46 @@ namespace JS.WorldGeneration
 
             FindBiomeGroups();
         }
+        
+        //Notes: Change boreal to Taiga, tropical rainforest to jungle
 
-        private Biome GetWhittakerBiome(TerrainNode node)
-        {
-            float avgAnnualTemp = node.avgAnnualTemperature_C;
-            float annualPrecipitation = node.annualPrecipitation_cm;
-
-            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
-            {
-                if (mapFeatures.Biomes[i].FitsWhittakerModel(avgAnnualTemp, annualPrecipitation))
-                    return mapFeatures.Biomes[i];
-            }
-            throw new UnityException("Node temperature and precipitation outside bounds of designated zones. " +
-                avgAnnualTemp + ", " + annualPrecipitation);
-        }
-
-        private Biome GetBiomeByTable(TerrainNode node)
+        private Biome GetWhittakerTableBiome(WorldTile node)
         {
             int temperatureIndex = TemperatureIndex(node.temperatureZone);
             int precipitationIndex = PrecipitationIndex(node.precipitationZone);
 
-            BiomeTypes type = BiomeTable[precipitationIndex, temperatureIndex];
-            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
+            switch (temperatureIndex)
             {
-                if (mapFeatures.Biomes[i].BiomeType == type) return mapFeatures.Biomes[i];
+                case 0:
+                    if (precipitationIndex == 5) return Taiga;
+                    return Tundra;
+                case 1:
+                    if (precipitationIndex >= 3) return Taiga;
+                    return Tundra;
+                case 2:
+                    if (precipitationIndex >= 3) return DeciduousForest;
+                    if (precipitationIndex == 2) return Shrubland;
+                    return TemperateGrassland;
+                case 3:
+                    if (precipitationIndex == 0) return Desert;
+                    if (precipitationIndex == 1) return TemperateGrassland;
+                    if (precipitationIndex == 4) return DeciduousForest;
+                    if (precipitationIndex == 5) return TropicalSeasonalForest;
+                    return Shrubland;
+                case 4:
+                    if (precipitationIndex < 2) return Desert;
+                    if (precipitationIndex == 2) return Savanna;
+                    if (precipitationIndex == 3) return TropicalSeasonalForest;
+                    return Jungle;
+                case 5:
+                    if (precipitationIndex <= 1) return Desert;
+                    if (precipitationIndex <= 3) return Savanna;
+                    return Jungle;
+                default: return Shrubland;
             }
-            throw new UnityException("Node temperature and precipitation outside bounds of designated zones. " +
-                temperatureIndex + ", " + precipitationIndex);
         }
+
+
 
         private int TemperatureIndex(TemperatureZone zone)
         {
@@ -516,7 +516,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     node.AdjustToNeighborBiomes();
                 }
             }
@@ -531,7 +531,7 @@ namespace JS.WorldGeneration
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    TerrainNode node = worldMap.GetNode(x, y);
+                    WorldTile node = worldMap.GetNode(x, y);
                     if (node.BiomeGroup != null && !biomes.Contains(node.BiomeGroup))
                     {
                         node.BiomeGroup.FinalizeValues(biomes.Count);
@@ -549,6 +549,35 @@ namespace JS.WorldGeneration
             if (lacunarity < 1) lacunarity = 1;
             if (octaves < 0) octaves = 0;
         }
+
+
+        #region - Obsolete -
+        /*
+        private Biome GetBiomeByTable(TerrainNode node)
+        {
+            int temperatureIndex = TemperatureIndex(node.temperatureZone);
+            int precipitationIndex = PrecipitationIndex(node.precipitationZone);
+
+            BiomeTypes type = BiomeTable[precipitationIndex, temperatureIndex];
+            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
+            {
+                if (mapFeatures.Biomes[i].BiomeType == type) return mapFeatures.Biomes[i];
+            }
+            throw new UnityException("Node temperature and precipitation outside bounds of designated zones. " +
+                temperatureIndex + ", " + precipitationIndex);
+        }
+
+        private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
+        //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
+        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.Desert,                   BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYEST
+        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.TemperateGrassland,       BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYER
+        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.Woodland,              BiomeTypes.Woodland,                 BiomeTypes.Savanna,                  BiomeTypes.Savanna },             //DRY
+        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.Woodland,                 BiomeTypes.TropicalSeasonalForest,   BiomeTypes.Savanna },             //WET
+        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.DeciduousForest,          BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest },  //WETTER
+        { BiomeTypes.BorealForest,  BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.TropicalSeasonalForest,   BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest }   //WETTEST
+        };
+        */
+        #endregion
     }
 }
 

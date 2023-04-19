@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35fc5d4bfae5f9347b99879c15d086fb, type: 3}
   m_Name: World Map Data
   m_EditorClassIdentifier: 
-  terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
+  <TerrainData>k__BackingField: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
+  <SettlementData>k__BackingField: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}

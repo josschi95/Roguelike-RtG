@@ -1013,6 +1013,15 @@ MonoBehaviour:
   persistence: 0.5
   lacunarity: 2
   offset: {x: 0, y: 0}
+  Tundra: {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}
+  Taiga: {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
+  TemperateGrassland: {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
+  Shrubland: {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
+  DeciduousForest: {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
+  Desert: {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
+  TropicalSeasonalForest: {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
+  Savanna: {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
+  Jungle: {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
 --- !u!4 &261351982
 Transform:
   m_ObjectHideFlags: 0
@@ -3129,10 +3138,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
   - {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
   - {fileID: 11400000, guid: d25dd31f161b12c47831830d3d70380f, type: 2}
-  city: {fileID: 11400000, guid: 3e9674a923d3c564ca0a7f862593afdf, type: 2}
-  town: {fileID: 11400000, guid: 45cc3dcd1a38d9b479ea2bcf2151fd1d, type: 2}
-  village: {fileID: 11400000, guid: 574ae0ee45743f142be67917e03e624c, type: 2}
-  hamlet: {fileID: 11400000, guid: d4407ac68a31b8845b319b9a253f638c, type: 2}
+  settlementTypes:
+  - {fileID: 11400000, guid: 3e9674a923d3c564ca0a7f862593afdf, type: 2}
+  - {fileID: 11400000, guid: 45cc3dcd1a38d9b479ea2bcf2151fd1d, type: 2}
+  - {fileID: 11400000, guid: 574ae0ee45743f142be67917e03e624c, type: 2}
+  - {fileID: 11400000, guid: d4407ac68a31b8845b319b9a253f638c, type: 2}
 --- !u!1 &923051950
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +6488,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
   landTile: {fileID: 11400000, guid: cfd3463562d845249acc5ff36b15d607, type: 2}
   waterTile: {fileID: 11400000, guid: e2d57eb18a0d7b649873ac9b009e87d8, type: 2}
+  biomes: []
 --- !u!114 &1693811273
 MonoBehaviour:
   m_ObjectHideFlags: 0

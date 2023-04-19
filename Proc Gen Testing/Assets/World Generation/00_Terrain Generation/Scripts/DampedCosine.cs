@@ -27,7 +27,7 @@ namespace JS.WorldGeneration
                     {
                         moistureValue += (seaLevel * 2f) - heightMap[x, y];
                     }
-                    moistureValue += rng.Next(0, 1) * 0.1f;
+                    moistureValue += rng.Next(0, 100) * 0.001f; //add random value between 0 and 0.1f;
 
                     moistureMap[x, y] = Mathf.Clamp(moistureValue, 0, 1);
                 }

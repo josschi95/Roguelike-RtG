@@ -5,7 +5,6 @@ namespace JS.WorldGeneration
     [CreateAssetMenu(fileName = "New Biome", menuName = "World Generation/Terrain/Biome")]
     public class Biome : ScriptableObject
     {
-        [field: SerializeField] public BiomeTypes BiomeType { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
         [field: SerializeField] public RuleTile RuleTile { get; private set; }
 
@@ -62,18 +61,4 @@ namespace JS.WorldGeneration
             return true;
         }
     }
-}
-
-public enum BiomeTypes
-{
-    BorealForest,
-    Desert,
-    Savanna,
-    DeciduousForest,
-    TemperateGrassland,
-    //TemperateRainforest,
-    TropicalSeasonalForest,
-    TropicalRainforest,
-    Tundra,
-    Woodland
 }

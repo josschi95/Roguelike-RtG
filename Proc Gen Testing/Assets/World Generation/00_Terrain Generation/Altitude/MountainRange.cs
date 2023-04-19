@@ -6,7 +6,7 @@ namespace JS.WorldGeneration
     public class MountainRange
     {
         public int ID { get; private set; }
-        public List<TerrainNode> Nodes;
+        public List<WorldTile> Nodes;
         public List<River> Rivers;
 
         public float AverageAltitude;
@@ -14,7 +14,7 @@ namespace JS.WorldGeneration
 
         public MountainRange()
         {
-            Nodes = new List<TerrainNode>();
+            Nodes = new List<WorldTile>();
             Rivers = new List<River>();
         }
 

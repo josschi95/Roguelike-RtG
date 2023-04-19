@@ -17,3 +17,4 @@ MonoBehaviour:
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 0447af590868e6d47b022f6dd9fe9cf5, type: 2}
   <isLand>k__BackingField: 1
   <isMountain>k__BackingField: 1
+  <SecondaryBiome>k__BackingField: {fileID: 11400000, guid: b7473dfa573ff72409ee845417ab166e, type: 2}

@@ -127,14 +127,14 @@ namespace JS.WorldGeneration
             // !!! This method here is taking up the vast majority of generation time !!!
             yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
             progressBar.fillAmount = 0.3f;
-            Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
+            //Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Land Masses";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
 
             yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
             progressBar.fillAmount = 0.3f;
-            Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
+            //Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Rivers";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;

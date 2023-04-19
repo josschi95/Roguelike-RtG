@@ -6,7 +6,7 @@ namespace JS.WorldGeneration
 	public class River
 	{
 		public int Length;
-		public List<TerrainNode> Nodes;
+		public List<WorldTile> Nodes;
 		public int ID { get; private set; }
 
 		public int Intersections;
@@ -17,7 +17,7 @@ namespace JS.WorldGeneration
 
 		public River()
 		{
-			Nodes = new List<TerrainNode>();
+			Nodes = new List<WorldTile>();
 		}
 
 		public void Register(int id)
@@ -29,7 +29,7 @@ namespace JS.WorldGeneration
 			}
 		}
 
-		public void AddNode(TerrainNode node)
+		public void AddNode(WorldTile node)
 		{
 			Nodes.Add(node);
 		}

@@ -5,13 +5,15 @@ using JS.WorldGeneration;
 public class MapDisplay : MonoBehaviour
 {
     [SerializeField] private WorldMapData worldMap;
-    [SerializeField] private TerrainData terrainData;
 
     [Space]
 
-    [SerializeField] private Tilemap oceanTileMap;
-    [SerializeField] private Tilemap landTileMap;
-    [SerializeField] private Tilemap biomeMap;
+    [SerializeField] private Tilemap oceanMap;
+    [SerializeField] private Tilemap landMap;
+    [SerializeField] private Tilemap terrainFeatureMap;
+    [SerializeField] private Tilemap riverMap;
+    [SerializeField] private Tilemap roadMap;
+    [SerializeField] private Tilemap settlementMap;
     [SerializeField] private Tilemap infoMap;
     [SerializeField] private TileBase highlightTile;
 
@@ -24,67 +26,103 @@ public class MapDisplay : MonoBehaviour
     [SerializeField] private RuleTile landTile;
     [SerializeField] private RuleTile waterTile;
 
-    public BiomeTypes highlightedBiome { get; set; }
+    public Biome[] biomes;
+    public Biome biomeToHighlight { get; set; }
 
-    public void DisplayHeightMap()
+    //Ok so this is how I'm going to have to do this
+    //ocean map goes at the bottom
+    //flat biome map goes on top of that
+    //feature map goes on top of that - 
+
+
+    //you know what, features can just go over biomes
+    //so have the normal biome map
+    //mountains, trees, etc. go on top of that or are included
+    //then rivers go over top of that
+    //then roads go over top of that
+    //then settlements go over top of that
+
+    public void DisplayWorldMap()
     {
-        oceanTileMap.ClearAllTiles();
-        landTileMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
+        oceanMap.ClearAllTiles();
+        landMap.ClearAllTiles();
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+
+        DisplayRivers();
+        DisplayRoads();
+        DisplaySettlements();
+
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
                 var node = worldMap.GetNode(x, y);
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                
-                oceanTileMap.SetTile(tilePos, waterTile);
-                if (node.isNotWater) landTileMap.SetTile(tilePos, landTile);
-            }
-        }
-    }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
 
-    public void DisplayBiomeMap()
-    {
-        biomeMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
-
-        for (int x = 0; x < terrainData.mapSize; x++)
-        {
-            for (int y = 0; y < terrainData.mapSize; y++)
-            {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-
-                if (node.Settlement != null && node.Settlement.Node == node)
+                oceanMap.SetTile(tilePos, waterTile);
+                if (node.isNotWater)
                 {
-                    biomeMap.SetTile(tilePos, node.Settlement.type.settlementTile);
-                    continue;
-                }
-
-                if (node.biome == null) continue;
-
-                biomeMap.SetTile(tilePos, node.biome.RuleTile);
+                    landMap.SetTile(tilePos, node.PrimaryBiome.RuleTile);
+                    //if (node.isCoast) oceanMap.SetTile(tilePos, waterTile);
+                }              
             }
         }
     }
 
-    public void ClearDisplay()
+    private void DisplayRivers()
+    {
+        riverMap.ClearAllTiles();
+
+        foreach(var river in worldMap.TerrainData.Rivers)
+        {
+            for (int i = 0; i < river.Nodes.Count; i++)
+            {
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(river.Nodes[i].x, river.Nodes[i].y);
+                riverMap.SetTile(tilePos, worldMap.TerrainData.RiverTile);
+            }
+        }
+    }
+
+    private void DisplayRoads()
+    {
+        /*roadMap.ClearAllTiles();
+
+        foreach (var road in worldMap.SettlementData.Roads)
+        {
+            for (int i = 0; i < road.Nodes.Count; i++)
+            {
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(road.Nodes[i].x, road.Nodes[i].y);
+                riverMap.SetTile(tilePos, worldMap.TerrainData.RiverTile);
+            }
+        }*/
+    }
+
+    private void DisplaySettlements()
+    {
+        settlementMap.ClearAllTiles();
+
+        foreach (var settlement in worldMap.SettlementData.Settlements)
+        {
+            var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(settlement.Node.x, settlement.Node.y);
+            settlementMap.SetTile(tilePos, settlement.type.settlementTile);
+        }
+    }
+
+    public void ClearInfoMap()
     {
         infoMap.ClearAllTiles();
     }
 
+    #region - Climate Values -
     public void DisplayHeatMap()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
                 var node = worldMap.GetNode(x, y);
 
                 infoMap.SetTile(tilePos, node.temperatureZone.Tile);
@@ -96,13 +134,12 @@ public class MapDisplay : MonoBehaviour
     public void DisplayMoistureMap()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
                 var node = worldMap.GetNode(x, y);
 
                 infoMap.SetTile(tilePos, node.precipitationZone.Tile);
@@ -112,31 +149,32 @@ public class MapDisplay : MonoBehaviour
 
     public void DisplayWindMap()
     {
-        //var worldMap = WorldMap.instance;
         infoMap.ClearAllTiles();
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
                 var node = worldMap.GetNode(x, y);
 
                 infoMap.SetTile(tilePos, windDirectionTiles[(int)node.windDirection]);
             }
         }
     }
+    #endregion
 
+    #region - Highlight Features -
     public void HighlightTectonicPlates()
     {
         infoMap.ClearAllTiles();
         //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
                 var node = worldMap.GetNode(x, y);
                 if (node.isTectonicPoint)
                 {
@@ -151,16 +189,13 @@ public class MapDisplay : MonoBehaviour
         infoMap.ClearAllTiles();
         //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        foreach (var biome in worldMap.TerrainData.Biomes)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            if (biome.biome != biomeToHighlight) continue;
+            for (int i = 0; i < biome.Nodes.Count; i++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-                if (node.biome != null && node.biome.BiomeType == highlightedBiome)
-                {
-                    infoMap.SetTile(tilePos, highlightTile);
-                }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(biome.Nodes[i].x, biome.Nodes[i].y);
+                infoMap.SetTile(tilePos, highlightTile);
             }
         }
     }
@@ -168,18 +203,13 @@ public class MapDisplay : MonoBehaviour
     public void HighlightMountains()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        foreach (var mountain in worldMap.TerrainData.Mountains)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int i = 0; i < mountain.Nodes.Count; i++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-                if (node.Mountain != null)
-                {
-                    infoMap.SetTile(tilePos, highlightTile);
-                }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(mountain.Nodes[i].x, mountain.Nodes[i].y);
+                infoMap.SetTile(tilePos, highlightTile);
             }
         }
     }
@@ -187,18 +217,13 @@ public class MapDisplay : MonoBehaviour
     public void HighlightIslands()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        foreach (var island in worldMap.TerrainData.Islands)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int i = 0; i < island.Nodes.Count; i++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-                if (node.Island != null)
-                {
-                    infoMap.SetTile(tilePos, highlightTile);
-                }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(island.Nodes[i].x, island.Nodes[i].y);
+                infoMap.SetTile(tilePos, highlightTile);
             }
         }
     }
@@ -206,18 +231,13 @@ public class MapDisplay : MonoBehaviour
     public void HighlightLakes()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        foreach (var lake in worldMap.TerrainData.Lakes)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int i = 0; i < lake.Nodes.Count; i++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-                if (node.Lake != null)
-                {
-                    infoMap.SetTile(tilePos, highlightTile);
-                }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(lake.Nodes[i].x, lake.Nodes[i].y);
+                infoMap.SetTile(tilePos, highlightTile);
             }
         }
     }
@@ -225,18 +245,13 @@ public class MapDisplay : MonoBehaviour
     public void HighlightSettlements()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        foreach (var settlement in worldMap.SettlementData.Settlements)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int i = 0; i < settlement.territory.Count; i++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
-                var node = worldMap.GetNode(x, y);
-                if (node.Settlement != null)
-                {
-                    infoMap.SetTile(tilePos, highlightTile);
-                }
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(settlement.territory[i].x, settlement.territory[i].y);
+                infoMap.SetTile(tilePos, highlightTile);
             }
         }
     }
@@ -244,13 +259,12 @@ public class MapDisplay : MonoBehaviour
     public void HighlightCoasts()
     {
         infoMap.ClearAllTiles();
-        //var worldMap = WorldMap.instance;
 
-        for (int x = 0; x < terrainData.mapSize; x++)
+        for (int x = 0; x < worldMap.Width; x++)
         {
-            for (int y = 0; y < terrainData.mapSize; y++)
+            for (int y = 0; y < worldMap.Height; y++)
             {
-                var tilePos = terrainData.mapOrigin + new Vector3Int(x, y);
+                var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
                 var node = worldMap.GetNode(x, y);
                 if (node.isCoast)
                 {
@@ -260,7 +274,7 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
-    public void HighlightNode(TerrainNode node)
+    public void HighlightNode(WorldTile node)
     {
         infoMap.ClearAllTiles();
         //var worldMap = WorldMap.instance;
@@ -294,4 +308,5 @@ public class MapDisplay : MonoBehaviour
             infoMap.SetTile(newPos, highlightTile);
         }
     }
+    #endregion
 }

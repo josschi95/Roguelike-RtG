@@ -3,7 +3,7 @@ using JS.WorldGeneration;
 
 public class Settlement
 {
-    public TerrainNode Node { get; private set; }
+    public WorldTile Node { get; private set; }
 
     public string name { get; private set; }
     public int ID { get; private set; }
@@ -13,12 +13,12 @@ public class Settlement
     public bool isSeaFaring { get; private set; }
     public bool isSubterranean { get; private set; }
 
-    public List<TerrainNode> territory;
-    public List<TerrainNode> areaOfInfluence;
+    public List<WorldTile> territory;
+    public List<WorldTile> areaOfInfluence;
 
     private Dictionary<Settlement, int> foreignRelations;
 
-    public Settlement(string name, int ID, TerrainNode node, SettlementType type, HumanoidTribe humanoids, int population)
+    public Settlement(string name, int ID, WorldTile node, SettlementType type, HumanoidTribe humanoids, int population)
     {
         this.name = name;
         this.ID = ID;
@@ -34,12 +34,12 @@ public class Settlement
         tribe = humanoids;
         this.population = population;
 
-        territory = new List<TerrainNode>();
-        areaOfInfluence = new List<TerrainNode>();
+        territory = new List<WorldTile>();
+        areaOfInfluence = new List<WorldTile>();
         foreignRelations = new Dictionary<Settlement, int>();
     }
 
-    public void Relocate(TerrainNode node)
+    public void Relocate(WorldTile node)
     {
         Node.Settlement = null;
         Node = node;
@@ -52,7 +52,7 @@ public class Settlement
         population = newPopulation;
     }
 
-    public void AddTerritory(TerrainNode node)
+    public void AddTerritory(WorldTile node)
     {
         if (territory.Contains(node)) return;
 
@@ -60,7 +60,7 @@ public class Settlement
         node.Territory = this;
     }
 
-    public void RemoveTerritory(TerrainNode node)
+    public void RemoveTerritory(WorldTile node)
     {
         if (!territory.Contains(node)) return;
 
@@ -68,12 +68,12 @@ public class Settlement
         territory.Remove(node);
     }
 
-    public void AddAreaOfInfluence(TerrainNode node)
+    public void AddAreaOfInfluence(WorldTile node)
     {
         areaOfInfluence.Add(node);
     }
 
-    public void RemoveAreaOfInfluence(TerrainNode node)
+    public void RemoveAreaOfInfluence(WorldTile node)
     {
         areaOfInfluence.Remove(node);
     }

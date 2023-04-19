@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19ed4a44b1bdb64fadb448260c4d59c, type: 3}
+  m_Name: 02_Village
+  m_EditorClassIdentifier: 
+  <MaxTerritory>k__BackingField: 10
+  <territorySize>k__BackingField: 2
+  <minPopulation>k__BackingField: 50
+  <maxPopulation>k__BackingField: 149
+  <settlementTile>k__BackingField: {fileID: 11400000, guid: 1ba1ff15983f3a14bbcec5d0e085c636, type: 2}

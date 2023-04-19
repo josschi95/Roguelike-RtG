@@ -11,6 +11,7 @@ namespace JS.WorldGeneration
         [field: SerializeField] public RuleTile RuleTile { get; private set; }
         [field: SerializeField] public bool isLand { get; private set; }
         [field: SerializeField] public bool isMountain { get; private set; }
+        [field: SerializeField] public Biome SecondaryBiome { get; private set; }
 
         public float Height => height;
     }

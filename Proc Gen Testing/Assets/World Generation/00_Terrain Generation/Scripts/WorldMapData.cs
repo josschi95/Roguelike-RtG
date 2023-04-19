@@ -5,9 +5,9 @@ using JS.WorldGeneration;
 [CreateAssetMenu(menuName = "Scriptable Objects/World Map Data")]
 public class WorldMapData : ScriptableObject
 {
-    [SerializeField] private TerrainData terrainData;
-
-    private Grid<TerrainNode> grid;
+    [field: SerializeField] public TerrainData TerrainData { get; private set; }
+    [field: SerializeField] public SettlementData SettlementData { get; private set; }
+    private Grid<WorldTile> grid;
 
 
     public int Height => grid.GetHeight();
@@ -19,7 +19,7 @@ public class WorldMapData : ScriptableObject
         float halfHeight = height / 2f;
         Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-        grid = new Grid<TerrainNode>(width, height, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(width, height, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < width; x++)
         {
@@ -32,12 +32,12 @@ public class WorldMapData : ScriptableObject
 
     public void CreateGridFromData()
     {
-        int size = terrainData.mapSize;
+        int size = TerrainData.mapSize;
         float halfWidth = size / 2f;
         float halfHeight = size / 2f;
         Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-        grid = new Grid<TerrainNode>(size, size, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < size; x++)
         {
@@ -56,7 +56,7 @@ public class WorldMapData : ScriptableObject
         float halfHeight = size / 2f;
         Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-        grid = new Grid<TerrainNode>(size, size, 1, origin, (Grid<TerrainNode> g, int x, int y) => new TerrainNode(g, x, y));
+        grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
         for (int x = 0; x < size; x++)
         {
@@ -70,47 +70,37 @@ public class WorldMapData : ScriptableObject
         }
     }
 
-    public TerrainNode GetNode(int x, int y)
+    public WorldTile GetNode(int x, int y)
     {
         return grid.GetGridObject(x, y);
     }
 
-    public TerrainNode GetNode(Vector3 worldPosition)
+    public WorldTile GetNode(Vector3 worldPosition)
     {
         return grid.GetGridObject(worldPosition);
     }
 
-    public Vector3 GetPosition(TerrainNode node)
+    public Vector3 GetPosition(WorldTile node)
     {
         return grid.GetWorldPosition(node.x, node.y);
     }
 
-    public int GetNodeVerticalDistance(TerrainNode fromNode, TerrainNode toNode)
-    {
-        return Mathf.Abs(fromNode.y - toNode.y);
-    }
-
-    public int GetNodeHorizontalDistance(TerrainNode fromNode, TerrainNode toNode)
-    {
-        return Mathf.Abs(fromNode.x - toNode.x);
-    }
-
-    public int GetNodeDistance_Path(TerrainNode fromNode, TerrainNode toNode)
+    public int GetNodeDistance_Path(WorldTile fromNode, WorldTile toNode)
     {
         int x = Mathf.Abs(fromNode.x - toNode.x);
         int y = Mathf.Abs(fromNode.y - toNode.y);
         return x + y;
     }
 
-    public float GetNodeDistance_Straight(TerrainNode fromNode, TerrainNode toNode)
+    public float GetNodeDistance_Straight(WorldTile fromNode, WorldTile toNode)
     {
 
         return Mathf.Sqrt(Mathf.Pow(fromNode.x - toNode.x, 2) + Mathf.Pow(fromNode.y - toNode.y, 2));
     }
 
-    public List<TerrainNode> GetNodesInRange_Circle(TerrainNode fromNode, int range)
+    public List<WorldTile> GetNodesInRange_Circle(WorldTile fromNode, int range)
     {
-        var nodes = new List<TerrainNode>();
+        var nodes = new List<WorldTile>();
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {
@@ -126,27 +116,9 @@ public class WorldMapData : ScriptableObject
         return nodes;
     }
 
-    public List<TerrainNode> GetNodesInRange_Diamond(TerrainNode fromNode, int range)
+    public List<WorldTile> GetNodesInRange_Square(WorldTile fromNode, int range)
     {
-        var nodes = new List<TerrainNode>();
-
-        for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
-        {
-            for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
-            {
-                if (x < 0 || x > grid.GetWidth() - 1) continue;
-                if (y < 0 || y > grid.GetHeight() - 1) continue;
-
-                var node = grid.GetGridObject(x, y);
-                if (GetNodeDistance_Path(fromNode, node) <= range) nodes.Add(node);
-            }
-        }
-        return nodes;
-    }
-
-    public List<TerrainNode> GetNodesInRange_Square(TerrainNode fromNode, int range)
-    {
-        var nodes = new List<TerrainNode>();
+        var nodes = new List<WorldTile>();
 
         for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
         {
@@ -164,35 +136,35 @@ public class WorldMapData : ScriptableObject
 
 
     #region - Pathfinding -
-    private List<TerrainNode> openList; //nodes to search
-    private List<TerrainNode> closedList; //already searched
+    private List<WorldTile> openList; //nodes to search
+    private List<WorldTile> closedList; //already searched
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
     
-    public int GetPathCount(TerrainNode startNode, TerrainNode endNode, Settlement settlement = null)
+    public int GetPathCount(WorldTile startNode, WorldTile endNode, Settlement settlement = null)
     {
         return (FindNodePath(startNode.x, startNode.y, endNode.x, endNode.y, settlement)).Count;
     }
 
     //Returns a list of nodes that can be travelled to reach a target destination
-    public List<TerrainNode> FindNodePath(int startX, int startY, int endX, int endY, Settlement settlement = null)
+    public List<WorldTile> FindNodePath(int startX, int startY, int endX, int endY, Settlement settlement = null)
     {
-        TerrainNode startNode = grid.GetGridObject(startX, startY);
+        WorldTile startNode = grid.GetGridObject(startX, startY);
         //Debug.Log("Start: " + startNode.x + "," + startNode.y);
-        TerrainNode endNode = grid.GetGridObject(endX, endY);
+        WorldTile endNode = grid.GetGridObject(endX, endY);
         //Debug.Log("End: " + endNode.x + "," + endNode.y);
 
-        openList = new List<TerrainNode> { startNode };
-        closedList = new List<TerrainNode>();
+        openList = new List<WorldTile> { startNode };
+        closedList = new List<WorldTile>();
 
         for (int x = 0; x < grid.GetWidth(); x++)
         {
             for (int y = 0; y < grid.GetHeight(); y++)
             {
-                TerrainNode pathNode = grid.GetGridObject(x, y);
+                WorldTile pathNode = grid.GetGridObject(x, y);
                 pathNode.gCost = int.MaxValue;
                 pathNode.CalculateFCost();
-                pathNode.cameFromNode = null;
+                pathNode.cameFromTile = null;
             }
         }
 
@@ -202,7 +174,7 @@ public class WorldMapData : ScriptableObject
 
         while (openList.Count > 0)
         {
-            TerrainNode currentNode = GetLowestFCostNode(openList);
+            WorldTile currentNode = GetLowestFCostNode(openList);
 
             if (currentNode == endNode)
             {
@@ -213,7 +185,7 @@ public class WorldMapData : ScriptableObject
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            foreach (TerrainNode neighbour in GetNeighbourList(currentNode))
+            foreach (WorldTile neighbour in GetNeighbourList(currentNode))
             {
                 if (closedList.Contains(neighbour)) continue;
 
@@ -236,7 +208,7 @@ public class WorldMapData : ScriptableObject
                 if (tentativeGCost < neighbour.gCost)
                 {
                     //If it's lower than the cost previously stored on the neightbor, update it
-                    neighbour.cameFromNode = currentNode;
+                    neighbour.cameFromTile = currentNode;
                     neighbour.gCost = tentativeGCost;
                     neighbour.hCost = CalculateDistanceCost(neighbour, endNode);
                     neighbour.CalculateFCost();
@@ -251,7 +223,7 @@ public class WorldMapData : ScriptableObject
         return null;
     }
 
-    private int CalculateDistanceCost(TerrainNode a, TerrainNode b)
+    private int CalculateDistanceCost(WorldTile a, WorldTile b)
     {
         int xDistance = Mathf.Abs(a.x - b.x);
         int yDistance = Mathf.Abs(a.y - b.y);
@@ -260,9 +232,9 @@ public class WorldMapData : ScriptableObject
         //return MOVE_STRAIGHT_COST * remaining;
     }
 
-    private TerrainNode GetLowestFCostNode(List<TerrainNode> pathNodeList)
+    private WorldTile GetLowestFCostNode(List<WorldTile> pathNodeList)
     {
-        TerrainNode lowestFCostNode = pathNodeList[0];
+        WorldTile lowestFCostNode = pathNodeList[0];
 
         for (int i = 0; i < pathNodeList.Count; i++)
         {
@@ -273,25 +245,25 @@ public class WorldMapData : ScriptableObject
         return lowestFCostNode;
     }
 
-    private List<TerrainNode> CalculatePath(TerrainNode endNode)
+    private List<WorldTile> CalculatePath(WorldTile endNode)
     {
-        List<TerrainNode> path = new List<TerrainNode>();
+        List<WorldTile> path = new List<WorldTile>();
         path.Add(endNode);
-        TerrainNode currentNode = endNode;
-        while (currentNode.cameFromNode != null)
+        WorldTile currentNode = endNode;
+        while (currentNode.cameFromTile != null)
         {
             //Start at the end and work backwards
-            path.Add(currentNode.cameFromNode);
-            currentNode = currentNode.cameFromNode;
+            path.Add(currentNode.cameFromTile);
+            currentNode = currentNode.cameFromTile;
         }
         path.Reverse();
         return path;
     }
 
     //Return a list of all neighbors, up/down/left/right
-    private List<TerrainNode> GetNeighbourList(TerrainNode currentNode)
+    private List<WorldTile> GetNeighbourList(WorldTile currentNode)
     {
-        List<TerrainNode> neighborList = new List<TerrainNode>();
+        List<WorldTile> neighborList = new List<WorldTile>();
 
         //Up
         if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x, currentNode.y + 1));

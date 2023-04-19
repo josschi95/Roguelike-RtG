@@ -7,11 +7,11 @@ namespace JS.WorldGeneration
     {
         public int ID { get; private set; }
         public Biome biome;
-        public List<TerrainNode> Nodes;
+        public List<WorldTile> Nodes;
 
         public BiomeGroup(Biome biome)
         {
-            Nodes = new List<TerrainNode>();
+            Nodes = new List<WorldTile>();
             this.biome = biome;
         }
 

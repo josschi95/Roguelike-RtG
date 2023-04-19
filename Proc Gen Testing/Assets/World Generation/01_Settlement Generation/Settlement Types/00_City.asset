@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19ed4a44b1bdb64fadb448260c4d59c, type: 3}
+  m_Name: 00_City
+  m_EditorClassIdentifier: 
+  <MaxTerritory>k__BackingField: 150
+  <territorySize>k__BackingField: 5
+  <minPopulation>k__BackingField: 300
+  <maxPopulation>k__BackingField: 500
+  <settlementTile>k__BackingField: {fileID: 11400000, guid: 5ad9173f4b2cc2a408000972614434d1, type: 2}

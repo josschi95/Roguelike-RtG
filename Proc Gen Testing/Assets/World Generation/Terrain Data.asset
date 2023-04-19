@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12b150a60fd1bf4dbd006faa57dea3f, type: 3}
   m_Name: Terrain Data
   m_EditorClassIdentifier: 
+  <RiverTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}

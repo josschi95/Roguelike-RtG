@@ -6,15 +6,15 @@ namespace JS.WorldGeneration
     public class Lake
     {
         public int ID { get; private set; }
-        private List<TerrainNode> nodes;
-        public List<TerrainNode> Nodes => nodes;
+        private List<WorldTile> nodes;
+        public List<WorldTile> Nodes => nodes;
 
         public Lake()
         {
-            nodes = new List<TerrainNode>();
+            nodes = new List<WorldTile>();
         }
 
-        public void Add(TerrainNode node)
+        public void Add(WorldTile node)
         {
             if (!nodes.Contains(node))
             {
@@ -23,7 +23,7 @@ namespace JS.WorldGeneration
             node.Lake = this;
         }
 
-        public void AddRange(List<TerrainNode> newNodes)
+        public void AddRange(List<WorldTile> newNodes)
         {
             for (int i = 0; i < newNodes.Count; i++)
             {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shrubland
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Shrubland
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 8f52aeae25b375b4aa15d97a456267a9, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 33ef3924964dfcf48a92c88df140e281, type: 2}
   minAvgAnnualTemperature: 7
   maxAvgAnnualTemperature: 20
   minAnnualPrecipitation: 45

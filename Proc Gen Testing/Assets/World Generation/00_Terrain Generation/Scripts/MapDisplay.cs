@@ -78,7 +78,8 @@ public class MapDisplay : MonoBehaviour
             for (int i = 0; i < river.Nodes.Count; i++)
             {
                 var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(river.Nodes[i].x, river.Nodes[i].y);
-                riverMap.SetTile(tilePos, worldMap.TerrainData.RiverTile);
+                var tile = worldMap.TerrainData.GetRiverTile(river.Flow[i]);
+                riverMap.SetTile(tilePos, tile);
             }
         }
     }
@@ -288,6 +289,15 @@ public class MapDisplay : MonoBehaviour
         var pos = worldMap.GetPosition(node);
         Vector3Int newPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
         infoMap.SetTile(newPos, highlightTile);
+
+        if (node.rivers.Count > 0)
+        {
+            Debug.Log("River Info:");
+            for (int i = 0; i < node.rivers[0].Nodes.Count; i++)
+            {
+                Debug.Log(node.rivers[0].Nodes[i].x + "," + node.rivers[0].Nodes[i].y + " : " + node.rivers[0].Flow[i].ToString());
+            }
+        }
 
         /*for (int i = 0; i < node.neighbors.Length; i++)
         {

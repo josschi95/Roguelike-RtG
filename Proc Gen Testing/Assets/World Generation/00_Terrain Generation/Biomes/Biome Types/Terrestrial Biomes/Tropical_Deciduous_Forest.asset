@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tropical_Deciduous_Forest
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Tropical Seasonal Forest
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 306b0a28b31b81945af67497c52e6ce1, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 839faba153141c149bbbb78ff52ef7a9, type: 2}
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 125

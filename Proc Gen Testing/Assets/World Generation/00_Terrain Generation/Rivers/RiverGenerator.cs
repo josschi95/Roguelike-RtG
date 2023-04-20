@@ -25,7 +25,7 @@ namespace JS.WorldGeneration
         private List<RiverGroup> riverGroups;
 
 
-        public List<River> GenerateRivers(int mapSize, MountainRange[] mountains, int count)
+        public List<River> GenerateRivers(int mapSize, int count)
         {
             //worldMap = WorldMap.instance;
 
@@ -37,44 +37,11 @@ namespace JS.WorldGeneration
             {
                 attempts++;
 
-                //Grab a random node from the foot of a random mountain
-                //If attempts are at less than half of what is allowed, try to find an unoccupied mountain
-                var mountain = FindRiverSource(mountains, attempts < MaxRiverAttempts / 2);
-                WorldTile node;
-                if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
-                else node = worldMap.GetNode(worldGenerator.rng.Next(0, mapSize - 1), worldGenerator.rng.Next(0, mapSize - 1));
-
-                if (node.altitude < MinRiverHeight) continue;
-                //Maybe add an extra property for if Land/Water
-
-                //Can start a river here
-                River river = new River();
-
-                //Find river initial direction
-                river.CurrentDirection = FindLowestNeighborDirection(node);
-
-                //Recursively find a path to water
-                FindPathToWater(node, river.CurrentDirection, river);
-
-                //Ensure the generated river meets all requirements
-                if (river.TurnCount < MinRiverTurns)
+                if (TryGenerateRiver(attempts < MaxRiverAttempts / 2, out River river))
                 {
-                    //Debug.Log("Not Enough Turns");
-                    continue;
+                    river.Register(rivers.Count);
+                    rivers.Add(river);
                 }
-                else if (river.Nodes.Count < MinRiverLength)
-                {
-                    //Debug.Log("Not Enough Nodes");
-                    continue;
-                }
-                else if (river.Intersections > MaxRiverIntersections)
-                {
-                    //Debug.Log("Too many intersections");
-                    continue;
-                }
-
-                river.Register(rivers.Count);
-                rivers.Add(river);
             }
 
             BuildRiverGroups(mapSize);
@@ -86,10 +53,38 @@ namespace JS.WorldGeneration
             return rivers;
         }
 
-        private MountainRange FindRiverSource(MountainRange[] mountains, bool riverLessMountain)
+        private bool TryGenerateRiver(bool findEmptyMountain, out River river)
         {
+            river = new River();
+            var mountain = FindRiverSource(findEmptyMountain);
+            WorldTile node;
+
+            if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
+            else node = worldMap.GetNode(worldGenerator.rng.Next(0, worldMap.Width - 1), worldGenerator.rng.Next(0, worldMap.Height - 1));
+
+            if (node.altitude < MinRiverHeight) return false;
+
+            //Find river initial direction
+            river.CurrentDirection = FindLowestNeighborDirection(node);
+
+            //Recursively find a path to water
+            FindPathToWater(node, river.CurrentDirection, river);
+
+            //Ensure the generated river meets all requirements
+            if (river.TurnCount < MinRiverTurns) return false;
+
+            else if (river.Nodes.Count < MinRiverLength) return false;
+
+            else if (river.Intersections > MaxRiverIntersections) return false;
+
+            return true;
+        }
+
+        private MountainRange FindRiverSource(bool riverLessMountain)
+        {
+            var mountains = worldMap.TerrainData.Mountains;
             if (mountains.Length == 0) return null;
-            if (!riverLessMountain) return mountains[worldGenerator.rng.Next(0, mountains.Length)];
+            if (!riverLessMountain) return worldMap.TerrainData.Mountains[worldGenerator.rng.Next(0, mountains.Length)];
 
             var shuffledList = new List<MountainRange>(mountains);
             for (int i = 0; i < shuffledList.Count; i++)
@@ -164,6 +159,8 @@ namespace JS.WorldGeneration
             if (node.rivers.Count > 0) river.Intersections++;
 
             river.AddNode(node);
+            if (node.x == 0 || node.y == 0 || node.x == worldMap.Width - 1 || node.y == worldMap.Height - 1) return;
+
 
             // get neighbors
             WorldTile north = GetNeighbor(node, Direction.North);
@@ -199,6 +196,7 @@ namespace JS.WorldGeneration
 
             float min = Mathf.Min(Mathf.Min(Mathf.Min(northValue, southValue), eastValue), westValue);
             if (min == int.MaxValue) return; //exit if no minimum is found
+
 
             if (min == northValue)
             {
@@ -438,34 +436,3 @@ namespace JS.WorldGeneration
         }
     }
 }
-
-/*
- * private TerrainNode FindFootOfMountain(MountainRange mountain)
-{
-    for (int i = 0; i < mountain.Nodes.Count; i++)
-    {
-        for (int n = 0; n < mountain.Nodes[i].neighbors.Length; n++)
-        {
-            //The neighbor is part of the mountain
-            if (mountain.Nodes.Contains(mountain.Nodes[i].neighbors[n])) continue;
-            //The neighbor is not part of the mountain but is adjacen to it
-            return mountain.Nodes[i];//.neighbors[n];
-        }
-    }
-        return mountain.Nodes[0];
-        }
-
-         private void AdjustRiverNodes(int width, int height)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    var node = worldMap.GetNode(x, y);
-                    if (node.rivers.Count <= 0) continue;
-                    node.SetBiome(riverBiome);
-                }
-            }
-        }
- 
- */

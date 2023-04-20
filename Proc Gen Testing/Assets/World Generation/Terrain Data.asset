@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: Terrain Data
   m_EditorClassIdentifier: 
   <RiverTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
+  riverNorth: {fileID: 11400000, guid: c44a25e09bde6f349adedbe041a52e8e, type: 2}
+  riverEast: {fileID: 11400000, guid: 5a1f507d9ac8f2e4ea96ecc83c84b167, type: 2}
+  riverNorthEast: {fileID: 11400000, guid: 20e1d996b5b244c46a2fbd694fa7ca70, type: 2}
+  riverNorthWest: {fileID: 11400000, guid: f8c9bbd039f304644bdb23f8162ad737, type: 2}
+  riverSouthEast: {fileID: 11400000, guid: 3a2441f349de9b745b3ba0dd9fb0a612, type: 2}
+  riverSouthWest: {fileID: 11400000, guid: 23fe628168426b64d8412fd523dbcbfb, type: 2}

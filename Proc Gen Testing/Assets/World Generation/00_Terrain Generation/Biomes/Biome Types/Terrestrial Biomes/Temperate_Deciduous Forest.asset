@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Temperate_Deciduous Forest
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Deciduous Forest
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 9ab6363eb01531e4ba86f21bfd172a61, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 767bc281021de684193cc8a11e61e2f4, type: 2}
   minAvgAnnualTemperature: 7
   maxAvgAnnualTemperature: 20
   minAnnualPrecipitation: 85

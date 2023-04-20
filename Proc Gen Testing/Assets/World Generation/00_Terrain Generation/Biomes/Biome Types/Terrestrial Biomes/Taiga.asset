@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Taiga
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Taiga
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 1ee521d29bab8b04e9570d4e37da01fc, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: fae1f13cf4da2914fa2602daaefa6768, type: 2}
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 7
   minAnnualPrecipitation: 45

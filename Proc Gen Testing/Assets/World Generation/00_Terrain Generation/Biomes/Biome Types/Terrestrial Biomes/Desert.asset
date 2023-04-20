@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Desert
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Desert
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 7f67a27062f6ce447b863f73065d1f01, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 5dee8ce209d21fe4298129f4298afb83, type: 2}
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0

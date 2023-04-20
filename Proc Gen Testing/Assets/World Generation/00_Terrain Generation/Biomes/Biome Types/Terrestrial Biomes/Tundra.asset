@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tundra
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Tundra
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 6ca1075a42ea2454c97b6b25d515d8b6, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
   minAvgAnnualTemperature: -100
   maxAvgAnnualTemperature: 0
   minAnnualPrecipitation: 0

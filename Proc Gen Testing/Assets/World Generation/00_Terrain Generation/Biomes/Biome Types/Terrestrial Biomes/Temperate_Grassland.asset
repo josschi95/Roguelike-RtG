@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Temperate_Grassland
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Temperate Grassland
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: f6cfff731a04aba46859f0257641dac9, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 05093612ddfa2ec4a9efcd5d9ec5bc31, type: 2}
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 20
   minAnnualPrecipitation: 0

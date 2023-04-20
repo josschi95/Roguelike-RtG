@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Jungle
   m_EditorClassIdentifier: 
   <BiomeName>k__BackingField: Jungle
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 797fe6fb0ad3b0449b00827cf6acb85f, type: 2}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 6e0fd37c95d6c7943b41c15a29cce30a, type: 2}
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 250

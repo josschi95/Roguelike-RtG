@@ -144,6 +144,26 @@ namespace JS.WorldGeneration
             }
         }
 
+        public Direction NeighborDirection(WorldTile tile)
+        {
+            for (int i = 0; i < neighbors.Length; i++)
+            {
+                if (tile == neighbors[i]) break;
+                if (i == neighbors.Length - 1) throw new System.Exception("This is not a neightbor tile!");
+            }
+
+            if (tile.x != x)
+            {
+                if (tile.x > x) return Direction.East;
+                return Direction.West;
+            }
+            else
+            {
+                if (tile.y > y) return Direction.North;
+                return Direction.South;
+            }
+        }
+
         #region - Tile Values -
         public void SetAltitude(float value, AltitudeZone zone)
         {

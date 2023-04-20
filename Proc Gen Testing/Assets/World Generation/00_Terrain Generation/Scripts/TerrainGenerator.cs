@@ -321,7 +321,7 @@ namespace JS.WorldGeneration
         public void GenerateRivers()
         {
             //Create rivers
-            var rivers = riverGenerator.GenerateRivers(mapSize, terrainData.Mountains, mapFeatures.RiverCount(worldSize));
+            var rivers = riverGenerator.GenerateRivers(mapSize, mapFeatures.RiverCount(worldSize));
             terrainData.SetRivers(rivers.ToArray());
         }
         #endregion
@@ -584,3 +584,5 @@ namespace JS.WorldGeneration
 public enum WorldSize { Tiny, Small, Medium, Large, Huge }
 public enum Direction { North, South, East, West}
 public enum SecondaryDirections { NorthEast, NorthWest, SouthEast, SouthWest }
+
+public enum Compass { North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest }

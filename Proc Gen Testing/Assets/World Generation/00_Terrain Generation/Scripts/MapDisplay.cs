@@ -23,7 +23,6 @@ public class MapDisplay : MonoBehaviour
 
     [Space]
 
-    [SerializeField] private RuleTile landTile;
     [SerializeField] private RuleTile waterTile;
 
     public Biome[] biomes;
@@ -78,6 +77,10 @@ public class MapDisplay : MonoBehaviour
             for (int i = 0; i < river.Nodes.Count; i++)
             {
                 var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(river.Nodes[i].x, river.Nodes[i].y);
+                if (riverMap.GetTile(tilePos) != null)
+                {
+                    Debug.LogWarning("River intersection found. Need to account for T's");
+                }
                 var tile = worldMap.TerrainData.GetRiverTile(river.Flow[i]);
                 riverMap.SetTile(tilePos, tile);
             }

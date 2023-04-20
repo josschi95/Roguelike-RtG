@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Gameplay/WorldMap.unity
     guid: f06f7852ab0ff3c4f9014f155e086ca8
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Gameplay/RegionMap.unity
+    guid: c0e63c5a8f009c54a9e5b94df95258b6
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Gameplay/LocalMap.unity
+    guid: c4cf666917a6cda4a8dd1b542d8b3032
   m_configObjects: {}

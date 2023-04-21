@@ -301,6 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 878084666}
   - component: {fileID: 878084665}
+  - component: {fileID: 878084667}
   m_Layer: 0
   m_Name: Player Input
   m_TagString: Untagged
@@ -349,6 +350,50 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 2556b460-47a1-4b47-98c1-fe41babf37b7
     m_ActionName: Player/Zoom[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b25cb2db-62d0-4f6b-bddc-1a0acec8d60d
+    m_ActionName: Player/SouthWest[/Keyboard/numpad1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e41bedca-47dc-48a9-87eb-1017b53c3633
+    m_ActionName: Player/South[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b927b34d-d351-4b58-bc8e-ee17343bf52f
+    m_ActionName: Player/SouthEast[/Keyboard/numpad3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 82a3b30e-b821-4886-8640-e06e92062938
+    m_ActionName: Player/West[/Keyboard/numpad4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c2970315-bc75-4a8a-b050-2d97c0b6a5a4
+    m_ActionName: Player/Wait[/Keyboard/numpad5]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a94f1c0c-9c2d-46de-bdc0-dbf6009e9444
+    m_ActionName: Player/East[/Keyboard/numpad6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8324fe58-7d5b-442c-b3e1-6b3fe679b636
+    m_ActionName: Player/NorthWest[/Keyboard/numpad7]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 79987094-63eb-4afd-947c-66fe51a4b344
+    m_ActionName: Player/North[/Keyboard/numpad8]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7cd176d6-39d4-4edc-b4ef-56b6c3b4bbb9
+    m_ActionName: Player/NorthEast[/Keyboard/numpad9]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0a49347-eb0a-4b81-bf29-83adaf33b26e
+    m_ActionName: Player/Up[/Keyboard/minus]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b21736f9-3fe9-4323-9e17-3cc08877a35a
+    m_ActionName: Player/Down[/Keyboard/numpadPlus]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -369,3 +414,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &878084667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878084664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e898ea8676a4547ac01055ff278dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wait:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Wait
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 23ad40fa-82bc-4188-8760-3f250ab8fd9f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -1311632873242107828, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
+  _up:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Up
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 85f76d7d-191b-4840-a5e8-9df1bd102482
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -4646410594510497581, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
+  _down:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Down
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 800fa818-aac4-45b7-b465-6bcff514c878
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 6306044278393268569, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}

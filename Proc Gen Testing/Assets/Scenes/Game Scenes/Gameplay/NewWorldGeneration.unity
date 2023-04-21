@@ -6013,6 +6013,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldSize: 0
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
+  playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
   mapGenerator: {fileID: 261351981}
   settlementGenerator: {fileID: 907612579}
   progressBar: {fileID: 2128025129}
@@ -6475,10 +6478,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 0}
-  terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
-  oceanTileMap: {fileID: 1271149521}
-  landTileMap: {fileID: 1217674924}
-  biomeMap: {fileID: 392281174}
+  oceanMap: {fileID: 0}
+  landMap: {fileID: 0}
+  terrainFeatureMap: {fileID: 0}
+  riverMap: {fileID: 0}
+  roadMap: {fileID: 0}
+  settlementMap: {fileID: 0}
   infoMap: {fileID: 1309917771}
   highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
   windDirectionTiles:
@@ -6486,7 +6491,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}
   - {fileID: 11400000, guid: b31f1e6ab5246d14eab4e31ba7649bde, type: 2}
   - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
-  landTile: {fileID: 11400000, guid: cfd3463562d845249acc5ff36b15d607, type: 2}
   waterTile: {fileID: 11400000, guid: e2d57eb18a0d7b649873ac9b009e87d8, type: 2}
   biomes: []
 --- !u!114 &1693811273

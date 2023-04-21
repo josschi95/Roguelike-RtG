@@ -700,6 +700,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407632079}
   m_CullTransparentMesh: 1
+--- !u!1 &503478387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 503478389}
+  - component: {fileID: 503478388}
+  m_Layer: 0
+  m_Name: Player Locator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &503478388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503478387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2207401455605184f9954b165cb17efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 707538844}
+  playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
+  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  pixelCam: {fileID: 519420033}
+--- !u!4 &503478389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503478387}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509509563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1532,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641658127}
   m_CullTransparentMesh: 1
+--- !u!1001 &707538843
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2689567875884823240, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823240, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823240, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -92050179
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823242, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_Name
+      value: Player_Placeholder
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689567875884823247, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+--- !u!1 &707538844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2689567875884823242, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+  m_PrefabInstance: {fileID: 707538843}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &713516209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,7 +1643,6 @@ MonoBehaviour:
   riverMap: {fileID: 337883118}
   roadMap: {fileID: 620276097}
   settlementMap: {fileID: 1062285702}
-  biomeMap: {fileID: 1002168319}
   infoMap: {fileID: 1757720318}
   highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
   windDirectionTiles:
@@ -1529,7 +1650,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}
   - {fileID: 11400000, guid: b31f1e6ab5246d14eab4e31ba7649bde, type: 2}
   - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
-  landTile: {fileID: 11400000, guid: cfd3463562d845249acc5ff36b15d607, type: 2}
   waterTile: {fileID: 11400000, guid: e2d57eb18a0d7b649873ac9b009e87d8, type: 2}
   biomes:
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
@@ -1852,10 +1972,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 503478388}
+        m_TargetAssemblyTypeName: PlayerWorldMapLocator, Assembly-CSharp
+        m_MethodName: PlacePlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   developerNotes: 'Creates a grid based on the stored map data
 
     Then calls for
-    the tilemaps to update'
+    the tilemaps to update.
+
+    Places player in given WorldTile'
 --- !u!4 &923298227
 Transform:
   m_ObjectHideFlags: 0
@@ -2817,7 +2951,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 248588071
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -640915464, guid: 52e0bb7df8546124ab72cf180038d2a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3075,7 +3209,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 248588071
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

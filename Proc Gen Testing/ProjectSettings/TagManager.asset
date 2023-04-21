@@ -46,6 +46,9 @@ TagManager:
   - name: Elevation
     uniqueID: 3116835953
     locked: 0
+  - name: Actors
+    uniqueID: 4202917117
+    locked: 0
   - name: UI
     uniqueID: 248588071
     locked: 0

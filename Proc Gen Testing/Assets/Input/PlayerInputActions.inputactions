@@ -42,7 +42,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Move_SouthWest",
+                    "name": "SouthWest",
                     "type": "Button",
                     "id": "b25cb2db-62d0-4f6b-bddc-1a0acec8d60d",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_South",
+                    "name": "South",
                     "type": "Button",
                     "id": "e41bedca-47dc-48a9-87eb-1017b53c3633",
                     "expectedControlType": "Button",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_SouthEast",
+                    "name": "SouthEast",
                     "type": "Button",
                     "id": "b927b34d-d351-4b58-bc8e-ee17343bf52f",
                     "expectedControlType": "Button",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_West",
+                    "name": "West",
                     "type": "Button",
                     "id": "82a3b30e-b821-4886-8640-e06e92062938",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_East",
+                    "name": "East",
                     "type": "Button",
                     "id": "a94f1c0c-9c2d-46de-bdc0-dbf6009e9444",
                     "expectedControlType": "Button",
@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_NorthWest",
+                    "name": "NorthWest",
                     "type": "Button",
                     "id": "8324fe58-7d5b-442c-b3e1-6b3fe679b636",
                     "expectedControlType": "Button",
@@ -105,7 +105,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_North",
+                    "name": "North",
                     "type": "Button",
                     "id": "79987094-63eb-4afd-947c-66fe51a4b344",
                     "expectedControlType": "Button",
@@ -114,9 +114,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move_NorthEast",
+                    "name": "NorthEast",
                     "type": "Button",
                     "id": "7cd176d6-39d4-4edc-b4ef-56b6c3b4bbb9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "e0a49347-eb0a-4b81-bf29-83adaf33b26e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "b21736f9-3fe9-4323-9e17-3cc08877a35a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -175,7 +193,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_North",
+                    "action": "North",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -186,7 +204,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_NorthEast",
+                    "action": "NorthEast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -197,7 +215,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_SouthWest",
+                    "action": "SouthWest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -208,7 +226,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_South",
+                    "action": "South",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,7 +237,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_SouthEast",
+                    "action": "SouthEast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -230,7 +248,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_West",
+                    "action": "West",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -252,7 +270,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_East",
+                    "action": "East",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -263,7 +281,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move_NorthWest",
+                    "action": "NorthWest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3ba4e13-db3a-42d4-87db-0df7e51c4023",
+                    "path": "<Keyboard>/minus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c743eb64-f976-4ddf-a620-a7d5739b51a6",
+                    "path": "<Keyboard>/numpadPlus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

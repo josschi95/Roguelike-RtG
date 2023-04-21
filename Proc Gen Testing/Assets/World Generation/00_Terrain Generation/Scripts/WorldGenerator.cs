@@ -13,6 +13,12 @@ namespace JS.WorldGeneration
 
         [SerializeField] private WorldSize worldSize;
         [SerializeField] private WorldGenerationParameters mapFeatures;
+        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private SettlementData settlementData;
+        [SerializeField] private PlayerData playerData;
+
+        [Space]
+
         [SerializeField] private TerrainGenerator mapGenerator;
         [SerializeField] private SettlementGenerator settlementGenerator;
         //private FloraFaunaGenerator floraFaunaGenerator;
@@ -66,18 +72,18 @@ namespace JS.WorldGeneration
 
         private IEnumerator GenerateWorld()
         {
-            yield return StartCoroutine(TerrainGeneration());
+            yield return StartCoroutine(HandleTerrainGeneration());
 
             yield return StartCoroutine(settlementGenerator.PlaceSettlements());
-            //settlementGenerator.GenerateSettlements();
-            progressBar.fillAmount = 0.9f;
-            //Debug.Log("GenerateSettlements: " + (Time.realtimeSinceStartup - initialTime));
-            yield return new WaitForSeconds(0.01f);
+            PlacePlayerAtStart();
 
+            progressBar.fillAmount = 0.9f;
+            yield return new WaitForSeconds(0.01f);
+            
             worldGenerationCompleteEvent?.Invoke();
         }
 
-        private IEnumerator TerrainGeneration()
+        private IEnumerator HandleTerrainGeneration()
         {
             var initialTime = Time.realtimeSinceStartup;
             progressText.text = "Loading";
@@ -166,6 +172,23 @@ namespace JS.WorldGeneration
             progressText.text = "Generating Settlements";
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
+        }
+
+
+        private void PlacePlayerAtStart()
+        {
+            int index = rng.Next(0, settlementData.Settlements.Length);
+            var node = settlementData.Settlements[index].Node;
+
+            Debug.Log("Node Located at: " + node.x + "," + node.y);
+
+            var flat = ArrayHelper.Convert2DCoordinateTo1DCoordinate(worldMap.Width, worldMap.Height, node.x, node.y);
+            Debug.Log("Flattened is: " + flat);
+
+            ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, flat, out int x, out int y);
+            Debug.Log("Unflattened: " + x + "," + y);
+
+            playerData.WorldMapTile = flat;
         }
     }
 }

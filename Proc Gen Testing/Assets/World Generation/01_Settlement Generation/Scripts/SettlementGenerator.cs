@@ -229,7 +229,7 @@ namespace JS.WorldGeneration
             if (allMountainNodes.Count == 0) return false;
 
             int index = worldGenerator.rng.Next(0, allMountainNodes.Count);
-            Debug.Log("Found Mountain Home");
+            //Debug.Log("Found Mountain Home");
             node = allMountainNodes[index];
             return true;
         }
@@ -256,7 +256,7 @@ namespace JS.WorldGeneration
             if (allIslandNodes.Count == 0) return false;
 
             int index = worldGenerator.rng.Next(0, allIslandNodes.Count);
-            Debug.Log("Found Island Home");
+            //Debug.Log("Found Island Home");
             node = allIslandNodes[index];
             return true;
         }
@@ -288,7 +288,7 @@ namespace JS.WorldGeneration
             if (nodeList.Count == 0) return false;
 
             int index = worldGenerator.rng.Next(0, nodeList.Count);
-            Debug.Log("Found Unopposed Biome");
+            //Debug.Log("Found Unopposed Biome");
             node = nodeList[index];
             return true;
         }
@@ -299,7 +299,7 @@ namespace JS.WorldGeneration
             if (availableNodes.Count == 0) return false;
 
             int index = worldGenerator.rng.Next(0, availableNodes.Count);
-            Debug.Log("Found Any Site");
+            //Debug.Log("Found Any Site");
             node = availableNodes[index];
             return true;
         }

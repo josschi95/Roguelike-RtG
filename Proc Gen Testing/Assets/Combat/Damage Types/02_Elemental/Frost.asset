@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Frost
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Frost
+  <ID>k__BackingField: 6
   <Color>k__BackingField: {r: 0, g: 0, b: 1, a: 1}
   <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 

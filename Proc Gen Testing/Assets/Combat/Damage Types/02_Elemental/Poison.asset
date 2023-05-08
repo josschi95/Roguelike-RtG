@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Poison
+  <ID>k__BackingField: 7
   <Color>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
   <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 

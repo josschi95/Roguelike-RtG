@@ -8,28 +8,17 @@ public class DiceCombo
     public int diceSides;
     public int modifier;
 }
-
+/*
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(DiceCombo))]
 public class DiceComboDrawer : PropertyDrawer
 {
-    bool showPosition = false;
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    /*public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
     {
-        return base.GetPropertyHeight(property, label);
+        DisplayProperty(ref rect, property, label);
     }
 
-    public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
-    {
-        showPosition = EditorGUILayout.Foldout(showPosition, label, true);
-        if (showPosition)
-        {
-            DisplayProperty(rect, property, label);
-        }
-    }
-
-    private void DisplayProperty(Rect rect, SerializedProperty property, GUIContent label)
+    private Rect DisplayProperty(ref Rect rect, SerializedProperty property, GUIContent label)
     {
         var w1 = rect.width * 0.15f;
         var w2 = rect.width * 0.15f;
@@ -47,7 +36,7 @@ public class DiceComboDrawer : PropertyDrawer
         var rect5 = new Rect(rect4.x + w4, h, w5, rect.height);
         var rect6 = new Rect(rect5.x + w5, h, w6, rect.height);
         var rect7 = new Rect(rect6.x + w6, h, w7, rect.height);
-
+        var fullRect = new Rect(rect.x, rect.y, rect.width, h * 10);
         GUIStyle centered = new GUIStyle(GUI.skin.label)
         {
             alignment = TextAnchor.MiddleCenter
@@ -62,7 +51,7 @@ public class DiceComboDrawer : PropertyDrawer
         SerializedProperty sides = property.FindPropertyRelative("diceSides");
         SerializedProperty mod = property.FindPropertyRelative("modifier");
 
-        EditorGUILayout.BeginHorizontal();
+        GUILayout.BeginHorizontal();
         EditorGUI.LabelField(rect1, "Roll: ");
         
         EditorGUI.BeginChangeCheck();
@@ -83,15 +72,18 @@ public class DiceComboDrawer : PropertyDrawer
         var max = count.intValue * sides.intValue + mod.intValue;
         EditorGUI.LabelField(rect7, min + "/" + max, centered);
 
-        EditorGUILayout.EndHorizontal();
+        GUILayout.EndHorizontal();
         EditorGUI.EndProperty();
 
-        GUILayout.Space(30);
+        //GUILayout.Space(30);
 
         if (GUILayout.Button("Roll Dice"))
         {
             Debug.Log("Rolled: " + Dice.Roll(count.intValue, sides.intValue, mod.intValue));
         }
+
+        return fullRect;
     }
 }
 #endif
+*/

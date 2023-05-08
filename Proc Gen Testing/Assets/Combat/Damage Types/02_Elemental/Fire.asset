@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Fire
+  <ID>k__BackingField: 5
   <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
   <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 

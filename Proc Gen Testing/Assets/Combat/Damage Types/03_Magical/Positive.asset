@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Positive
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Positive
+  <ID>k__BackingField: 13
   <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 
+  <Symbol>k__BackingField: 

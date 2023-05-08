@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Mystic
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Mystic
+  <ID>k__BackingField: 11
   <Color>k__BackingField: {r: 0, g: 0.78431374, b: 1, a: 1}
+  <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 
+  <Symbol>k__BackingField: 

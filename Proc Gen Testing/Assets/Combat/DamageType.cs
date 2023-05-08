@@ -6,6 +6,7 @@ namespace JS.Combat
     public class DamageType : ScriptableObject
     {
         [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public Color Color { get; private set; }
         [field: SerializeField] public bool isPhysical { get; private set; }
 

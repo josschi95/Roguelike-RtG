@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Rot
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Rot
+  <ID>k__BackingField: 8
   <Color>k__BackingField: {r: 1, g: 0.39215687, b: 0, a: 1}
+  <isPhysical>k__BackingField: 0
   <Description>k__BackingField: 
+  <Symbol>k__BackingField: 

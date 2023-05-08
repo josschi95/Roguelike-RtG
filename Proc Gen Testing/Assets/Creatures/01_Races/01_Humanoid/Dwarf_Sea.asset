@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
+  m_Name: Dwarf_Sea
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 1
+  <RaceName>k__BackingField: Sea Dwarf
+  <RaceSprite>k__BackingField: {fileID: 330245926, guid: dc0e69b9aabe35f4aabe81bcef235917, type: 3}
+  raceDescription: 
+  <Archetype>k__BackingField: {fileID: 11400000, guid: e7a0775feab588745bd992ed3c85ef78, type: 2}
+  <RaceType>k__BackingField: 0
+  <Size>k__BackingField: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  <RacialStats>k__BackingField:
+    attributeModifiers: []
+    skillModifiers: []
+    damageModifiers: []
+  <StartingAge>k__BackingField:
+    diceCount: 0
+    diceSides: 0
+    modifier: 0
+  <LifeSpan>k__BackingField:
+    diceCount: 0
+    diceSides: 0
+    modifier: 0
+  developerNotes: 

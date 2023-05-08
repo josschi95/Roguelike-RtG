@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
+  m_Name: Boggard
+  m_EditorClassIdentifier: 
+  <RaceName>k__BackingField: Boggard
+  <Archetype>k__BackingField: {fileID: 11400000, guid: 70bc587676fb53640b870e83e21994a6, type: 2}
+  <Size>k__BackingField: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  experienceRate: 0
+  racialAttributeBonuses: []
+  <RacialSkillBonuses>k__BackingField: []
+  developerNotes: frog-like, pathfinder reference

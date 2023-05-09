@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace JS.CharacterSystem
@@ -23,6 +24,7 @@ namespace JS.CharacterSystem
         [field: SerializeField] public DiceCombo StartingAge { get; private set; }
 
         [field: SerializeField] public DiceCombo LifeSpan { get; private set; }
+        [field: SerializeField] public CharacterRace[] ValidCrossBreeds { get; private set; }
 
         public string RaceDescription => raceDescription;
 

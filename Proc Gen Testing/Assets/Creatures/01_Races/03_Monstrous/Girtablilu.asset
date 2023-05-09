@@ -16,7 +16,7 @@ MonoBehaviour:
   <RaceName>k__BackingField: Girtablilu
   <RaceSprite>k__BackingField: {fileID: 1165509679, guid: 8546b4f4fa7471440a9ced0f9c46534c, type: 3}
   raceDescription: 
-  <Archetype>k__BackingField: {fileID: 11400000, guid: 111047043ee1d3f41a3bd66f558fc955, type: 2}
+  <Archetype>k__BackingField: {fileID: 11400000, guid: eadc2dbb991237d47b105fc6f96e43f2, type: 2}
   <RaceType>k__BackingField: 2
   <Size>k__BackingField: {fileID: 11400000, guid: 40d839a46ee03c4498bb4fcd6a7d2b9c, type: 2}
   <RacialStats>k__BackingField:
@@ -31,4 +31,14 @@ MonoBehaviour:
     diceCount: 0
     diceSides: 0
     modifier: 0
+  <ValidCrossBreeds>k__BackingField:
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
+  - {fileID: 11400000, guid: 795261d81c97ad345a2025c39b551f8b, type: 2}
+  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  - {fileID: 11400000, guid: 48637377009d8694eb27d592acb42fae, type: 2}
   developerNotes: 

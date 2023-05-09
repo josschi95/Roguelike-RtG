@@ -31,4 +31,36 @@ MonoBehaviour:
     diceCount: 0
     diceSides: 0
     modifier: 0
+  <ValidCrossBreeds>k__BackingField:
+  - {fileID: 11400000, guid: 17d42d542a55dd6459f4e28ab5707cb7, type: 2}
+  - {fileID: 11400000, guid: a7e93f2d3d0822d47a1849366984ea6d, type: 2}
+  - {fileID: 11400000, guid: 945091ee1f2b0be44946326d63c3b67b, type: 2}
+  - {fileID: 11400000, guid: 1d28fdc182794c64a8a017315195d189, type: 2}
+  - {fileID: 11400000, guid: 576551a645af248469ded6907d757735, type: 2}
+  - {fileID: 11400000, guid: 9f119f817584a6f489083298ff155aad, type: 2}
+  - {fileID: 11400000, guid: c85613625d5ffa6418779eb7d0b0d64b, type: 2}
+  - {fileID: 11400000, guid: db567f76028c00d41915a473e36bba12, type: 2}
+  - {fileID: 11400000, guid: e76f4921328b8b1458526a164a78889d, type: 2}
+  - {fileID: 11400000, guid: bc1c360ca4cf81c4eb11f95213c57650, type: 2}
+  - {fileID: 11400000, guid: 96f42c4c5557eb44fafc2b62413097ea, type: 2}
+  - {fileID: 11400000, guid: aabf0ea3e9898fb499661088c76e8f2c, type: 2}
+  - {fileID: 11400000, guid: 9af58ee2ddbd07e4ca74eba4f7510cb3, type: 2}
+  - {fileID: 11400000, guid: 723571066e6c7c047b4aa61fcadfbb90, type: 2}
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000, guid: a437f7abddb0e30498172d64e3c42a65, type: 2}
+  - {fileID: 11400000, guid: a485779c09a8d5f429ee1ea89b6698d9, type: 2}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: 2fbfe0543bb5f164bbdeb8c359c43c9d, type: 2}
+  - {fileID: 11400000, guid: 48637377009d8694eb27d592acb42fae, type: 2}
+  - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
+  - {fileID: 11400000, guid: 16d4089ac0d6add4da0bea0345883f58, type: 2}
+  - {fileID: 11400000, guid: d33a7581737ba214d968b78b38e0ad00, type: 2}
+  - {fileID: 11400000, guid: 2330339828efe6d4b8b7215aac1ae157, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  - {fileID: 11400000, guid: 5f5335efe556b6a40be8c60d71b45ada, type: 2}
+  - {fileID: 11400000, guid: afff2a288650689479267dfe5a5a55de, type: 2}
   developerNotes: 

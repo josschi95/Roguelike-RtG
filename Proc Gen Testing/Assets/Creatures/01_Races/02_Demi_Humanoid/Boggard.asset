@@ -31,4 +31,12 @@ MonoBehaviour:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  developerNotes: frog-like, pathfinder reference
+  <ValidCrossBreeds>k__BackingField:
+  - {fileID: 11400000, guid: a437f7abddb0e30498172d64e3c42a65, type: 2}
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  developerNotes: 

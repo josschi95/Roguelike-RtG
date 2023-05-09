@@ -31,4 +31,21 @@ MonoBehaviour:
     diceCount: 0
     diceSides: 0
     modifier: 0
+  <ValidCrossBreeds>k__BackingField:
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
+  - {fileID: 11400000, guid: 795261d81c97ad345a2025c39b551f8b, type: 2}
+  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 96f42c4c5557eb44fafc2b62413097ea, type: 2}
+  - {fileID: 11400000, guid: bc1c360ca4cf81c4eb11f95213c57650, type: 2}
+  - {fileID: 11400000, guid: e76f4921328b8b1458526a164a78889d, type: 2}
+  - {fileID: 11400000, guid: db567f76028c00d41915a473e36bba12, type: 2}
+  - {fileID: 11400000, guid: 723571066e6c7c047b4aa61fcadfbb90, type: 2}
+  - {fileID: 11400000, guid: afff2a288650689479267dfe5a5a55de, type: 2}
+  - {fileID: 11400000, guid: 9f119f817584a6f489083298ff155aad, type: 2}
   developerNotes: 

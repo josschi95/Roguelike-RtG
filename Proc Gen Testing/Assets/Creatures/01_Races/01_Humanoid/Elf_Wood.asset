@@ -12,26 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
   m_Name: Elf_Wood
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 4
-  <RaceName>k__BackingField: Wood Elf
-  <RaceSprite>k__BackingField: {fileID: 330245926, guid: dc0e69b9aabe35f4aabe81bcef235917, type: 3}
+  raceID: 4
+  raceName: Wood Elf
+  raceCategory: 0
+  raceArchetype: {fileID: 11400000, guid: 9fe068e310a56df4098704f72dbb0555, type: 2}
+  raceSize: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  raceSprite: {fileID: 330245926, guid: dc0e69b9aabe35f4aabe81bcef235917, type: 3}
   raceDescription: 
-  <Archetype>k__BackingField: {fileID: 11400000, guid: 9fe068e310a56df4098704f72dbb0555, type: 2}
-  <RaceType>k__BackingField: 0
-  <Size>k__BackingField: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
-  <RacialStats>k__BackingField:
+  racialStats:
     attributeModifiers: []
     skillModifiers: []
     damageModifiers: []
-  <StartingAge>k__BackingField:
+  startingAge:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <LifeSpan>k__BackingField:
+  lifespan:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <ValidCrossBreeds>k__BackingField:
+  ageRanges:
+  - Category: {fileID: 11400000, guid: e2a0c1b7aa8cccb408b4b3ba4f0c90fb, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 120fb33cc50354a4c8a09de4682a4a3c, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 781862f1988e4ef42a9768fd91387b88, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 13c9df243e2673b468e8da13e9c8cc28, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 168bfac3b9c3a4b40a202d60b1802ad0, type: 2}
+    Age: 0
+  validCrossBreeds:
   - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
   - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
   - {fileID: 11400000, guid: 17d42d542a55dd6459f4e28ab5707cb7, type: 2}
@@ -44,4 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
   - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
   - {fileID: 11400000, guid: 9f119f817584a6f489083298ff155aad, type: 2}
+  hasMales: 1
+  hasFemales: 1
+  hasOther: 1
   developerNotes: 

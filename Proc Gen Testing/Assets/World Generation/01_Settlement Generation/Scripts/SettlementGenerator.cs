@@ -327,9 +327,9 @@ namespace JS.WorldGeneration
                     //territoryToAdd--;
                 }
 
-                for (int i = 0; i < node.neighbors.Length; i++)
+                for (int i = 0; i < node.neighbors_adj.Count; i++)
                 {
-                    var neighbor = node.neighbors[i];
+                    var neighbor = node.neighbors_adj[i];
                     if (mapFlags[neighbor.x, neighbor.y] == 1) continue; //visited
                     
                     mapFlags[neighbor.x, neighbor.y] = 1;
@@ -505,9 +505,9 @@ namespace JS.WorldGeneration
             var territoryToAdd = new List<WorldTile>();
             for (int i = 0; i < settlement.territory.Count; i++)
             {
-                for (int j = 0; j < settlement.territory[i].neighbors.Length; j++)
+                for (int j = 0; j < settlement.territory[i].neighbors_adj.Count; j++)
                 {
-                    var node = settlement.territory[i].neighbors[j];
+                    var node = settlement.territory[i].neighbors_adj[j];
                     if (!node.isNotWater) continue;
                     if (node.Settlement != null) continue;
                     if (node.Territory != null) continue;

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a6042afae51b14c9f8ab8ebf8f8dfb, type: 3}
+  m_Name: 01_Adolescent
+  m_EditorClassIdentifier: 
+  lifeStage: 1
+  _name: Adolescent
+  message: 
+  ageModifiers:
+  - attribute: {fileID: 11400000, guid: b22a8b66dd1860d409f842f231fae508, type: 2}
+    value: 0
+  - attribute: {fileID: 11400000, guid: 54a3713e4c96d1b4aa5d592db791c37c, type: 2}
+    value: 0
+  - attribute: {fileID: 11400000, guid: d87b40fc34f80554eb55021fc32912df, type: 2}
+    value: 0
+  - attribute: {fileID: 11400000, guid: 5c0b06d3fb2671f488ec1c4b22de4736, type: 2}
+    value: 0
+  - attribute: {fileID: 11400000, guid: f855a96f65151d248884ad01b00f2919, type: 2}
+    value: 0
+  - attribute: {fileID: 11400000, guid: ff31507bca5547446878078348a30d30, type: 2}
+    value: 0
+  developerNotes: '3/4 Young Adult
+
+    e.g. 16 from 22 Young, 45 Middle,
+
+    90
+    Venerable, 120 Max'

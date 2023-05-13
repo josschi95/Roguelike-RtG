@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TESTSAVEJSON : MonoBehaviour
 {
-    public RacialArchetype[] archetypes;
+    public CreatureType[] archetypes;
     public CharacterRace[] races;
 
     [ContextMenu("Save")]
@@ -17,7 +17,7 @@ public class TESTSAVEJSON : MonoBehaviour
         for (int i = 0; i < data.archetypes.Length; i++)
         {
             string parent = "";
-            if (archetypes[i] is RacialChildArchetype child) parent = child.parentArchetype.ArchetypeName;
+            if (archetypes[i] is CreatureSubTypes child) parent = child.parentArchetype.ArchetypeName;
             var type = new SpeciesArchetype(archetypes[i].ArchetypeName, archetypes[i].NeedsAir, archetypes[i].NeedsFood, archetypes[i].NeedsSleep, parent);
             data.archetypes[i] = type;
         }
@@ -30,7 +30,7 @@ public class TESTSAVEJSON : MonoBehaviour
             race.name = races[i].name;
 
             race.archetype = races[i].Archetype.ArchetypeName;
-            race.racialType = (int)races[i].RaceType;
+            race.racialType = (int)races[i].RaceCategory;
 
             race.size = races[i].Size.SizeModifier;
 
@@ -38,7 +38,7 @@ public class TESTSAVEJSON : MonoBehaviour
             for (int j = 0; j < race.attributeModifiers.Length; j++)
             {
                 var pair = races[i].RacialStats.AttributeModifiers[j];
-                var mod = new ObjectIDReference((int)pair.attribute, pair.value);
+                var mod = new ObjectIDReference(pair.attribute.ID, pair.value);
                 race.attributeModifiers[j] = mod;
             }
 
@@ -46,7 +46,7 @@ public class TESTSAVEJSON : MonoBehaviour
             for (int j = 0; j < race.skillModifiers.Length; j++)
             {
                 var pair = races[i].RacialStats.SkillModifiers[j];
-                var mod = new ObjectIDReference((int)pair.skill, pair.value);
+                var mod = new ObjectIDReference(pair.skill.ID, pair.value);
                 race.skillModifiers[j] = mod;
             }
 

@@ -12,33 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
   m_Name: Troll
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 35
-  <RaceName>k__BackingField: Troll
-  <RaceSprite>k__BackingField: {fileID: 1165509679, guid: 8546b4f4fa7471440a9ced0f9c46534c, type: 3}
+  raceID: 35
+  raceName: Troll
+  raceCategory: 2
+  raceArchetype: {fileID: 11400000, guid: a5c9c3b10692a104eb41a318387d780b, type: 2}
+  raceSize: {fileID: 11400000, guid: 40d839a46ee03c4498bb4fcd6a7d2b9c, type: 2}
+  raceSprite: {fileID: 1165509679, guid: 8546b4f4fa7471440a9ced0f9c46534c, type: 3}
   raceDescription: 
-  <Archetype>k__BackingField: {fileID: 11400000, guid: a5c9c3b10692a104eb41a318387d780b, type: 2}
-  <RaceType>k__BackingField: 2
-  <Size>k__BackingField: {fileID: 11400000, guid: 40d839a46ee03c4498bb4fcd6a7d2b9c, type: 2}
-  <RacialStats>k__BackingField:
+  racialStats:
     attributeModifiers: []
     skillModifiers: []
     damageModifiers: []
-  <StartingAge>k__BackingField:
+  startingAge:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <LifeSpan>k__BackingField:
+  lifespan:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <ValidCrossBreeds>k__BackingField:
+  ageRanges:
+  - Category: {fileID: 11400000, guid: e2a0c1b7aa8cccb408b4b3ba4f0c90fb, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 120fb33cc50354a4c8a09de4682a4a3c, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 781862f1988e4ef42a9768fd91387b88, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 13c9df243e2673b468e8da13e9c8cc28, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 168bfac3b9c3a4b40a202d60b1802ad0, type: 2}
+    Age: 0
+  validCrossBreeds:
   - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
   - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
   - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
   - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
   - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
-  - {fileID: 11400000, guid: 795261d81c97ad345a2025c39b551f8b, type: 2}
-  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
   - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
   - {fileID: 11400000, guid: 5f5335efe556b6a40be8c60d71b45ada, type: 2}
   - {fileID: 11400000, guid: 96f42c4c5557eb44fafc2b62413097ea, type: 2}
@@ -47,4 +56,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db567f76028c00d41915a473e36bba12, type: 2}
   - {fileID: 11400000, guid: 723571066e6c7c047b4aa61fcadfbb90, type: 2}
   - {fileID: 11400000}
+  hasMales: 1
+  hasFemales: 1
+  hasOther: 1
   developerNotes: 

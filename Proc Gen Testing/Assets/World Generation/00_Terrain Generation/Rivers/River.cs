@@ -44,16 +44,16 @@ namespace JS.WorldGeneration
             {
 				if (i == 0) //Direction is only dependent on following node
                 {
-					Flow.Add(ConvertDirection(Nodes[i].NeighborDirection(Nodes[i + 1])));
+					Flow.Add(ConvertDirection(Nodes[i].NeighborDirection_Adjacent(Nodes[i + 1])));
                 }
 				else if (i == Nodes.Count - 1) //Direction is only dependent on previous node
                 {
-					Flow.Add(ConvertDirection(Nodes[i].NeighborDirection(Nodes[i - 1])));
+					Flow.Add(ConvertDirection(Nodes[i].NeighborDirection_Adjacent(Nodes[i - 1])));
 				}
                 else
                 {
-					var from = Nodes[i].NeighborDirection(Nodes[i - 1]);
-					var to = Nodes[i].NeighborDirection(Nodes[i + 1]);
+					var from = Nodes[i].NeighborDirection_Adjacent(Nodes[i - 1]);
+					var to = Nodes[i].NeighborDirection_Adjacent(Nodes[i + 1]);
 					Flow.Add(CombineDirections(from, to));
 				}
 			}

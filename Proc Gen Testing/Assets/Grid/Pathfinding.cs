@@ -234,6 +234,9 @@ public class Pathfinding : MonoBehaviour
     //Return a list of all neighbors, up/down/left/right
     private List<GridNode> GetNeighbourList(GridNode currentNode)
     {
+        if (allowDiagonals) return currentNode.neighbors_all;
+        return currentNode.neighbors_adj;
+        /*
         List<GridNode> neighborList = new List<GridNode>();
 
         //Up
@@ -264,6 +267,7 @@ public class Pathfinding : MonoBehaviour
         }
 
         return neighborList;
+        */
     }
 
     public GridNode GetNode(int x, int y)

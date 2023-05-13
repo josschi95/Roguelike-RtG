@@ -268,9 +268,9 @@ namespace JS.WorldGeneration
                 var node = queue.Dequeue();
                 tiles.Add(node);
 
-                for (int i = 0; i < node.neighbors.Length; i++)
+                for (int i = 0; i < node.neighbors_adj.Count; i++)
                 {
-                    var neighbor = node.neighbors[i];
+                    var neighbor = node.neighbors_adj[i];
                     if (mapFlags[neighbor.x, neighbor.y] == 0 && neighbor.isNotWater == isLand)
                     {
                         mapFlags[neighbor.x, neighbor.y] = 1;
@@ -289,9 +289,9 @@ namespace JS.WorldGeneration
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     if (!node.isNotWater) continue;
-                    for (int i = 0; i < node.neighbors.Length; i++)
+                    for (int i = 0; i < node.neighbors_adj.Count; i++)
                     {
-                        if (!node.neighbors[i].isNotWater && node.rivers.Count == 0)
+                        if (!node.neighbors_adj[i].isNotWater && node.rivers.Count == 0)
                         {
                             node.isCoast = true;
                         }

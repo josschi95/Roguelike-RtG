@@ -105,12 +105,12 @@ namespace JS.WorldGeneration
 
         private WorldTile FindLowestNeighborNode(WorldTile node)
         {
-            var lowestNeighbor = node.neighbors[0];
-            for (int i = 0; i < node.neighbors.Length; i++)
+            var lowestNeighbor = node.neighbors_adj[0];
+            for (int i = 0; i < node.neighbors_adj.Count; i++)
             {
-                if (node.neighbors[i].altitude < lowestNeighbor.altitude)
+                if (node.neighbors_adj[i].altitude < lowestNeighbor.altitude)
                 {
-                    lowestNeighbor = node.neighbors[i];
+                    lowestNeighbor = node.neighbors_adj[i];
                 }
             }
             return lowestNeighbor;

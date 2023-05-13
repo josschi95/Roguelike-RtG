@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JSONSaving : MonoBehaviour
 {
-    private SaveData playerData;
+    private WorldData playerData;
 
     private string path = "";
     private string persistentPath = "";
@@ -28,7 +28,7 @@ public class JSONSaving : MonoBehaviour
             StreamReader reader = new StreamReader(saves[i]);
             string json = reader.ReadToEnd();
 
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            WorldData data = JsonUtility.FromJson<WorldData>(json);
             Debug.Log(data.saveFileName);
         }
         return true;
@@ -36,7 +36,7 @@ public class JSONSaving : MonoBehaviour
 
     private void CreatePlayerData()
     {
-        playerData = new SaveData();
+        playerData = new WorldData();
     }
 
     private void SetPaths()
@@ -65,13 +65,13 @@ public class JSONSaving : MonoBehaviour
         StreamReader reader = new StreamReader(persistentPath);
         string json = reader.ReadToEnd();
 
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
+        WorldData data = JsonUtility.FromJson<WorldData>(json);
 
         //Debug.Log("this isn't doing anything yet");
         SetPlayerValues(data);
     }
 
-    private void SetPlayerValues(SaveData data)
+    private void SetPlayerValues(WorldData data)
     {
         //Load back in all saved data to appropriate places
     }

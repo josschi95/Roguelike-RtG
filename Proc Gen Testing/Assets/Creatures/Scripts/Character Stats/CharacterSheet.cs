@@ -1,63 +1,68 @@
-using UnityEngine;
-
 namespace JS.CharacterSystem
 {
-    public class CharacterSheet : MonoBehaviour
+    public class CharacterSheet
     {
         public string Name { get; private set; }
-        public CharacterRace Race { get; private set; }
-        public ClassArchetype Class { get; private set; }
+        public CharacterRace PrimaryRace { get; private set; }
+        public CharacterRace SecondaryRace { get; private set; }
+        public CharacterClass Class { get; private set; }
 
         private Attribute[] attributes;
         private Skill[] skills;
 
-        public CharacterSheet(string name, CharacterRace race, ClassArchetype job, int[] attributeScores, int[] skillScores)
+        public CharacterSheet(string name, CharacterRace race1, CharacterRace race2, 
+            CharacterClass job, int[] attributeScores, int[] skillScores)
         {
             Name = name;
-            Race = race;
+            PrimaryRace = race1;
+            SecondaryRace = race2;
             Class = job;
 
             attributes = new Attribute[attributeScores.Length];
             for (int i = 0; i < attributes.Length; i++)
             {
-                attributes[i].SetBaseValue(attributeScores[i]);
+                int baseValue = attributeScores[i];
+
+                foreach(var bonus in PrimaryRace.RacialStats.AttributeModifiers)
+                {
+                    if (bonus.attribute.ID == i) baseValue += bonus.value;
+                }
+
+                foreach (var bonus in Class.ArchetypeStas.AttributeModifiers)
+                {
+                    if (bonus.attribute.ID == i) baseValue += bonus.value;
+                }
+
+                attributes[i] = new Attribute(baseValue, 100, 100);
             }
 
             skills = new Skill[skillScores.Length];
             for (int i = 0; i < skills.Length; i++)
             {
-                skills[i].SetBaseValue(skillScores[i]);
-            }
+                int baseValue = skillScores[i];
 
-            foreach(var bonus in Race.RacialStats.AttributeModifiers)
-            {
-                attributes[(int)bonus.attribute].IncreaseBaseValue(bonus.value);
-            }
+                foreach (var bonus in PrimaryRace.RacialStats.SkillModifiers)
+                {
+                    if (bonus.skill.ID == i) baseValue += bonus.value;
+                }
 
-            foreach (var bonus in Race.RacialStats.SkillModifiers)
-            {
-                skills[(int)bonus.skill].IncreaseBaseValue(bonus.value);
-            }
+                foreach (var bonus in Class.ArchetypeStas.SkillModifiers)
+                {
+                    if (bonus.skill.ID == i) baseValue += bonus.value;
+                }
 
-            foreach (var bonus in Class.ArchetypeStas.AttributeModifiers)
-            {
-                attributes[(int)bonus.attribute].IncreaseBaseValue(bonus.value);
-            }
-
-            foreach (var bonus in Class.ArchetypeStas.SkillModifiers)
-            {
-                skills[(int)bonus.skill].IncreaseBaseValue(bonus.value);
+                skills[i] = new Skill(baseValue);
             }
         }
 
-        public int GetAttributeValue(Attributes attribute)
+        public int GetAttributeValue(int attribute)
         {
-            return attributes[(int)attribute].Value;
+            return attributes[attribute].Value;
         }
 
-        public int GetSkillValue(Skills skill)
+        public int GetSkillValue(int skill)
         {
-            return skills[(int)skill].Value;
+            return skills[skill].Value;
         }
     }
 }

@@ -12,26 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
   m_Name: Merfolk
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 16
-  <RaceName>k__BackingField: Merfolk
-  <RaceSprite>k__BackingField: {fileID: 1871580175, guid: 88aa9af243b869b468796b4455e5a6c7, type: 3}
+  raceID: 16
+  raceName: Merfolk
+  raceCategory: 1
+  raceArchetype: {fileID: 11400000, guid: 70bc587676fb53640b870e83e21994a6, type: 2}
+  raceSize: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  raceSprite: {fileID: 1871580175, guid: 88aa9af243b869b468796b4455e5a6c7, type: 3}
   raceDescription: 
-  <Archetype>k__BackingField: {fileID: 11400000, guid: 70bc587676fb53640b870e83e21994a6, type: 2}
-  <RaceType>k__BackingField: 1
-  <Size>k__BackingField: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
-  <RacialStats>k__BackingField:
+  racialStats:
     attributeModifiers: []
     skillModifiers: []
     damageModifiers: []
-  <StartingAge>k__BackingField:
+  startingAge:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <LifeSpan>k__BackingField:
+  lifespan:
     diceCount: 0
     diceSides: 0
     modifier: 0
-  <ValidCrossBreeds>k__BackingField:
+  ageRanges:
+  - Category: {fileID: 11400000, guid: e2a0c1b7aa8cccb408b4b3ba4f0c90fb, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 120fb33cc50354a4c8a09de4682a4a3c, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 781862f1988e4ef42a9768fd91387b88, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 13c9df243e2673b468e8da13e9c8cc28, type: 2}
+    Age: 0
+  - Category: {fileID: 11400000, guid: 168bfac3b9c3a4b40a202d60b1802ad0, type: 2}
+    Age: 0
+  validCrossBreeds:
   - {fileID: 11400000}
   - {fileID: 11400000, guid: a437f7abddb0e30498172d64e3c42a65, type: 2}
   - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
@@ -43,4 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
   - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
   - {fileID: 11400000, guid: 2330339828efe6d4b8b7215aac1ae157, type: 2}
+  hasMales: 1
+  hasFemales: 1
+  hasOther: 1
   developerNotes: 

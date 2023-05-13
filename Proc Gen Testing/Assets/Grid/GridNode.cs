@@ -16,7 +16,8 @@ public class GridNode
     public bool isWalkable { get; private set; } //if this node can be traversed at all
     public int movementPenalty { get; private set; } //additional cost to move into this tile
 
-    public GridNode[] neighbors { get; private set; }
+    public List<GridNode> neighbors_all { get; private set; }
+    public List<GridNode> neighbors_adj { get; private set; }
 
     public GridNode(Grid<GridNode> grid, int x, int y)
     {
@@ -27,21 +28,39 @@ public class GridNode
         isOccupied = false;
         isWalkable = true;
         movementPenalty = 0;
+
+        neighbors_all = new List<GridNode>();
+        neighbors_adj = new List<GridNode>();
     }
 
     public void GetNeighbors()
-    {
-        var neighbors = new List<GridNode>();
-
-        if (x != 0) neighbors.Add(grid.GetGridObject(x - 1, y));
-        if (x != grid.GetWidth() - 1) neighbors.Add(grid.GetGridObject(x + 1, y));
-        if (y != 0) neighbors.Add(grid.GetGridObject(x, y - 1));
-        if (y != grid.GetHeight() - 1) neighbors.Add(grid.GetGridObject(x, y + 1));
-        this.neighbors = new GridNode[neighbors.Count];
-
-        for (int i = 0; i < this.neighbors.Length; i++)
+    {       
+        if (y + 1 < grid.GetHeight())
         {
-            this.neighbors[i] = neighbors[i];
+            neighbors_adj.Add(grid.GetGridObject(x, y + 1)); //N
+            neighbors_all.Add(grid.GetGridObject(x, y + 1));
+        }
+        if (y - 1 >= 0)
+        {
+            neighbors_adj.Add(grid.GetGridObject(x, y - 1)); //S
+            neighbors_all.Add(grid.GetGridObject(x, y - 1));
+        }
+        
+        if (x + 1 < grid.GetWidth())
+        {
+            neighbors_adj.Add(grid.GetGridObject(x + 1, y)); //E
+            neighbors_all.Add(grid.GetGridObject(x + 1, y));
+
+            if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x + 1, y - 1)); //SW
+            if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x + 1, y + 1)); //NW
+        }
+        if (x - 1 >= 0)
+        {
+            neighbors_adj.Add(grid.GetGridObject(x - 1, y)); //W
+            neighbors_all.Add(grid.GetGridObject(x - 1, y));
+
+            if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x - 1, y - 1)); //SW
+            if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x - 1, y + 1)); //NW
         }
     }
 

@@ -3,27 +3,17 @@ using UnityEngine;
 
 namespace JS.CharacterSystem
 {
-    public class StatBase
+    public abstract class StatBase
     {
-        public int BaseValue { get; private set; } = 10;
+        public int BaseValue { get; protected set; } = 10;
         public int Value => GetModifiedValue();
+        public int AbsoluteValue { get; protected set; }
+
+        public int XP { get; protected set; } = 0;
+        public int XPToNextLevel { get; protected set; }
+
 
         protected List<int> modifiers;
-
-        public StatBase()
-        {
-            modifiers = new List<int>();
-        }
-
-        public void SetBaseValue(int value)
-        {
-            BaseValue = value;
-        }
-
-        public void IncreaseBaseValue(int value)
-        {
-            BaseValue = Mathf.Clamp(BaseValue + value, 0, 100);
-        }
 
         private int GetModifiedValue()
         {
@@ -43,54 +33,24 @@ namespace JS.CharacterSystem
             if (value == 0) return;
             modifiers.Remove(value);
         }
-    }
 
-    public class Attribute : StatBase
-    {
-        public Attribute() : base()
+        public void OnGainXP(int xp)
         {
-            //modifiers = new List<int>();   
+            if (BaseValue >= AbsoluteValue) return;
+
+            XP += xp;
+            if (XP >= XPToNextLevel) OnLevelUp();
+        }
+
+        protected virtual void OnLevelUp()
+        {
+            //meant to be overwritten
+        }
+
+        protected void CalculateXPToNextLevel()
+        {
+            XPToNextLevel = Mathf.RoundToInt(2 * BaseValue + 1) * 3; //Use this for testing
+            //XPToNextLevel = Mathf.RoundToInt(2 * BaseValue + 1) * 30; //Use this for actual play
         }
     }
-
-    public class Skill : StatBase
-    {
-        public Skill() : base()
-        {
-            //modifiers = new List<int>();
-        }
-    }
-}
-
-public enum Attributes 
-{ 
-    Strength, 
-    Dexterity, 
-    Constitution, 
-    Intelligence, 
-    Wisdom, 
-    Charisma,
-}
-
-public enum Skills
-{
-    Alchemy,
-    Appraisal,
-    Athletics,
-    Barter,
-    Carpentry,
-    Cooking,
-    Cunning,
-    Detect_Traps,
-    Diplomacy,
-    Disarm_Traps,
-    Engineering,
-    Evasion,
-    Herbalism,
-    Literacy,
-    Medicine,
-    Perception,
-    Smithing,
-    Survival,
-    Thievery,
 }

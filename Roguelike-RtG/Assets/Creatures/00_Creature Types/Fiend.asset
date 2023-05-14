@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Fiend
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 7
-  <ArchetypeName>k__BackingField: Fiend
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 0
-  <NeedsSleep>k__BackingField: 0
+  typeName: Fiend
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 0
+  needsSleep: 0
   developerNotes: 

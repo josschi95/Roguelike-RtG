@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Monstrosity
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 11
-  <ArchetypeName>k__BackingField: Monstrosity
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 1
+  typeName: Monstrosity
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 1
+  needsSleep: 1
   developerNotes: 

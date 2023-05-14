@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Undead
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 14
-  <ArchetypeName>k__BackingField: Undead
-  <NeedsAir>k__BackingField: 0
-  <NeedsFood>k__BackingField: 0
-  <NeedsSleep>k__BackingField: 0
+  typeName: Undead
+  canBeUndead: 0
+  needsAir: 0
+  needsFood: 0
+  needsSleep: 0
   developerNotes: 

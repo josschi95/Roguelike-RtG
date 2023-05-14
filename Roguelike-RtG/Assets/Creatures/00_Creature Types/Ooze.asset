@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Ooze
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 12
-  <ArchetypeName>k__BackingField: Ooze
-  <NeedsAir>k__BackingField: 0
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 0
+  typeName: Ooze
+  canBeUndead: 0
+  needsAir: 0
+  needsFood: 1
+  needsSleep: 0
   developerNotes: 

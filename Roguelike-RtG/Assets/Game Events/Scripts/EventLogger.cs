@@ -7,6 +7,7 @@ namespace JS.EventSystem
     /// </summary>
     public class EventLogger : MonoBehaviour
     {
+        [SerializeField] private bool logEvents;
         /// <summary>
         /// Debugging tool - Raise an assertion alert if event is triggered.
         /// </summary>
@@ -35,6 +36,8 @@ namespace JS.EventSystem
         /// <param name="e">GameEvent to log.</param>
         private void LogEvent(GameEvent e)
         {
+            if (!logEvents) return;
+
             if (watchForEvent != null && e.name.Equals(watchForEvent.name))
             {
                 Debug.LogAssertion(e.name);

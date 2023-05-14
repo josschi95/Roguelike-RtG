@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Magical Beast
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 10
-  <ArchetypeName>k__BackingField: Magical Beast
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 1
+  typeName: Magical Beast
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 1
+  needsSleep: 1
   developerNotes: 

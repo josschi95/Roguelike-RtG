@@ -9,11 +9,12 @@ namespace JS.CharacterSystem
 
         [Space]
 
-        [SerializeField] private CreatureSubTypes[] creatureSubTypes;
+        [SerializeField] private CreatureSubType[] creatureSubtypes;
 
         [Space]
 
         [SerializeField] private CharacterRace[] races;
+        public CharacterRace[] Races => races;
 
         [Space]
 

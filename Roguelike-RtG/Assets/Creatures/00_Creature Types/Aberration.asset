@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd10fc87137b0434c96ca68c43a140e4, type: 3}
   m_Name: Aberration
   m_EditorClassIdentifier: 
-  <ArchetypeName>k__BackingField: Aberration
-  <RacialType>k__BackingField: 2
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 1
+  <ID>k__BackingField: 0
+  typeName: Aberration
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 1
+  needsSleep: 1
   developerNotes: 

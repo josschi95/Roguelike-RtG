@@ -3353,12 +3353,12 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1760407110}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 9f92a4a4546f20b479e16fc78e4f786b, type: 2}
+      - m_Target: {fileID: 11400000, guid: 62cf92654d95ea14b985dbd742aca1fd, type: 2}
         m_TargetAssemblyTypeName: JS.CommandSystem.CommandBase, Assembly-CSharp
         m_MethodName: Invoke
         m_Mode: 1

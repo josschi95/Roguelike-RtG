@@ -23,6 +23,17 @@ namespace JS.CharacterSystem.Creation
         public CharacterRace SecondaryRace { get => secondaryRace; set => SetSecondaryRace(value); }
         public bool IsUndead { get => isUndead; set => SetUndead(value); }
 
+        public void ResetValues()
+        {
+            characterName = "";
+            characterGender = Gender.Male; 
+            characterAge = 0;
+            primaryRace = null;
+            secondaryRace = null;
+            isUndead = false;
+            onCharacterChangeEvent?.Invoke();
+        }
+
         private void SetName(string name)
         {
             characterName = name;

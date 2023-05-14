@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
+  m_Name: Goblinoid_Bugbear
+  m_EditorClassIdentifier: 
+  raceID: 10
+  raceName: Bugbear
+  raceCategory: 1
+  raceSize: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  type: {fileID: 11400000, guid: 22e29ac3a6eb979448fd20162f093574, type: 2}
+  subtypes:
+  - {fileID: 11400000, guid: 8e3d24152cd8b6846bd51a3f8d8d2cec, type: 2}
+  raceSprite: {fileID: 1871580175, guid: 88aa9af243b869b468796b4455e5a6c7, type: 3}
+  raceDescription: 
+  racialStats:
+    attributeModifiers: []
+    skillModifiers: []
+    damageModifiers: []
+  lifeExpectancy: {fileID: 11400000, guid: 1a3124b72007ecc419f5536dcc0423da, type: 2}
+  validCrossBreeds:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: e76f4921328b8b1458526a164a78889d, type: 2}
+  - {fileID: 11400000, guid: bc1c360ca4cf81c4eb11f95213c57650, type: 2}
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
+  - {fileID: 11400000, guid: 795261d81c97ad345a2025c39b551f8b, type: 2}
+  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  - {fileID: 11400000, guid: 5f5335efe556b6a40be8c60d71b45ada, type: 2}
+  - {fileID: 11400000, guid: afff2a288650689479267dfe5a5a55de, type: 2}
+  - {fileID: 11400000, guid: 723571066e6c7c047b4aa61fcadfbb90, type: 2}
+  hasMales: 1
+  hasFemales: 1
+  hasOther: 1
+  developerNotes: 

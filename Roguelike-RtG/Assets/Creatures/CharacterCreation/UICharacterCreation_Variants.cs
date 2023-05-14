@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 namespace JS.CharacterSystem.Creation
 {
@@ -24,30 +23,7 @@ namespace JS.CharacterSystem.Creation
 
         private void OnEnable()
         {
-            maleButton.onClick.AddListener(delegate
-            {
-                characterBuilder.CharacterGender = Gender.Male;
-            });
-            femaleButton.onClick.AddListener(delegate
-            {
-                characterBuilder.CharacterGender = Gender.Female;
-            });
-            otherButton.onClick.AddListener(delegate
-            {
-                characterBuilder.CharacterGender = Gender.Other;
-            });
-
-            ageSlider.onValueChanged.AddListener(UpdateAgeDisplay);
-            int min = characterBuilder.PrimaryRace.AgeRanges[2].Age; //young adult
-            var life = characterBuilder.PrimaryRace.LifeSpan;
-            int max = life.modifier + (life.diceCount * life.diceSides) - 1; //max lifespan
-            ageSlider.minValue = min;
-            ageSlider.maxValue = max;
-            ageSlider.value = min;
-
-            undeadToggle.onValueChanged.AddListener(OnToggleUndead);
-
-            nextButton.enabled = true;
+            UpdatePanelOptions();
         }
 
         private void OnDisable()
@@ -58,15 +34,50 @@ namespace JS.CharacterSystem.Creation
 
             ageSlider.onValueChanged.RemoveAllListeners();
             undeadToggle.onValueChanged.RemoveAllListeners();
-
-            nextButton.enabled = false;
         }
 
-        public void OnCharacterChanged()
+        private void UpdatePanelOptions()
         {
-            maleButton.interactable = characterBuilder.PrimaryRace.HasMales;
-            femaleButton.interactable = characterBuilder.PrimaryRace.HasFemale;
-            otherButton.interactable = characterBuilder.PrimaryRace.HasOther;
+            maleButton.onClick.AddListener(delegate
+            {
+                characterBuilder.CharacterGender = Gender.Male;
+            });
+            maleButton.interactable = characterBuilder.PrimaryRace.HasMales ||
+                characterBuilder.SecondaryRace.HasMales;
+
+            femaleButton.onClick.AddListener(delegate
+            {
+                characterBuilder.CharacterGender = Gender.Female;
+            });
+            femaleButton.interactable = characterBuilder.PrimaryRace.HasFemale ||
+                characterBuilder.SecondaryRace.HasFemale;
+            
+            otherButton.onClick.AddListener(delegate
+            {
+                characterBuilder.CharacterGender = Gender.Other;
+            });
+            otherButton.interactable = characterBuilder.PrimaryRace.HasOther ||
+                characterBuilder.SecondaryRace.HasOther;
+
+            ageSlider.onValueChanged.AddListener(UpdateAgeDisplay);
+
+            //Take average of primary and secondary life expectancies
+            ageSlider.minValue = Mathf.RoundToInt((characterBuilder.PrimaryRace.LifeExpectancy.YoungAdultAge +
+                characterBuilder.SecondaryRace.LifeExpectancy.YoungAdultAge) * 0.5f);
+
+            ageSlider.maxValue = Mathf.RoundToInt((characterBuilder.PrimaryRace.LifeExpectancy.MaxLifeExpectancy +
+                characterBuilder.SecondaryRace.LifeExpectancy.MaxLifeExpectancy) * 0.5f) - 1;
+
+            ageSlider.value = ageSlider.minValue;
+
+            undeadToggle.onValueChanged.AddListener(OnToggleUndead);
+
+            if (!characterBuilder.PrimaryRace.Type.CanBeUndead &&
+                !characterBuilder.SecondaryRace.Type.CanBeUndead)
+            {
+                undeadToggle.interactable = false;
+            }
+            else undeadToggle.interactable = true;
         }
 
         private void OnToggleUndead(bool value)
@@ -79,13 +90,32 @@ namespace JS.CharacterSystem.Creation
             int age = Mathf.RoundToInt(value);
             ageText.text = age.ToString();
 
-            for (int i = characterBuilder.PrimaryRace.AgeRanges.Length - 1; i >= 0; i--)
+            var primary = characterBuilder.PrimaryRace.LifeExpectancy;
+            var secondary = characterBuilder.SecondaryRace.LifeExpectancy;
+
+            if (age >= Mathf.RoundToInt((primary.VenerableAge +
+                secondary.VenerableAge) * 0.5f))
             {
-                if (age >= characterBuilder.PrimaryRace.AgeRanges[i].Age)
-                {
-                    ageText.text += " (" + characterBuilder.PrimaryRace.AgeRanges[i].Category.Name + ")";
-                    break;
-                }
+                ageText.text += " (Venerable)";
+            }
+            else if (age >= Mathf.RoundToInt((primary.OldAge +
+                secondary.OldAge) * 0.5f))
+            {
+                ageText.text += " (Old)";
+            }
+            else if (age >= Mathf.RoundToInt((primary.MiddleAge +
+                secondary.MiddleAge) * 0.5f))
+            {
+                ageText.text += " (Middle Age)";
+            }
+            else if (age >= Mathf.RoundToInt((primary.YoungAdultAge +
+                secondary.YoungAdultAge) * 0.5f))
+            {
+                ageText.text += " (Young Adult)";
+            }
+            else
+            {
+                Debug.LogWarning("Fix this");
             }
         }
     }

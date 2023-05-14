@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Celestial
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 2
-  <ArchetypeName>k__BackingField: Celestial
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 0
-  <NeedsSleep>k__BackingField: 0
+  typeName: Celestial
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 0
+  needsSleep: 0
   developerNotes: 

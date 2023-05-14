@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
+  m_Name: Elf_Dark
+  m_EditorClassIdentifier: 
+  raceID: 2
+  raceName: Dark Elf
+  raceCategory: 0
+  raceSize: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  type: {fileID: 11400000, guid: 70bc587676fb53640b870e83e21994a6, type: 2}
+  subtypes:
+  - {fileID: 11400000, guid: 9fe068e310a56df4098704f72dbb0555, type: 2}
+  raceSprite: {fileID: 330245926, guid: dc0e69b9aabe35f4aabe81bcef235917, type: 3}
+  raceDescription: 
+  racialStats:
+    attributeModifiers: []
+    skillModifiers: []
+    damageModifiers: []
+  lifeExpectancy: {fileID: 11400000, guid: 6040b9c95b8b9d146b71d8427bb3913c, type: 2}
+  validCrossBreeds:
+  - {fileID: 11400000, guid: 8d8e532ad902f2248b2c2a2cfe0fe77f, type: 2}
+  - {fileID: 11400000, guid: 5ca030fc2758c294d8a536168ba4dc9a, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: a7e93f2d3d0822d47a1849366984ea6d, type: 2}
+  - {fileID: 11400000, guid: 945091ee1f2b0be44946326d63c3b67b, type: 2}
+  - {fileID: 11400000, guid: 795261d81c97ad345a2025c39b551f8b, type: 2}
+  - {fileID: 11400000, guid: a017103b5675ad34f80a47ee4c07230f, type: 2}
+  - {fileID: 11400000, guid: cdf14c119632edf4f9884b7f4341c800, type: 2}
+  - {fileID: 11400000, guid: 223e92f8e45e2b4448ca0b3066cb786d, type: 2}
+  - {fileID: 11400000, guid: 5b61c75b6a443ba47befb54f9c136f72, type: 2}
+  - {fileID: 11400000, guid: 212e9ea49034fd849a91e924daf40bf6, type: 2}
+  - {fileID: 11400000, guid: 9f119f817584a6f489083298ff155aad, type: 2}
+  hasMales: 1
+  hasFemales: 1
+  hasOther: 1
+  developerNotes: 

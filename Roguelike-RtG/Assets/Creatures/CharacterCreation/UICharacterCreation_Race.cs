@@ -16,6 +16,7 @@ namespace JS.CharacterSystem.Creation
         private RaceMethod method;
 
 
+        [SerializeField] private CreatureCatalog creatureCatalog;
         [SerializeField] private CharacterBuilder characterBuilder;
         [SerializeField] private UICharacterCreation characterCreatorParent;
 
@@ -32,12 +33,6 @@ namespace JS.CharacterSystem.Creation
 
         [Space]
 
-        [SerializeField] private CharacterRace[] humanoidRaces;
-        [SerializeField] private CharacterRace[] demihumanRaces;
-        [SerializeField] private CharacterRace[] monstrousRaces;
-
-        [Space]
-
         [SerializeField] private RectTransform raceButtonParent;
         [SerializeField] private UIRaceSelectionPanel raceButtonPrefab;
 
@@ -51,24 +46,24 @@ namespace JS.CharacterSystem.Creation
             ResetRace();
             SetMethod(RaceMethod.Single);
 
-            DisplayRacialOptions(humanoidRaces);
+            DisplayRacialOptions(RacialCategory.Humanoid);
 
             humanoidRacebutton.onClick.AddListener(delegate
             {
-                DisplayRacialOptions(humanoidRaces);
+                DisplayRacialOptions(RacialCategory.Humanoid);
             });
             demiHumanRacebutton.onClick.AddListener(delegate
             {
-                DisplayRacialOptions(demihumanRaces);
+                DisplayRacialOptions(RacialCategory.Demihuman);
             });
             monstrousRacebutton.onClick.AddListener(delegate
             {
-                DisplayRacialOptions(monstrousRaces);
+                DisplayRacialOptions(RacialCategory.Monstrous);
             });
             crossbreedbutton.onClick.AddListener(delegate
             {
                 ToggleCrossbreed();
-                DisplayRacialOptions(humanoidRaces);
+                DisplayRacialOptions(RacialCategory.Humanoid);
             });
         }
 
@@ -118,16 +113,14 @@ namespace JS.CharacterSystem.Creation
             }
         }
 
-        private void DisplayRacialOptions(CharacterRace[] collection)
+        private void DisplayRacialOptions(RacialCategory cat)
         {
             ResetButtons();
-            for (int i = 0; i < collection.Length; i++)
+            foreach(var race in creatureCatalog.Races)
             {
-                int index = i;
-                var race = collection[index];
-
+                if (race.RaceCategory != cat) continue;
                 if (!IsValidRace(race)) continue;
-     
+
                 var raceOption = Instantiate(raceButtonPrefab);
                 raceOption.transform.SetParent(raceButtonParent.transform, false);
 

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Humanoid
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 9
-  <ArchetypeName>k__BackingField: Humanoid
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 1
+  typeName: Humanoid
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 1
+  needsSleep: 1
   developerNotes: 'races which are largely human in appearance
 
     2 arms/legs and

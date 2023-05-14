@@ -18,15 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/UI/MainMenu.unity
     guid: c371b6be6e6c6e242b54439d34fb3154
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/UI/CharacterCreation.unity
+    guid: 4bc11f6a3777c614083f3785b191b29d
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Gameplay/NewWorldGeneration.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Gameplay/WorldMap.unity
     guid: f06f7852ab0ff3c4f9014f155e086ca8
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}

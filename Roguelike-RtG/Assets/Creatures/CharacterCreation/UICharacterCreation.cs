@@ -1,19 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using JS.CharacterSystem.Creation;
-using UnityEngine.Analytics;
+using JS.EventSystem;
 
-namespace JS.CharacterSystem
+namespace JS.CharacterSystem.Creation
 {
     public class UICharacterCreation : MonoBehaviour
     {
+        private enum CreationPanel
+        {
+            Race,
+            Variants,
+            Class,
+            Skills,
+            Domain,
+            Final,
+        }
+
         [SerializeField] private CharacterBuilder characterBuilder;
+        [SerializeField] private GameEvent returnToMainMenuEvent;
+        [SerializeField] private GameEvent completeCharacterCreationEvent;
 
         [SerializeField] private GameObject[] categoryPanels;
-        private int panelIndex = 0;
+        private CreationPanel panelIndex = 0;
 
         public bool IsUndead { get; set; }
         public bool IsHybrid { get; set; }
@@ -25,11 +34,12 @@ namespace JS.CharacterSystem
         [Header("Character Sheet")]
         [SerializeField] private TMP_InputField nameInput;
         [SerializeField] private Image characterSprite;
-        [SerializeField] private TMP_Text characterRaceText;
-        [SerializeField] private TMP_Text characterArchetypeText;
-        [SerializeField] private TMP_Text characterSizeText;
-        [SerializeField] private TMP_Text characterGenderText;
-        [SerializeField] private TMP_Text characterAgeText;
+        [SerializeField] private TMP_Text raceText;
+        [SerializeField] private TMP_Text typeText;
+        [SerializeField] private TMP_Text subtypeText;
+        [SerializeField] private TMP_Text sizeText;
+        [SerializeField] private TMP_Text genderText;
+        [SerializeField] private TMP_Text ageText;
 
         [Space]
 
@@ -46,62 +56,89 @@ namespace JS.CharacterSystem
                 characterBuilder.CharacterName = nameInput.text;
             });
 
-            nextButton.onClick.AddListener(Next);
         }
 
         private void OnDestroy()
         {
             nameInput.onSubmit.RemoveAllListeners();
-            nextButton.onClick.RemoveAllListeners();
         }
 
         private void SetDefaults()
         {
+            DisplayCategoryPanel(0);
+            characterBuilder.ResetValues();
+
             //set race to human, gender male, age to young
        
         }
 
-        //[Header("Character Class")]
-
-
-        //[Header("Character Skills")]
-
-
-        //[Header("Character Domain")]
-
-
-        //[Header("Finalization")]
-
-        public void Back()
+        #region - Navigation -
+        private void Back()
         {
-            OnRaceHoverExit();
-            if (panelIndex == 0)
+            switch (panelIndex)
             {
-                //return to main menu
-            }
-            else
-            {
-                DisplayCategoryPanel(panelIndex - 1);
+                case CreationPanel.Race:
+                    OnRaceHoverExit();
+                    returnToMainMenuEvent?.Invoke();
+                    break;
+                case CreationPanel.Variants:
+                    DisplayCategoryPanel((int)panelIndex - 1);
+                    nextButton.gameObject.SetActive(false);
+                    break;
+                case CreationPanel.Class:
+                    DisplayCategoryPanel((int)panelIndex - 1);
+                    nextButton.gameObject.SetActive(true);
+                    break;
+                case CreationPanel.Skills:
+                    //Skip class if character has a non-humanoid race
+                    if ((int)characterBuilder.PrimaryRace.RaceCategory + 
+                        (int)characterBuilder.SecondaryRace.RaceCategory > 0)
+                    {
+                        DisplayCategoryPanel((int)panelIndex - 2);
+                    }
+                    else DisplayCategoryPanel((int)panelIndex - 1);
+                    break;
+                case CreationPanel.Domain:
+                    DisplayCategoryPanel((int)panelIndex - 1);
+                    break;
+                case CreationPanel.Final:
+                    DisplayCategoryPanel((int)panelIndex - 1);
+                    break;
             }
         }
 
         public void Next()
         {
-            OnRaceHoverExit();
-            if (panelIndex == categoryPanels.Length - 1)
+            switch (panelIndex)
             {
-                //complete
+                case CreationPanel.Race:
+                    OnRaceHoverExit();
+                    DisplayCategoryPanel((int)panelIndex + 1);
+                    nextButton.gameObject.SetActive(true);
+                    break;
+                case CreationPanel.Variants:
+                    //Skip class if character has a non-humanoid race
+                    if ((int)characterBuilder.PrimaryRace.RaceCategory +
+                        (int)characterBuilder.SecondaryRace.RaceCategory > 0)
+                    {
+                        DisplayCategoryPanel((int)panelIndex + 2);
+                    }
+                    else DisplayCategoryPanel((int)panelIndex + 1);
+                    nextButton.gameObject.SetActive(false);
+                    break;
+                case CreationPanel.Class:
+                    DisplayCategoryPanel((int)panelIndex + 1);
+                    break;
+                case CreationPanel.Skills:
+                    DisplayCategoryPanel((int)panelIndex + 1);
+                    break;
+                case CreationPanel.Domain:
+                    DisplayCategoryPanel((int)panelIndex + 1);
+                    break;
+                case CreationPanel.Final:
+                    completeCharacterCreationEvent?.Invoke();
+                    break;
             }
-            else
-            {
-                DisplayCategoryPanel(panelIndex + 1);
-            }
-        }
-
-        public void OnCharacterChanged()
-        {
-            SetRaceDependentText();
-            characterGenderText.text = "Gender: " + characterBuilder.CharacterGender.ToString()[0];
         }
 
         private void DisplayCategoryPanel(int index)
@@ -111,54 +148,69 @@ namespace JS.CharacterSystem
                 categoryPanels[i].SetActive(false);
             }
             categoryPanels[index].SetActive(true);
-            panelIndex = index;
+            panelIndex = (CreationPanel)index;
+        }
+        #endregion
+
+        public void OnCharacterChanged()
+        {
+            SetRaceDependentText();
+            genderText.text = "Gender: " + characterBuilder.CharacterGender.ToString()[0];
         }
 
         public void SetRaceDependentText()
         {
             if (characterBuilder.PrimaryRace == null)
             {
-                characterRaceText.text = "";
-                characterArchetypeText.text = "";
-                characterSizeText.text = "";
+                raceText.text = "";
+                typeText.text = "";
+                sizeText.text = "";
                 return;
             }
 
             #region - Primary Race -
             var primary = characterBuilder.PrimaryRace;
 
-            //Undead
-            if (characterBuilder.IsUndead) characterRaceText.text = "Undead ";
-            else characterRaceText.text = "";
             //Race
-            characterRaceText.text += primary.RaceName;
-
-            //Archetype
-            if (primary.Archetype is CreatureSubTypes child)
+            raceText.text = primary.RaceName;
+            
+            //Type
+            if (characterBuilder.IsUndead) typeText.text = "Type: Undead";
+            else typeText.text = "Type: " + primary.Type.TypeName;
+            
+            //Subtypes
+            subtypeText.text = "Subtypes:";
+            for (int i = 0; i < primary.Subtypes.Length; i++)
             {
-                characterArchetypeText.text = child.parentArchetype.ArchetypeName + " (" + child.ArchetypeName + ")";
+                subtypeText.text += " " + primary.Subtypes[i].ArchetypeName + ",";
             }
-            else characterArchetypeText.text = primary.Archetype.ArchetypeName;
 
             //Size
-            characterSizeText.text = primary.Size.Name;
+            sizeText.text = primary.Size.Name;
             #endregion
 
             #region - Secondary Race -
-            if (characterBuilder.SecondaryRace == characterBuilder.PrimaryRace) return;
+            if (characterBuilder.SecondaryRace == characterBuilder.PrimaryRace)
+            {
+                subtypeText.text = subtypeText.text.Substring(0, subtypeText.text.Length - 1);
+                return;
+            }
             var secondary = characterBuilder.SecondaryRace;
             
             //Race
-            characterRaceText.text += "/" + secondary.RaceName;
-
-            //Archetype
-            if (secondary.Archetype == primary.Archetype) return;
-
-            if (secondary.Archetype is CreatureSubTypes child2)
+            raceText.text += "/" + secondary.RaceName;
+            
+            //Type
+            if (!characterBuilder.IsUndead && secondary.Type != primary.Type)
+                typeText.text += "/" + secondary.Type.TypeName;
+            
+            //Subtypes
+            for (int i = 0; i < secondary.Subtypes.Length; i++)
             {
-                characterArchetypeText.text += "/" + child2.parentArchetype.ArchetypeName + " (" + child2.ArchetypeName + ")";
+                subtypeText.text += " " + secondary.Subtypes[i].ArchetypeName + ",";
             }
-            else characterArchetypeText.text += "/" + secondary.Archetype.ArchetypeName;
+            subtypeText.text = subtypeText.text.Substring(0, subtypeText.text.Length - 1);
+
             #endregion
         }
 
@@ -166,45 +218,53 @@ namespace JS.CharacterSystem
         {
             //Display info
             descriptionText.text = race.RaceDescription + "\n";
+            //Type
+            descriptionText.text += race.RaceName + "\n" + race.Type.TypeName;
+            if (race.RaceCategory == RacialCategory.Monstrous) 
+                descriptionText.text += " (" + race.RaceCategory.ToString() + ")";
+            descriptionText.text += "\n";
 
-            //Archetype/Hierarchy
-            if (race.Archetype is CreatureSubTypes child)
+            //Subtypes
+            for (int i = 0; i < race.Subtypes.Length; i++)
             {
-                descriptionText.text += "(" + race.RaceCategory.ToString() + "/" + child.parentArchetype.ArchetypeName + "/" + child.ArchetypeName + ") " + race.RaceName + "\n";
+                if (i > 0) descriptionText.text += " ";
+                descriptionText.text += race.Subtypes[i].ArchetypeName + ",";
             }
-            else
-            {
-                descriptionText.text += "(" + race.RaceCategory.ToString() + "/" + race.Archetype.ArchetypeName + ") " + race.RaceName + "\n";
-            }
+            if (race.Subtypes.Length > 0)
+                descriptionText.text = descriptionText.text.Substring(0, 
+                    descriptionText.text.Length - 1);
+            descriptionText.text += "\n";
 
+            //Size
             descriptionText.text += "Size: " + race.Size.Name + "\n";
 
             //Needs
-            descriptionText.text += "Needs: ";
-            if (race.Archetype.NeedsAir) descriptionText.text += "Air, ";
-            //else descriptionText.text += "Breaths: No; ";
-            if (race.Archetype.NeedsFood) descriptionText.text += "Food, ";
-            //else descriptionText.text += "Eats: No; ";
-            if (race.Archetype.NeedsSleep) descriptionText.text += "Sleep";
-            //else descriptionText.text += "Sleeps: No \n";
+            descriptionText.text += "Needs:";
+            if (race.Type.NeedsAir) descriptionText.text += " Air,";
+            if (race.Type.NeedsFood) descriptionText.text += " Food,";
+            if (race.Type.NeedsSleep) descriptionText.text += " Sleep,";
+            descriptionText.text = descriptionText.text.Substring(0, descriptionText.text.Length - 1);
             descriptionText.text += "\n";
 
-            int min = race.LifeSpan.modifier + race.LifeSpan.diceCount;
-            int max = race.LifeSpan.modifier + (race.LifeSpan.diceCount * race.LifeSpan.diceSides);
-            descriptionText.text += "Lifespan: " + min + " - " + max + "\n";
+            //Lifespan
+            descriptionText.text += "Lifespan: " + race.LifeExpectancy.MinLifeExpectancy + 
+                " - " + race.LifeExpectancy.MaxLifeExpectancy + " years\n";
 
+            //Attribute Modifiers
             foreach (var mod in race.RacialStats.AttributeModifiers)
             {
                 char op = '+';
                 if (mod.value < 0) op = '-';
                 descriptionText.text += mod.attribute.ToString() + " : " + op + Mathf.Abs(mod.value) + "\n";
             }
+            //Skill Modifiers
             foreach (var mod in race.RacialStats.SkillModifiers)
             {
                 char op = '+';
                 if (mod.value < 0) op = '-';
                 descriptionText.text += mod.skill.ToString() + " : " + op + Mathf.Abs(mod.value) + "\n";
             }
+            //Resistance Modifiers
             foreach (var mod in race.RacialStats.ResistanceModifiers)
             {
                 char op = '+';

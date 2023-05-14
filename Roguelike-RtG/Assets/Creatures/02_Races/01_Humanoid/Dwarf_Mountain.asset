@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
+  m_Name: Dwarf_Mountain
+  m_EditorClassIdentifier: 
+  raceID: 0
+  raceName: Mountain Dwarf
+  raceCategory: 0
+  raceSize: {fileID: 11400000, guid: 56830c760711aa144a433de42b480d75, type: 2}
+  type: {fileID: 11400000, guid: 70bc587676fb53640b870e83e21994a6, type: 2}
+  subtypes:
+  - {fileID: 11400000, guid: e7a0775feab588745bd992ed3c85ef78, type: 2}
+  raceSprite: {fileID: 330245926, guid: dc0e69b9aabe35f4aabe81bcef235917, type: 3}
+  raceDescription: 
+  racialStats:
+    attributeModifiers: []
+    skillModifiers: []
+    damageModifiers: []
+  lifeExpectancy: {fileID: 11400000, guid: d9b706a3691247946b0a85c6777f54e4, type: 2}
+  validCrossBreeds: []
+  hasMales: 1
+  hasFemales: 0
+  hasOther: 0
+  developerNotes: 

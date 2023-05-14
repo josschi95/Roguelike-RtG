@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Vermin
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 15
-  <ArchetypeName>k__BackingField: Vermin
-  <NeedsAir>k__BackingField: 1
-  <NeedsFood>k__BackingField: 1
-  <NeedsSleep>k__BackingField: 1
+  typeName: Vermin
+  canBeUndead: 1
+  needsAir: 1
+  needsFood: 1
+  needsSleep: 1
   developerNotes: insects, arachnids, invertebrates

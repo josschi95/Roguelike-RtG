@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Construct
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 3
-  <ArchetypeName>k__BackingField: Construct
-  <NeedsAir>k__BackingField: 0
-  <NeedsFood>k__BackingField: 0
-  <NeedsSleep>k__BackingField: 0
+  typeName: Construct
+  canBeUndead: 0
+  needsAir: 0
+  needsFood: 0
+  needsSleep: 0
   developerNotes: 

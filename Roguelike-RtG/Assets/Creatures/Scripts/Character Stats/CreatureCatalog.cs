@@ -32,5 +32,10 @@ namespace JS.CharacterSystem
         [Space]
 
         [SerializeField] private CharacterSkill[] skills;
+
+        [Space]
+        
+        [SerializeField] private CharacterClass[] classes; 
+        public CharacterClass[] Classes => classes;
     }
 }

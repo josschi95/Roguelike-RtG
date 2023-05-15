@@ -28,7 +28,7 @@ namespace JS.CharacterSystem
                     if (bonus.attribute.ID == i) baseValue += bonus.value;
                 }
 
-                foreach (var bonus in Class.ArchetypeStas.AttributeModifiers)
+                foreach (var bonus in Class.ClassStats.AttributeModifiers)
                 {
                     if (bonus.attribute.ID == i) baseValue += bonus.value;
                 }
@@ -46,7 +46,7 @@ namespace JS.CharacterSystem
                     if (bonus.skill.ID == i) baseValue += bonus.value;
                 }
 
-                foreach (var bonus in Class.ArchetypeStas.SkillModifiers)
+                foreach (var bonus in Class.ClassStats.SkillModifiers)
                 {
                     if (bonus.skill.ID == i) baseValue += bonus.value;
                 }

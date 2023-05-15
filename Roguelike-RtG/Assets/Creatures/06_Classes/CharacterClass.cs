@@ -5,16 +5,30 @@ namespace JS.CharacterSystem
     [CreateAssetMenu(menuName = "Characters/Stats/Character Class")]
     public class CharacterClass : ScriptableObject
     {
-        [field: SerializeField] public string ClassName { get; private set; }
-        [field: SerializeField] public ClassTier Tier { get; private set; }
-        [field: SerializeField] public StatField ArchetypeStas { get; private set; }
+        [SerializeField] private string _name;
+        [SerializeField] private ClassArchetype archetype;
+        [SerializeField] private ClassTier tier;
 
+        [Space]
+
+        [SerializeField] private StatField classStats;
+
+        [Space]
+
+        [TextArea(3,5)]
+        [SerializeField] private string description;
 
         [Header("Requirements")]
         [SerializeField] private AttributeReference[] requiredAttributeScores;
         [SerializeField] private SkillReference[] requiredSkillScores;
         [SerializeField] private ClassReference[] requiredClassLevels;
         [SerializeField] private CharacterRace requiredRace;
+
+        public string ClassName => _name;
+        public ClassArchetype Archetype => archetype;
+        public ClassTier Tier => tier;
+        public StatField ClassStats => classStats;
+        public string Description => description;
 
         public bool MeetsRequirements()
         {
@@ -47,3 +61,5 @@ namespace JS.CharacterSystem
 #pragma warning restore 0414
     }
 }
+
+public enum ClassArchetype { Martial, Mage, Artisan }

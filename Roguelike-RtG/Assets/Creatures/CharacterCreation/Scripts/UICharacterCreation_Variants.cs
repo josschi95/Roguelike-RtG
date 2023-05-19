@@ -38,6 +38,7 @@ namespace JS.CharacterSystem.Creation
 
         private void UpdatePanelOptions()
         {
+            #region - Gender -
             maleButton.onClick.AddListener(delegate
             {
                 characterBuilder.CharacterGender = Gender.Male;
@@ -58,15 +59,23 @@ namespace JS.CharacterSystem.Creation
             });
             otherButton.interactable = characterBuilder.PrimaryRace.HasOther ||
                 characterBuilder.SecondaryRace.HasOther;
+            #endregion
 
             ageSlider.onValueChanged.AddListener(UpdateAgeDisplay);
 
+            var primary = characterBuilder.PrimaryRace.LifeExpectancy;
+            var secondary = characterBuilder.SecondaryRace.LifeExpectancy;
             //Take average of primary and secondary life expectancies
             ageSlider.minValue = Mathf.RoundToInt((characterBuilder.PrimaryRace.LifeExpectancy.YoungAdultAge +
                 characterBuilder.SecondaryRace.LifeExpectancy.YoungAdultAge) * 0.5f);
 
-            ageSlider.maxValue = Mathf.RoundToInt((characterBuilder.PrimaryRace.LifeExpectancy.MaxLifeExpectancy +
-                characterBuilder.SecondaryRace.LifeExpectancy.MaxLifeExpectancy) * 0.5f) - 1;
+            ageSlider.maxValue = Aging.GetMaxLifespan(primary, secondary) - 1;
+
+            if (!characterBuilder.PrimaryRace.LifeExpectancy.Ages && !characterBuilder.SecondaryRace.LifeExpectancy.Ages)
+            {
+                ageSlider.minValue = 0;
+                ageSlider.maxValue = 1000;
+            }
 
             ageSlider.value = ageSlider.minValue;
 
@@ -88,33 +97,32 @@ namespace JS.CharacterSystem.Creation
         private void UpdateAgeDisplay(float value)
         {
             int age = Mathf.RoundToInt(value);
+            characterBuilder.CharacterAge = age;
             ageText.text = age.ToString();
 
             var primary = characterBuilder.PrimaryRace.LifeExpectancy;
             var secondary = characterBuilder.SecondaryRace.LifeExpectancy;
+            var max = Aging.GetMaxLifespan(primary, secondary);
 
-            if (age >= Mathf.RoundToInt((primary.VenerableAge +
-                secondary.VenerableAge) * 0.5f))
+            if (age >= Aging.GetVenerableAge(max))
             {
                 ageText.text += " (Venerable)";
             }
-            else if (age >= Mathf.RoundToInt((primary.OldAge +
-                secondary.OldAge) * 0.5f))
+            else if (age >= Aging.GetOldAge(max))
             {
                 ageText.text += " (Old)";
             }
-            else if (age >= Mathf.RoundToInt((primary.MiddleAge +
-                secondary.MiddleAge) * 0.5f))
+            else if (age >= Aging.GetMiddleAge(max))
             {
                 ageText.text += " (Middle Age)";
             }
-            else if (age >= Mathf.RoundToInt((primary.YoungAdultAge +
-                secondary.YoungAdultAge) * 0.5f))
+            else if (age >= Aging.GetYoungAdultAge(max))
             {
                 ageText.text += " (Young Adult)";
             }
             else
             {
+                ageText.text += " (Ageless)";
                 Debug.LogWarning("Fix this");
             }
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using JS.DomainSystem;
 
 namespace JS.CharacterSystem
 {
@@ -23,19 +24,27 @@ namespace JS.CharacterSystem
         [Space]
 
         [SerializeField] private AgeCategory[] ages;
+        public AgeCategory[] Ages => ages;
 
         [Space]
 
         [SerializeField] private CharacterAttribute[] primaryAttributes;
         [SerializeField] private CharacterAttribute[] secondaryAttributes;
+        public CharacterAttribute[] PrimaryAttributes => primaryAttributes;
 
         [Space]
 
         [SerializeField] private CharacterSkill[] skills;
+        public CharacterSkill[] Skills => skills;
 
         [Space]
         
         [SerializeField] private CharacterClass[] classes; 
         public CharacterClass[] Classes => classes;
+
+        [Space]
+
+        [SerializeField] private Domain[] domains;
+        public Domain[] Domains => domains;
     }
 }

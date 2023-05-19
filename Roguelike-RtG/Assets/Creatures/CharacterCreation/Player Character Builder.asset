@@ -7,9 +7,10 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4802b809fcfff4e40aaa2012f03b6400, type: 3}
   m_Name: Player Character Builder
   m_EditorClassIdentifier: 
   onCharacterChangeEvent: {fileID: 11400000, guid: 79fd8799e3e93484fb6c7fa1a5b0102d, type: 2}
+  catalog: {fileID: 11400000, guid: fcca88c2ff432934e9f4baa1c1c4f19a, type: 2}

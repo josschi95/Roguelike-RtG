@@ -75,10 +75,8 @@ namespace JS.CharacterSystem.Creation
 
         private void ResetButtons()
         {
-            int count = raceButtonParent.transform.childCount;
-            for (int i = count - 1; i >= 0; i--)
+            for (int i = raceButtonParent.transform.childCount - 1; i >= 0; i--)
             {
-
                 Destroy(raceButtonParent.transform.GetChild(i).gameObject);
             }
         }
@@ -178,6 +176,7 @@ namespace JS.CharacterSystem.Creation
             {
                 characterBuilder.PrimaryRace = race;
                 SetMethod(RaceMethod.Paternal);
+                DisplayRacialOptions(RacialCategory.Humanoid);
             }
             else
             {

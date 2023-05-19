@@ -12,7 +12,7 @@ namespace JS.CharacterSystem.Creation
             Race,
             Variants,
             Class,
-            Skills,
+            Attributes,
             Domain,
             Final,
         }
@@ -92,13 +92,11 @@ namespace JS.CharacterSystem.Creation
                     break;
                 case CreationPanel.Variants:
                     DisplayCategoryPanel((int)panelIndex - 1);
-                    nextButton.gameObject.SetActive(false);
                     break;
                 case CreationPanel.Class:
                     DisplayCategoryPanel((int)panelIndex - 1);
-                    nextButton.gameObject.SetActive(true);
                     break;
-                case CreationPanel.Skills:
+                case CreationPanel.Attributes:
                     //Skip class if character has a non-humanoid race
                     if ((int)characterBuilder.PrimaryRace.RaceCategory + 
                         (int)characterBuilder.SecondaryRace.RaceCategory > 0)
@@ -123,7 +121,6 @@ namespace JS.CharacterSystem.Creation
                 case CreationPanel.Race:
                     OnHoverExit();
                     DisplayCategoryPanel((int)panelIndex + 1);
-                    nextButton.gameObject.SetActive(true);
                     break;
                 case CreationPanel.Variants:
                     //Skip class if character has a non-humanoid race
@@ -133,13 +130,17 @@ namespace JS.CharacterSystem.Creation
                         DisplayCategoryPanel((int)panelIndex + 2);
                     }
                     else DisplayCategoryPanel((int)panelIndex + 1);
-                    nextButton.gameObject.SetActive(false);
                     break;
                 case CreationPanel.Class:
                     DisplayCategoryPanel((int)panelIndex + 1);
                     break;
-                case CreationPanel.Skills:
-                    DisplayCategoryPanel((int)panelIndex + 1);
+                case CreationPanel.Attributes:
+                    if (characterBuilder.AvailableAttributePoints > 0)
+                    {
+                        Debug.Log("Are you sure? You still have unspent Attribute Points.");
+                        DisplayCategoryPanel((int)panelIndex + 1);
+                    }
+                    else DisplayCategoryPanel((int)panelIndex + 1);
                     break;
                 case CreationPanel.Domain:
                     DisplayCategoryPanel((int)panelIndex + 1);
@@ -157,7 +158,17 @@ namespace JS.CharacterSystem.Creation
                 categoryPanels[i].SetActive(false);
             }
             categoryPanels[index].SetActive(true);
+            EnableNextButton(index);
             panelIndex = (CreationPanel)index;
+        }
+
+        private void EnableNextButton(int index)
+        {
+            bool enable = false;
+            if (index == (int)CreationPanel.Variants) enable = true;
+            else if (index == (int)CreationPanel.Attributes) enable = true;
+            else if (index == (int)CreationPanel.Final) enable = true;
+            nextButton.gameObject.SetActive(enable);
         }
         #endregion
 
@@ -292,6 +303,16 @@ namespace JS.CharacterSystem.Creation
 
             //description
             infoText.text += characterClass.Description;
+        }
+
+        public void OnAttributeHover(int attributeID)
+        {
+
+        }
+
+        public void OnDomainHover(DomainSystem.Domain domain)
+        {
+
         }
 
         public void OnHoverExit()

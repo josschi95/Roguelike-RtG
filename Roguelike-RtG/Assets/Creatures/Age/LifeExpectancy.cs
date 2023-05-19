@@ -7,7 +7,7 @@ namespace JS.CharacterSystem
     {
         [SerializeField] private string _name;
         public string Name => _name;
-        [SerializeField] public bool ages = true;
+        [SerializeField] private bool ages = true;
         public bool Ages => ages;
 
         [Space]
@@ -29,10 +29,10 @@ namespace JS.CharacterSystem
             MaxLifeExpectancy = lifespan.modifier + (lifespan.diceCount * lifespan.diceSides);
             MinLifeExpectancy = lifespan.modifier + lifespan.diceCount;
 
-            VenerableAge = Mathf.RoundToInt(MaxLifeExpectancy * 0.75f);
-            OldAge = Mathf.RoundToInt(MaxLifeExpectancy * 0.5f);
-            MiddleAge = Mathf.RoundToInt(VenerableAge * 0.5f);
-            YoungAdultAge = Mathf.RoundToInt(MiddleAge * 0.5f);
+            VenerableAge = Aging.GetVenerableAge(MaxLifeExpectancy);
+            OldAge = Aging.GetOldAge(MaxLifeExpectancy);
+            MiddleAge = Aging.GetMiddleAge(MaxLifeExpectancy);
+            YoungAdultAge = Aging.GetYoungAdultAge(MaxLifeExpectancy);
             AdolescentAge = Mathf.RoundToInt(YoungAdultAge * 0.75f);
             ChildAge = Mathf.RoundToInt(YoungAdultAge * 0.5f);
         }

@@ -28,6 +28,12 @@ namespace JS.CharacterSystem
 
         [Space]
 
+        [Space]
+
+        [SerializeField] private AttributeReference[] baseAttributes = new AttributeReference[6];
+
+        [SerializeField] private AttributeReference[] attributePotentials = new AttributeReference[6];
+
         [SerializeField] private StatField racialStats;
 
         [Space]
@@ -53,6 +59,8 @@ namespace JS.CharacterSystem
         public SizeCategory Size => raceSize;
         public Sprite RaceSprite => raceSprite;
         public string RaceDescription => raceDescription;
+        public AttributeReference[] BaseAttributes => baseAttributes;
+        public AttributeReference[] AttributePotentials => attributePotentials;
         public StatField RacialStats => racialStats;
         public LifeExpectancy LifeExpectancy => lifeExpectancy;
         public CharacterRace[] ValidCrossBreeds => validCrossBreeds;

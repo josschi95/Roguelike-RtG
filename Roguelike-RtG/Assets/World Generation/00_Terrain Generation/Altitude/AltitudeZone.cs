@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [CreateAssetMenu(fileName = "New Atltitude Zone", menuName = "World Generation/Terrain/Altitude Zone")]
     public class AltitudeZone : ScriptableObject

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// </summary>
 public class MainMenuHandler : MonoBehaviour
 {
+    [SerializeField] private Button continueButton;
     [SerializeField] private Button confirmQuitButton;
 
     private void OnEnable() => SetButtonEvents();
@@ -13,16 +14,13 @@ public class MainMenuHandler : MonoBehaviour
 
     private void SetButtonEvents()
     {
-
         confirmQuitButton.onClick.AddListener(OnConfirmQuitGame);
     }
 
     private void ClearButtonEvents()
     {
-
         confirmQuitButton.onClick.RemoveListener(OnConfirmQuitGame);
     }
-
 
     private void OnConfirmQuitGame()
     {

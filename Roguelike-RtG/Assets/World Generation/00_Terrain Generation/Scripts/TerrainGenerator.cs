@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using JS.EventSystem;
 
@@ -9,7 +8,7 @@ using JS.EventSystem;
 //      Ocean Currents
 //
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap.Generation
 {
     /// <summary>
     /// Generates world altitude, climate, and biomes
@@ -48,7 +47,6 @@ namespace JS.WorldGeneration
 
         [SerializeField] private Biome Tundra, Taiga, TemperateGrassland, Shrubland, DeciduousForest, Desert, TropicalSeasonalForest, Savanna, Jungle;
 
-
         public void SetInitialValues(WorldSize size, int seed)
         {
             this.seed = seed;
@@ -62,7 +60,8 @@ namespace JS.WorldGeneration
 
             mapSize = mapFeatures.MapSize(worldSize);
             origin = new Vector3Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
-            terrainData.SetMapSize(mapSize, origin);
+            terrainData.MapSize = mapSize;
+            terrainData.Origin = origin;
 
             worldMap.CreateGrid(mapSize, mapSize);
         }
@@ -121,7 +120,7 @@ namespace JS.WorldGeneration
                         heightMap[nodesInRange[i].x, nodesInRange[i].y] = y;
                 }
             }
-            terrainData.heightMap = heightMap;
+            terrainData.HeightMap = heightMap;
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace JS.WorldGeneration
         /// </summary>
         public void GenerateHeightMap()
         {
-            float[,] heightMap = terrainData.heightMap;
+            float[,] heightMap = terrainData.HeightMap;
 
             float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
             for (int x = 0; x < perlinMap.GetLength(0); x++)
@@ -141,7 +140,7 @@ namespace JS.WorldGeneration
                 }
             }
 
-            terrainData.heightMap = heightMap;
+            terrainData.HeightMap = heightMap;
         }
 
         /// <summary>
@@ -149,14 +148,14 @@ namespace JS.WorldGeneration
         /// </summary>
         public void ErodeLandMasses()
         {
-            float[,] heightMap = terrainData.heightMap;
+            float[,] heightMap = terrainData.HeightMap;
             heightMap = erosion.Erode(heightMap, mapFeatures.Raindrops(worldSize), seed);
-            terrainData.heightMap = heightMap;
+            terrainData.HeightMap = heightMap;
         }
 
         public void SetNodeAltitudeValues()
         {
-            float[,] heightMap = terrainData.heightMap;
+            float[,] heightMap = terrainData.HeightMap;
 
             //This is doing nothing and is EXTREMELY FLAWED only taking into account altitude
             //float[,] airPressureMap = AirPressureData.GetAirPressureMap(heightMap);
@@ -175,7 +174,7 @@ namespace JS.WorldGeneration
                     //node.airPressure = airPressureMap[x, y];
                 }
             }
-            terrainData.heightMap = heightMap;
+            terrainData.HeightMap = heightMap;
         }
 
         /// <summary>
@@ -220,7 +219,7 @@ namespace JS.WorldGeneration
 
                 yield return null;
             }
-            terrainData.SetLakes(lakes.ToArray());
+            terrainData.Lakes = lakes.ToArray();
         }
 
         /// <summary>
@@ -246,7 +245,7 @@ namespace JS.WorldGeneration
 
                 yield return null;
             }
-            terrainData.SetIslands(islands.ToArray());
+            terrainData.Islands = islands.ToArray();
         }
 
         /// <summary>
@@ -315,14 +314,13 @@ namespace JS.WorldGeneration
                 }
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
-            terrainData.SetMountains(ranges.ToArray());
+            terrainData.Mountains = ranges.ToArray();
         }
 
         public void GenerateRivers()
         {
             //Create rivers
-            var rivers = riverGenerator.GenerateRivers(mapSize, mapFeatures.RiverCount(worldSize));
-            terrainData.SetRivers(rivers.ToArray());
+            terrainData.Rivers = riverGenerator.GenerateRivers(mapSize, mapFeatures.RiverCount(worldSize)).ToArray();
         }
         #endregion
 
@@ -330,7 +328,7 @@ namespace JS.WorldGeneration
         public void GenerateHeatMap()
         {
             //Create Heat Map
-            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.heightMap, seaLevel, worldGenerator.rng);
+            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.HeightMap, seaLevel, worldGenerator.rng);
 
             //Pass heat values to nodes
             for (int x = 0; x < mapSize; x++)
@@ -362,7 +360,7 @@ namespace JS.WorldGeneration
         #region - Precipitation -
         public void GeneratePrecipitationMap()
         {
-            var heightMap = terrainData.heightMap;
+            var heightMap = terrainData.HeightMap;
             //Create Wind Map
             SecondaryDirections[,] windMap = AirPressureData.GetWindMap(heightMap);
             //Other factors that need to be taken into account
@@ -397,7 +395,16 @@ namespace JS.WorldGeneration
             }
 
             //pass to terrain data
-            //return moistureMap;
+            float[,] adjustedMoistureMap = new float[mapSize, mapSize];
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    WorldTile node = worldMap.GetNode(x, y);
+                    adjustedMoistureMap[x, y] = node.precipitationValue;
+                }
+            }
+            terrainData.MoistureMap = adjustedMoistureMap;
         }
 
         private PrecipitationZone GetPrecipitationZone(float moistureValue)
@@ -443,7 +450,7 @@ namespace JS.WorldGeneration
             }
 
             ConsolidateBiomes(2);
-
+            SaveBiomeMap();
             FindBiomeGroups();
         }
         
@@ -485,8 +492,6 @@ namespace JS.WorldGeneration
             }
         }
 
-
-
         private int TemperatureIndex(TemperatureZone zone)
         {
             if (zone == mapFeatures.TemperatureZones[0]) return 0;      //Coldest
@@ -524,6 +529,23 @@ namespace JS.WorldGeneration
             ConsolidateBiomes(iterations - 1);
         }
 
+        private void SaveBiomeMap()
+        {
+            int[,] biomeMap = new int[mapSize, mapSize];
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    WorldTile node = worldMap.GetNode(x, y);
+                    if (node.PrimaryBiome != null)
+                    {
+                        biomeMap[x, y] = node.PrimaryBiome.ID;
+                    }
+                }
+            }
+            terrainData.BiomeMap = biomeMap;
+        }
+
         private void FindBiomeGroups()
         {
             var biomes = new List<BiomeGroup>();
@@ -534,13 +556,13 @@ namespace JS.WorldGeneration
                     WorldTile node = worldMap.GetNode(x, y);
                     if (node.BiomeGroup != null && !biomes.Contains(node.BiomeGroup))
                     {
-                        node.BiomeGroup.FinalizeValues(biomes.Count);
+                        node.BiomeGroup.ID = biomes.Count;
                         biomes.Add(node.BiomeGroup);
                         //Debug.Log("New biome group found! " + node.BiomeGroup.biome + " (" + node.BiomeGroup.ID + ")");
                     }
                 }
             }
-            terrainData.SetBiomes(biomes.ToArray());
+            terrainData.BiomeGroups = biomes.ToArray();
         }
         #endregion
 

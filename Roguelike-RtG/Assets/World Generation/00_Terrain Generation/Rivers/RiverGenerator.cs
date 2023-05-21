@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap.Generation
 {
     public class RiverGenerator : MonoBehaviour
     {

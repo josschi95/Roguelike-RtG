@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [System.Serializable]
     public class Lake

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using JS.WorldGeneration;
+using JS.WorldMap.Generation;
 using TMPro;
 
 public class WorldGenerationSettings : MonoBehaviour
@@ -35,7 +35,10 @@ public class WorldGenerationSettings : MonoBehaviour
         RandomizeSeed();
 
         randomizeSeedButton.onClick.AddListener(RandomizeSeed);
-        seedInputField.onSubmit.AddListener(delegate { Debug.Log(seedInputField.text); });
+        seedInputField.onSubmit.AddListener(delegate 
+        {
+            OnSetSeed(seedInputField.text);
+        });
     }
 
     private void ClearUIElementEvents()
@@ -48,7 +51,14 @@ public class WorldGenerationSettings : MonoBehaviour
         }
     }
 
-
+    private void OnSetSeed(string value)
+    {
+        Debug.Log(seedInputField.text);
+        int intValue = int.Parse(value);
+        intValue = Mathf.Clamp(intValue, 1, int.MaxValue);
+        worldGenerator.SetSeed(intValue);
+        OnSeedChanged();
+    }
 
     //Randomizes seed and updates display
     private void RandomizeSeed()

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [System.Serializable]
     public class BiomeGroup
     {
-        public int ID { get; private set; }
+        public int ID;
+        public int BiomeID;
         public Biome biome;
         public List<WorldTile> Nodes;
 
@@ -13,6 +14,7 @@ namespace JS.WorldGeneration
         {
             Nodes = new List<WorldTile>();
             this.biome = biome;
+            BiomeID = biome.ID;
         }
 
         public void MergeBiomes(BiomeGroup otherBiome)
@@ -23,11 +25,6 @@ namespace JS.WorldGeneration
                 Nodes[i].BiomeGroup = otherBiome;
             }
             Nodes.Clear();
-        }
-
-        public void FinalizeValues(int ID)
-        {
-            this.ID = ID;
         }
     }
 }

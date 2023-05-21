@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using JS.WorldGeneration;
+using JS.WorldMap;
 
 [CreateAssetMenu(fileName = "New Tribe", menuName = "World Generation/Settlements/Tribe")]
 public class HumanoidTribe : ScriptableObject

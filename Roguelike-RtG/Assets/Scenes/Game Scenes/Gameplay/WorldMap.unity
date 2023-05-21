@@ -251,7 +251,6 @@ GameObject:
   m_Component:
   - component: {fileID: 144143803}
   - component: {fileID: 144143802}
-  - component: {fileID: 144143804}
   m_Layer: 0
   m_Name: Pathfinding
   m_TagString: Untagged
@@ -287,19 +286,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &144143804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144143801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c84f995c7713ef7498d2b488be82b437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrainData: {fileID: 0}
 --- !u!1 &278773160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  tileHelper: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
   oceanMap: {fileID: 1805211640}
   landMap: {fileID: 2049578736}
   terrainFeatureMap: {fileID: 1002168319}

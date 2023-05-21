@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Jungle
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 6
   <BiomeName>k__BackingField: Jungle
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 6e0fd37c95d6c7943b41c15a29cce30a, type: 2}
   minAvgAnnualTemperature: 20

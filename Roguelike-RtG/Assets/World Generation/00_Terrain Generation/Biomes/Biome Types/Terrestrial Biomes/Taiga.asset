@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Taiga
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 9
   <BiomeName>k__BackingField: Taiga
   <RuleTile>k__BackingField: {fileID: 11400000, guid: fae1f13cf4da2914fa2602daaefa6768, type: 2}
   minAvgAnnualTemperature: 0

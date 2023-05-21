@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [CreateAssetMenu(fileName = "New Temperature Zone", menuName = "World Generation/Terrain/Temperature Zone")]
     public class TemperatureZone : ScriptableObject

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using JS.WorldMap.Generation;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
 	[System.Serializable]
 	public class River

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: River_Secondary
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 3
   <BiomeName>k__BackingField: River
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
   minAvgAnnualTemperature: 0

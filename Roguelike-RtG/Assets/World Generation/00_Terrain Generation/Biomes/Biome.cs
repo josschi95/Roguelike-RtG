@@ -1,10 +1,11 @@
 using UnityEngine;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [CreateAssetMenu(fileName = "New Biome", menuName = "World Generation/Terrain/Biome")]
     public class Biome : ScriptableObject
     {
+        [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
         [field: SerializeField] public RuleTile RuleTile { get; private set; }
 

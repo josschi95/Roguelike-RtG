@@ -1,85 +1,98 @@
 using UnityEngine;
-using JS.WorldGeneration;
-using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
-public class TerrainData : ScriptableObject
+namespace JS.WorldMap
 {
-    public int mapSize { get; private set; }
-    public Vector3Int mapOrigin { get; private set; }
-
-    public float[,] heightMap;
-    public float[,] heatMap;
-
-    public MountainRange[] Mountains { get; private set; }
-    public Lake[] Lakes { get; private set; }
-    public River[] Rivers { get; private set; }
-    public BiomeGroup[] Biomes { get; private set; }
-    public Island[] Islands { get; private set; }
-
-
-    [field: SerializeField] public RuleTile RiverTile { get; private set; }
-
-    [field: SerializeField] public RuleTile riverNorth;
-    [field: SerializeField] public RuleTile riverEast;
-    [field: SerializeField] public RuleTile riverNorthEast;
-    [field: SerializeField] public RuleTile riverNorthWest;
-    [field: SerializeField] public RuleTile riverSouthEast;
-    [field: SerializeField] public RuleTile riverSouthWest;
-
-    public RuleTile GetRiverTile(Compass direction)
+    [CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
+    public class TerrainData : ScriptableObject
     {
-        switch (direction)
+        private int mapSize;
+
+        public int MapSize
         {
-            case Compass.North: return riverNorth;
-            case Compass.South: return riverNorth;
-            case Compass.East: return riverEast;
-            case Compass.West: return riverEast;
-            case Compass.NorthEast: return riverNorthEast;
-            case Compass.NorthWest: return riverNorthWest;
-            case Compass.SouthEast: return riverSouthEast;
-            case Compass.SouthWest: return riverSouthWest;
-            default: return riverNorth;
+            get => mapSize;
+            set => mapSize = value;
         }
-    }
 
-    public void ClearData()
-    {
-        Mountains = null;
-        Lakes = null;
-        Rivers = null;
-        Biomes = null;
-        Islands = null;
-    }
+        private Vector3Int origin;
+        public Vector3Int Origin
+        {
+            get => origin;
+            set => origin = value;
+        }
 
-    public void SetMapSize(int size, Vector3Int origin)
-    {
-        mapSize = size;
-        mapOrigin = origin;
-    }
+        //Elevation
+        private float[,] heightMap;
+        public float[,] HeightMap
+        {
+            get => heightMap;
+            set => heightMap = value;
+        }
 
-    public void SetMountains(MountainRange[] mountains)
-    {
-        Mountains = mountains;
-    }
+        //Temperature
+        private float[,] heatMap;
+        public float[,] HeatMap
+        {
+            get => heatMap;
+            set => heatMap = value;
+        }
 
-    public void SetIslands(Island[] islands)
-    {
-        Islands = islands;
-    }
+        //Moisture
+        private float[,] moistureMap;
+        public float[,] MoistureMap
+        {
+            get => moistureMap;
+            set => moistureMap = value;
+        }
 
-    public void SetLakes(Lake[] lakes)
-    {
-        Lakes = lakes;
-    }
+        private int[,] biomeMap;
+        public int[,] BiomeMap
+        {
+            get => biomeMap;
+            set => biomeMap = value;
+        }
 
-    public void SetRivers(River[] rivers)
-    {
-        Rivers = rivers;
-    }
+        private MountainRange[] mountains;
+        public MountainRange[] Mountains
+        {
+            get => mountains;
+            set => mountains = value;
+        }
 
-    public void SetBiomes(BiomeGroup[] biomes)
-    {
-        Biomes = biomes;
+        private Lake[] lakes;
+        public Lake[] Lakes
+        {
+            get => lakes;
+            set => lakes = value;
+        }
+
+        private River[] rivers;
+        public River[] Rivers
+        {
+            get => rivers;
+            set => rivers = value;
+        }
+
+        private BiomeGroup[] biomeGroups;
+        public BiomeGroup[] BiomeGroups
+        {
+            get => biomeGroups;
+            set => biomeGroups = value;
+        }
+
+        private Island[] islands;
+        public Island[] Islands
+        {
+            get => islands;
+            set => islands = value;
+        }
+
+        public void ClearData()
+        {
+            Mountains = null;
+            Lakes = null;
+            Rivers = null;
+            BiomeGroups = null;
+            Islands = null;
+        }
     }
 }

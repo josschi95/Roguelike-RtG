@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Temperate_Grassland
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 11
   <BiomeName>k__BackingField: Temperate Grassland
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 05093612ddfa2ec4a9efcd5d9ec5bc31, type: 2}
   minAvgAnnualTemperature: 0

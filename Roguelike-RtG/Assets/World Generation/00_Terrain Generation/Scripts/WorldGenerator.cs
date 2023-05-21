@@ -4,13 +4,13 @@ using UnityEngine.UI;
 using JS.EventSystem;
 using TMPro;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {
         public System.Random rng { get; private set; }
         public int seed { get; private set; }
-
+            
         [SerializeField] private WorldSize worldSize;
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private WorldMapData worldMap;
@@ -44,7 +44,13 @@ namespace JS.WorldGeneration
         //Called from World Generation Settings Menu
         public void SetRandomSeed()
         {
-            seed = Random.Range(-100000, 100000);
+            SetSeed(Random.Range(1, int.MaxValue));
+        }
+
+        public void SetSeed(int value)
+        {
+            seed = value;
+            worldMap.Seed = seed;
         }
 
         //Not currently being used. 
@@ -75,6 +81,7 @@ namespace JS.WorldGeneration
             yield return StartCoroutine(HandleTerrainGeneration());
 
             yield return StartCoroutine(settlementGenerator.PlaceSettlements());
+
             PlacePlayerAtStart();
 
             progressBar.fillAmount = 0.9f;
@@ -92,35 +99,35 @@ namespace JS.WorldGeneration
             //Debug.Log("SetNewWorldValues: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Tectonic Plates";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.PlaceTectonicPlates();
             progressBar.fillAmount = 0.1f;
             //Debug.Log("PlaceTectonicPlates: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Land Masses";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.GenerateHeightMap();
             progressBar.fillAmount = 0.2f;
             //Debug.Log("GenerateHeightMap: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Eroding Land Masses";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.ErodeLandMasses();
             progressBar.fillAmount = 0.2f;
             //Debug.Log("ErodeLandMasses: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Allocating Height Map";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.SetNodeAltitudeValues();
             progressBar.fillAmount = 0.2f;
             //Debug.Log("SetNodeAltitudeValues: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Mountains";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.IdentifyCoasts();
             mapGenerator.IdentifyMountains();
@@ -128,7 +135,7 @@ namespace JS.WorldGeneration
             //Debug.Log("IdentifyMountains: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Bodies of Water";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             // !!! This method here is taking up the vast majority of generation time !!!
             yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
@@ -136,44 +143,43 @@ namespace JS.WorldGeneration
             //Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Identifying Land Masses";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
             progressBar.fillAmount = 0.3f;
             //Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Rivers";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.GenerateRivers();
             progressBar.fillAmount = 0.5f;
             //Debug.Log("GenerateRivers: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Heat Map";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.GenerateHeatMap();
             progressBar.fillAmount = 0.6f;
             //Debug.Log("GenerateHeatMap: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Precipitation Map";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.GeneratePrecipitationMap();
             progressBar.fillAmount = 0.7f;
             //Debug.Log("GeneratePrecipitationMap: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Biomes";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
 
             mapGenerator.GenerateBiomes();
             progressBar.fillAmount = 0.8f;
             //Debug.Log("GenerateBiomes: " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = "Generating Settlements";
             yield return new WaitForSeconds(0.01f);
-            initialTime = Time.realtimeSinceStartup;
+            //initialTime = Time.realtimeSinceStartup;
         }
-
 
         private void PlacePlayerAtStart()
         {

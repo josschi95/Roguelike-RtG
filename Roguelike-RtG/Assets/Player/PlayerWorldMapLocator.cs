@@ -1,32 +1,35 @@
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class PlayerWorldMapLocator : MonoBehaviour
+namespace JS.WorldMap
 {
-    [SerializeField] private GameObject playerObject;
-    [SerializeField] private PlayerData playerData;
-    [SerializeField] private WorldMapData worldMap;
-
-    [Space]
-
-    [SerializeField] private PixelPerfectCamera pixelCam;
-
-    public void PlacePlayer()
+    public class PlayerWorldMapLocator : MonoBehaviour
     {
-        ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, playerData.WorldMapTile, out int x, out int y);
+        [SerializeField] private GameObject playerObject;
+        [SerializeField] private PlayerData playerData;
+        [SerializeField] private WorldMapData worldMap;
 
-        var convertedPos = worldMap.TerrainData.mapOrigin + new Vector3Int(x, y);
-        playerObject.transform.position = convertedPos;
+        [Space]
 
-        CenterCameraOnPlayer();
-    }
+        [SerializeField] private PixelPerfectCamera pixelCam;
 
-    private void CenterCameraOnPlayer()
-    {
-        var newPos = playerObject.transform.position;
-        newPos.z = pixelCam.transform.position.z;
-        pixelCam.transform.position = newPos;
+        public void PlacePlayer()
+        {
+            ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, playerData.WorldMapTile, out int x, out int y);
 
-        pixelCam.assetsPPU = 64;
+            var convertedPos = worldMap.TerrainData.Origin + new Vector3Int(x, y);
+            playerObject.transform.position = convertedPos;
+
+            CenterCameraOnPlayer();
+        }
+
+        private void CenterCameraOnPlayer()
+        {
+            var newPos = playerObject.transform.position;
+            newPos.z = pixelCam.transform.position.z;
+            pixelCam.transform.position = newPos;
+
+            pixelCam.assetsPPU = 64;
+        }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     //Do Not Serialize this class, results in a recursive serialization issue
     public class WorldTile

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldGeneration
+namespace JS.WorldMap
 {
     [CreateAssetMenu(fileName = "Map Features", menuName = "World Generation/Terrain/Map Features")]
     public class WorldGenerationParameters : ScriptableObject

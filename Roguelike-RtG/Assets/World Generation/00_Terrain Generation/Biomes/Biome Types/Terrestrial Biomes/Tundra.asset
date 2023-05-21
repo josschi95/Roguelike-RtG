@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Tundra
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 13
   <BiomeName>k__BackingField: Tundra
   <RuleTile>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
   minAvgAnnualTemperature: -100

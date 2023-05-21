@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using JS.WorldGeneration;
+using JS.WorldMap;
 
 public class Settlement
 {

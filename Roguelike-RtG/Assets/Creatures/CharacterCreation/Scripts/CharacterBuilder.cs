@@ -150,6 +150,8 @@ namespace JS.CharacterSystem.Creation
 
         private void RefactorGender()
         {
+            if (primaryRace == null) return;
+
             if (characterGender == Gender.Male)
             {
                 if (!primaryRace.HasMales && !secondaryRace.HasMales)

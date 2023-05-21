@@ -62,4 +62,4 @@ namespace JS.CharacterSystem
     }
 }
 
-public enum ClassArchetype { Martial, Mage, Artisan }
+public enum ClassArchetype { Martial, Mage, Artisan, Racial }

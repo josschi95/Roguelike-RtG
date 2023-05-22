@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19ed4a44b1bdb64fadb448260c4d59c, type: 3}
   m_Name: 01_Town
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
+  <TypeName>k__BackingField: Town
   <MaxTerritory>k__BackingField: 20
   <territorySize>k__BackingField: 3
   <minPopulation>k__BackingField: 150

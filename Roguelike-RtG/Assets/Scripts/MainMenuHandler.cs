@@ -1,3 +1,4 @@
+using JS.CommandSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 /// </summary>
 public class MainMenuHandler : MonoBehaviour
 {
+    [SerializeField] private LoadSavedWorldCommand loadWorldCommand;
+
     [SerializeField] private Button continueButton;
     [SerializeField] private Button confirmQuitButton;
 
@@ -14,6 +17,8 @@ public class MainMenuHandler : MonoBehaviour
 
     private void SetButtonEvents()
     {
+        loadWorldCommand?.Invoke();
+
         confirmQuitButton.onClick.AddListener(OnConfirmQuitGame);
     }
 

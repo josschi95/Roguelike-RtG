@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46e5edabf5a6cf34796c39533357a3dc, type: 3}
-  m_Name: Wetter
+  m_Name: 03_Wet
   m_EditorClassIdentifier: 
-  precipitationValue: 0.8
-  Tile: {fileID: 11400000, guid: 8af2703773e39ec4b8b644d07d96e128, type: 2}
+  <ID>k__BackingField: 3
+  precipitationValue: 0.6
+  Tile: {fileID: 11400000, guid: 452471c63e6ce344994e6a82e261f275, type: 2}

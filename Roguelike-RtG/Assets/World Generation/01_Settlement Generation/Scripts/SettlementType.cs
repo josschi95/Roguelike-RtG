@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Settlement", menuName = "World Generation/Settlements/Settlement Type")]
 public class SettlementType : ScriptableObject
 {
+    [field: SerializeField] public int ID { get; private set; }
+    [field: SerializeField] public string TypeName { get; private set; }
     [field: SerializeField] public int MaxTerritory { get; private set; }
     [field: SerializeField] public int territorySize { get; private set; } = 1;
 

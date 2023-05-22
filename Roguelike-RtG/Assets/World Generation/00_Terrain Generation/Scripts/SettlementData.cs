@@ -14,4 +14,29 @@ public class SettlementData : ScriptableObject
     {
         this.settlements = settlements;
     }
+
+    public Settlement FindSettlement(int x, int y)
+    {
+        if (settlements == null) return null;
+
+        for (int i = 0; i < settlements.Length; i++)
+        {
+            if (settlements[i].x == x && settlements[i].y == y)
+            {
+                return settlements[i];
+            }
+        }
+        return null;
+    }
+
+    public Settlement FindClaimedTerritory(int x, int y)
+    {
+        if (settlements == null) return null;
+
+        for (int i = 0; i < settlements.Length; i++)
+        {
+            if (settlements[i].OwnsTerritory(x,y)) return settlements[i];
+        }
+        return null;
+    }
 }

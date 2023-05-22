@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using JS.WorldMap;
 
 public class JSONSaving : MonoBehaviour
 {
@@ -28,7 +29,6 @@ public class JSONSaving : MonoBehaviour
             string json = reader.ReadToEnd();
 
             WorldData data = JsonUtility.FromJson<WorldData>(json);
-            Debug.Log(data.saveFileName);
         }
         return true;
     }

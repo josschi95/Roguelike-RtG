@@ -3,18 +3,19 @@ using JS.WorldMap;
 
 public class Settlement
 {
-    public WorldTile Node { get; private set; }
+    public int x { get; private set; }
+    public int y { get; private set; }
 
     public string name { get; private set; }
     public int ID { get; private set; }
     public SettlementType type { get; private set; }
     public HumanoidTribe tribe { get; private set; }
     public int population { get; private set; }
-    public bool isSeaFaring { get; private set; }
+    //public bool isSeaFaring { get; private set; }
     public bool isSubterranean { get; private set; }
 
-    public List<WorldTile> territory;
-    public List<WorldTile> areaOfInfluence;
+    public List<GridCoordinates> Territory;
+    public List<GridCoordinates> Reach;
 
     private Dictionary<Settlement, int> foreignRelations;
 
@@ -22,11 +23,11 @@ public class Settlement
     {
         this.name = name;
         this.ID = ID;
-        Node = node;
-        Node.Settlement = this;
+        x = node.x; 
+        y = node.y;
 
         //Set to a seafaring settlement if placed on an island
-        isSeaFaring = node.Island != null;
+        //isSeaFaring = node.Island != null;
         //Sets the settlement as subterranean if placed in a mountain
         isSubterranean = node.Mountain != null;
 
@@ -34,16 +35,20 @@ public class Settlement
         tribe = humanoids;
         this.population = population;
 
-        territory = new List<WorldTile>();
-        areaOfInfluence = new List<WorldTile>();
+        Territory = new List<GridCoordinates>();
+        Reach = new List<GridCoordinates>();
         foreignRelations = new Dictionary<Settlement, int>();
     }
 
     public void Relocate(WorldTile node)
     {
-        Node.Settlement = null;
-        Node = node;
-        Node.Settlement = this;
+        x = node.x;
+        y = node.y;
+    }
+
+    public void Relocate(int x, int y)
+    {
+        this.x = x; this.y = y;
     }
 
     public void AdjustSize(SettlementType type, int newPopulation)
@@ -52,30 +57,21 @@ public class Settlement
         population = newPopulation;
     }
 
+    public bool OwnsTerritory(int x, int y)
+    {
+        for (int i = 0; i < Territory.Count; i++)
+        {
+            if (Territory[i].x == x && Territory[i].y == y) return true;
+        }
+        return false;
+    }
+
     public void AddTerritory(WorldTile node)
     {
-        if (territory.Contains(node)) return;
+        if (OwnsTerritory(node.x, node.y)) return;
 
-        territory.Add(node);
-        node.Territory = this;
-    }
-
-    public void RemoveTerritory(WorldTile node)
-    {
-        if (!territory.Contains(node)) return;
-
-        node.Territory = null;
-        territory.Remove(node);
-    }
-
-    public void AddAreaOfInfluence(WorldTile node)
-    {
-        areaOfInfluence.Add(node);
-    }
-
-    public void RemoveAreaOfInfluence(WorldTile node)
-    {
-        areaOfInfluence.Remove(node);
+        Territory.Add(new GridCoordinates(node.x, node.y));
+        //node.Territory = this;
     }
 
     public void AddNewRelation(Settlement otherSettlement, int initialDisposition = 0)
@@ -104,16 +100,17 @@ public class Settlement
 
     public void DeconstructSettlement()
     {
-        if (Node != null && Node.Settlement == this) Node.Settlement = null;
-        Node = null;
+        //if (Node != null && Node.Settlement == this) Node.Settlement = null;
+        //Node = null;
 
-        for (int i = 0; i < territory.Count; i++)
+        /*for (int i = 0; i < territory.Count; i++)
         {
             if (territory[i].Territory == this) territory[i].Territory = null;
-        }
-        territory.Clear();
-        
-        areaOfInfluence.Clear();
+        }*/
+        //territory.Clear();
+        Territory.Clear();
+        //areaOfInfluence.Clear();
+        Reach.Clear();
         foreignRelations.Clear();
     }
 }

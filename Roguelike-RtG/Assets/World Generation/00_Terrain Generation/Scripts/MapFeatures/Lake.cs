@@ -5,7 +5,7 @@ namespace JS.WorldMap
     [System.Serializable]
     public class Lake
     {
-        public int ID { get; private set; }
+        public int ID;
         private List<WorldTile> nodes;
         public List<WorldTile> Nodes => nodes;
 
@@ -20,7 +20,6 @@ namespace JS.WorldMap
             {
                 nodes.Add(node);
             }
-            node.Lake = this;
         }
 
         public void AddRange(List<WorldTile> newNodes)
@@ -47,20 +46,11 @@ namespace JS.WorldMap
             return true;
         }
 
-        public void FinalizeValues(int ID)
-        {
-            this.ID = ID;
-        }
-
         /// <summary>
         /// Clears Lake nodes to be picked up by GC
         /// </summary>
         public void DeconstructLake()
         {
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                if (nodes[i].Lake == this) nodes[i].Lake = null;
-            }
             nodes.Clear();
         }
     }

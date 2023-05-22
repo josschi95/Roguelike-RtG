@@ -51,7 +51,6 @@ namespace JS.WorldMap.Generation
         {
             this.seed = seed;
             worldSize = size;
-            //worldMap = WorldMap.instance;
 
             terrainData.ClearData();
             seaLevel = mapFeatures.SeaLevel;
@@ -110,7 +109,7 @@ namespace JS.WorldMap.Generation
                     nodesInRange[i].isTectonicPoint = true; //Mark as tectonic node, mainly for visual referencing
 
                     //The relative distance from this node to the tectonic node
-                    float x = worldMap.GetNodeDistance_Straight(tectonicNode, nodesInRange[i]) / range;
+                    float x = GridMath.GetStraightDist(tectonicNode.x, tectonicNode.y, nodesInRange[i].x, nodesInRange[i].y) / range;
 
                     float n = 6; //affects the width of the flat-top on the gaussian
                     float y = 0.5f * Mathf.Exp(-10 * Mathf.Pow(x, n)); //flat-top gaussian
@@ -144,7 +143,7 @@ namespace JS.WorldMap.Generation
         }
 
         /// <summary>
-        /// Simulates erosion on the height map using the Raindrop algorithm.
+        /// Simulates erosion on the height map using a Raindrop algorithm.
         /// </summary>
         public void ErodeLandMasses()
         {
@@ -167,7 +166,7 @@ namespace JS.WorldMap.Generation
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     var altitude = GetAltitude(heightMap[x, y]);
-                    node.SetAltitude(heightMap[x, y], altitude);
+                    node.SetAltitude(heightMap[x, y], altitude.isLand);
                     if (altitude.isLand) land.Add(node);
                     else water.Add(node);
 
@@ -207,7 +206,7 @@ namespace JS.WorldMap.Generation
                 newLake.AddRange(body);
                 if (newLake.IsLandLocked(mapSize))
                 {
-                    newLake.FinalizeValues(lakes.Count);
+                    newLake.ID = lakes.Count;
                     lakes.Add(newLake);
                 }
                 else newLake.DeconstructLake();
@@ -234,7 +233,17 @@ namespace JS.WorldMap.Generation
                 if (body.Count <= mapSize)
                 {
                     Island newIsland = new Island(islands.Count);
-                    newIsland.AddRange(body);
+                    var coords = new GridCoordinates[body.Count];
+                    for (int i = 0; i < body.Count; i++)
+                    {
+                        coords[i] = new GridCoordinates(body[i].x, body[i].y);
+                        if (newIsland.Nodes.Contains(body[i]))
+                        {
+                            newIsland.Nodes.Add(body[i]);
+                        }
+                        //body[i].Island = newIsland;
+                    }
+                    newIsland.GridNodes = coords;
                     islands.Add(newIsland);
                 }
 
@@ -255,7 +264,7 @@ namespace JS.WorldMap.Generation
         {
             var tiles = new List<WorldTile>();
 
-            if (startNode.isNotWater != isLand) throw new UnityException("Start Node does not align with given parameters!");
+            if (startNode.IsLand != isLand) throw new UnityException("Start Node does not align with given parameters!");
 
             int[,] mapFlags = new int[mapSize, mapSize];
 
@@ -270,7 +279,7 @@ namespace JS.WorldMap.Generation
                 for (int i = 0; i < node.neighbors_adj.Count; i++)
                 {
                     var neighbor = node.neighbors_adj[i];
-                    if (mapFlags[neighbor.x, neighbor.y] == 0 && neighbor.isNotWater == isLand)
+                    if (mapFlags[neighbor.x, neighbor.y] == 0 && neighbor.IsLand == isLand)
                     {
                         mapFlags[neighbor.x, neighbor.y] = 1;
                         queue.Enqueue(neighbor);
@@ -287,10 +296,10 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (!node.isNotWater) continue;
+                    if (!node.IsLand) continue;
                     for (int i = 0; i < node.neighbors_adj.Count; i++)
                     {
-                        if (!node.neighbors_adj[i].isNotWater && node.rivers.Count == 0)
+                        if (!node.neighbors_adj[i].IsLand && node.rivers.Count == 0)
                         {
                             node.isCoast = true;
                         }
@@ -309,7 +318,7 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (node.altitudeZone.isMountain) 
+                    if (terrainData.HeightMap[node.x, node.y] >= mapFeatures.MountainHeight)
                         node.CheckNeighborMountains();
                 }
             }
@@ -340,17 +349,16 @@ namespace JS.WorldMap.Generation
                 }
             }
 
-            //probably pass this to terrainData
-            //return heatMap;
+            terrainData.HeatMap = heatMap;
         }
 
-        private TemperatureZone GetTemperatureZone(float heatValue)
+        private int GetTemperatureZone(float heatValue)
         {
             for (int i = 0; i < mapFeatures.TemperatureZones.Length; i++)
             {
                 if (heatValue <= mapFeatures.TemperatureZones[i].TemperatureValue)
                 {
-                    return mapFeatures.TemperatureZones[i];
+                    return mapFeatures.TemperatureZones[i].ID;
                 }
             }
             throw new UnityException("Node temperature is outside bounds of designated zones. " + heatValue);
@@ -407,13 +415,13 @@ namespace JS.WorldMap.Generation
             terrainData.MoistureMap = adjustedMoistureMap;
         }
 
-        private PrecipitationZone GetPrecipitationZone(float moistureValue)
+        private int GetPrecipitationZone(float moistureValue)
         {
             for (int i = mapFeatures.PrecipitationZones.Length - 1; i >= 0; i--)
             {
                 if (moistureValue >= mapFeatures.PrecipitationZones[i].PrecipitationValue)
                 {
-                    return mapFeatures.PrecipitationZones[i];
+                    return mapFeatures.PrecipitationZones[i].ID;
                 }
             }
             throw new UnityException("Node precipitation is outside bounds of designated zones. " + moistureValue);
@@ -445,7 +453,7 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (node.isNotWater) node.SetBiome(GetWhittakerTableBiome(node));
+                    if (node.IsLand) node.SetBiome(GetWhittakerTableBiome(node));
                 }
             }
 
@@ -455,11 +463,10 @@ namespace JS.WorldMap.Generation
         }
         
         //Notes: Change boreal to Taiga, tropical rainforest to jungle
-
         private Biome GetWhittakerTableBiome(WorldTile node)
         {
-            int temperatureIndex = TemperatureIndex(node.temperatureZone);
-            int precipitationIndex = PrecipitationIndex(node.precipitationZone);
+            int temperatureIndex = node.TempZoneID;
+            int precipitationIndex = node.PrecipitationZoneID;
 
             switch (temperatureIndex)
             {
@@ -492,27 +499,6 @@ namespace JS.WorldMap.Generation
             }
         }
 
-        private int TemperatureIndex(TemperatureZone zone)
-        {
-            if (zone == mapFeatures.TemperatureZones[0]) return 0;      //Coldest
-            else if (zone == mapFeatures.TemperatureZones[1]) return 1; //Colder
-            else if (zone == mapFeatures.TemperatureZones[2]) return 2; //Cold
-            else if (zone == mapFeatures.TemperatureZones[3]) return 3; //Warm
-            else if (zone == mapFeatures.TemperatureZones[4]) return 4; //Warmer
-            else if (zone == mapFeatures.TemperatureZones[5]) return 5; //Warmest
-            else throw new UnityException("What the fuck.");
-        }
-
-        private int PrecipitationIndex(PrecipitationZone zone)
-        {
-            if (zone == mapFeatures.PrecipitationZones[0]) return 0;
-            else if (zone == mapFeatures.PrecipitationZones[1]) return 1;
-            else if (zone == mapFeatures.PrecipitationZones[2]) return 2;
-            else if (zone == mapFeatures.PrecipitationZones[3]) return 3;
-            else if (zone == mapFeatures.PrecipitationZones[4]) return 4;
-            else return 5;
-        }
-
         private void ConsolidateBiomes(int iterations)
         {
             if (iterations <= 0) return;
@@ -521,12 +507,48 @@ namespace JS.WorldMap.Generation
             {
                 for (int y = 0; y < mapSize; y++)
                 {
-                    WorldTile node = worldMap.GetNode(x, y);
-                    node.AdjustToNeighborBiomes();
+                    CheckBiomeNeighbors(worldMap.GetNode(x, y));
                 }
             }
 
             ConsolidateBiomes(iterations - 1);
+        }
+
+        //Check if this tile is surrounded by a biome of different types
+        private void CheckBiomeNeighbors(WorldTile tile)
+        {
+            if (!tile.IsLand) return;
+            int differentNeighbors = 0; //number of neighbors with a different biome
+            int neighborBiome = 0; //the biome this tile will switch to
+
+            for (int i = 0; i < tile.neighbors_adj.Count; i++)
+            {
+                if (!tile.neighbors_adj[i].hasBiome) continue;
+                if (!tile.neighbors_adj[i].IsLand) continue; //don't adjust to water biomes
+                if (tile.neighbors_adj[i].BiomeID == tile.BiomeID) continue;
+                neighborBiome = tile.neighbors_adj[i].BiomeID;
+                differentNeighbors++;
+            }
+
+            if (differentNeighbors >= 3) AdjustNodeBiome(tile, neighborBiome);
+        }
+
+        private void AdjustNodeBiome(WorldTile tile, int biomeID)
+        {
+            var newBiome = mapFeatures.Biomes[biomeID];
+
+            tile.SetBiome(newBiome);
+            var newTemp = Mathf.Clamp(tile.heatValue,
+                Temperature.CelsiusToFarenheit(newBiome.MinAvgTemp) / 100f,
+                Temperature.CelsiusToFarenheit(newBiome.MaxAvgTemp) / 100f);
+            var newZone = GetTemperatureZone(newTemp);
+            tile.SetTemperatureValues(newTemp, newZone);
+
+            var newPrecip = Mathf.Clamp(tile.precipitationValue,
+                newBiome.MinPrecipitation / 400f,
+                newBiome.MaxPrecipitation / 400f);
+            var precipZone = GetPrecipitationZone(newPrecip);
+            tile.SetPrecipitationValues(newPrecip, precipZone);
         }
 
         private void SaveBiomeMap()
@@ -537,10 +559,7 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (node.PrimaryBiome != null)
-                    {
-                        biomeMap[x, y] = node.PrimaryBiome.ID;
-                    }
+                    if (node.hasBiome) biomeMap[x, y] = node.BiomeID;
                 }
             }
             terrainData.BiomeMap = biomeMap;

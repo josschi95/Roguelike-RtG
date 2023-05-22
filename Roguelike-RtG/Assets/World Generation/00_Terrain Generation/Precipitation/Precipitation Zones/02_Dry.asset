@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a27096731b8f6ae43a038ee3cb2f6275, type: 3}
-  m_Name: Colder
+  m_Script: {fileID: 11500000, guid: 46e5edabf5a6cf34796c39533357a3dc, type: 3}
+  m_Name: 02_Dry
   m_EditorClassIdentifier: 
-  temperatureValue: 0.18
-  Tile: {fileID: 11400000, guid: 2a5e0091bc5e7304b8b5fa88eca2d585, type: 2}
+  <ID>k__BackingField: 2
+  precipitationValue: 0.4
+  Tile: {fileID: 11400000, guid: e53ab75cb28107a4382ab79924f19dcb, type: 2}

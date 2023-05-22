@@ -5,8 +5,14 @@ namespace JS.WorldMap
     [CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
     public class TerrainData : ScriptableObject
     {
-        private int mapSize;
+        private bool saveExists;
+        public bool SaveExists
+        {
+            get => saveExists; 
+            set => saveExists = value;
+        }
 
+        private int mapSize;
         public int MapSize
         {
             get => mapSize;
@@ -44,6 +50,7 @@ namespace JS.WorldMap
             set => moistureMap = value;
         }
 
+        //Biomes
         private int[,] biomeMap;
         public int[,] BiomeMap
         {

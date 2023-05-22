@@ -85,18 +85,7 @@ public class Grid<TGridObject>
         return GetGridObject(x, y);
     }
 
-    public int GetWidth()
-    {
-        return width;
-    }
-
-    public int GetHeight()
-    {
-        return height;
-    }
-
-    public float GetCellSize()
-    {
-        return cellSize;
-    }
+    public int GetWidth() => width;
+    public int GetHeight() => height;
+    public float GetCellSize() => cellSize;
 }

@@ -2713,7 +2713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58514da13b7747e4b9c5b874f01563cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldMapData: {fileID: 0}
+  loadWorldCommand: {fileID: 11400000, guid: 86469ad3a99da894f8a09e3982ec54f1, type: 2}
   continueButton: {fileID: 1574996687}
   confirmQuitButton: {fileID: 1267271985}
 --- !u!1 &1604078346

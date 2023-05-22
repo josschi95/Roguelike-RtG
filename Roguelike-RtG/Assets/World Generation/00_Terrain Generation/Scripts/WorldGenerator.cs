@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using JS.EventSystem;
 using TMPro;
+using JS.CommandSystem;
 
 namespace JS.WorldMap.Generation
 {
@@ -32,6 +33,10 @@ namespace JS.WorldMap.Generation
 
         [Header("Game Events")]
         [SerializeField] private GameEvent worldGenerationCompleteEvent;
+
+        [Space]
+
+        [SerializeField] private SaveWorldDataCommand saveWorldDataCommand;
 
         //private void Awake() => SetRandomSeed();
 
@@ -179,16 +184,18 @@ namespace JS.WorldMap.Generation
             progressText.text = "Generating Settlements";
             yield return new WaitForSeconds(0.01f);
             //initialTime = Time.realtimeSinceStartup;
+
+            saveWorldDataCommand?.Invoke();
         }
 
         private void PlacePlayerAtStart()
         {
             int index = rng.Next(0, settlementData.Settlements.Length);
-            var node = settlementData.Settlements[index].Node;
+            var settlement = settlementData.Settlements[index];
 
-            Debug.Log("Node Located at: " + node.x + "," + node.y);
+            Debug.Log("Node Located at: " + settlement.x + "," + settlement.y);
 
-            var flat = ArrayHelper.Convert2DCoordinateTo1DCoordinate(worldMap.Width, worldMap.Height, node.x, node.y);
+            var flat = ArrayHelper.Convert2DCoordinateTo1DCoordinate(worldMap.Width, worldMap.Height, settlement.x, settlement.y);
             Debug.Log("Flattened is: " + flat);
 
             ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, flat, out int x, out int y);

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19ed4a44b1bdb64fadb448260c4d59c, type: 3}
   m_Name: 04_Hamlet
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
+  <TypeName>k__BackingField: Hamlet
   <MaxTerritory>k__BackingField: 5
   <territorySize>k__BackingField: 1
   <minPopulation>k__BackingField: 5

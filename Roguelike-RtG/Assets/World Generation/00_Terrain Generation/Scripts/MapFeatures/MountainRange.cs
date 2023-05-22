@@ -40,8 +40,8 @@ namespace JS.WorldMap
             {
                 Nodes[i].Mountain = this;
 
-                AverageAltitude += Nodes[i].altitude;
-                if (Nodes[i].altitude > peakAltitude) peakAltitude = Nodes[i].altitude;
+                AverageAltitude += Nodes[i].Altitude;
+                if (Nodes[i].Altitude > peakAltitude) peakAltitude = Nodes[i].Altitude;
             }
 
             AverageAltitude /= Nodes.Count;

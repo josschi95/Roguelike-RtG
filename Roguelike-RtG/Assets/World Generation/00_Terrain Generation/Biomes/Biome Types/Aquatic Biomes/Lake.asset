@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
   m_Name: Lake
   m_EditorClassIdentifier: 
-  <BiomeType>k__BackingField: 1
+  <ID>k__BackingField: 2
   <BiomeName>k__BackingField: Lake
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 99a6fe2b6829c55438585c28273bac19, type: 2}
   minAvgAnnualTemperature: 0
@@ -25,8 +25,6 @@ MonoBehaviour:
   foodAvailability: 1
   waterAvailability: 1
   lumberAvailability: 0
-  stoneAvailability: 0
-  mineralAvailability: 0
   vegetation: []
   animals: []
   monsters: []

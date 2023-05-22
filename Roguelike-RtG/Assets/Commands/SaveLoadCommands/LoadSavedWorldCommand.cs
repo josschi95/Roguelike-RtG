@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using JS.WorldMap;
 
 namespace JS.CommandSystem
 {
@@ -46,14 +47,21 @@ namespace JS.CommandSystem
 
         private void SetTerrainValues(WorldData data)
         {
+            terrainData.SaveExists = true;
+
             terrainData.MapSize = data.mapWidth;
             terrainData.Origin = new Vector3Int(data.originX, data.originY);
-            terrainData.HeightMap = data.heightMap;
-            terrainData.HeatMap = data.heatMap;
-            terrainData.MoistureMap = data.moistureMap;
-            terrainData.BiomeMap = data.biomeMap;
+            terrainData.HeightMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heightMap, data.mapWidth, data.mapHeight);
+            terrainData.HeatMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heatMap, data.mapWidth, data.mapHeight);
+            terrainData.MoistureMap = ArrayHelper.Convert1DFloatArrayTo2D(data.moistureMap, data.mapWidth, data.mapHeight);
 
+            terrainData.BiomeMap = ArrayHelper.Convert1DIntArrayTo2D(data.biomeMap, data.mapWidth, data.mapHeight);
 
+            terrainData.Mountains = data.Mountains;
+            terrainData.Lakes = data.Lakes;
+            terrainData.Rivers = data.Rivers;
+            terrainData.BiomeGroups = data.BiomeGroups;
+            terrainData.Islands = data.Islands;
         }
     }
 }

@@ -9,7 +9,8 @@ namespace JS.WorldMap
         private int seed;
         public int Seed
         {
-            get => seed; set => seed = value;
+            get => seed; 
+            set => seed = value;
         }
 
         [field: SerializeField] public TerrainData TerrainData { get; private set; }
@@ -76,32 +77,19 @@ namespace JS.WorldMap
             }
         }
 
-        public WorldTile GetNode(int x, int y)
-        {
-            return grid.GetGridObject(x, y);
-        }
+        public WorldTile GetNode(int x, int y) => grid.GetGridObject(x, y);
 
-        public WorldTile GetNode(Vector3 worldPosition)
-        {
-            return grid.GetGridObject(worldPosition);
-        }
+        public WorldTile GetNode(Vector3 worldPosition) => grid.GetGridObject(worldPosition);
 
-        public Vector3 GetPosition(WorldTile node)
-        {
-            return grid.GetWorldPosition(node.x, node.y);
-        }
+        public Vector3 GetWorldPosition(WorldTile node) => grid.GetWorldPosition(node.x, node.y);
+
+        public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(x, y);
 
         public int GetNodeDistance_Path(WorldTile fromNode, WorldTile toNode)
         {
             int x = Mathf.Abs(fromNode.x - toNode.x);
             int y = Mathf.Abs(fromNode.y - toNode.y);
             return x + y;
-        }
-
-        public float GetNodeDistance_Straight(WorldTile fromNode, WorldTile toNode)
-        {
-
-            return Mathf.Sqrt(Mathf.Pow(fromNode.x - toNode.x, 2) + Mathf.Pow(fromNode.y - toNode.y, 2));
         }
 
         public List<WorldTile> GetNodesInRange_Circle(WorldTile fromNode, int range)
@@ -116,7 +104,7 @@ namespace JS.WorldMap
                     if (y < 0 || y > grid.GetHeight() - 1) continue;
 
                     var toNode = grid.GetGridObject(x, y);
-                    if (GetNodeDistance_Straight(fromNode, toNode) <= range) nodes.Add(toNode);
+                    if (GridMath.GetStraightDist(fromNode.x, fromNode.y, toNode.x, toNode.y) <= range) nodes.Add(toNode);
                 }
             }
             return nodes;
@@ -191,21 +179,26 @@ namespace JS.WorldMap
                 openList.Remove(currentNode);
                 closedList.Add(currentNode);
 
-                foreach (WorldTile neighbour in GetNeighbourList(currentNode))
+                foreach (WorldTile neighbour in currentNode.neighbors_all)
                 {
                     if (closedList.Contains(neighbour)) continue;
 
-                    if (!neighbour.isNotWater)// || neighbour.isOccupied)
+                    if (!neighbour.IsLand)// || neighbour.isOccupied)
                     {
                         //Debug.Log("Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
                         closedList.Add(neighbour);
                         continue;
                     }
+
                     //Don't allow the passage of one settlement through another's territory
-                    if (settlement != null && neighbour.Territory != null && neighbour.Territory != settlement)
+                    if (settlement != null)
                     {
-                        closedList.Add(neighbour);
-                        continue;
+                        var claimant = SettlementData.FindClaimedTerritory(neighbour.x, neighbour.y);
+                        if (claimant != null && claimant != settlement)
+                        {
+                            closedList.Add(neighbour);
+                            continue;
+                        }
                     }
 
                     //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
@@ -235,7 +228,6 @@ namespace JS.WorldMap
             int yDistance = Mathf.Abs(a.y - b.y);
             int remaining = Mathf.Abs(xDistance - yDistance);
             return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
-            //return MOVE_STRAIGHT_COST * remaining;
         }
 
         private WorldTile GetLowestFCostNode(List<WorldTile> pathNodeList)
@@ -265,42 +257,6 @@ namespace JS.WorldMap
             path.Reverse();
             return path;
         }
-
-        //Return a list of all neighbors, up/down/left/right
-        private List<WorldTile> GetNeighbourList(WorldTile currentNode)
-        {
-            List<WorldTile> neighborList = new List<WorldTile>();
-
-            //Up
-            if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x, currentNode.y + 1));
-            //Down
-            if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x, currentNode.y - 1));
-            //Left
-            if (currentNode.x - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y));
-            //Right
-            if (currentNode.x + 1 < grid.GetWidth()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y));
-
-            /*if (allowDiagonals)
-            {
-                if (currentNode.x - 1 >= 0)
-                {
-                    //Left Down
-                    if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y - 1));
-                    //Left Up
-                    if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y + 1));
-                }
-                if (currentNode.x + 1 < grid.GetWidth())
-                {
-                    //Right Down
-                    if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y - 1));
-                    //Right Up
-                    if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y + 1));
-                }
-            }*/
-
-            return neighborList;
-        }
-
         #endregion
     }
 }

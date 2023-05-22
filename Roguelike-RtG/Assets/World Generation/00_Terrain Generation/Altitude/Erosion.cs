@@ -70,23 +70,9 @@ namespace JS.WorldMap.Generation
 
         public float[,] Erode(float[,] heightMap, int numIterations, int seed)
         {
-            var linearHeightMap = new float[heightMap.GetLength(0) * heightMap.GetLength(1)];
-            for (int x = 0; x < heightMap.GetLength(0); x++)
-            {
-                for (int y = 0; y < heightMap.GetLength(1); y++)
-                {
-                    linearHeightMap[x * heightMap.GetLength(0) + y] = heightMap[x, y];
-                }
-            }
+            var linearHeightMap = ArrayHelper.Convert2DFloatArrayTo1D(heightMap);
             Erode(linearHeightMap, heightMap.GetLength(0), numIterations, seed);
-
-            for (int x = 0; x < heightMap.GetLength(0); x++)
-            {
-                for (int y = 0; y < heightMap.GetLength(1); y++)
-                {
-                    heightMap[x, y] = linearHeightMap[x * heightMap.GetLength(0) + y];
-                }
-            }
+            heightMap = ArrayHelper.Convert1DFloatArrayTo2D(linearHeightMap, heightMap.GetLength(0), heightMap.GetLength (1));
             return heightMap;
         }
 
@@ -137,7 +123,7 @@ namespace JS.WorldMap.Generation
                     }
                     // Stop simulating droplet if it has reach a body of water
                     //if (!WorldMap.instance.GetNode(nodeX, nodeY).isNotWater)
-                    if (!worldMap.GetNode(nodeX, nodeY).isNotWater)
+                    if (!worldMap.GetNode(nodeX, nodeY).IsLand)
                     {
                         break;
                     }

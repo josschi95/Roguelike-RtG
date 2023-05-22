@@ -1051,6 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   worldGenerator: {fileID: 1549498269}
+  terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   MinRiverHeight: 0.6
   MaxRiverAttempts: 1000
   MinRiverTurns: 10
@@ -2091,7 +2092,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3130,6 +3131,7 @@ MonoBehaviour:
   worldGenerator: {fileID: 1549498269}
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
+  settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   tribeRelations: {fileID: 11400000, guid: 5b5e601d5d7858f49bfef3e199366d25, type: 2}
   tribes:
@@ -6021,6 +6023,7 @@ MonoBehaviour:
   progressBar: {fileID: 2128025129}
   progressText: {fileID: 1686435238}
   worldGenerationCompleteEvent: {fileID: 11400000, guid: 00872b6f655e73f4dbbd79e6114f2d11, type: 2}
+  saveWorldDataCommand: {fileID: 11400000, guid: eccd9433662ea9b4eb3a6baa25b1cdea, type: 2}
 --- !u!4 &1549498270
 Transform:
   m_ObjectHideFlags: 0
@@ -6478,6 +6481,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 0}
+  settlementData: {fileID: 0}
+  tileHelper: {fileID: 0}
+  worldGenerationParameters: {fileID: 0}
   oceanMap: {fileID: 0}
   landMap: {fileID: 0}
   terrainFeatureMap: {fileID: 0}

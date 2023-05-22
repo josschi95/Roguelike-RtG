@@ -1,3 +1,4 @@
+using JS.WorldMap.Generation;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,22 +24,18 @@ namespace JS.WorldMap
 
         #region - Altitude -
         public bool isTectonicPoint { get; set; }
-        public bool isNotWater { get; private set; }
-        public float altitude { get; private set; }
-        public AltitudeZone altitudeZone { get; private set; }
+        public bool IsLand { get; private set; }
+        public float Altitude { get; private set; }
         #endregion
 
         #region - Temperature -
         public float heatValue { get; private set; }
-        public float avgAnnualTemperature_F => Mathf.Clamp(heatValue - 0.1f, 0, 1) * 100;
-        public float avgAnnualTemperature_C => Temperature.FarenheitToCelsius(avgAnnualTemperature_F);
-        public TemperatureZone temperatureZone { get; private set; }
+        public int TempZoneID { get; private set; }
         #endregion
 
         #region - Precipitation -
         public float precipitationValue { get; private set; }
-        public float annualPrecipitation_cm => precipitationValue * 400;
-        public PrecipitationZone precipitationZone { get; private set; }
+        public int PrecipitationZoneID { get; private set; }
         #endregion
 
         public SecondaryDirections windDirection;// { get; private set; }
@@ -50,7 +47,6 @@ namespace JS.WorldMap
 
         #region - Map Features -
         private MountainRange mountain;
-
         public MountainRange Mountain
         {
             get => mountain;
@@ -62,60 +58,14 @@ namespace JS.WorldMap
 
         public List<River> rivers;
 
-        public Biome PrimaryBiome { get; private set; }
-        public List<Biome> SecondaryBiomes { get; private set; }
+        public int BiomeID { get; private set; }
+        public bool hasBiome { get; private set; } = false;
 
         private BiomeGroup biomeGroup;
-
         public BiomeGroup BiomeGroup
         {
             get => biomeGroup;
-            set
-            {
-                biomeGroup = value;
-            }
-        }
-
-        private Island island = null;
-
-        public Island Island
-        {
-            get => island;
-            set
-            {
-                island = value;
-            }
-        }
-
-        private Lake lake = null;
-
-        public Lake Lake
-        {
-            get => lake;
-            set
-            {
-                lake = value;
-            }
-        }
-
-        private Settlement settlement = null;
-        public Settlement Settlement
-        {
-            get => settlement;
-            set
-            {
-                settlement = value;
-            }
-        }
-
-        private Settlement territory = null;
-        public Settlement Territory
-        {
-            get => territory;
-            set
-            {
-                territory = value;
-            }
+            set => biomeGroup = value;
         }
         #endregion
 
@@ -129,7 +79,6 @@ namespace JS.WorldMap
             neighbors_adj = new List<WorldTile>();
 
             rivers = new List<River>();
-            SecondaryBiomes = new List<Biome>();
         }
 
         public void SetNeighbors()
@@ -180,24 +129,22 @@ namespace JS.WorldMap
         }
 
         #region - Tile Values -
-        public void SetAltitude(float value, AltitudeZone zone)
+        public void SetAltitude(float value, bool isLand)
         {
-            altitude = value;
-            isNotWater = zone.isLand;
-            altitudeZone = zone;
-            AddSecondaryBiome(zone.SecondaryBiome);
+            Altitude = value;
+            IsLand = isLand;
         }
 
-        public void SetTemperatureValues(float value, TemperatureZone zone)
+        public void SetTemperatureValues(float value, int zoneID)
         {
             heatValue = value;
-            temperatureZone = zone;
+            TempZoneID = zoneID;
         }
 
-        public void SetPrecipitationValues(float value, PrecipitationZone zone)
+        public void SetPrecipitationValues(float value, int zoneID)
         {
             precipitationValue = value;
-            precipitationZone = zone;
+            PrecipitationZoneID = zoneID;
         }
         
         public void AddMoisture(float value)
@@ -253,7 +200,7 @@ namespace JS.WorldMap
         public void AddRiver(River river)
         {
             SetRiverPath(river);
-            altitude = Mathf.Clamp(altitude - 0.25f, 0, 1);
+            Altitude = Mathf.Clamp(Altitude - 0.25f, 0, 1);
             precipitationValue = Mathf.Clamp(precipitationValue + 0.25f, 0.5f, 0.9f);
 
             for (int i = 0; i < neighbors_adj.Count; i++)
@@ -266,7 +213,7 @@ namespace JS.WorldMap
 
         public void SetRiverPath(River river)
         {
-            if (!isNotWater) return;
+            if (!IsLand) return;
             if (rivers.Contains(river)) return;
 
             //Debug.Log("Adding River " + river.ID + " to tile " + x + "," + y);
@@ -278,63 +225,24 @@ namespace JS.WorldMap
             if (size < 1) return; //Will need to adjust this later, the size of the river will ultimately decide its width in Local Tiles
 
             AddRiver(river);
-            AddSecondaryBiome(riverBiome);
         }
         #endregion
 
         #region - Biome -
         public void SetBiome(Biome biome)
         {
-            PrimaryBiome = biome;
+            //PrimaryBiome = biome;
+            BiomeID = biome.ID;
+            hasBiome = true;
             CheckNeighborBiomes();
-        }
-
-        /// <summary>
-        /// Adds a secondary biome to the tile such as a river, mountain (or possibly coast)
-        /// </summary>
-        private void AddSecondaryBiome(Biome biome)
-        {
-            if (biome == null) return;
-            if (SecondaryBiomes.Contains(biome)) return;
-            SecondaryBiomes.Add(biome);
-        }
-
-        //Check if this tile is surrounded by a biome of different types
-        public void AdjustToNeighborBiomes()
-        {
-            if (!isNotWater) return; //water doesn't have a biome (yet)
-            int differentNeighbors = 0; //number of neighbors with a different biome
-            Biome neighborBiome = null; //the biome this tile will switch to
-            for (int i = 0; i < neighbors_adj.Count; i++)
-            {
-                if (neighbors_adj[i].PrimaryBiome == null) continue;
-                if (!neighbors_adj[i].isNotWater) continue; //don't adjust to water biomes
-                if (neighbors_adj[i].PrimaryBiome == PrimaryBiome) continue;
-                neighborBiome = neighbors_adj[i].PrimaryBiome;
-                differentNeighbors++;
-            }
-            if (differentNeighbors >= 3) AdjustToBiome(neighborBiome);
-        }
-
-        public void AdjustToBiome(Biome biome)
-        {
-            SetBiome(biome);
-
-            heatValue = Mathf.Clamp(heatValue,
-                Temperature.CelsiusToFarenheit(biome.MinAvgTemp) / 100f,
-                Temperature.CelsiusToFarenheit(biome.MaxAvgTemp) / 100f);
-
-            precipitationValue = Mathf.Clamp(precipitationValue,
-                biome.MinPrecipitation / 400f,
-                biome.MaxPrecipitation / 400f
-                );
         }
 
         private void CheckNeighborBiomes()
         {
             for (int i = 0; i < neighbors_adj.Count; i++)
             {
-                if (neighbors_adj[i].PrimaryBiome != PrimaryBiome) continue;
+                if (!neighbors_adj[i].hasBiome) continue;
+                if (neighbors_adj[i].BiomeID != BiomeID) continue;
                 if (neighbors_adj[i].biomeGroup != null)
                 {
                     MergeBiomes(neighbors_adj[i].BiomeGroup);
@@ -342,7 +250,7 @@ namespace JS.WorldMap
             }
 
             if (biomeGroup != null) return;
-            var newBiome = new BiomeGroup(PrimaryBiome);
+            var newBiome = new BiomeGroup(BiomeID);
             MergeBiomes(newBiome);
         }
 
@@ -351,7 +259,7 @@ namespace JS.WorldMap
             if (biomeGroup != null)
             {
                 if (newBiomeGroup == biomeGroup) return;
-                else biomeGroup.MergeBiomes(newBiomeGroup);
+                else TerrainHelper.MergeBiomes(biomeGroup, newBiomeGroup);
             }
 
             biomeGroup = newBiomeGroup;

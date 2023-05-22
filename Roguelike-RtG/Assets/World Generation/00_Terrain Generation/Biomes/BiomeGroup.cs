@@ -7,24 +7,12 @@ namespace JS.WorldMap
     {
         public int ID;
         public int BiomeID;
-        public Biome biome;
-        public List<WorldTile> Nodes;
+        public List<WorldTile> Nodes { get; private set; }
 
-        public BiomeGroup(Biome biome)
+        public BiomeGroup(int biomeID)
         {
+            BiomeID = biomeID;
             Nodes = new List<WorldTile>();
-            this.biome = biome;
-            BiomeID = biome.ID;
-        }
-
-        public void MergeBiomes(BiomeGroup otherBiome)
-        {
-            otherBiome.Nodes.AddRange(Nodes);
-            for (int i = 0; i < Nodes.Count; i++)
-            {
-                Nodes[i].BiomeGroup = otherBiome;
-            }
-            Nodes.Clear();
         }
     }
 }

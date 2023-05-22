@@ -5,6 +5,10 @@ namespace JS.WorldMap
 {
     public class NodeDisplay : MonoBehaviour
     {
+        [SerializeField] private WorldGenerationParameters worldGenerationParameters;
+        [SerializeField] private TerrainData terrainData;
+        [SerializeField] private SettlementData settlementData;
+
         [SerializeField] private TMP_Text nodeCoordinates;
         [SerializeField] private TMP_Text nodeElevation;
         [SerializeField] private TMP_Text nodeBiome;
@@ -18,6 +22,11 @@ namespace JS.WorldMap
         [SerializeField] private GameObject mountainPanel;
         [SerializeField] private TMP_Text nodeMountainRange;
 
+        [Space]
+
+        [SerializeField] private GameObject settlementPanel;
+        [SerializeField] private TMP_Text settlementText;
+
         public void DisplayNodeValues(WorldTile node)
         {
             gameObject.SetActive(node != null);
@@ -25,34 +34,32 @@ namespace JS.WorldMap
 
             MountainDisplay(node);
 
-            if (node.Settlement != null)
-            {
-                DisplaySettlementInfo(node.Settlement);
-                return;
-            }
+            DisplaySettlementInfo(node);
 
             nodeCoordinates.text = "[X,Y] = " + node.x + "," + node.y;
-            nodeElevation.text = "Elevation = " + node.altitude;
+            nodeElevation.text = "Elevation = " + terrainData.HeightMap[node.x, node.y];
 
-            if (node.PrimaryBiome != null) nodeBiome.text = "Biome: " + node.PrimaryBiome.BiomeName;
+            if (node.hasBiome) nodeBiome.text = "Biome: " + worldGenerationParameters.Biomes[node.BiomeID].BiomeName;
 
-            nodeTemperature.text = "Temperature: " + node.temperatureZone.name +
-                " " + (node.avgAnnualTemperature_C).ToString("00") + "\u00B0" + "C";
-            nodePrecipitation.text = node.precipitationZone.name + ": " + node.annualPrecipitation_cm.ToString("00");
+            nodeTemperature.text = "Avg. Temperature: " + (Temperature.FloatToCelsius(terrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
+            nodePrecipitation.text = "Annual Rainfall: " + (terrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
 
             if (node.rivers.Count > 0) nodeRiverText.text = "River (" + node.rivers.Count + ")";
             else nodeRiverText.text = "";
         }
 
-        private void DisplaySettlementInfo(Settlement settlement)
+        private void DisplaySettlementInfo(WorldTile node)
         {
-            nodeCoordinates.text = settlement.name;
-            nodeElevation.text = "[X,Y] = " + settlement.Node.x + "," + settlement.Node.y;
-            nodeBiome.text = "Tribe: " + settlement.tribe.name;
-            nodeTemperature.text = "Population: " + settlement.population.ToString() + settlement.type.ToString();
+            var settlement = settlementData.FindSettlement(node.x, node.y);
+            settlementPanel.SetActive(settlement  != null);
+            if (settlement == null) return;
 
-            nodePrecipitation.text = "Territory Size: " + settlement.territory.Count;
-            nodeRiverText.text = "";
+            settlementText.text = settlement.name;
+            settlementText.text += "\nTribe: " + settlement.tribe.name + "\n";
+            settlementText.text += settlement.type.TypeName;
+
+            settlementText.text += "\nPopulation: " + settlement.population.ToString() + settlement.type.ToString();
+            settlementText.text += "\nTerritory Size: " + settlement.Territory.Count;
         }
 
         private void MountainDisplay(WorldTile node)

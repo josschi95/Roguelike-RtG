@@ -7,6 +7,7 @@ namespace JS.WorldMap.Generation
     {
         [SerializeField] private WorldMapData worldMap;
         [SerializeField] private WorldGenerator worldGenerator;
+        [SerializeField] private TerrainData terrainData;
         //private WorldMap worldMap;
 
         [SerializeField] private float MinRiverHeight = 0.6f;
@@ -62,7 +63,7 @@ namespace JS.WorldMap.Generation
             if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
             else node = worldMap.GetNode(worldGenerator.rng.Next(0, worldMap.Width - 1), worldGenerator.rng.Next(0, worldMap.Height - 1));
 
-            if (node.altitude < MinRiverHeight) return false;
+            if (terrainData.HeightMap[node.x, node.y] < MinRiverHeight) return false;
 
             //Find river initial direction
             river.CurrentDirection = FindLowestNeighborDirection(node);
@@ -108,7 +109,7 @@ namespace JS.WorldMap.Generation
             var lowestNeighbor = node.neighbors_adj[0];
             for (int i = 0; i < node.neighbors_adj.Count; i++)
             {
-                if (node.neighbors_adj[i].altitude < lowestNeighbor.altitude)
+                if (terrainData.HeightMap[node.neighbors_adj[i].x, node.neighbors_adj[i].y] < terrainData.HeightMap[lowestNeighbor.x, lowestNeighbor.y])
                 {
                     lowestNeighbor = node.neighbors_adj[i];
                 }
@@ -200,7 +201,7 @@ namespace JS.WorldMap.Generation
 
             if (min == northValue)
             {
-                if (north.isNotWater)
+                if (north.IsLand)
                 {
                     if (river.CurrentDirection != Direction.North)
                     {
@@ -212,7 +213,7 @@ namespace JS.WorldMap.Generation
             }
             else if (min == southValue)
             {
-                if (south.isNotWater)
+                if (south.IsLand)
                 {
                     if (river.CurrentDirection != Direction.South)
                     {
@@ -224,7 +225,7 @@ namespace JS.WorldMap.Generation
             }
             else if (min == eastValue)
             {
-                if (east.isNotWater)
+                if (east.IsLand)
                 {
                     if (river.CurrentDirection != Direction.East)
                     {
@@ -236,7 +237,7 @@ namespace JS.WorldMap.Generation
             }
             else if (min == westValue)
             {
-                if (west.isNotWater)
+                if (west.IsLand)
                 {
                     if (river.CurrentDirection != Direction.West)
                     {
@@ -254,10 +255,11 @@ namespace JS.WorldMap.Generation
             float value = int.MaxValue;
 
             // query height values of neighbor
-            if (node.GetNeighborRiverCount(river) < 2 && !river.Nodes.Contains(node)) value = node.altitude;
+            if (node.GetNeighborRiverCount(river) < 2 && !river.Nodes.Contains(node)) 
+                value = terrainData.HeightMap[node.x, node.y];
 
             // if neighbor is existing river that is not this one, flow into it
-            if (node.rivers.Count == 0 && !node.isNotWater) value = 0;
+            if (node.rivers.Count == 0 && !node.IsLand) value = 0;
 
             return value;
         }

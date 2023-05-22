@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a27096731b8f6ae43a038ee3cb2f6275, type: 3}
-  m_Name: Warm
+  m_Name: 05_Warmest
   m_EditorClassIdentifier: 
-  temperatureValue: 0.6
-  Tile: {fileID: 11400000, guid: b03516cfa8406ff43be2fb18915bc602, type: 2}
+  <ID>k__BackingField: 5
+  temperatureValue: 1
+  Tile: {fileID: 11400000, guid: 56147c2ffd2bf6e44b350df3583bc949, type: 2}

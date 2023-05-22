@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SeaLevel>k__BackingField: 0.4
   <MountainHeight>k__BackingField: 0.8
-  <MaxIslandSize>k__BackingField: 250
   tinyMap:
     mapSize: 200
     tectonicPlateCount: 4
@@ -101,12 +100,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ebe347fa0223e34295c040991810d04, type: 2}
   - {fileID: 11400000, guid: 37d351710b8ac5b4b9bf8cb9f0e40ee9, type: 2}
   biomes:
+  - {fileID: 11400000, guid: 7339a461c4bc6df4a8cf09f86a1c3fca, type: 2}
+  - {fileID: 11400000, guid: 15ffda11dff01bb4ba973fa86041f37f, type: 2}
+  - {fileID: 11400000, guid: 406c62171fbe44a49b79ffc4f1bc676c, type: 2}
+  - {fileID: 11400000, guid: 204cecb601a1b144e930a2b0deb53133, type: 2}
+  - {fileID: 11400000, guid: b7473dfa573ff72409ee845417ab166e, type: 2}
   - {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
-  - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
-  - {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
   - {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
-  - {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
+  - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
   - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
-  - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
+  - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
+  - {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
+  - {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
   - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}

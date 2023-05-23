@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: 00_Ocean_Deep
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 0
-  <BiomeName>k__BackingField: Ocean
+  <BiomeName>k__BackingField: Ocean_Deep
   <RuleTile>k__BackingField: {fileID: 11400000, guid: e2d57eb18a0d7b649873ac9b009e87d8, type: 2}
+  <isLand>k__BackingField: 0
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0

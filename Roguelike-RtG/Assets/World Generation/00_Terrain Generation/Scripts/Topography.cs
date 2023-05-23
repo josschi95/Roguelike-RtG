@@ -4,7 +4,7 @@ namespace JS.WorldMap
 {
     public static class Topography
     {
-        public static List<MountainRange> FindMountainRanges(WorldMapData worldMap, int mapSize, int minRangeSize = 4, float minMountainHeight = 0.7f)
+        public static List<MountainRange> FindMountainRanges(WorldData worldMap, int mapSize, int minRangeSize = 4, float minMountainHeight = 0.7f)
         {
             //UnityEngine.Debug.Log("Finding Mountain Ranges. " + UnityEngine.Time.realtimeSinceStartup);
             //var worldMap = WorldMap.instance;

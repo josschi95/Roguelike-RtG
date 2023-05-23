@@ -5,6 +5,8 @@ using JS.WorldMap;
 [CreateAssetMenu(fileName = "New Tribe", menuName = "World Generation/Settlements/Tribe")]
 public class HumanoidTribe : ScriptableObject
 {
+    [field: SerializeField] public int ID { get; private set; }
+
     [field: SerializeField] public List<Biome> preferredBiomes { get; private set; } = new List<Biome>();
     [field: SerializeField] public List<Biome> opposedBiomes { get; private set; } = new List<Biome>();
 

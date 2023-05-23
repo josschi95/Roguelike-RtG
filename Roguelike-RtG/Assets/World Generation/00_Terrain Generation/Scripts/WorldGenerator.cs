@@ -14,7 +14,7 @@ namespace JS.WorldMap.Generation
             
         [SerializeField] private WorldSize worldSize;
         [SerializeField] private WorldGenerationParameters mapFeatures;
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private PlayerData playerData;
 
@@ -32,7 +32,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private TMP_Text progressText;
 
         [Header("Game Events")]
-        [SerializeField] private GameEvent worldGenerationCompleteEvent;
+        [SerializeField] private GameEvent worldGenCompleteEvent;
 
         [Space]
 
@@ -91,8 +91,9 @@ namespace JS.WorldMap.Generation
 
             progressBar.fillAmount = 0.9f;
             yield return new WaitForSeconds(0.01f);
-            
-            worldGenerationCompleteEvent?.Invoke();
+
+            saveWorldDataCommand?.Invoke();
+            worldGenCompleteEvent?.Invoke();
         }
 
         private IEnumerator HandleTerrainGeneration()
@@ -184,8 +185,6 @@ namespace JS.WorldMap.Generation
             progressText.text = "Generating Settlements";
             yield return new WaitForSeconds(0.01f);
             //initialTime = Time.realtimeSinceStartup;
-
-            saveWorldDataCommand?.Invoke();
         }
 
         private void PlacePlayerAtStart()
@@ -193,15 +192,8 @@ namespace JS.WorldMap.Generation
             int index = rng.Next(0, settlementData.Settlements.Length);
             var settlement = settlementData.Settlements[index];
 
-            Debug.Log("Node Located at: " + settlement.x + "," + settlement.y);
-
-            var flat = ArrayHelper.Convert2DCoordinateTo1DCoordinate(worldMap.Width, worldMap.Height, settlement.x, settlement.y);
-            Debug.Log("Flattened is: " + flat);
-
-            ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, flat, out int x, out int y);
-            Debug.Log("Unflattened: " + x + "," + y);
-
-            playerData.WorldMapTile = flat;
+            playerData.worldX = settlement.X;
+            playerData.worldY = settlement.Y;
         }
     }
 }

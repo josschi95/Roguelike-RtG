@@ -11,7 +11,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
         //[SerializeField] private SettlementData settlementData;
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
         [SerializeField] private TribalRelation tribeRelations;
         private WorldSize worldSize;
 
@@ -50,9 +50,22 @@ namespace JS.WorldMap.Generation
             }
         }
 
-        private Biome GetBiome(int id)
+        private Biome GetBiome(int ID)
         {
-            return mapFeatures.Biomes[id];
+            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
+            {
+                if (mapFeatures.Biomes[i].ID == ID) return mapFeatures.Biomes[i];
+            }
+            throw new System.Exception("Biome ID not found.");
+        }
+
+        private HumanoidTribe GetTribe(int ID)
+        {
+            for (int i = 0; i < tribes.Length; i++)
+            {
+                if (tribes[i].ID == ID) return tribes[i];
+            }
+            throw new System.Exception("Tribe ID not found.");
         }
 
         #region - Settlement Placement -
@@ -317,16 +330,15 @@ namespace JS.WorldMap.Generation
         {
             //clamp max size based on settlement size
 
-
             int[,] mapFlags = new int[worldMap.Width, worldMap.Height];
             Queue<WorldTile> queue = new Queue<WorldTile>();
-            queue.Enqueue(worldMap.GetNode(settlement.x, settlement.y));
+            queue.Enqueue(worldMap.GetNode(settlement.X, settlement.Y));
 
             //So this is going to repeat the same territory every single time, which seems a waste
             while(queue.Count > 0)// && territoryToAdd > 0)
             {
                 //Limit settlements from getting too large at the start
-                if (settlement.Territory.Count >= settlement.type.MaxTerritory) break;
+                if (settlement.Territory.Count >= settlementTypes[settlement.TypeID].MaxTerritory) break;
 
                 var node = queue.Dequeue();
                 if (!settlement.OwnsTerritory(node.x, node.y))
@@ -343,14 +355,14 @@ namespace JS.WorldMap.Generation
                     mapFlags[neighbor.x, neighbor.y] = 1;
                     if (!neighbor.IsLand) continue; //is water
                     if (settlement.isSubterranean != (neighbor.Mountain != null)) continue; //subterranean can't extend outside mountain, others can't extend into mountains
-                    if (settlement.tribe.opposedBiomes.Contains(GetBiome(neighbor.BiomeID))) continue; //won't extend into opposed biomes
+                    if (GetTribe(settlement.TribeID).opposedBiomes.Contains(GetBiome(neighbor.BiomeID))) continue; //won't extend into opposed biomes
 
                     var claimant = FindClaimedTerritory(neighbor.x, neighbor.y);
                     if (claimant != null && claimant != settlement) continue; //already claimed
                     //The distance in node path count from the settlement to the new territory
                     //Also need to take into account going around mountains instead of through them
                     //if (worldMap.GetPathCount(settlement.Node, neighbor, settlement) > 50 + Random.Range(-10, 5)) continue;
-                    if (GridMath.GetStraightDist(settlement.x, settlement.y, neighbor.x, neighbor.y) > 50 + Random.Range(-10, 5)) continue;
+                    if (GridMath.GetStraightDist(settlement.X, settlement.Y, neighbor.x, neighbor.y) > 50 + Random.Range(-10, 5)) continue;
 
                     queue.Enqueue(neighbor);
                 }
@@ -381,8 +393,8 @@ namespace JS.WorldMap.Generation
             availableNodes.Remove(territory);
             biomes[GetBiome(territory.BiomeID)].Remove(territory);
 
-            if (!tribeTerritories[settlement.tribe].Contains(territory))
-                tribeTerritories[settlement.tribe].Add(territory);
+            if (!tribeTerritories[GetTribe(settlement.TribeID)].Contains(territory))
+                tribeTerritories[GetTribe(settlement.TribeID)].Add(territory);
         }
 
         /// <summary>
@@ -437,7 +449,7 @@ namespace JS.WorldMap.Generation
                 for (int j = 0; j < settlement.Territory.Count; j++)
                 {
                     var node = worldMap.GetNode(settlement.Territory[j].x, settlement.Territory[j].y);
-                    tribeTerritories[settlement.tribe].Remove(node);
+                    tribeTerritories[GetTribe(settlement.TribeID)].Remove(node);
                     AssignTerritory(settlementToMerge, node);
                 }
 
@@ -454,7 +466,7 @@ namespace JS.WorldMap.Generation
             for (int i = 0; i < settlements.Count; i++)
             {
                 if (settlements[i] == fromSettlement) continue;
-                var newDist = GridMath.GetStraightDist(fromSettlement.x, fromSettlement.y, settlements[i].x, settlements[i].y);
+                var newDist = GridMath.GetStraightDist(fromSettlement.X, fromSettlement.Y, settlements[i].X, settlements[i].Y);
 
                 if (newDist < dist)
                 {
@@ -475,13 +487,13 @@ namespace JS.WorldMap.Generation
                     if (newSettlement == null) continue;
                     if (newSettlement == settlement) continue;
 
-                    var disposition = tribeRelations.GetDisposition(settlement.tribe, newSettlement.tribe);
+                    var disposition = tribeRelations.GetDisposition(GetTribe(settlement.TribeID), GetTribe(newSettlement.TribeID));
 
                     settlement.AddNewRelation(newSettlement, disposition);
                     newSettlement.AddNewRelation(settlement, disposition);
-                    Debug.Log(settlement.tribe + " " + settlement.type + " at " + settlement.x + "," + settlement.y +
-                        " has encountered a " + newSettlement.tribe + " " + newSettlement.type + " at " +
-                        newSettlement.x + "," + newSettlement.y + ". They have a disposition of " + disposition);
+                    Debug.Log(GetTribe(settlement.TribeID) + " (" + settlement.TypeID + ") at " + settlement.X + "," + settlement.Y +
+                        " has encountered a " + GetTribe(newSettlement.TribeID) + " (" + newSettlement.TypeID + ") at " +
+                        newSettlement.X + "," + newSettlement.Y + ". They have a disposition of " + disposition);
                 }
             }
         }
@@ -493,13 +505,13 @@ namespace JS.WorldMap.Generation
                 int count = 0, hamlets = 0, villages = 0, towns = 0, cities = 0;
                 for (int j = 0; j < settlements.Count; j++)
                 {
-                    if (settlements[j].tribe == tribes[i])
+                    if (GetTribe(settlements[j].TribeID) == tribes[i])
                     {
                         count++;
-                        if (settlements[j].type == settlementTypes[0]) cities++;
-                        if (settlements[j].type == settlementTypes[1]) towns++;
-                        if (settlements[j].type == settlementTypes[2]) villages++;
-                        if (settlements[j].type == settlementTypes[3]) hamlets++;
+                        if (settlements[j].TypeID == 0) cities++;
+                        if (settlements[j].TypeID == 1) towns++;
+                        if (settlements[j].TypeID == 2) villages++;
+                        if (settlements[j].TypeID == 3) hamlets++;
                     }
                 }
                 Debug.Log(tribes[i].ToString() + ": " + count + " settlements, " + tribeTerritories[tribes[i]].Count + " nodes, " +
@@ -514,7 +526,7 @@ namespace JS.WorldMap.Generation
 
             for (int i = 0; i < settlements.Count; i++)
             {
-                if (settlements[i].x == x && settlements[i].y == y)
+                if (settlements[i].X == x && settlements[i].Y == y)
                 {
                     return settlements[i];
                 }
@@ -543,12 +555,12 @@ namespace JS.WorldMap.Generation
             foreach (Settlement settlement in settlements)
             {
                 //Returns false if the territory range of the proposed settlement site would overlap with territory of another settlement
-                if (Mathf.Abs(settlement.x - proposedSite.x) <= settlement.type.territorySize + range)
+                if (Mathf.Abs(settlement.X - proposedSite.x) <= settlementTypes[settlement.TypeID].territorySize + range)
                 {
                     //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
                     return true;
                 }
-                if (Mathf.Abs(settlement.y - proposedSite.y) <= settlement.type.territorySize + range)
+                if (Mathf.Abs(settlement.Y - proposedSite.y) <= settlementTypes[settlement.TypeID].territorySize + range)
                 {
                     //Debug.Log(range + " + " + settlement.settlementType + " range is " + (range + settlement.settlementType.territorySize));
                     return true;

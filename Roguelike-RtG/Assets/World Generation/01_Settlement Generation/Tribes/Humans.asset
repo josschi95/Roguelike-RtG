@@ -12,16 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a562b3256664f5f43a324daea36ab9d4, type: 3}
   m_Name: Humans
   m_EditorClassIdentifier: 
-  mountainPreference: 0
-  islandPreference: 0
+  <ID>k__BackingField: 3
   <preferredBiomes>k__BackingField: []
   <opposedBiomes>k__BackingField: []
-  tribalRelations:
-  - tribe: {fileID: 11400000, guid: 1b551bc04abf6054ab4faf97e8482352, type: 2}
-    disposition: 0
-  - tribe: {fileID: 11400000, guid: e7db29a8baf77cd4ebea035379597601, type: 2}
-    disposition: 0
-  - tribe: {fileID: 11400000, guid: 1a76edc156fb3144786bee3efe23c6ad, type: 2}
-    disposition: 0
-  - tribe: {fileID: 11400000, guid: ad950cb9142680847a8561be2412607d, type: 2}
-    disposition: 0
+  <PrefersMountains>k__BackingField: 0
+  <PrefersIslands>k__BackingField: 0

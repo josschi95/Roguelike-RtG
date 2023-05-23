@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.U2D;
+using JS.ECS;
+using UnityEngine.InputSystem;
 
 namespace JS.WorldMap
 {
@@ -7,7 +10,8 @@ namespace JS.WorldMap
     {
         [SerializeField] private GameObject playerObject;
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
+        [SerializeField] private InputActionAsset inputActionAsset;
 
         [Space]
 
@@ -15,12 +19,24 @@ namespace JS.WorldMap
 
         public void PlacePlayer()
         {
-            ArrayHelper.Convert1DCoordinateTo2DCoordinate(worldMap.Width, worldMap.Height, playerData.WorldMapTile, out int x, out int y);
+            CreatePlayerEntity();
 
-            var convertedPos = worldMap.TerrainData.Origin + new Vector3Int(x, y);
+            var convertedPos = worldMap.TerrainData.Origin + new Vector3Int(playerData.worldX, playerData.worldY);
             playerObject.transform.position = convertedPos;
 
             CenterCameraOnPlayer();
+        }
+
+        private void CreatePlayerEntity()
+        {
+            var playerEntity = new Entity();
+            var transform = new ECS.Transform(playerEntity);
+            var locomotion = new Locomotion(transform);
+            var actor = new TimedActor(playerEntity);
+            var input = new InputHandler(inputActionAsset);
+            input.entity = playerEntity;
+            input.actor = actor;
+            input.locomotion = locomotion;
         }
 
         private void CenterCameraOnPlayer()

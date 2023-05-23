@@ -5,11 +5,25 @@ namespace JS.ECS
         public delegate void OnTurnChangeCallback(bool isTurn);
         public OnTurnChangeCallback onTurnChange;
 
-        public bool HasActed = false;
+        private bool hasActed = false;
+        public bool HasActed
+        {
+            get => hasActed;
+            set
+            {
+                hasActed = value;
+                onTurnChange?.Invoke(!hasActed);
+            }
+        }
+
         public int ActionPoints = 0;
         public int Speed = 100;
 
-        public TimedActor() => TimeSystem.Register(this);
+        public TimedActor(Entity entity)
+        {
+            this.entity = entity;
+            TimeSystem.Register(this);
+        }
 
         public override void Release()
         {

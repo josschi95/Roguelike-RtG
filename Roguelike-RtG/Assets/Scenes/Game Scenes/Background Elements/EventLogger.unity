@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58f33228f4c4614c9402c06d2972378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logEvents: 0
   watchForEvent: {fileID: 0}
 --- !u!4 &182991318
 Transform:
@@ -301,7 +302,6 @@ GameObject:
   m_Component:
   - component: {fileID: 878084666}
   - component: {fileID: 878084665}
-  - component: {fileID: 878084667}
   m_Layer: 0
   m_Name: Player Input
   m_TagString: Untagged
@@ -394,6 +394,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b21736f9-3fe9-4323-9e17-3cc08877a35a
     m_ActionName: Player/Down[/Keyboard/numpadPlus]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1d43096-96d3-41cc-b5b7-39ba31fb68c1
+    m_ActionName: Player/Control[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -414,51 +418,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &878084667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878084664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e898ea8676a4547ac01055ff278dbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _wait:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Wait
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 23ad40fa-82bc-4188-8760-3f250ab8fd9f
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -1311632873242107828, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  _up:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Up
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 85f76d7d-191b-4840-a5e8-9df1bd102482
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -4646410594510497581, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  _down:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Down
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 800fa818-aac4-45b7-b465-6bcff514c878
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 6306044278393268569, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}

@@ -385,7 +385,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1022,6 +1022,8 @@ MonoBehaviour:
   TropicalSeasonalForest: {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
   Savanna: {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
   Jungle: {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
+  DeepOcean: {fileID: 11400000, guid: 7339a461c4bc6df4a8cf09f86a1c3fca, type: 2}
+  OceanSurface: {fileID: 11400000, guid: 15ffda11dff01bb4ba973fa86041f37f, type: 2}
 --- !u!4 &261351982
 Transform:
   m_ObjectHideFlags: 0
@@ -1206,7 +1208,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3131,7 +3133,6 @@ MonoBehaviour:
   worldGenerator: {fileID: 1549498269}
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
-  settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   tribeRelations: {fileID: 11400000, guid: 5b5e601d5d7858f49bfef3e199366d25, type: 2}
   tribes:
@@ -3415,7 +3416,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4327,7 +4328,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4649,7 +4650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'World Size: Medium'
+  m_text: 'World Size: Tiny'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ba39e4e02ca773046b93c27f23d01d37, type: 2}
   m_sharedMaterial: {fileID: -1493933108247034834, guid: ba39e4e02ca773046b93c27f23d01d37, type: 2}
@@ -4992,7 +4993,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -6022,7 +6023,7 @@ MonoBehaviour:
   settlementGenerator: {fileID: 907612579}
   progressBar: {fileID: 2128025129}
   progressText: {fileID: 1686435238}
-  worldGenerationCompleteEvent: {fileID: 11400000, guid: 00872b6f655e73f4dbbd79e6114f2d11, type: 2}
+  worldGenCompleteEvent: {fileID: 11400000, guid: 0ed37ee11b761bd49906c6fe51071d56, type: 2}
   saveWorldDataCommand: {fileID: 11400000, guid: eccd9433662ea9b4eb3a6baa25b1cdea, type: 2}
 --- !u!4 &1549498270
 Transform:
@@ -7139,7 +7140,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

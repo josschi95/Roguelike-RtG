@@ -13,8 +13,7 @@ namespace JS.ECS
         public TimeSystem()
         {
             var entity = new Entity();
-            var sentinel = new TimedActor();
-            entity.AddComponent(sentinel);
+            var sentinel = new TimedActor(entity);
             this.sentinel = sentinel;
 
             TurnTransition();
@@ -92,21 +91,20 @@ namespace JS.ECS
         private void StartTurn(TimedActor actor)
         {
             actor.HasActed = false;
-            actor.onTurnChange?.Invoke(true);
 
             if (actor == sentinel) OnNewRound();
-
-            while (!actor.HasActed)
+            actor.onTurnChange += delegate
             {
-                //Wait
-            }
-
-            EndTurn(actor);
+                EndTurn(actor);
+            };
         }
 
         private void EndTurn(TimedActor actor)
         {
-            actor.onTurnChange?.Invoke(false);
+            actor.onTurnChange -= delegate
+            {
+                EndTurn(actor);
+            };
             TurnTransition();
         }
 

@@ -6,7 +6,7 @@ namespace JS.WorldMap
 {
     public class MapDisplay : MonoBehaviour
     {
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private RiverTileHelper tileHelper;
         [SerializeField] private WorldGenerationParameters worldGenerationParameters;
@@ -26,8 +26,6 @@ namespace JS.WorldMap
         [SerializeField] private TileBase[] windDirectionTiles;
 
         [Space]
-
-        [SerializeField] private RuleTile waterTile;
 
         public Biome[] biomes;
         public Biome biomeToHighlight { get; set; }
@@ -50,25 +48,23 @@ namespace JS.WorldMap
             oceanMap.ClearAllTiles();
             landMap.ClearAllTiles();
 
-
             DisplayRivers();
             DisplayRoads();
             DisplaySettlements();
+            DisplayBiomes();
+        }
 
+        private void DisplayBiomes()
+        {
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var node = worldMap.GetNode(x, y);
                     var tilePos = worldMap.TerrainData.Origin + new Vector3Int(x, y);
+                    var biome = worldMap.TerrainData.GetBiome(x, y);
 
-                    oceanMap.SetTile(tilePos, waterTile);
-                    if (node.IsLand)
-                    {
-                        var tile = worldGenerationParameters.Biomes[node.BiomeID].RuleTile;
-                        landMap.SetTile(tilePos, tile);
-                        //if (node.isCoast) oceanMap.SetTile(tilePos, waterTile);
-                    }
+                    if (biome.isLand) landMap.SetTile(tilePos, biome.RuleTile);
+                    else oceanMap.SetTile(tilePos, biome.RuleTile);
                 }
             }
         }
@@ -79,9 +75,11 @@ namespace JS.WorldMap
 
             foreach (var river in worldMap.TerrainData.Rivers)
             {
-                for (int i = 0; i < river.Nodes.Count; i++)
+                for (int i = 0; i < river.Coordinates.Length; i++)
                 {
-                    var tilePos = worldMap.TerrainData.Origin + new Vector3Int(river.Nodes[i].x, river.Nodes[i].y);
+                    var tilePos = worldMap.TerrainData.Origin + 
+                        new Vector3Int(river.Coordinates[i].x, river.Coordinates[i].y);
+
                     if (riverMap.GetTile(tilePos) != null)
                     {
                         Debug.LogWarning("River intersection found. Need to account for T's");
@@ -112,8 +110,8 @@ namespace JS.WorldMap
 
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
-                var tilePos = worldMap.TerrainData.Origin + new Vector3Int(settlement.x, settlement.y);
-                settlementMap.SetTile(tilePos, settlement.type.settlementTile);
+                var tilePos = worldMap.TerrainData.Origin + new Vector3Int(settlement.X, settlement.Y);
+                settlementMap.SetTile(tilePos, settlementData.Types[settlement.TypeID].settlementTile);
             }
         }
 
@@ -302,9 +300,9 @@ namespace JS.WorldMap
             if (node.rivers.Count > 0)
             {
                 Debug.Log("River Info:");
-                for (int i = 0; i < node.rivers[0].Nodes.Count; i++)
+                for (int i = 0; i < node.rivers[0].Coordinates.Length; i++)
                 {
-                    Debug.Log(node.rivers[0].Nodes[i].x + "," + node.rivers[0].Nodes[i].y + " : " + node.rivers[0].Flow[i].ToString());
+                    Debug.Log(node.rivers[0].Coordinates[i].x + "," + node.rivers[0].Coordinates[i].y + " : " + node.rivers[0].Flow[i].ToString());
                 }
             }
 

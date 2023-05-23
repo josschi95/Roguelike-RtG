@@ -936,7 +936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterBuilder: {fileID: 11400000, guid: da7c7b785811eb84da3e7e416044dbcd, type: 2}
-  returnToMainMenuEvent: {fileID: 11400000, guid: 2d5738c4a7e2a1a489117472d2632668, type: 2}
+  returnToMainMenuEvent: {fileID: 11400000, guid: 4113626677d734d42a0e176ee95ad4e0, type: 2}
   completeCharacterCreationEvent: {fileID: 11400000, guid: afda4cf2dc50a144193561fbde1ae423, type: 2}
   categoryPanels:
   - {fileID: 1353560340}

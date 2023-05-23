@@ -8,6 +8,7 @@ namespace JS.ECS
         public Locomotion(Transform transform)
         {
             Transform = transform;
+            entity = transform.entity;
             LocomotionSystem.Register(this);
         }
     }

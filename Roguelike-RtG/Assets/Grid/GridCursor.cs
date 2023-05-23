@@ -5,15 +5,14 @@ using JS.WorldMap;
 public class GridCursor : MonoBehaviour
 {
     [SerializeField] private InputActionProperty mousePosition;
-    [SerializeField] private WorldMapData worldMap;
+    [SerializeField] private WorldData worldMap;
     [SerializeField] private NodeDisplay nodeDisplay;
+    [SerializeField] private Camera cam;
 
-    private Camera cam;
     private Vector2 mousePos;
 
     private void Start()
     {
-        cam = Camera.main;
         mousePosition.action.performed += i => mousePos = i.ReadValue<Vector2>();
     }
 

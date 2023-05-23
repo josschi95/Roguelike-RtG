@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12b150a60fd1bf4dbd006faa57dea3f, type: 3}
   m_Name: Terrain Data
   m_EditorClassIdentifier: 
-  <RiverTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
-  riverNorth: {fileID: 11400000, guid: c44a25e09bde6f349adedbe041a52e8e, type: 2}
-  riverEast: {fileID: 11400000, guid: 5a1f507d9ac8f2e4ea96ecc83c84b167, type: 2}
-  riverNorthEast: {fileID: 11400000, guid: 20e1d996b5b244c46a2fbd694fa7ca70, type: 2}
-  riverNorthWest: {fileID: 11400000, guid: f8c9bbd039f304644bdb23f8162ad737, type: 2}
-  riverSouthEast: {fileID: 11400000, guid: 3a2441f349de9b745b3ba0dd9fb0a612, type: 2}
-  riverSouthWest: {fileID: 11400000, guid: 23fe628168426b64d8412fd523dbcbfb, type: 2}
+  biomes:
+  - {fileID: 11400000, guid: 7339a461c4bc6df4a8cf09f86a1c3fca, type: 2}
+  - {fileID: 11400000, guid: 15ffda11dff01bb4ba973fa86041f37f, type: 2}
+  - {fileID: 11400000, guid: 406c62171fbe44a49b79ffc4f1bc676c, type: 2}
+  - {fileID: 11400000, guid: 204cecb601a1b144e930a2b0deb53133, type: 2}
+  - {fileID: 11400000, guid: b7473dfa573ff72409ee845417ab166e, type: 2}
+  - {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
+  - {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
+  - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
+  - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
+  - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
+  - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
+  - {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
+  - {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
+  - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}

@@ -9,6 +9,8 @@ namespace JS.WorldMap
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private SettlementData settlementData;
 
+        [Space]
+
         [SerializeField] private TMP_Text nodeCoordinates;
         [SerializeField] private TMP_Text nodeElevation;
         [SerializeField] private TMP_Text nodeBiome;
@@ -39,7 +41,7 @@ namespace JS.WorldMap
             nodeCoordinates.text = "[X,Y] = " + node.x + "," + node.y;
             nodeElevation.text = "Elevation = " + terrainData.HeightMap[node.x, node.y];
 
-            if (node.hasBiome) nodeBiome.text = "Biome: " + worldGenerationParameters.Biomes[node.BiomeID].BiomeName;
+            nodeBiome.text = "Biome: " + terrainData.GetBiome(node.x, node.y).BiomeName;
 
             nodeTemperature.text = "Avg. Temperature: " + (Temperature.FloatToCelsius(terrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
             nodePrecipitation.text = "Annual Rainfall: " + (terrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
@@ -54,11 +56,11 @@ namespace JS.WorldMap
             settlementPanel.SetActive(settlement  != null);
             if (settlement == null) return;
 
-            settlementText.text = settlement.name;
-            settlementText.text += "\nTribe: " + settlement.tribe.name + "\n";
-            settlementText.text += settlement.type.TypeName;
+            settlementText.text = settlement.Name;
+            settlementText.text += "\nTribe: " + settlementData.Tribes[settlement.TribeID].name + "\n";
+            settlementText.text += settlementData.Types[settlement.TypeID].TypeName;
 
-            settlementText.text += "\nPopulation: " + settlement.population.ToString() + settlement.type.ToString();
+            settlementText.text += "\nPopulation: " + settlement.Population.ToString();
             settlementText.text += "\nTerritory Size: " + settlement.Territory.Count;
         }
 

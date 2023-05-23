@@ -4,7 +4,7 @@ namespace JS.WorldMap.Generation
 {
     public class Erosion : MonoBehaviour
     {
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
 
         [Range(2, 8)]
         public int erosionRadius = 3;

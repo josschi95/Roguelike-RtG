@@ -208,10 +208,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345412767}
-  - component: {fileID: 345412768}
   - component: {fileID: 345412769}
   - component: {fileID: 345412770}
-  - component: {fileID: 345412771}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -234,47 +232,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &345412768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345412765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 6148589601efcdf459b1ad917220d8a3, type: 2}
-  callbackEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1976489675}
-        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: UnloadScene
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
-          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1976489675}
-        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: LoadSceneCollectionAdditive
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 9dc60136bdce539469a7e293c4f449b5, type: 2}
-          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.SceneCollection, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  developerNotes: Load New Game from Main Menu
 --- !u!114 &345412769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,18 +281,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: UnloadScene
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}
-          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1976489675}
-        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
         m_MethodName: LoadSceneAdditiveWithSplashScreen
         m_Mode: 2
         m_Arguments:
@@ -346,23 +291,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  developerNotes: Loads World Map after generating world
---- !u!114 &345412771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345412765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: f666a866e569c6642b607d56e7389218, type: 2}
-  callbackEvent:
-    m_PersistentCalls:
-      m_Calls:
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
         m_MethodName: UnloadScene
@@ -375,21 +303,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1976489675}
-        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b22da7d8554a8a24ba66f16ff87e6498, type: 2}
-          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  developerNotes: 'Loads CharacterCreation scene from
-
-    MainMenu'
+  developerNotes: Loads World Map after generating world
 --- !u!1 &601089860
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +423,7 @@ RectTransform:
   - {fileID: 45670250}
   - {fileID: 925034197}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -727,6 +641,307 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925034196}
   m_CullTransparentMesh: 1
+--- !u!1 &1344369155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344369160}
+  - component: {fileID: 1344369159}
+  - component: {fileID: 1344369158}
+  - component: {fileID: 1344369161}
+  - component: {fileID: 1344369163}
+  - component: {fileID: 1344369162}
+  - component: {fileID: 1344369164}
+  - component: {fileID: 1344369165}
+  m_Layer: 0
+  m_Name: UI_SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1344369158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: a1da1e6f46a3be74da4a8f092daf2fb3, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b801e62c9ead7604ebc3d18f66aa3546, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: Unloads Settings Menu
+--- !u!114 &1344369159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 08f20110c87a5a0428583401a84430b5, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b801e62c9ead7604ebc3d18f66aa3546, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: Loads Settings Menu
+--- !u!4 &1344369160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1344369161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f666a866e569c6642b607d56e7389218, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b22da7d8554a8a24ba66f16ff87e6498, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: 'Load Character Creation '
+--- !u!114 &1344369162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6148589601efcdf459b1ad917220d8a3, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: Load New World Generation
+--- !u!114 &1344369163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 4113626677d734d42a0e176ee95ad4e0, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b22da7d8554a8a24ba66f16ff87e6498, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: 'Unload Character Creation '
+--- !u!114 &1344369164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b970b6f20cfa6704b85263e6bd329bad, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: Unload New World Generation
+--- !u!114 &1344369165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344369155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 0ed37ee11b761bd49906c6fe51071d56, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 60b58e4fd1deb8f4c8c3628b6626515a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: Loads World Map from World Creation
 --- !u!1 &1357073727
 GameObject:
   m_ObjectHideFlags: 0

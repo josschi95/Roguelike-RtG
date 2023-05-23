@@ -16,9 +16,9 @@ namespace JS.WorldMap
         [SerializeField] private WorldFeatures largeMap;
         [SerializeField] private WorldFeatures hugeMap;
 
-        [Header("Altitude")]
-        [SerializeField] private AltitudeZone[] altitudeZones;
-        public AltitudeZone[] AltitudeZones => altitudeZones;
+        //[Header("Altitude")]
+        //[SerializeField] private AltitudeZone[] altitudeZones;
+        //public AltitudeZone[] AltitudeZones => altitudeZones;
 
         [Header("Temperature")]
         [SerializeField] private TemperatureZone[] temperatureZones;

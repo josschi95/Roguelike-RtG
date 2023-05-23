@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19ed4a44b1bdb64fadb448260c4d59c, type: 3}
   m_Name: 02_Village
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 0
+  <ID>k__BackingField: 2
   <TypeName>k__BackingField: Village
   <MaxTerritory>k__BackingField: 10
   <territorySize>k__BackingField: 2

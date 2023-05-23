@@ -8,6 +8,7 @@ namespace JS.WorldMap
         [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
         [field: SerializeField] public RuleTile RuleTile { get; private set; }
+        [field: SerializeField] public bool isLand { get; private set; } = true;
 
         [Header("Temperature and Precipitation")]
         [SerializeField] private int minAvgAnnualTemperature;

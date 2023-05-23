@@ -1,3 +1,4 @@
+[System.Serializable]
 public struct GridCoordinates
 {
     public int x, y;

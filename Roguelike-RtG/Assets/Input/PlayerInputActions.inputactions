@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Wait",
+                    "name": "Center",
                     "type": "Button",
                     "id": "c2970315-bc75-4a8a-b050-2d97c0b6a5a4",
                     "expectedControlType": "Button",
@@ -135,6 +135,15 @@
                     "name": "Down",
                     "type": "Button",
                     "id": "b21736f9-3fe9-4323-9e17-3cc08877a35a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Control",
+                    "type": "Button",
+                    "id": "f1d43096-96d3-41cc-b5b7-39ba31fb68c1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -259,7 +268,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Wait",
+                    "action": "Center",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -304,6 +313,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "030b5652-3c7a-48e7-8aed-a4730b3a1dc3",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Control",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

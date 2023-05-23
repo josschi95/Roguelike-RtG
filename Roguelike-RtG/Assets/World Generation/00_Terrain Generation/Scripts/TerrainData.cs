@@ -5,13 +5,32 @@ namespace JS.WorldMap
     [CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
     public class TerrainData : ScriptableObject
     {
-        private bool saveExists;
-        public bool SaveExists
+        [SerializeField] private Biome[] biomes;
+
+        public Biome GetBiome(int id)
         {
-            get => saveExists; 
-            set => saveExists = value;
+            for (int i = 0; i < biomes.Length; i++)
+            {
+                if (biomes[i].ID == id) return biomes[i];
+            }
+            throw new System.Exception("Biome ID not valid.");
         }
 
+        public Biome GetBiome(int x, int y)
+        {
+            return GetBiome(biomeMap[x, y]);
+        }
+
+        public void ClearData()
+        {
+            Mountains = null;
+            Lakes = null;
+            Rivers = null;
+            BiomeGroups = null;
+            Islands = null;
+        }
+
+        #region - Map Data -
         private int mapSize;
         public int MapSize
         {
@@ -92,14 +111,6 @@ namespace JS.WorldMap
             get => islands;
             set => islands = value;
         }
-
-        public void ClearData()
-        {
-            Mountains = null;
-            Lakes = null;
-            Rivers = null;
-            BiomeGroups = null;
-            Islands = null;
-        }
+        #endregion
     }
 }

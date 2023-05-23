@@ -7,14 +7,14 @@ namespace JS.ECS
     {
         //this might later be changed to a string
         public Guid ID { get; private set; }
-        private List<ComponentBase> components;
+        //private List<ComponentBase> components;
 
         public Entity()
         {
             ID = Guid.NewGuid();
-            components = new List<ComponentBase>();
+            //components = new List<ComponentBase>();
         }
-
+        /*
         //Adds the referenced component to this entity and sets this as its entity
         public void AddComponent(ComponentBase component)
         {
@@ -52,5 +52,6 @@ namespace JS.ECS
             }
             //Will also need to unregister this likely
         }
+        */
     }
 }

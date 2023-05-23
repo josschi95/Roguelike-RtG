@@ -29,7 +29,7 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
-        [SerializeField] private WorldMapData worldMap;
+        [SerializeField] private WorldData worldMap;
 
         [Header("Perlin Noise")]
         [SerializeField] private float noiseScale;
@@ -46,6 +46,7 @@ namespace JS.WorldMap.Generation
         private List<WorldTile> land;
 
         [SerializeField] private Biome Tundra, Taiga, TemperateGrassland, Shrubland, DeciduousForest, Desert, TropicalSeasonalForest, Savanna, Jungle;
+        [SerializeField] private Biome DeepOcean, OceanSurface;
 
         public void SetInitialValues(WorldSize size, int seed)
         {
@@ -165,9 +166,10 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    var altitude = GetAltitude(heightMap[x, y]);
-                    node.SetAltitude(heightMap[x, y], altitude.isLand);
-                    if (altitude.isLand) land.Add(node);
+                    bool isLand = heightMap[x, y] >= mapFeatures.SeaLevel;
+
+                    node.SetAltitude(heightMap[x, y], isLand);
+                    if (isLand) land.Add(node);
                     else water.Add(node);
 
                     //node.airPressure = airPressureMap[x, y];
@@ -179,7 +181,7 @@ namespace JS.WorldMap.Generation
         /// <summary>
         /// Returns an Altitude Zone Scriptable Object based on given height value.
         /// </summary>
-        private AltitudeZone GetAltitude(float height)
+        /*private AltitudeZone GetAltitude(float height)
         {
             for (int i = 0; i < mapFeatures.AltitudeZones.Length; i++)
             {
@@ -189,7 +191,7 @@ namespace JS.WorldMap.Generation
                 }
             }
             throw new UnityException("Node altitude is outside bounds of designated zones. " + height);
-        }
+        }*/
         #endregion
 
         #region - Terrain Features -
@@ -454,6 +456,7 @@ namespace JS.WorldMap.Generation
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     if (node.IsLand) node.SetBiome(GetWhittakerTableBiome(node));
+                    else node.SetBiome(GetAquaticBiome(node));
                 }
             }
 
@@ -497,6 +500,12 @@ namespace JS.WorldMap.Generation
                     return Jungle;
                 default: return Shrubland;
             }
+        }
+
+        private Biome GetAquaticBiome(WorldTile tile)
+        {
+            if (tile.Altitude >= mapFeatures.SeaLevel * 0.5f) return OceanSurface; 
+            else return DeepOcean;
         }
 
         private void ConsolidateBiomes(int iterations)

@@ -4,7 +4,7 @@ using JS.WorldMap;
 
 public class JSONSaving : MonoBehaviour
 {
-    private WorldData playerData;
+    private WorldSaveData playerData;
 
     private string path = "";
     private string persistentPath = "";
@@ -28,14 +28,14 @@ public class JSONSaving : MonoBehaviour
             StreamReader reader = new StreamReader(saves[i]);
             string json = reader.ReadToEnd();
 
-            WorldData data = JsonUtility.FromJson<WorldData>(json);
+            WorldSaveData data = JsonUtility.FromJson<WorldSaveData>(json);
         }
         return true;
     }
 
     private void CreatePlayerData()
     {
-        playerData = new WorldData();
+        playerData = new WorldSaveData();
     }
 
     private void SetPaths()
@@ -64,13 +64,13 @@ public class JSONSaving : MonoBehaviour
         StreamReader reader = new StreamReader(persistentPath);
         string json = reader.ReadToEnd();
 
-        WorldData data = JsonUtility.FromJson<WorldData>(json);
+        WorldSaveData data = JsonUtility.FromJson<WorldSaveData>(json);
 
         //Debug.Log("this isn't doing anything yet");
         SetPlayerValues(data);
     }
 
-    private void SetPlayerValues(WorldData data)
+    private void SetPlayerValues(WorldSaveData data)
     {
         //Load back in all saved data to appropriate places
     }

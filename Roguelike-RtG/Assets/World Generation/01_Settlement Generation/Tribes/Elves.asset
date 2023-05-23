@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a562b3256664f5f43a324daea36ab9d4, type: 3}
   m_Name: Elves
   m_EditorClassIdentifier: 
-  mountainPreference: 0
-  islandPreference: 0.25
+  <ID>k__BackingField: 1
   <preferredBiomes>k__BackingField:
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
   - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
@@ -21,3 +20,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
   - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
   <opposedBiomes>k__BackingField: []
+  <PrefersMountains>k__BackingField: 0
+  <PrefersIslands>k__BackingField: 0

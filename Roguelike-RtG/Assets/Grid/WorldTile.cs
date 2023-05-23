@@ -185,18 +185,6 @@ namespace JS.WorldMap
         #endregion
 
         #region - Rivers -
-        public int GetNeighborRiverCount(River river)
-        {
-            int count = 0;
-
-            for (int i = 0; i < neighbors_adj.Count; i++)
-            {
-                if (neighbors_adj[i].rivers.Count > 0 && neighbors_adj[i].rivers.Contains(river)) count++;
-            }
-
-            return count;
-        }
-
         public void AddRiver(River river)
         {
             SetRiverPath(river);

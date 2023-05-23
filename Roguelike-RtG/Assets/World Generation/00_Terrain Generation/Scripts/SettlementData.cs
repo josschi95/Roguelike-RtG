@@ -4,7 +4,16 @@ using JS.WorldMap;
 [CreateAssetMenu(fileName = "Settlement Data", menuName = "World Generation/Settlements/Settlement Data")]
 public class SettlementData : ScriptableObject
 {
-    private Settlement[] settlements;
+    [Header("References")]
+    [SerializeField] private SettlementType[] settlementTypes;
+    public SettlementType[] Types => settlementTypes;
+
+    [SerializeField] private HumanoidTribe[] tribes;
+    public HumanoidTribe[] Tribes => tribes;
+
+    [Space]
+
+    [SerializeField] private Settlement[] settlements;
     public Settlement[] Settlements => settlements;
 
     //later also include roads
@@ -21,7 +30,7 @@ public class SettlementData : ScriptableObject
 
         for (int i = 0; i < settlements.Length; i++)
         {
-            if (settlements[i].x == x && settlements[i].y == y)
+            if (settlements[i].X == x && settlements[i].Y == y)
             {
                 return settlements[i];
             }

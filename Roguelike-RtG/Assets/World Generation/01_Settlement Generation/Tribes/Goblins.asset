@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a562b3256664f5f43a324daea36ab9d4, type: 3}
   m_Name: Goblins
   m_EditorClassIdentifier: 
-  mountainPreference: 0.5
-  islandPreference: 0
+  <ID>k__BackingField: 2
   <preferredBiomes>k__BackingField:
   - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
   - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
   <opposedBiomes>k__BackingField:
   - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
+  <PrefersMountains>k__BackingField: 0
+  <PrefersIslands>k__BackingField: 0

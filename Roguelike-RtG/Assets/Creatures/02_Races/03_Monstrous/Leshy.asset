@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1d846dcc4494b247bc95af09612a8cb, type: 3}
-  m_Name: Shrubling
+  m_Name: Leshy
   m_EditorClassIdentifier: 
   raceID: 34
-  raceName: Shrubling
+  raceName: Leshy
   raceCategory: 2
   raceSize: {fileID: 11400000, guid: 40d839a46ee03c4498bb4fcd6a7d2b9c, type: 2}
   type: {fileID: 11400000, guid: bb700d7f479354841817d478366bf6d4, type: 2}
@@ -55,4 +55,4 @@ MonoBehaviour:
   hasMales: 0
   hasFemales: 0
   hasOther: 1
-  developerNotes: Treant will be higher class
+  developerNotes: 

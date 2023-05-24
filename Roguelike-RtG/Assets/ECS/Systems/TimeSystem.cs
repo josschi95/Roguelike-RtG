@@ -1,7 +1,14 @@
+using System.Collections;
+using UnityEngine;
+using JS.EventSystem;
+
 namespace JS.ECS
 {
     public class TimeSystem : SystemBase<TimedActor>
     {
+        private static TimeSystem instance;
+
+
         public delegate void OnTimeProgressCallback();
         public OnTimeProgressCallback onTick;
         public OnTimeProgressCallback onNewRound;
@@ -10,27 +17,44 @@ namespace JS.ECS
         public const int pointsToAct = 1000;
         private bool runTurnCounter = true;
 
-        public TimeSystem()
+        [SerializeField] private GameEvent gameTickEvent;
+
+        private void Awake()
         {
+            if (instance != null)
+            {
+                Destroy(this); 
+                return;
+            }
+            instance = this;
+        }
+
+        private IEnumerator Start()
+        {
+            Debug.Log("TimeSystem Init");
             var entity = new Entity();
             var sentinel = new TimedActor(entity);
+            sentinel.Speed = 100;
             this.sentinel = sentinel;
+            this.sentinel.onTurnStart += OnNewRound;
+
+            while(components.Count <= 1) yield return null;
 
             TurnTransition();
         }
 
         private void OnNewRound()
         {
+            Debug.Log("OnNewRound");
             onNewRound?.Invoke();
             Action.SkipAction(sentinel);
         }
 
-        public void Pause()
-        {
-            runTurnCounter = false;
-        }
+        public void Pause() => instance.PauseTime();
+        public void Resume() => instance.ResumeTime();
 
-        public void Resume()
+        private void PauseTime() => runTurnCounter = false;
+        private void ResumeTime()
         {
             runTurnCounter = true;
             TurnTransition();
@@ -38,8 +62,8 @@ namespace JS.ECS
 
         private void TurnTransition()
         {
+            Debug.Log("TurnTransition");
             if (!runTurnCounter) return;
-           
             GetNextTurn();
         }
 
@@ -86,25 +110,22 @@ namespace JS.ECS
                 RegainActionPoints(components[i]);
             }
             onTick?.Invoke();
+            gameTickEvent?.Invoke();
         }
 
         private void StartTurn(TimedActor actor)
         {
-            actor.HasActed = false;
-
-            if (actor == sentinel) OnNewRound();
-            actor.onTurnChange += delegate
-            {
-                EndTurn(actor);
-            };
+            actor.IsTurn = true;
         }
 
-        private void EndTurn(TimedActor actor)
+        public static void EndTurn(TimedActor actor)
         {
-            actor.onTurnChange -= delegate
-            {
-                EndTurn(actor);
-            };
+            instance.EndActorTurn(actor);
+        }
+
+        private void EndActorTurn(TimedActor actor)
+        {
+            actor.IsTurn = false;
             TurnTransition();
         }
 

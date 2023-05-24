@@ -13,6 +13,7 @@ namespace JS.CommandSystem
         [Space]
         [Space]
         [SerializeField] private WorldData _worldMapData;
+        [SerializeField] private TimeKeeper timeData;
 
         protected override bool ExecuteCommand()
         {
@@ -22,7 +23,11 @@ namespace JS.CommandSystem
         private bool CheckForExistingSave()
         {
             string[] saves = Directory.GetFiles(Application.persistentDataPath);
-            if (saves.Length == 0) return false;
+            if (saves.Length == 0)
+            {
+                _worldMapData.SaveExists = false;
+                return false;
+            }
 
             foreach (string save in saves)
             {
@@ -32,6 +37,7 @@ namespace JS.CommandSystem
                     return true;
                 }
             }
+            _worldMapData.SaveExists = false;
             return false;
         }
 
@@ -42,8 +48,14 @@ namespace JS.CommandSystem
 
             WorldSaveData data = JsonUtility.FromJson<WorldSaveData>(json);
 
+            SetTimeData(data);
             SetTerrainValues(data);
             SetSettlementValues(data);
+        }
+
+        private void SetTimeData(WorldSaveData data)
+        {
+            timeData.SetSavedTime(data.seconds, data.minutes, data.hours, data.days, data.weeks, data.months, data.years);
         }
 
         private void SetTerrainValues(WorldSaveData data)

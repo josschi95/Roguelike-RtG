@@ -33,6 +33,7 @@ namespace JS.WorldMap
             var transform = new ECS.Transform(playerEntity);
             var locomotion = new Locomotion(transform);
             var actor = new TimedActor(playerEntity);
+            actor.Speed = 100;
             var input = new InputHandler(inputActionAsset);
             input.entity = playerEntity;
             input.actor = actor;

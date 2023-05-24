@@ -17,6 +17,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private PlayerData playerData;
+        [SerializeField] private TimeKeeper timeKeeper;
 
         [Space]
 
@@ -70,6 +71,8 @@ namespace JS.WorldMap.Generation
         //Called from World Generation Settings Menu
         public void OnBeginWorldGeneration()
         {
+            timeKeeper.ResetTime();
+
             StartCoroutine(GenerateWorld());
 
             //Generate Plant and Wildlife

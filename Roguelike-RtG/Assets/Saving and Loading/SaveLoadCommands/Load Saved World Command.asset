@@ -15,3 +15,4 @@ MonoBehaviour:
   callbackEvents: []
   developerNotes: 
   _worldMapData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  timeData: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}

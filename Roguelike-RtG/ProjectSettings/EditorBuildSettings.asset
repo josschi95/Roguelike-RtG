@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Gameplay/NewWorldGeneration.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/Background Elements/Systems.unity
+    guid: b653be7b0bbcb0b41b60fd3160cf2ddd
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Gameplay/LocalMap.unity
+    guid: 0e3145e123cf2ee489289ebd30afe0c3
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Gameplay/WorldMap.unity
     guid: f06f7852ab0ff3c4f9014f155e086ca8
   m_configObjects: {}

@@ -19,7 +19,10 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: bb700d7f479354841817d478366bf6d4, type: 2}
   subtypes: []
   raceSprite: {fileID: 1165509679, guid: 8546b4f4fa7471440a9ced0f9c46534c, type: 3}
-  raceDescription: 
+  raceDescription: Dryads have the unique property of needing to return to their
+    tree periodically and suffering an increasing penalty the longer they are away.
+    When a dryad becomes a treant, they fuse with the tree, giving it their sentience
+    and life.
   baseAttributes:
   - attribute: {fileID: 11400000, guid: b22a8b66dd1860d409f842f231fae508, type: 2}
     value: 5
@@ -86,4 +89,4 @@ MonoBehaviour:
   hasMales: 0
   hasFemales: 1
   hasOther: 0
-  developerNotes: 
+  developerNotes: Treant will be higher class

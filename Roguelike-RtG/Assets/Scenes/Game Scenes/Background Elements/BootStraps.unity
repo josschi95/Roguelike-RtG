@@ -260,6 +260,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadSceneCollection
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: c3acca180633e464ead0d206d0298173, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.SceneCollection, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   developerNotes: 'Return to Main Menu from Gameplay
 
     Need to also unload current'
@@ -281,6 +293,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
         m_MethodName: LoadSceneAdditiveWithSplashScreen
         m_Mode: 2
         m_Arguments:
@@ -293,10 +317,10 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: UnloadScene
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 30899dc0a3d68014189e9a3a51dd31e1, type: 2}
           m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -923,6 +947,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 30899dc0a3d68014189e9a3a51dd31e1, type: 2}
           m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

@@ -4,8 +4,17 @@ namespace JS.WorldMap
     {
         //NOTE//
         //A number of these values can be re-generated using the seed quickly enough that there's no need to actually save them. 
-            //Seriously, I don't need a JSON with 5 sets of 40,000 item length arrays
+        //Seriously, I don't need a JSON with 5 sets of 40,000 item length arrays
         //However, the features (Mountains, Lakes, Rivers, Islands, etc.) take quite a bit more time and should definitely be saved
+
+        //Time
+        public int seconds;
+        public int minutes;
+        public int hours;
+        public int days;
+        public int weeks;
+        public int months;
+        public int years;
 
         public int seed;
 

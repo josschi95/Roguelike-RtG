@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace JS.ECS
 {
-    public abstract class SystemBase<T> where T : ComponentBase
+    public abstract class SystemBase<T> : MonoBehaviour where T : ComponentBase
     {
         protected static List<T> components = new List<T>();
 

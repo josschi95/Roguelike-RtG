@@ -14,6 +14,7 @@ namespace JS.ECS
             ID = Guid.NewGuid();
             //components = new List<ComponentBase>();
         }
+
         /*
         //Adds the referenced component to this entity and sets this as its entity
         public void AddComponent(ComponentBase component)

@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58f33228f4c4614c9402c06d2972378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logEvents: 0
+  logEvents: 1
   watchForEvent: {fileID: 0}
 --- !u!4 &182991318
 Transform:

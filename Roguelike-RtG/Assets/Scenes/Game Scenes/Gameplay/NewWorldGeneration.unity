@@ -6019,6 +6019,7 @@ MonoBehaviour:
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
   playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
+  timeKeeper: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
   mapGenerator: {fileID: 261351981}
   settlementGenerator: {fileID: 907612579}
   progressBar: {fileID: 2128025129}
@@ -6498,7 +6499,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}
   - {fileID: 11400000, guid: b31f1e6ab5246d14eab4e31ba7649bde, type: 2}
   - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
-  waterTile: {fileID: 11400000, guid: e2d57eb18a0d7b649873ac9b009e87d8, type: 2}
   biomes: []
 --- !u!114 &1693811273
 MonoBehaviour:

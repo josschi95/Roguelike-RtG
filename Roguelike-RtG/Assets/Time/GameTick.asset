@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a596a54f245153d44a9c0de2678e1749, type: 3}
-  m_Name: NewCharacterCommand
+  m_Script: {fileID: 11500000, guid: 5e888310cffed4a449b9aa45b71a656a, type: 3}
+  m_Name: GameTick
   m_EditorClassIdentifier: 
-  callbackEvents:
-  - {fileID: 11400000, guid: f666a866e569c6642b607d56e7389218, type: 2}
-  developerNotes: "Triggers callback to load \nCharacterCreation scene"
+  EventEnabled: 1

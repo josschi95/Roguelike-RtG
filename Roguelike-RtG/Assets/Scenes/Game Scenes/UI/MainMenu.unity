@@ -3186,8 +3186,8 @@ MonoBehaviour:
   characterSaveExists: 0
   worldMapData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   loadWorldCommand: {fileID: 11400000, guid: 86469ad3a99da894f8a09e3982ec54f1, type: 2}
-  newWorldCommand: {fileID: 11400000, guid: 222906628d3b98547bdcc30d91f8bbb4, type: 2}
-  newCharacterCommand: {fileID: 11400000, guid: 62cf92654d95ea14b985dbd742aca1fd, type: 2}
+  newWorldEvent: {fileID: 11400000, guid: 6148589601efcdf459b1ad917220d8a3, type: 2}
+  newCharacterEvent: {fileID: 11400000, guid: f666a866e569c6642b607d56e7389218, type: 2}
   newWorldButton: {fileID: 960712311}
   continueButton: {fileID: 1574996687}
   confirmQuitButton: {fileID: 1267271985}
@@ -4139,8 +4139,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 62cf92654d95ea14b985dbd742aca1fd, type: 2}
-        m_TargetAssemblyTypeName: JS.CommandSystem.CommandBase, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: f666a866e569c6642b607d56e7389218, type: 2}
+        m_TargetAssemblyTypeName: JS.EventSystem.GameEvent, Assembly-CSharp
         m_MethodName: Invoke
         m_Mode: 1
         m_Arguments:

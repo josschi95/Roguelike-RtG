@@ -1,7 +1,6 @@
 using System.IO;
 using UnityEngine;
 using JS.WorldMap;
-using JS.WorldMap.Generation;
 
 namespace JS.CommandSystem
 {
@@ -15,6 +14,7 @@ namespace JS.CommandSystem
         [Space]
 
         [SerializeField] private WorldData worldData;
+        [SerializeField] private TimeKeeper timeData;
 
         protected override bool ExecuteCommand()
         {
@@ -25,6 +25,15 @@ namespace JS.CommandSystem
         private void SaveWorldData()
         {
             var data = new WorldSaveData();
+
+            //Time
+            data.seconds = timeData.Seconds;
+            data.minutes = timeData.Minutes;
+            data.hours = timeData.Hours;
+            data.days = timeData.Days;
+            data.weeks = timeData.Weeks;
+            data.months = timeData.Months;
+            data.years = timeData.Years;
 
             //Terrain
             var terrain = worldData.TerrainData;
@@ -49,7 +58,6 @@ namespace JS.CommandSystem
             //Settlements
             var settlements = worldData.SettlementData;
             data.Settlements = settlements.Settlements;
-            Debug.Log("Settlements: " + data.Settlements.Length + "/" + settlements.Settlements.Length);
             SaveToJSON(data);
         }
 

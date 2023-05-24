@@ -1,4 +1,5 @@
 using JS.CommandSystem;
+using JS.EventSystem;
 using JS.WorldMap;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +16,7 @@ public class MainMenuHandler : MonoBehaviour
     [Space]
 
     [SerializeField] private LoadSavedWorldCommand loadWorldCommand;
-    [SerializeField] private EmptyCommand newWorldCommand;
-    [SerializeField] private EmptyCommand newCharacterCommand;
+    [SerializeField] private GameEvent newWorldEvent;
 
     [Space]
 
@@ -52,11 +52,9 @@ public class MainMenuHandler : MonoBehaviour
         {
             newWorldButton.onClick.AddListener(delegate
             {
-                newWorldCommand?.Invoke();
+                newWorldEvent?.Invoke();
             });
         }
-
-
 
         confirmQuitButton.onClick.AddListener(OnConfirmQuitGame);
     }

@@ -32,19 +32,6 @@ namespace JS.ECS
         private InputAction _down;
         private InputAction _control;
 
-        private void SetActions()
-        {
-            _north.performed += i => North();
-            _south.performed += i => South();
-            _east.performed += i => East();
-            _west.performed += i => West();
-
-            _northEast.performed += i => NorthEast();
-            _northWest.performed += i => NorthWest();
-            _southEast.performed += i => SouthEast();
-            _southWest.performed += i => SouthWest();
-        }
-
         private void MapActions()
         {
             var input = actionAsset.FindActionMap("Player");
@@ -65,6 +52,19 @@ namespace JS.ECS
             _control = input.FindAction("Control");
         }
 
+        private void SetActions()
+        {
+            _north.performed += i => North();
+            _south.performed += i => South();
+            _east.performed += i => East();
+            _west.performed += i => West();
+
+            _northEast.performed += i => NorthEast();
+            _northWest.performed += i => NorthWest();
+            _southEast.performed += i => SouthEast();
+            _southWest.performed += i => SouthWest();
+        }
+
         private void ClearActions()
         {
             _north.performed -= i => North();
@@ -78,113 +78,118 @@ namespace JS.ECS
             _southWest.performed -= i => SouthWest();
         }
 
+        private bool CanAct()
+        {
+            if (actor == null || !actor.IsTurn) return false; 
+            return true;
+        }
         private void North()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(0, 1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(0, 1));
             }
         }
 
         private void South()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(0, -1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(0, -1));
             }
         }
 
         private void East()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(1, 0));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, 0));
             }
         }
 
         private void West()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(-1, 0));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, 0));
             }
         }
 
         private void NorthEast()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(1, 1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, 1));
             }
         }
 
         private void NorthWest()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(1, -1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, -1));
             }
         }
 
         private void SouthEast()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(-1, 1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, 1));
             }
         }
 
         private void SouthWest()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
 
             }
             else
             {
-                Action.MoveAction(actor, locomotion, new Vector2Int(-1, -1));
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, -1));
             }
         }
 
         private void Center()
         {
-            if (actor == null || !actor.HasActed) return;
+            if (!CanAct()) return;
             if (_control.WasPressedThisFrame())
             {
                 //Attack down/same tile

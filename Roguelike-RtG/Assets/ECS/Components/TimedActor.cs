@@ -2,17 +2,19 @@ namespace JS.ECS
 {
     public class TimedActor : ComponentBase
     {
-        public delegate void OnTurnChangeCallback(bool isTurn);
-        public OnTurnChangeCallback onTurnChange;
+        public delegate void OnTurnChangeCallback();
+        public OnTurnChangeCallback onTurnStart;
+        public OnTurnChangeCallback onTurnEnd;
 
-        private bool hasActed = false;
-        public bool HasActed
+        private bool isTurn = false;
+        public bool IsTurn
         {
-            get => hasActed;
+            get => isTurn;
             set
             {
-                hasActed = value;
-                onTurnChange?.Invoke(!hasActed);
+                isTurn = value;
+                if (isTurn) onTurnStart?.Invoke();
+                else onTurnEnd?.Invoke();
             }
         }
 
@@ -22,6 +24,7 @@ namespace JS.ECS
         public TimedActor(Entity entity)
         {
             this.entity = entity;
+            this.Speed = 100;
             TimeSystem.Register(this);
         }
 

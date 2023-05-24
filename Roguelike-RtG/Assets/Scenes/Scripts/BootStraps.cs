@@ -19,6 +19,8 @@ namespace JS.SceneManagement
         [SerializeField] private GameEvent bootEvent;
         [SerializeField] private ScenePicker eventLogger;
 
+        [Space]
+
         [SerializeField] private GameObject loadingScreen;
         [SerializeField] private Image loadingProgressBar;
 
@@ -81,11 +83,9 @@ namespace JS.SceneManagement
         /// <param name="sceneCollection">Collection of ScenePickers to load.</param>
         public void LoadSceneCollectionAdditive(SceneCollection sceneCollection)
         {
-            int i;
-
             ShowLoadingScreen();
 
-            for (i = 0; i < sceneCollection.Scenes.Count; i++)
+            for (int i = 0; i < sceneCollection.Scenes.Count; i++)
             {
                 GameEvent afterLoadingEvent = sceneCollection.Scenes[i].SceneFinishedLoadingEvent;
                 if (afterLoadingEvent)
@@ -114,8 +114,7 @@ namespace JS.SceneManagement
         /// <param name="sceneCollection">SceneCollection to deactivate.</param>
         public void UnloadSceneCollection(SceneCollection sceneCollection)
         {
-            int i;
-            for (i = 0; i < sceneCollection.Scenes.Count; i++)
+            for (int i = 0; i < sceneCollection.Scenes.Count; i++)
             {
                 string sceneName = Path.GetFileNameWithoutExtension(sceneCollection.Scenes[i].ScenePath);
                 SceneManager.UnloadSceneAsync(sceneName);
@@ -138,10 +137,7 @@ namespace JS.SceneManagement
         /// <returns>null</returns>
         private IEnumerator LoadingWithoutSplashScreen()
         {
-            int i;
-            int sceneCount = scenesToLoad.Count;
-
-            for (i = 0; i < sceneCount; i++)
+            for (int i = 0; i < scenesToLoad.Count; i++)
             {
                 while (!scenesToLoad[i].isDone)
                 {
@@ -157,16 +153,14 @@ namespace JS.SceneManagement
         /// </summary>
         private IEnumerator LoadingWithSplashScreen()
         {
-            int i;
             float totalProgress = 0;
-            int sceneCount = scenesToLoad.Count;
 
-            for (i = 0; i < sceneCount; i++)
+            for (int i = 0; i < scenesToLoad.Count; i++)
             {
                 while (!scenesToLoad[i].isDone)
                 {
                     totalProgress += scenesToLoad[i].progress;
-                    loadingProgressBar.fillAmount = totalProgress / sceneCount;
+                    loadingProgressBar.fillAmount = totalProgress / scenesToLoad.Count;
                     yield return null;
                 }
             }

@@ -4,23 +4,25 @@ namespace JS.ECS
 {
     public static class Action
     {
-        public static bool MoveAction(TimedActor actor, Locomotion entity, Vector2Int direction)
+        public static bool TryMoveAction(TimedActor actor, Locomotion entity, Vector2Int direction)
         {
-            if (actor.HasActed) return false;
+            Debug.Log("TryMoveAction");
+            if (!actor.IsTurn) return false;
             int cost = LocomotionSystem.MoveEntity(entity, direction);
             if (cost > 0)
             {
                 TimeSystem.SpendActionPoints(actor, cost);
-                actor.HasActed = true;
             }
+            TimeSystem.EndTurn(actor);
             return true;
         }
 
         public static void SkipAction(TimedActor entity)
         {
-            if (entity.HasActed) return;
+            Debug.Log("SkipAction");
+            if (!entity.IsTurn) return;
             TimeSystem.SpendActionPoints(entity);
-            entity.HasActed = true;
+            TimeSystem.EndTurn(entity);
         }
     }
 

@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b51e23fd2fd9c0448ca3a8f668ce878, type: 3}
   m_Name: Helper_RiverTiles
   m_EditorClassIdentifier: 
-  <RiverTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
-  riverNorth: {fileID: 11400000, guid: c44a25e09bde6f349adedbe041a52e8e, type: 2}
-  riverEast: {fileID: 11400000, guid: 5a1f507d9ac8f2e4ea96ecc83c84b167, type: 2}
+  riverVertical: {fileID: 11400000, guid: c44a25e09bde6f349adedbe041a52e8e, type: 2}
+  riverHorizontal: {fileID: 11400000, guid: 5a1f507d9ac8f2e4ea96ecc83c84b167, type: 2}
   riverNorthEast: {fileID: 11400000, guid: 20e1d996b5b244c46a2fbd694fa7ca70, type: 2}
   riverNorthWest: {fileID: 11400000, guid: f8c9bbd039f304644bdb23f8162ad737, type: 2}
   riverSouthEast: {fileID: 11400000, guid: 3a2441f349de9b745b3ba0dd9fb0a612, type: 2}
   riverSouthWest: {fileID: 11400000, guid: 23fe628168426b64d8412fd523dbcbfb, type: 2}
+  riverT_North: {fileID: 11400000, guid: fd6979e8bd05d774da7e82afa3373a5d, type: 2}
+  riverT_South: {fileID: 11400000, guid: 0c43369c58c4bc348912a3fb0803a4ba, type: 2}
+  riverT_East: {fileID: 11400000, guid: 05284ef4d587046438ef0f43b6da86df, type: 2}
+  riverT_West: {fileID: 11400000, guid: 09ecf1d88bdf11f41bd961ba3450a27d, type: 2}
+  riverIntersection: {fileID: 11400000, guid: a9b7c2f3db5c4c64b98f79b2fdf54ede, type: 2}

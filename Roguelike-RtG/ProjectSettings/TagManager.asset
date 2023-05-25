@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CommandLog
   - TileBlocker
+  - CompoundSprite
   layers:
   - Default
   - TransparentFX

@@ -5,9 +5,15 @@ namespace JS.ECS
 {
     public class InputHandler : ComponentBase
     {
-        public InputHandler(InputActionAsset asset)
+        public InputHandler(InputActionAsset asset,TimedActor actor, Locomotion locomotion)
         {
+            entity = actor.entity;
             actionAsset = asset;
+
+            this.actor = actor;
+            this.locomotion = locomotion;
+            actor.onTurnStart += CheckForButtonDown;
+
             MapActions();
             SetActions();
         }
@@ -63,6 +69,8 @@ namespace JS.ECS
             _northWest.performed += i => NorthWest();
             _southEast.performed += i => SouthEast();
             _southWest.performed += i => SouthWest();
+
+            _center.performed += i => Center();
         }
 
         private void ClearActions()
@@ -76,7 +84,22 @@ namespace JS.ECS
             _northWest.performed -= i => NorthWest();
             _southEast.performed -= i => SouthEast();
             _southWest.performed -= i => SouthWest();
+
+            _center.performed -= i => Center();
         }
+
+        private void CheckForButtonDown()
+        {
+            if (_north.IsPressed()) North();
+            else if (_south.IsPressed()) South();
+            else if (_east.IsPressed()) East();
+            else if (_west.IsPressed()) West();
+            else if (_northEast.IsPressed()) NorthEast();
+            else if (_northWest.IsPressed()) NorthWest();
+            else if (_southEast.IsPressed()) SouthEast();
+            else if (_southWest.IsPressed()) SouthWest();
+        }
+
 
         private bool CanAct()
         {
@@ -86,7 +109,7 @@ namespace JS.ECS
         private void North()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -99,7 +122,7 @@ namespace JS.ECS
         private void South()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -112,7 +135,7 @@ namespace JS.ECS
         private void East()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -125,7 +148,7 @@ namespace JS.ECS
         private void West()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -138,7 +161,7 @@ namespace JS.ECS
         private void NorthEast()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -151,20 +174,7 @@ namespace JS.ECS
         private void NorthWest()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
-            {
-
-            }
-            else
-            {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, -1));
-            }
-        }
-
-        private void SouthEast()
-        {
-            if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -174,10 +184,23 @@ namespace JS.ECS
             }
         }
 
+        private void SouthEast()
+        {
+            if (!CanAct()) return;
+            if (_control.IsPressed())
+            {
+
+            }
+            else
+            {
+                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, -1));
+            }
+        }
+
         private void SouthWest()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
+            if (_control.IsPressed())
             {
 
             }
@@ -190,14 +213,7 @@ namespace JS.ECS
         private void Center()
         {
             if (!CanAct()) return;
-            if (_control.WasPressedThisFrame())
-            {
-                //Attack down/same tile
-            }
-            else
-            {
-                Action.SkipAction(actor);
-            }
+            Action.SkipAction(actor);
         }
     }
 }

@@ -29,6 +29,11 @@ namespace JS.WorldMap
         [SerializeField] private GameObject settlementPanel;
         [SerializeField] private TMP_Text settlementText;
 
+        public void HideDisplay()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void DisplayNodeValues(WorldTile node)
         {
             gameObject.SetActive(node != null);

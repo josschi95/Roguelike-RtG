@@ -38,11 +38,17 @@ namespace JS.WorldMap
             set => mapSize = value;
         }
 
-        private Vector3Int origin;
-        public Vector3Int Origin
+        private int originX;
+        private int originY;
+        public int OriginX
         {
-            get => origin;
-            set => origin = value;
+            get => originX;
+            set => originX = value;
+        }
+        public int OriginY
+        {
+            get => originY;
+            set => originY = value;
         }
 
         //Elevation

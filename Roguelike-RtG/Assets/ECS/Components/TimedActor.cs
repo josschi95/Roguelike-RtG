@@ -18,19 +18,21 @@ namespace JS.ECS
             }
         }
 
-        public int ActionPoints = 0;
-        public int Speed = 100;
+        public int ActionPoints;
+        public int Speed;
 
-        public TimedActor(Entity entity)
+        public TimedActor(Entity entity, int speed = 100)
         {
             this.entity = entity;
-            this.Speed = 100;
+            Speed = speed;
             TimeSystem.Register(this);
         }
 
         public override void Release()
         {
             entity = null;
+            onTurnStart = null;
+            onTurnEnd = null;
             TimeSystem.Unregister(this);
         }
     }

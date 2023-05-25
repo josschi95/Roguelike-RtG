@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.U2D;
 using JS.ECS;
@@ -8,10 +7,10 @@ namespace JS.WorldMap
 {
     public class PlayerWorldMapLocator : MonoBehaviour
     {
-        [SerializeField] private GameObject playerObject;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private InputActionAsset inputActionAsset;
+        [SerializeField] private Sprite[] playerSprites;
 
         [Space]
 
@@ -19,34 +18,29 @@ namespace JS.WorldMap
 
         public void PlacePlayer()
         {
-            CreatePlayerEntity();
-
-            var convertedPos = worldMap.TerrainData.Origin + new Vector3Int(playerData.worldX, playerData.worldY);
-            playerObject.transform.position = convertedPos;
-
-            CenterCameraOnPlayer();
-        }
-
-        private void CreatePlayerEntity()
-        {
             var playerEntity = new Entity();
             var transform = new ECS.Transform(playerEntity);
+            transform.localPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
+
             var locomotion = new Locomotion(transform);
             var actor = new TimedActor(playerEntity);
-            actor.Speed = 100;
-            var input = new InputHandler(inputActionAsset);
-            input.entity = playerEntity;
-            input.actor = actor;
-            input.locomotion = locomotion;
+            var input = new InputHandler(inputActionAsset, actor, locomotion);
+            new RenderCompound(transform, playerSprites);
+
+            CenterCameraOnPlayer(transform.localPosition);
+            pixelCam.assetsPPU = 64;
+
+            var cam = pixelCam.GetComponent<CameraController>();
+            transform.onTransformChanged += delegate
+            {
+                cam.SmoothToPosition(transform.localPosition);
+            };
         }
 
-        private void CenterCameraOnPlayer()
+        private void CenterCameraOnPlayer(Vector2 pos)
         {
-            var newPos = playerObject.transform.position;
-            newPos.z = pixelCam.transform.position.z;
+            var newPos = new Vector3(pos.x, pos.y, pixelCam.transform.position.z);
             pixelCam.transform.position = newPos;
-
-            pixelCam.assetsPPU = 64;
         }
     }
 }

@@ -114,7 +114,8 @@ namespace JS.WorldMap
 
         public Direction NeighborDirection_Adjacent(WorldTile tile)
         {
-            if (!neighbors_adj.Contains(tile)) throw new System.Exception("This is not an adjacent tile!");
+            if (!neighbors_adj.Contains(tile)) throw new System.Exception(tile.x + "," + tile.y + 
+                " is is not an adjacent tile to " + x + "," + y + "." + "");
 
             if (tile.x != x)
             {
@@ -219,7 +220,6 @@ namespace JS.WorldMap
         #region - Biome -
         public void SetBiome(Biome biome)
         {
-            //PrimaryBiome = biome;
             BiomeID = biome.ID;
             hasBiome = true;
             CheckNeighborBiomes();

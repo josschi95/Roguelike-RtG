@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: GameplayScenes
   m_EditorClassIdentifier: 
   <Scenes>k__BackingField:
-  - {fileID: 11400000, guid: 30899dc0a3d68014189e9a3a51dd31e1, type: 2}
   - {fileID: 11400000, guid: 60b58e4fd1deb8f4c8c3628b6626515a, type: 2}
   - {fileID: 11400000, guid: aadaeaf7673021c459950e22efa82c2b, type: 2}

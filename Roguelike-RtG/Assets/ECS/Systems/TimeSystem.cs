@@ -31,7 +31,6 @@ namespace JS.ECS
 
         private IEnumerator Start()
         {
-            Debug.Log("TimeSystem Init");
             var entity = new Entity();
             var sentinel = new TimedActor(entity);
             sentinel.Speed = 100;
@@ -45,13 +44,19 @@ namespace JS.ECS
 
         private void OnNewRound()
         {
-            Debug.Log("OnNewRound");
+            //Debug.Log("OnNewRound");
             onNewRound?.Invoke();
+            StartCoroutine(RoundDelay());
+        }
+
+        private IEnumerator RoundDelay()
+        {
+            yield return new WaitForSeconds(0.2f);
             Action.SkipAction(sentinel);
         }
 
-        public void Pause() => instance.PauseTime();
-        public void Resume() => instance.ResumeTime();
+        public static void Pause() => instance.PauseTime();
+        public static void Resume() => instance.ResumeTime();
 
         private void PauseTime() => runTurnCounter = false;
         private void ResumeTime()
@@ -62,7 +67,7 @@ namespace JS.ECS
 
         private void TurnTransition()
         {
-            Debug.Log("TurnTransition");
+            //Debug.Log("TurnTransition");
             if (!runTurnCounter) return;
             GetNextTurn();
         }

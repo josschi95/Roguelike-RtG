@@ -15,7 +15,8 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private int MaxRiverAttempts = 1000;
 
-        [SerializeField] private int MinRiverTurns = 10;
+        [SerializeField] private int MinRiverTurns = 6;
+        [SerializeField] private int MaxRiverTurns = 15;
 
         [SerializeField] private int MinRiverLength = 15;
 
@@ -68,8 +69,9 @@ namespace JS.WorldMap.Generation
 
             //Ensure the generated river meets all requirements
             if (river.TurnCount < MinRiverTurns) return false;
-            else if (tiles.Count < MinRiverLength) return false;
-            else if (river.Intersections > MaxRiverIntersections) return false;
+            if (river.TurnCount > MaxRiverTurns) return false;
+            if (tiles.Count < MinRiverLength) return false;
+            if (river.Intersections > MaxRiverIntersections) return false;
 
             return true;
         }
@@ -328,7 +330,17 @@ namespace JS.WorldMap.Generation
                 }
                 else if (i == tiles.Count - 1) //Direction is only dependent on previous node
                 {
-                    river.Flow[i] = ConvertDirection(tiles[i].NeighborDirection_Adjacent(tiles[i - 1]));
+                    var from = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
+                    var water = FindWaterTile(tiles[i]);
+                    if (water == null) //likely the edge of the map
+                    {
+                        river.Flow[i] = ConvertDirection(tiles[i].NeighborDirection_Adjacent(tiles[i - 1]));
+                    }
+                    else
+                    {
+                        var to = tiles[i].NeighborDirection_Adjacent(water);
+                        river.Flow[i] = CombineDirections(from, to);
+                    }
                 }
                 else
                 {
@@ -374,6 +386,15 @@ namespace JS.WorldMap.Generation
                     else return Compass.East;
             }
             throw new System.Exception("Compass Direction outside parameters");
+        }
+
+        private WorldTile FindWaterTile(WorldTile fromTile)
+        {
+            for (int i = 0; i < fromTile.neighbors_adj.Count; i++)
+            {
+                if (!fromTile.neighbors_adj[i].IsLand) return fromTile.neighbors_adj[i];
+            }
+            return null;
         }
         #endregion
 

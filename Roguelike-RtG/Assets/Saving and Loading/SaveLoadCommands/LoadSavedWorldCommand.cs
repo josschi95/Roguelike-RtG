@@ -66,7 +66,8 @@ namespace JS.CommandSystem
             var terrain = _worldMapData.TerrainData;
 
             terrain.MapSize = data.mapWidth;
-            terrain.Origin = new Vector3Int(data.originX, data.originY);
+            terrain.OriginX = data.originX;
+            terrain.OriginY = data.originY;
             terrain.HeightMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heightMap, data.mapWidth, data.mapHeight);
             terrain.HeatMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heatMap, data.mapWidth, data.mapHeight);
             terrain.MoistureMap = ArrayHelper.Convert1DFloatArrayTo2D(data.moistureMap, data.mapWidth, data.mapHeight);

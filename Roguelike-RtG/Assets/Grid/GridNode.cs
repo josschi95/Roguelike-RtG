@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GridNode
 {
-    private Grid<GridNode> grid;
+    public Grid<GridNode> grid {  get; private set; }
     public int x { get; private set; }
     public int y { get; private set; }
 
@@ -14,6 +14,7 @@ public class GridNode
 
     public bool isOccupied { get; private set; } //true if there is another creature occupying the node
     public bool isWalkable { get; private set; } //if this node can be traversed at all
+    public bool blocksGas { get; private set; }
     public int movementPenalty { get; private set; } //additional cost to move into this tile
 
     public List<GridNode> neighbors_all { get; private set; }

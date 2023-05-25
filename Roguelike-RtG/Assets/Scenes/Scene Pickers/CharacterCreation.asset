@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d5cb1197fee034092f667366f57f65, type: 3}
   m_Name: CharacterCreation
   m_EditorClassIdentifier: 
-  SceneFinishedLoadingEvent: {fileID: 0}
+  SceneFinishedLoadingEvent: {fileID: 11400000, guid: f26dd706513299b428ca471981bd9dcf, type: 2}
   ScenePath: Assets/Scenes/Game Scenes/Gameplay/CharacterCreation.unity

@@ -121,6 +121,18 @@ namespace JS.SceneManagement
             }
         }
 
+        /// <summary>
+        /// Sets the given scene to be active to change where objects will be instantiated.
+        /// </summary>
+        public void SetActiveScene(ScenePicker scene)
+        {
+            if (scene == null) return;
+            string sceneName = Path.GetFileNameWithoutExtension(scene.ScenePath);
+            var activeScene = SceneManager.GetSceneByName(sceneName);
+            if (activeScene == null) return;
+            SceneManager.SetActiveScene(activeScene);
+        }
+
         private void ShowLoadingScreen()
         {
             loadingScreen.SetActive(true);
@@ -173,11 +185,14 @@ namespace JS.SceneManagement
         /// </summary>
         private void InvokeSceneLoadedEvents()
         {
+            //Debug.Log(SceneManager.GetActiveScene().name);
             for (int i = 0; i < eventsToInvokeAfterLoading.Count; i++)
             {
                 eventsToInvokeAfterLoading[i]?.Invoke();
             }
             eventsToInvokeAfterLoading.Clear();
         }
+
+
     }
 }

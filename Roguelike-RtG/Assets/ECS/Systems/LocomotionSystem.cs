@@ -14,15 +14,16 @@ namespace JS.ECS
             return true;
         }
 
-        public static int MoveEntity(Locomotion entity, Vector2 position)
+        public static int MoveEntity(Locomotion entity, Vector2 direction)
         {
-            if (!CanMoveToPosition(position)) return 0;
+            if (!CanMoveToPosition(direction)) return 0;
 
             //Will also need to take into account difficult terrain, movement modifiers, etc. 
             //Movement modifiers should affect Locomotion directly, and have no impact on this
             int cost = Mathf.RoundToInt(movementDivident / entity.MovementSpeed);
 
-            entity.Transform.position = position;
+            entity.Transform.localPosition += direction;
+            entity.Transform.onTransformChanged?.Invoke();
             return cost;
         }
     }

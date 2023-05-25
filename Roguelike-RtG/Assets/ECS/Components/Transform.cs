@@ -4,13 +4,22 @@ namespace JS.ECS
 {
     public class Transform : ComponentBase
     {
-        public Vector2 position = Vector2.zero;
-        public int layerDepth = 0;
-        public float rotation = 0;
+        public delegate void OnTransformChanged();
+        public OnTransformChanged onTransformChanged;
+
+        public Vector2 worldPosition;
+        public Vector2 regionPosition;
+        public Vector2 localPosition;
 
         public Transform(Entity entity)
         {
             this.entity = entity;
+        }
+
+        public override void Release()
+        {
+            base.Release();
+            onTransformChanged = null;
         }
     }
 }

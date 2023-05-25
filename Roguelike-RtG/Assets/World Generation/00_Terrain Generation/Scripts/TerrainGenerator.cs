@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using JS.EventSystem;
 
 // Features To Add:
 //      Rain Shadows
@@ -16,7 +15,6 @@ namespace JS.WorldMap.Generation
     public class TerrainGenerator : MonoBehaviour 
     {
         public int mapSize { get; private set; }
-        public Vector3Int origin { get; private set; }
 
         private int seed;
         private WorldSize worldSize;
@@ -30,6 +28,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private WorldData worldMap;
+        [SerializeField] private BiomeHelper biomeHelper;
 
         [Header("Perlin Noise")]
         [SerializeField] private float noiseScale;
@@ -47,6 +46,7 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private Biome Tundra, Taiga, TemperateGrassland, Shrubland, DeciduousForest, Desert, TropicalSeasonalForest, Savanna, Jungle;
         [SerializeField] private Biome DeepOcean, OceanSurface;
+        [SerializeField] private Biome Mountain;
 
         public void SetInitialValues(WorldSize size, int seed)
         {
@@ -59,9 +59,11 @@ namespace JS.WorldMap.Generation
             land = new List<WorldTile>();
 
             mapSize = mapFeatures.MapSize(worldSize);
-            origin = new Vector3Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
+            var origin = new Vector2Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
             terrainData.MapSize = mapSize;
-            terrainData.Origin = origin;
+            
+            terrainData.OriginX = origin.x;
+            terrainData.OriginY = origin.y;
 
             worldMap.CreateGrid(mapSize, mapSize);
         }
@@ -322,6 +324,7 @@ namespace JS.WorldMap.Generation
                     WorldTile node = worldMap.GetNode(x, y);
                     if (terrainData.HeightMap[node.x, node.y] >= mapFeatures.MountainHeight)
                         node.CheckNeighborMountains();
+                    node.SetBiome(Mountain);
                 }
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
@@ -455,57 +458,15 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (node.IsLand) node.SetBiome(GetWhittakerTableBiome(node));
-                    else node.SetBiome(GetAquaticBiome(node));
+                    if (node.IsLand) node.SetBiome(biomeHelper.GetWhittakerTableBiome(node));
+                    else node.SetBiome(biomeHelper.GetAquaticBiome(node));
                 }
             }
 
+            OverrideMountainBiomes();
             ConsolidateBiomes(2);
             SaveBiomeMap();
             FindBiomeGroups();
-        }
-        
-        //Notes: Change boreal to Taiga, tropical rainforest to jungle
-        private Biome GetWhittakerTableBiome(WorldTile node)
-        {
-            int temperatureIndex = node.TempZoneID;
-            int precipitationIndex = node.PrecipitationZoneID;
-
-            switch (temperatureIndex)
-            {
-                case 0:
-                    if (precipitationIndex == 5) return Taiga;
-                    return Tundra;
-                case 1:
-                    if (precipitationIndex >= 3) return Taiga;
-                    return Tundra;
-                case 2:
-                    if (precipitationIndex >= 3) return DeciduousForest;
-                    if (precipitationIndex == 2) return Shrubland;
-                    return TemperateGrassland;
-                case 3:
-                    if (precipitationIndex == 0) return Desert;
-                    if (precipitationIndex == 1) return TemperateGrassland;
-                    if (precipitationIndex == 4) return DeciduousForest;
-                    if (precipitationIndex == 5) return TropicalSeasonalForest;
-                    return Shrubland;
-                case 4:
-                    if (precipitationIndex < 2) return Desert;
-                    if (precipitationIndex == 2) return Savanna;
-                    if (precipitationIndex == 3) return TropicalSeasonalForest;
-                    return Jungle;
-                case 5:
-                    if (precipitationIndex <= 1) return Desert;
-                    if (precipitationIndex <= 3) return Savanna;
-                    return Jungle;
-                default: return Shrubland;
-            }
-        }
-
-        private Biome GetAquaticBiome(WorldTile tile)
-        {
-            if (tile.Altitude >= mapFeatures.SeaLevel * 0.5f) return OceanSurface; 
-            else return DeepOcean;
         }
 
         private void ConsolidateBiomes(int iterations)
@@ -592,6 +553,17 @@ namespace JS.WorldMap.Generation
             }
             terrainData.BiomeGroups = biomes.ToArray();
         }
+
+        private void OverrideMountainBiomes()
+        {
+            foreach(var range in terrainData.Mountains)
+            {
+                for (int i = 0; i < range.Nodes.Count; i++)
+                {
+                    range.Nodes[i].SetBiome(biomeHelper.Mountain);
+                }
+            }
+        } 
         #endregion
 
         private void OnValidate()

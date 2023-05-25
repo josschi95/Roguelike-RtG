@@ -4,6 +4,7 @@ namespace JS.CommandSystem
 {
     public class CommandLogger : MonoBehaviour
     {
+        [SerializeField] private bool logCommands;
         /// <summary>
         /// Debugging tool - Raise an assertion alert if command is triggered.
         /// </summary>
@@ -23,6 +24,7 @@ namespace JS.CommandSystem
                 return;
             }
 
+            if (!logCommands) return;
             Debug.Log($"{command.name}, {successMessage}", this);
         }
     }

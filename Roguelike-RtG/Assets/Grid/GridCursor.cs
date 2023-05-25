@@ -7,10 +7,12 @@ public class GridCursor : MonoBehaviour
     [SerializeField] private InputActionProperty mousePosition;
     [SerializeField] private WorldData worldMap;
     [SerializeField] private NodeDisplay nodeDisplay;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Camera cam;
 
     private Vector2 mousePos;
-
+    private float inactiveTimer;
+    private float timeToDeactive = 5;
     private void Start()
     {
         mousePosition.action.performed += i => mousePos = i.ReadValue<Vector2>();
@@ -23,8 +25,31 @@ public class GridCursor : MonoBehaviour
 
     private void LateUpdate()
     {
+        bool isActive = CheckActivity();
+        spriteRenderer.enabled = isActive;
+        if (!isActive)
+        {
+            nodeDisplay.HideDisplay();
+            return;
+        }
+
         SetCursorPosition();
         CheckNode();
+    }
+
+    private bool CheckActivity()
+    {
+        if (mousePosition.action.WasPerformedThisFrame())
+        {
+            inactiveTimer = 0;
+            return true;
+        }
+        else
+        {
+            inactiveTimer += Time.deltaTime;
+            if (inactiveTimer >= timeToDeactive) return false;
+        }
+        return true;
     }
 
     private void SetCursorPosition()
@@ -39,8 +64,6 @@ public class GridCursor : MonoBehaviour
 
     private void CheckNode()
     {
-        //if (WorldMap.instance == null) return;
-        //var node = WorldMap.instance.GetNode(transform.position);
         var node = worldMap.GetNode(transform.position);
         nodeDisplay.DisplayNodeValues(node);
 
@@ -50,4 +73,10 @@ public class GridCursor : MonoBehaviour
             dis.HighlightNode(node);
         }
     }
+}
+
+public enum CursorControlMethod
+{
+    Mouse,
+    Keys,
 }

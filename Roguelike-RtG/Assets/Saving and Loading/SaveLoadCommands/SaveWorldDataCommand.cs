@@ -40,8 +40,8 @@ namespace JS.CommandSystem
             data.mapWidth = terrain.MapSize;
             data.mapHeight = terrain.MapSize;
 
-            data.originX = terrain.Origin.x;
-            data.originY = terrain.Origin.y;
+            data.originX = terrain.OriginX;
+            data.originY = terrain.OriginY;
             
             data.heightMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeightMap);
             data.heatMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeatMap);

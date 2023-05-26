@@ -8,6 +8,7 @@ namespace JS.CharacterSystem.Creation
     {
         [SerializeField] private CharacterBuilder characterBuilder;
         [SerializeField] private Button nextButton;
+
         [Header("Gender")]
         [SerializeField] private Button maleButton;
         [SerializeField] private Button femaleButton;
@@ -43,35 +44,27 @@ namespace JS.CharacterSystem.Creation
             {
                 characterBuilder.CharacterGender = Gender.Male;
             });
-            maleButton.interactable = characterBuilder.PrimaryRace.HasMales ||
-                characterBuilder.SecondaryRace.HasMales;
+            maleButton.interactable = characterBuilder.Race.HasMales;
 
             femaleButton.onClick.AddListener(delegate
             {
                 characterBuilder.CharacterGender = Gender.Female;
             });
-            femaleButton.interactable = characterBuilder.PrimaryRace.HasFemale ||
-                characterBuilder.SecondaryRace.HasFemale;
+            femaleButton.interactable = characterBuilder.Race.HasFemale;
             
             otherButton.onClick.AddListener(delegate
             {
                 characterBuilder.CharacterGender = Gender.Other;
             });
-            otherButton.interactable = characterBuilder.PrimaryRace.HasOther ||
-                characterBuilder.SecondaryRace.HasOther;
+            otherButton.interactable = characterBuilder.Race.HasOther;
             #endregion
 
+            //Age
             ageSlider.onValueChanged.AddListener(UpdateAgeDisplay);
+            ageSlider.minValue = characterBuilder.Race.LifeExpectancy.YoungAdultAge;
+            ageSlider.maxValue = characterBuilder.Race.LifeExpectancy.MaxLifeExpectancy - 1;
 
-            var primary = characterBuilder.PrimaryRace.LifeExpectancy;
-            var secondary = characterBuilder.SecondaryRace.LifeExpectancy;
-            //Take average of primary and secondary life expectancies
-            ageSlider.minValue = Mathf.RoundToInt((characterBuilder.PrimaryRace.LifeExpectancy.YoungAdultAge +
-                characterBuilder.SecondaryRace.LifeExpectancy.YoungAdultAge) * 0.5f);
-
-            ageSlider.maxValue = Aging.GetMaxLifespan(primary, secondary) - 1;
-
-            if (!characterBuilder.PrimaryRace.LifeExpectancy.Ages && !characterBuilder.SecondaryRace.LifeExpectancy.Ages)
+            if (!characterBuilder.Race.LifeExpectancy.Ages)
             {
                 ageSlider.minValue = 0;
                 ageSlider.maxValue = 1000;
@@ -81,8 +74,7 @@ namespace JS.CharacterSystem.Creation
 
             undeadToggle.onValueChanged.AddListener(OnToggleUndead);
 
-            if (!characterBuilder.PrimaryRace.Type.CanBeUndead &&
-                !characterBuilder.SecondaryRace.Type.CanBeUndead)
+            if (!characterBuilder.Race.Type.CanBeUndead)
             {
                 undeadToggle.interactable = false;
             }
@@ -100,31 +92,12 @@ namespace JS.CharacterSystem.Creation
             characterBuilder.CharacterAge = age;
             ageText.text = age.ToString();
 
-            var primary = characterBuilder.PrimaryRace.LifeExpectancy;
-            var secondary = characterBuilder.SecondaryRace.LifeExpectancy;
-            var max = Aging.GetMaxLifespan(primary, secondary);
-
-            if (age >= Aging.GetVenerableAge(max))
-            {
-                ageText.text += " (Venerable)";
-            }
-            else if (age >= Aging.GetOldAge(max))
-            {
-                ageText.text += " (Old)";
-            }
-            else if (age >= Aging.GetMiddleAge(max))
-            {
-                ageText.text += " (Middle Age)";
-            }
-            else if (age >= Aging.GetYoungAdultAge(max))
-            {
-                ageText.text += " (Young Adult)";
-            }
-            else
-            {
-                ageText.text += " (Ageless)";
-                Debug.LogWarning("Fix this");
-            }
+            var life = characterBuilder.Race.LifeExpectancy;
+            if (!life.Ages) ageText.text += " (Ageless)";
+            else if (age >= life.VenerableAge) ageText.text += " (Venerable)";
+            else if (age >= life.OldAge) ageText.text += " (Old)";
+            else if (age >= life.MiddleAge) ageText.text += " (Middle Age)";
+            else if (age >= life.YoungAdultAge) ageText.text += " (Young Adult)";
         }
     }
 }

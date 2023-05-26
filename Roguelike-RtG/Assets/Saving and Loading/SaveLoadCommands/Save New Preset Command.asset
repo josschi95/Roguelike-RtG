@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de4d748416ec744fb40c7bdd97532e0, type: 3}
+  m_Name: Save New Preset Command
+  m_EditorClassIdentifier: 
+  callbackEvents: []
+  developerNotes: Saves the current character build to JSON
+  playerPresets: {fileID: 11400000, guid: f461456baa5ad16409d812d999b7d64f, type: 2}
+  _characterBuilder: {fileID: 11400000, guid: da7c7b785811eb84da3e7e416044dbcd, type: 2}

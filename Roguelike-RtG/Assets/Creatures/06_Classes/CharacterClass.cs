@@ -5,7 +5,11 @@ namespace JS.CharacterSystem
     [CreateAssetMenu(menuName = "Characters/Stats/Character Class")]
     public class CharacterClass : ScriptableObject
     {
+        [SerializeField] private int id;
         [SerializeField] private string _name;
+
+        [Space]
+
         [SerializeField] private ClassArchetype archetype;
         [SerializeField] private ClassTier tier;
 
@@ -24,6 +28,7 @@ namespace JS.CharacterSystem
         [SerializeField] private ClassReference[] requiredClassLevels;
         [SerializeField] private CharacterRace requiredRace;
 
+        public int ID => id;
         public string ClassName => _name;
         public ClassArchetype Archetype => archetype;
         public ClassTier Tier => tier;

@@ -21,11 +21,11 @@ namespace JS.CharacterSystem.Creation
         [SerializeField] private GameEvent returnToMainMenuEvent;
         [SerializeField] private GameEvent completeCharacterCreationEvent;
 
-        [SerializeField] private GameObject[] categoryPanels;
         private CreationPanel panelIndex = 0;
+        [SerializeField] private GameObject[] categoryPanels;
+        [SerializeField] private CanvasGroup[] categoryTabs;
 
-        public bool IsUndead { get; set; }
-        public bool IsHybrid { get; set; }
+        [Space]
 
         [SerializeField] private Button backButton;
         [SerializeField] private Button helpButton;
@@ -56,6 +56,7 @@ namespace JS.CharacterSystem.Creation
                 characterBuilder.CharacterName = nameInput.text;
             });
 
+            nextButton.onClick.AddListener(Next);
         }
 
         private void OnDestroy()
@@ -98,8 +99,7 @@ namespace JS.CharacterSystem.Creation
                     break;
                 case CreationPanel.Attributes:
                     //Skip class if character has a non-humanoid race
-                    if ((int)characterBuilder.PrimaryRace.RaceCategory + 
-                        (int)characterBuilder.SecondaryRace.RaceCategory > 0)
+                    if (characterBuilder.Race.RaceCategory != RacialCategory.Humanoid)
                     {
                         DisplayCategoryPanel((int)panelIndex - 2);
                     }
@@ -124,8 +124,7 @@ namespace JS.CharacterSystem.Creation
                     break;
                 case CreationPanel.Variants:
                     //Skip class if character has a non-humanoid race
-                    if ((int)characterBuilder.PrimaryRace.RaceCategory +
-                        (int)characterBuilder.SecondaryRace.RaceCategory > 0)
+                    if (characterBuilder.Race.RaceCategory != RacialCategory.Humanoid)
                     {
                         DisplayCategoryPanel((int)panelIndex + 2);
                     }
@@ -135,12 +134,7 @@ namespace JS.CharacterSystem.Creation
                     DisplayCategoryPanel((int)panelIndex + 1);
                     break;
                 case CreationPanel.Attributes:
-                    if (characterBuilder.AvailableAttributePoints > 0)
-                    {
-                        Debug.Log("Are you sure? You still have unspent Attribute Points.");
-                        DisplayCategoryPanel((int)panelIndex + 1);
-                    }
-                    else DisplayCategoryPanel((int)panelIndex + 1);
+                    DisplayCategoryPanel((int)panelIndex + 1);
                     break;
                 case CreationPanel.Domain:
                     DisplayCategoryPanel((int)panelIndex + 1);
@@ -156,8 +150,10 @@ namespace JS.CharacterSystem.Creation
             for (int i = 0; i < categoryPanels.Length; i++)
             {
                 categoryPanels[i].SetActive(false);
+                categoryTabs[i].alpha = 0.5f;
             }
             categoryPanels[index].SetActive(true);
+            categoryTabs[index].alpha = 1f;
             EnableNextButton(index);
             panelIndex = (CreationPanel)index;
         }
@@ -180,14 +176,14 @@ namespace JS.CharacterSystem.Creation
 
         public void SetRaceDependentText()
         {
-            if (characterBuilder.PrimaryRace == null)
+            if (characterBuilder.Race == null)
             {
                 ClearFields();
                 return;
             }
 
             #region - Primary Race -
-            var primary = characterBuilder.PrimaryRace;
+            var primary = characterBuilder.Race;
 
             //Race
             raceText.text = primary.RaceName;
@@ -202,33 +198,10 @@ namespace JS.CharacterSystem.Creation
             {
                 subtypeText.text += " " + primary.Subtypes[i].ArchetypeName + ",";
             }
+            subtypeText.text = subtypeText.text.Substring(0, subtypeText.text.Length - 1);
 
             //Size
             sizeText.text = primary.Size.Name;
-            #endregion
-
-            #region - Secondary Race -
-            if (characterBuilder.SecondaryRace == characterBuilder.PrimaryRace)
-            {
-                subtypeText.text = subtypeText.text.Substring(0, subtypeText.text.Length - 1);
-                return;
-            }
-            var secondary = characterBuilder.SecondaryRace;
-            
-            //Race
-            raceText.text += "/" + secondary.RaceName;
-            
-            //Type
-            if (!characterBuilder.IsUndead && secondary.Type != primary.Type)
-                typeText.text += "/" + secondary.Type.TypeName;
-            
-            //Subtypes
-            for (int i = 0; i < secondary.Subtypes.Length; i++)
-            {
-                subtypeText.text += " " + secondary.Subtypes[i].ArchetypeName + ",";
-            }
-            subtypeText.text = subtypeText.text.Substring(0, subtypeText.text.Length - 1);
-
             #endregion
         }
 

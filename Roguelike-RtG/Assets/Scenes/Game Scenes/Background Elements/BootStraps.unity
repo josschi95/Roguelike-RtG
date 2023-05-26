@@ -581,7 +581,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_MethodName: LoadSceneAdditiveWithSplashScreen
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
@@ -622,7 +622,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_MethodName: LoadSceneAdditiveWithSplashScreen
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b22da7d8554a8a24ba66f16ff87e6498, type: 2}

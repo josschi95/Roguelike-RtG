@@ -42,10 +42,6 @@ namespace JS.CharacterSystem
 
         [Space]
 
-        [SerializeField] private CharacterRace[] validCrossBreeds;
-
-        [Space]
-
         [SerializeField] private bool hasMales = true;
         [SerializeField] private bool hasFemales = true;
         [SerializeField] private bool hasOther = true;
@@ -63,7 +59,6 @@ namespace JS.CharacterSystem
         public AttributeReference[] AttributePotentials => attributePotentials;
         public StatField RacialStats => racialStats;
         public LifeExpectancy LifeExpectancy => lifeExpectancy;
-        public CharacterRace[] ValidCrossBreeds => validCrossBreeds;
         public bool HasMales => hasMales;
         public bool HasFemale => hasFemales;
         public bool HasOther => hasOther;

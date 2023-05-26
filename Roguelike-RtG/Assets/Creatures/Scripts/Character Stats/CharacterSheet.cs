@@ -3,19 +3,17 @@ namespace JS.CharacterSystem
     public class CharacterSheet
     {
         public string Name { get; private set; }
-        public CharacterRace PrimaryRace { get; private set; }
-        public CharacterRace SecondaryRace { get; private set; }
+        public CharacterRace Race { get; private set; }
         public CharacterClass Class { get; private set; }
 
         private Attribute[] attributes;
         private Skill[] skills;
 
-        public CharacterSheet(string name, CharacterRace race1, CharacterRace race2, 
-            CharacterClass job, int[] attributeScores, int[] skillScores)
+        public CharacterSheet(string name, CharacterRace race, CharacterClass job, 
+            int[] attributeScores, int[] skillScores)
         {
             Name = name;
-            PrimaryRace = race1;
-            SecondaryRace = race2;
+            Race = race;
             Class = job;
 
             attributes = new Attribute[attributeScores.Length];
@@ -23,7 +21,7 @@ namespace JS.CharacterSystem
             {
                 int baseValue = attributeScores[i];
 
-                foreach(var bonus in PrimaryRace.RacialStats.AttributeModifiers)
+                foreach(var bonus in Race.RacialStats.AttributeModifiers)
                 {
                     if (bonus.attribute.ID == i) baseValue += bonus.value;
                 }
@@ -41,7 +39,7 @@ namespace JS.CharacterSystem
             {
                 int baseValue = skillScores[i];
 
-                foreach (var bonus in PrimaryRace.RacialStats.SkillModifiers)
+                foreach (var bonus in Race.RacialStats.SkillModifiers)
                 {
                     if (bonus.skill.ID == i) baseValue += bonus.value;
                 }

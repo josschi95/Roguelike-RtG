@@ -1,20 +1,38 @@
+using JS.DomainSystem;
 using UnityEngine;
 
 namespace JS.CharacterSystem
 {
-    [CreateAssetMenu(menuName = "Characters/Preset")]
-    public class CreaturePreset : ScriptableObject
+    [CreateAssetMenu(menuName = "Characters/Presets/Preset SO")]
+    public class CreaturePresetSO : ScriptableObject
     {
         [SerializeField] private string characterName;
+        public string Name => characterName;
+
+        [SerializeField] private CharacterRace race;
+        public CharacterRace Race => race;
+
+        [SerializeField] private bool isUndead;
+        public bool IsUndead => isUndead;
+
+        [SerializeField] private CharacterClass characterClass;
+        public CharacterClass CharacterClass => characterClass;
+
+        [SerializeField] private Domain domain;
+        public Domain Domain => domain;
+
         [SerializeField] private Gender characterGender;
+        public Gender CharacterGender => characterGender;
+        
         [SerializeField] private int characterAge;
         [SerializeField] private AgeCategory ageCategory;
-        [SerializeField] private CharacterRace primaryRace;
-        [SerializeField] private CharacterRace secondaryRace;
-        [SerializeField] private bool isUndead = false;
-        [SerializeField] private CharacterClass characterClass;
+        public int CharacterAge => characterAge;
+
         [SerializeField] private AttributeReference[] attributeValues;
+        public AttributeReference[] AttributeValues => attributeValues;
+
         [SerializeField] private SkillReference[] skillValues;
+        public SkillReference[] SkillValues => skillValues;
         
         public CharacterSheet GetCharacterSheet()
         {
@@ -33,8 +51,7 @@ namespace JS.CharacterSystem
             var sheet = new CharacterSheet
                 (
                     characterName,
-                    primaryRace,
-                    secondaryRace,
+                    race,
                     characterClass,
                     attributes,
                     skills

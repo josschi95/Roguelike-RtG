@@ -58,6 +58,7 @@ namespace JS.CommandSystem
             //Settlements
             var settlements = worldData.SettlementData;
             data.Settlements = settlements.Settlements;
+
             SaveToJSON(data);
         }
 

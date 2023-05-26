@@ -6,15 +6,6 @@ namespace JS.CharacterSystem.Creation
 {
     public class UICharacterCreation_Race : MonoBehaviour
     {
-        private enum RaceMethod
-        {
-            Single,
-            Maternal,
-            Paternal,
-        }
-        private RaceMethod method;
-
-
         [SerializeField] private CreatureCatalog creatureCatalog;
         [SerializeField] private CharacterBuilder characterBuilder;
         [SerializeField] private UICharacterCreation characterCreatorParent;
@@ -22,28 +13,20 @@ namespace JS.CharacterSystem.Creation
         [Space]
 
         [SerializeField] private TMP_Text headerText;
-        private TMP_Text crossbreedButtonText;
 
         [Header("Character Races")]
         [SerializeField] private Button humanoidRacebutton;
         [SerializeField] private Button demiHumanRacebutton;
         [SerializeField] private Button monstrousRacebutton;
-        [SerializeField] private Button crossbreedbutton;
 
         [Space]
 
         [SerializeField] private RectTransform raceButtonParent;
         [SerializeField] private UISelectionElement selectionElement;
 
-        private void Awake()
-        {
-            crossbreedButtonText = crossbreedbutton.GetComponentInChildren<TMP_Text>();
-        }
-
         private void OnEnable()
         {
             ResetRace();
-            SetMethod(RaceMethod.Single);
 
             DisplayRacialOptions(RacialCategory.Humanoid);
 
@@ -58,11 +41,6 @@ namespace JS.CharacterSystem.Creation
             monstrousRacebutton.onClick.AddListener(delegate
             {
                 DisplayRacialOptions(RacialCategory.Monstrous);
-            });
-            crossbreedbutton.onClick.AddListener(delegate
-            {
-                ToggleCrossbreed();
-                DisplayRacialOptions(RacialCategory.Humanoid);
             });
         }
 
@@ -81,43 +59,12 @@ namespace JS.CharacterSystem.Creation
             }
         }
 
-        private void ToggleCrossbreed()
-        {
-            //Switch to Crossbreed
-            if (method == RaceMethod.Single) SetMethod(RaceMethod.Maternal);
-            //Switch to single race
-            else SetMethod(RaceMethod.Single);
-
-            ResetRace();
-        }
-
-        private void SetMethod(RaceMethod method)
-        {
-            this.method = method;
-            if (method == RaceMethod.Single)
-            {
-                headerText.text = "Select Your Race";
-                crossbreedButtonText.text = "Crossbreed";
-            }
-            else if (method == RaceMethod.Maternal)
-            {
-                headerText.text = "Select Maternal Race";
-                crossbreedButtonText.text = "Cancel";
-            }
-            else
-            {
-                headerText.text = "Select Paternal Race";
-                crossbreedButtonText.text = "Cancel";
-            }
-        }
-
         private void DisplayRacialOptions(RacialCategory cat)
         {
             ResetButtons();
             foreach(var race in creatureCatalog.Races)
             {
                 if (race.RaceCategory != cat) continue;
-                if (!IsValidRace(race)) continue;
 
                 var element = Instantiate(selectionElement);
                 element.transform.SetParent(raceButtonParent.transform, false);
@@ -139,50 +86,15 @@ namespace JS.CharacterSystem.Creation
             }
         }
 
-        private bool IsValidRace(CharacterRace race)
-        {
-            if (method == RaceMethod.Single) return true;
-
-            if (race.ValidCrossBreeds.Length == 0) return false;
-
-            if (method == RaceMethod.Maternal)
-            {
-                if (!race.HasFemale) return false;
-                return true;
-            }
-            else if (!race.HasMales) return false;
-
-            foreach(var validPair in characterBuilder.PrimaryRace.ValidCrossBreeds)
-            {
-                if (validPair == race) return true;
-            }
-            return false;
-        }
-
         private void ResetRace()
         {
-            characterBuilder.PrimaryRace = null;
-            characterBuilder.SecondaryRace = null;
+            characterBuilder.Race = null;
         }
 
         private void OnConfirmRace(CharacterRace race)
         {
-            if (method == RaceMethod.Single)
-            {
-                characterBuilder.PrimaryRace = race;
-                characterCreatorParent.Next();
-            }
-            else if (method == RaceMethod.Maternal)
-            {
-                characterBuilder.PrimaryRace = race;
-                SetMethod(RaceMethod.Paternal);
-                DisplayRacialOptions(RacialCategory.Humanoid);
-            }
-            else
-            {
-                characterBuilder.SecondaryRace = race;
-                characterCreatorParent.Next();
-            }
+            characterBuilder.Race = race;
+            characterCreatorParent.Next();
         }
     }
 }

@@ -4,6 +4,11 @@ using JS.DomainSystem;
 
 namespace JS.CharacterSystem.Creation
 {
+    //NOTE//
+    //I don't think I actually need this script
+    //All of the methods in here can just be moved to another for CharacterCreation, likely the one by same name
+    //And then just replace this with a CreaturePresetSO set aside for assigning values
+
     [CreateAssetMenu(menuName = "Characters/Character Builder")]
     public class CharacterBuilder : ScriptableObject
     {
@@ -14,21 +19,24 @@ namespace JS.CharacterSystem.Creation
         [SerializeField] private GameEvent onCharacterChangeEvent;
         [SerializeField] private CreatureCatalog catalog;
 
-        private string characterName;
+        [Space]
+
+        [SerializeField] private string characterName;
         [SerializeField] private Gender characterGender;
         [SerializeField] private int characterAge;
         [SerializeField] private AgeCategory ageCategory;
-        [SerializeField] private CharacterRace primaryRace;
-        [SerializeField] private CharacterRace secondaryRace;
+        [SerializeField] private CharacterRace race;
         [SerializeField] private bool isUndead = false;
         [SerializeField] private CharacterClass characterClass;
 
+        //Attributes
         [SerializeField] private int[] attributeValues = new int[6];
         [SerializeField] private int[] minimumAttributeValues = new int[6];
         [SerializeField] private int[] attributePotentials = new int[6];
         [SerializeField] private int[] increaseAttributeCost = new int[6];
         [SerializeField] private int availableAttributePoints;
         [SerializeField] private int maxAttributePoints;
+
         private int[] skillValues = new int[20];
 
         private Domain domain;
@@ -43,8 +51,7 @@ namespace JS.CharacterSystem.Creation
         public Gender CharacterGender { get => characterGender; set => SetGender(value); }
         public int CharacterAge { get => characterAge; set => SetAge(value); }
         public AgeCategory AgeCategory => ageCategory;
-        public CharacterRace PrimaryRace { get => primaryRace; set => SetPrimaryRace(value); }
-        public CharacterRace SecondaryRace { get => secondaryRace; set => SetSecondaryRace(value); }
+        public CharacterRace Race { get => race; set => SetRace(value); }
         public bool IsUndead { get => isUndead; set => SetUndead(value); }
         public CharacterClass Class { get => characterClass; set => SetClass(value); }
 
@@ -79,8 +86,7 @@ namespace JS.CharacterSystem.Creation
             characterName = "";
             characterGender = Gender.Male; 
             characterAge = 0;
-            primaryRace = null;
-            secondaryRace = null;
+            race = null;
             isUndead = false;
             onCharacterChangeEvent?.Invoke();
         }
@@ -91,9 +97,63 @@ namespace JS.CharacterSystem.Creation
             onCharacterChangeEvent?.Invoke();
         }
 
+        #region - Race -
+        public void ResetRace()
+        {
+            SetRace(null);
+        }
+
+        private void SetRace(CharacterRace race)
+        {
+            this.race = race;
+            RefactorGender();
+            RefactorAttributes();
+            onCharacterChangeEvent?.Invoke();
+        }
+
+        private void SetUndead(bool value)
+        {
+            isUndead = value;
+            onCharacterChangeEvent?.Invoke();
+        }
+        #endregion
+
+        #region - Gender -
+        private void RefactorGender()
+        {
+            if (race == null) return;
+
+            if (characterGender == Gender.Male)
+            {
+                if (!race.HasMales)
+                {
+                    if (race.HasFemale) SetGender(Gender.Female);
+                    else SetGender(Gender.Other);
+                }
+            }
+            if (characterGender == Gender.Female)
+            {
+                if (!race.HasFemale)
+                {
+                    if (race.HasMales) SetGender(Gender.Female);
+                    else SetGender(Gender.Other);
+                }
+            }
+            else SetGender(Gender.Other);
+        }
+
         private void SetGender(Gender gender)
         {
             characterGender = gender;
+            onCharacterChangeEvent?.Invoke();
+        }
+        #endregion
+
+        #region - Age -
+        public void ResetAge()
+        {
+            characterAge = 0;
+            ageCategory = null;
             onCharacterChangeEvent?.Invoke();
         }
 
@@ -106,69 +166,53 @@ namespace JS.CharacterSystem.Creation
 
         private AgeCategory FindAgeCategory()
         {
-            var primary = primaryRace.LifeExpectancy;
-            var secondary = secondaryRace.LifeExpectancy;
-            var max = Aging.GetMaxLifespan(primary, secondary);
+            var life = race.LifeExpectancy;
 
-            if (characterAge >= Aging.GetVenerableAge(max))
+            if (characterAge >= life.VenerableAge)
             {
                 return catalog.Ages[catalog.Ages.Length - 1];
             }
-            else if (characterAge >= Aging.GetOldAge(max))
+            else if (characterAge >= life.OldAge)
             {
                 return catalog.Ages[catalog.Ages.Length - 2];
             }
-            else if (characterAge >= Aging.GetMiddleAge(max))
+            else if (characterAge >= life.MiddleAge)
             {
                 return catalog.Ages[catalog.Ages.Length - 3];
             }
-            else if (characterAge >= Aging.GetYoungAdultAge(max))
+            else if (characterAge >= life.YoungAdultAge)
             {
                 return catalog.Ages[catalog.Ages.Length - 4];
             }
+            return catalog.Ageless;
+        }
+        #endregion
 
-            throw new System.Exception("Fix this.");
+        #region - Class -
+        public void ResetClass()
+        {
+            SetClass(null);
         }
 
-        #region - Creature Race -
-        private void SetPrimaryRace(CharacterRace race)
+        private void SetClass(CharacterClass characterClass)
         {
-            primaryRace = race;
-            secondaryRace = race;
-            RefactorGender();
-            RefactorAttributes();
+            this.characterClass = characterClass;
             onCharacterChangeEvent?.Invoke();
         }
+        #endregion
 
-        private void SetSecondaryRace(CharacterRace race)
+        #region - Attributes -
+        public void ResetAttributes()
         {
-            secondaryRace = race;
-            RefactorGender();
-            RefactorAttributes();
-            onCharacterChangeEvent?.Invoke();
-        }
-
-        private void RefactorGender()
-        {
-            if (primaryRace == null) return;
-
-            if (characterGender == Gender.Male)
+            for (int i = 0; i < attributeValues.Length; i++)
             {
-                if (!primaryRace.HasMales && !secondaryRace.HasMales)
-                {
-                    if (primaryRace.HasFemale || secondaryRace.HasFemale) SetGender(Gender.Female);
-                    else SetGender(Gender.Other);
-                }
+                attributeValues[i] = 0;
+                minimumAttributeValues[i] = 0;
+                attributePotentials[i] = 0;
+                increaseAttributeCost[i] = 0;
             }
-            if (characterGender == Gender.Female)
-            {
-                if (!primaryRace.HasFemale && !secondaryRace.HasFemale)
-                {
-                    if (primaryRace.HasMales || secondaryRace.HasMales) SetGender(Gender.Female);
-                    else SetGender(Gender.Other);
-                }
-            }
-            else SetGender(Gender.Other);
+            availableAttributePoints = 0;
+            maxAttributePoints = 0;
         }
 
         private void RefactorAttributes()
@@ -180,61 +224,36 @@ namespace JS.CharacterSystem.Creation
         //Sets the number of available attribute points based on race
         private void SetAvailableAttributePoints()
         {
-            if (primaryRace == null) return;
+            if (race == null) return;
 
-            int primary = humanoidAttributePoints;
-            if (primaryRace.RaceCategory == RacialCategory.Demihuman) primary = demihumanAttributePoints;
-            else if (primaryRace.RaceCategory == RacialCategory.Monstrous) primary = monstrousAttributePoints;
-            int secondary = primary;
-
-            if (primaryRace != secondaryRace)
+            switch (race.RaceCategory)
             {
-                secondary = humanoidAttributePoints;
-                if (secondaryRace.RaceCategory == RacialCategory.Demihuman) secondary = demihumanAttributePoints;
-                else if (secondaryRace.RaceCategory == RacialCategory.Monstrous) secondary = monstrousAttributePoints;
+                case RacialCategory.Humanoid:
+                    maxAttributePoints = humanoidAttributePoints;
+                    break;
+                case RacialCategory.Demihuman:
+                    maxAttributePoints = demihumanAttributePoints;
+                    break;
+                case RacialCategory.Monstrous:
+                    maxAttributePoints = monstrousAttributePoints;
+                    break;
             }
-
-            maxAttributePoints = Mathf.RoundToInt((primary + secondary) * 0.5f);
             availableAttributePoints = maxAttributePoints;
         }
 
         private void SetAttributePotentials()
         {
-            if (primaryRace == null) return;
+            if (race == null) return;
 
             for (int i = 0; i < attributePotentials.Length; i++)
             {
-                minimumAttributeValues[i] = primaryRace.BaseAttributes[i].value;
-                attributePotentials[i] = primaryRace.AttributePotentials[i].value;
-                SetAttributeValue(i, minimumAttributeValues[i]);
-            }
-
-            if (primaryRace == secondaryRace) return;
-
-            for (int i = 0; i < attributePotentials.Length; i++)
-            {
-                //Average two values
-                minimumAttributeValues[i] = Mathf.RoundToInt((primaryRace.BaseAttributes[i].value + secondaryRace.BaseAttributes[i].value) * 0.5f);
-                int value = Mathf.RoundToInt((primaryRace.AttributePotentials[i].value + secondaryRace.AttributePotentials[i].value) * 0.5f);
-                attributePotentials[i] = value;
+                minimumAttributeValues[i] = race.BaseAttributes[i].value;
+                attributePotentials[i] = race.AttributePotentials[i].value;
                 SetAttributeValue(i, minimumAttributeValues[i]);
             }
         }
-        #endregion
 
-        private void SetUndead(bool value)
-        {
-            isUndead = value;
-            onCharacterChangeEvent?.Invoke();
-        }
-
-        private void SetClass(CharacterClass characterClass)
-        {
-            this.characterClass = characterClass;
-            onCharacterChangeEvent?.Invoke();
-        }
-
-        private void SetAttributeValue(int index, int value)
+        public void SetAttributeValue(int index, int value)
         {
             attributeValues[index] = value;
             
@@ -287,5 +306,6 @@ namespace JS.CharacterSystem.Creation
                 //_ => 1,
             };
         }
+        #endregion
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public static class Parabola
+public static class MathParabola
 {
     public static Vector3 GetParabola(Vector3 start, Vector3 end, float height, float time)
     {

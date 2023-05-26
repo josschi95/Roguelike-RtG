@@ -20,6 +20,9 @@ namespace JS.CharacterSystem.Creation
         [SerializeField] private TMP_Text[] attributeAbsoluteTexts;
         [SerializeField] private TMP_Text availablePointsText;
 
+        [SerializeField] private Button nextButton;
+        [SerializeField] private GameObject confirmNextPanel;
+
         private void OnEnable()
         {
             SetButtons();
@@ -30,6 +33,9 @@ namespace JS.CharacterSystem.Creation
                 attributePotentialTexts[i].text = builder.AttributePotentials[i].ToString();
 
             }
+
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(CheckForUnspentPoints);
         }
 
         private void OnDisable()
@@ -39,6 +45,8 @@ namespace JS.CharacterSystem.Creation
                 decreaseAttributeButtons[i].onClick.RemoveAllListeners();
                 increaseAttributeButtons[i].onClick.RemoveAllListeners();
             }
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(characterCreation.Next);
         }
 
 
@@ -79,6 +87,15 @@ namespace JS.CharacterSystem.Creation
                 //Enable/Disable decrease buttons if the value is above its minimum value
                 decreaseAttributeButtons[index].interactable = builder.AttributeValues[index] > builder.MinAttributeValues[index];
             }
+        }
+
+        private void CheckForUnspentPoints()
+        {
+            if (builder.AvailableAttributePoints > 0)
+            {
+                confirmNextPanel.SetActive(true);
+            }
+            else characterCreation.Next();
         }
     }
 }

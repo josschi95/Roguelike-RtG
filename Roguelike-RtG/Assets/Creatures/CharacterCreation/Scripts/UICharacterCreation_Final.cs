@@ -20,49 +20,29 @@ namespace JS.CharacterSystem.Creation
         private void DisplayCharacterInfo()
         {
             //Class and Race
-            classAndRaceText.text = builder.PrimaryRace.RaceName;
-            if (builder.SecondaryRace != builder.PrimaryRace)
-            {
-                classAndRaceText.text += "/" + builder.SecondaryRace.RaceName;
-            }
-            if ((int)builder.PrimaryRace.RaceCategory + (int)builder.SecondaryRace.RaceCategory == 0)
-                classAndRaceText.text += " " + builder.Class.ClassName; //Only display class if not a racial class
+            classAndRaceText.text = builder.Race.RaceName;
+
+            //Only display class if not a racial class
+            if (builder.Race.RaceCategory == RacialCategory.Humanoid)
+                classAndRaceText.text += " " + builder.Class.ClassName; 
 
             //Gender
             genderText.text = builder.CharacterGender.ToString();
 
             //Creature Type
             if (builder.IsUndead) creatureTypeText.text = "Undead";
-            else creatureTypeText.text = builder.PrimaryRace.Type.TypeName;
-            if (builder.SecondaryRace.Type != builder.PrimaryRace.Type)
-                creatureTypeText.text += "/" + builder.SecondaryRace.Type.TypeName;
+            else creatureTypeText.text = builder.Race.Type.TypeName;
 
             //Lifespan
             lifespanText.text = builder.CharacterAge.ToString() + " years old,";
-            if (!builder.PrimaryRace.LifeExpectancy.Ages && !builder.SecondaryRace.LifeExpectancy.Ages)
-                lifespanText.text += " Ageless";
+            if (!builder.Race.LifeExpectancy.Ages) lifespanText.text += " Ageless";
             else
             {
-                var primary = builder.PrimaryRace.LifeExpectancy;
-                var secondary = builder.SecondaryRace.LifeExpectancy;
-                var max = Aging.GetMaxLifespan(primary, secondary);
-
-                if (builder.CharacterAge >= Aging.GetVenerableAge(max))
-                {
-                    lifespanText.text += " Venerable";
-                }
-                else if (builder.CharacterAge >= Aging.GetOldAge(max))
-                {
-                    lifespanText.text += " Old";
-                }
-                else if (builder.CharacterAge >= Aging.GetMiddleAge(max))
-                {
-                    lifespanText.text += " Middle Age";
-                }
-                else if (builder.CharacterAge >= Aging.GetYoungAdultAge(max))
-                {
-                    lifespanText.text += " Young Adult";
-                }
+                var life = builder.Race.LifeExpectancy;
+                if (builder.CharacterAge >= life.VenerableAge) lifespanText.text += " Venerable";
+                else if (builder.CharacterAge >= life.OldAge) lifespanText.text += " Old";
+                else if (builder.CharacterAge >= life.MiddleAge) lifespanText.text += " Middle Age";
+                else if (builder.CharacterAge >= life.YoungAdultAge) lifespanText.text += " Young Adult";
             }
 
             //Domain

@@ -4,7 +4,7 @@ namespace JS.ECS
 {
     public static class Action
     {
-        public static bool TryMoveAction(TimedActor actor, Locomotion entity, Vector2Int direction)
+        public static bool TryMoveAction(TimedActor actor, Locomotion entity, Compass direction)
         {
             if (!actor.IsTurn) return false;
             int cost = LocomotionSystem.MoveEntity(entity, direction);
@@ -14,6 +14,11 @@ namespace JS.ECS
             }
             TimeSystem.EndTurn(actor);
             return true;
+        }
+
+        public static void TryAttack(TimedActor actor)
+        {
+
         }
 
         public static void SkipAction(TimedActor entity)

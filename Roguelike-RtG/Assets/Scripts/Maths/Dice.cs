@@ -22,4 +22,21 @@ public static class Dice
     {
         return Random.Range(1, value);
     }
+
+    public static int Roll(string value)
+    {
+        if (value.Contains('d'))
+        {
+            var dice = value.Split('d');
+            if (int.TryParse(dice[0], out int count) && int.TryParse(dice[1], out int sides))
+            {
+                return Roll(count, sides, 0);
+            }
+        }
+        else if (int.TryParse(value, out int dmg))
+        {
+            return dmg;
+        }
+        return 0;
+    }
 }

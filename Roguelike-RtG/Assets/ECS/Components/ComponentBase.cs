@@ -6,6 +6,7 @@ namespace JS.ECS
     public class ComponentBase
     {
         public Entity entity;
+        public int Priority = int.MaxValue;
 
         public virtual void Update()
         {

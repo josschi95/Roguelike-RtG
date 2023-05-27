@@ -12,7 +12,6 @@ namespace JS.WorldMap
         public int minutes;
         public int hours;
         public int days;
-        public int weeks;
         public int months;
         public int years;
 

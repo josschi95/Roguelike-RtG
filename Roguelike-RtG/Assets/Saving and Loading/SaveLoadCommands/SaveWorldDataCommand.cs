@@ -31,7 +31,6 @@ namespace JS.CommandSystem
             data.minutes = timeData.Minutes;
             data.hours = timeData.Hours;
             data.days = timeData.Days;
-            data.weeks = timeData.Weeks;
             data.months = timeData.Months;
             data.years = timeData.Years;
 

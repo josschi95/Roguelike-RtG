@@ -55,7 +55,7 @@ namespace JS.CommandSystem
 
         private void SetTimeData(WorldSaveData data)
         {
-            timeData.SetSavedTime(data.seconds, data.minutes, data.hours, data.days, data.weeks, data.months, data.years);
+            timeData.SetSavedTime(data.seconds, data.minutes, data.hours, data.days, data.months, data.years);
         }
 
         private void SetTerrainValues(WorldSaveData data)

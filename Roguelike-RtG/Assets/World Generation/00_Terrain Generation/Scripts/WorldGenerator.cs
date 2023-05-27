@@ -39,6 +39,7 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private SaveWorldDataCommand saveWorldDataCommand;
 
+        private float initialTime;
         //private void Awake() => SetRandomSeed();
 
         //Set from the World Generation Settings Menu
@@ -47,6 +48,7 @@ namespace JS.WorldMap.Generation
             worldSize = (WorldSize)size;
         }
 
+        #region - Seed -
         //Called from World Generation Settings Menu
         public void SetRandomSeed()
         {
@@ -58,15 +60,7 @@ namespace JS.WorldMap.Generation
             seed = value;
             worldMap.Seed = seed;
         }
-
-        //Not currently being used. 
-        public void SetNewWorldValues()
-        {
-            rng = new System.Random(seed);
-
-            mapGenerator.SetInitialValues(worldSize, seed);
-            settlementGenerator.SetInitialValues(worldSize);
-        }
+        #endregion
 
         //Called from World Generation Settings Menu
         public void OnBeginWorldGeneration()
@@ -89,105 +83,83 @@ namespace JS.WorldMap.Generation
             yield return StartCoroutine(HandleTerrainGeneration());
 
             yield return StartCoroutine(settlementGenerator.PlaceSettlements());
+            progressBar.fillAmount = 0.9f;
+            yield return StartCoroutine(UpdateProgress("Finalizing"));
 
             PlacePlayerAtStart();
-
-            progressBar.fillAmount = 0.9f;
-            yield return new WaitForSeconds(0.01f);
 
             saveWorldDataCommand?.Invoke();
             worldGenCompleteEvent?.Invoke();
         }
 
+        private void SetNewWorldValues()
+        {
+            rng = new System.Random(seed);
+
+            mapGenerator.SetInitialValues(worldSize, seed); //also creates grid
+            settlementGenerator.SetInitialValues(worldSize);
+        }
+
         private IEnumerator HandleTerrainGeneration()
         {
-            var initialTime = Time.realtimeSinceStartup;
+            initialTime = Time.realtimeSinceStartup;
             progressText.text = "Loading";
             progressBar.fillAmount = 0;
             SetNewWorldValues();
-            //Debug.Log("SetNewWorldValues: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Tectonic Plates";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Tectonic Plates"));
 
             mapGenerator.PlaceTectonicPlates();
             progressBar.fillAmount = 0.1f;
-            //Debug.Log("PlaceTectonicPlates: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Land Masses";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Land Masses"));
 
             mapGenerator.GenerateHeightMap();
             progressBar.fillAmount = 0.2f;
-            //Debug.Log("GenerateHeightMap: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Eroding Land Masses";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Eroding Land Masses"));
 
             mapGenerator.ErodeLandMasses();
             progressBar.fillAmount = 0.2f;
-            //Debug.Log("ErodeLandMasses: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Allocating Height Map";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Allocating Height Map"));
 
             mapGenerator.SetNodeAltitudeValues();
             progressBar.fillAmount = 0.2f;
-            //Debug.Log("SetNodeAltitudeValues: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Identifying Mountains";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Identifying Mountains"));
 
             mapGenerator.IdentifyCoasts();
             mapGenerator.IdentifyMountains();
             progressBar.fillAmount = 0.3f;
-            //Debug.Log("IdentifyMountains: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Identifying Bodies of Water";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Identifying Bodies of Water"));
 
-            // !!! This method here is taking up the vast majority of generation time !!!
             yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
             progressBar.fillAmount = 0.3f;
-            //Debug.Log("IdentifyBodiesOfWater: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Identifying Land Masses";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Identifying Land Masses"));
 
             yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
             progressBar.fillAmount = 0.3f;
-            //Debug.Log("IdentifyLandMasses: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Rivers";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Rivers"));
 
             mapGenerator.GenerateRivers();
             progressBar.fillAmount = 0.5f;
-            //Debug.Log("GenerateRivers: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Heat Map";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Heat Map"));
 
             mapGenerator.GenerateHeatMap();
             progressBar.fillAmount = 0.6f;
-            //Debug.Log("GenerateHeatMap: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Precipitation Map";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Precipitation Map"));
 
             mapGenerator.GeneratePrecipitationMap();
             progressBar.fillAmount = 0.7f;
-            //Debug.Log("GeneratePrecipitationMap: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Biomes";
-            yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            yield return StartCoroutine(UpdateProgress("Generating Biomes"));
 
             mapGenerator.GenerateBiomes();
             progressBar.fillAmount = 0.8f;
-            //Debug.Log("GenerateBiomes: " + (Time.realtimeSinceStartup - initialTime));
-            progressText.text = "Generating Settlements";
+            yield return StartCoroutine(UpdateProgress("Generating Settlements"));
+        }
+
+        private IEnumerator UpdateProgress(string message)
+        {
+            Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
+            progressText.text = message;
             yield return new WaitForSeconds(0.01f);
-            //initialTime = Time.realtimeSinceStartup;
+            initialTime = Time.realtimeSinceStartup;
         }
 
         private void PlacePlayerAtStart()

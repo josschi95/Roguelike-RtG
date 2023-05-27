@@ -1181,6 +1181,7 @@ MonoBehaviour:
   bootScenes: {fileID: 11400000, guid: 5ed54da919de6c349be65c4975a9e9a8, type: 2}
   bootEvent: {fileID: 11400000, guid: 4ae7992b3ce30a7449ce9ec6011aec9e, type: 2}
   eventLogger: {fileID: 11400000, guid: 575321e5a9291cb429abb92947bf6f31, type: 2}
+  gameSettings: {fileID: 11400000, guid: d1539ae491201f84b8b1cb17a9d43777, type: 2}
   loadingScreen: {fileID: 601089860}
   loadingProgressBar: {fileID: 745975586}
 --- !u!1 &2082426951

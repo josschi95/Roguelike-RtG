@@ -115,7 +115,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(0, 1));
+                Action.TryMoveAction(actor, locomotion, Compass.North);
             }
         }
 
@@ -128,7 +128,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(0, -1));
+                Action.TryMoveAction(actor, locomotion, Compass.South);
             }
         }
 
@@ -141,7 +141,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, 0));
+                Action.TryMoveAction(actor, locomotion, Compass.East);
             }
         }
 
@@ -154,7 +154,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, 0));
+                Action.TryMoveAction(actor, locomotion, Compass.West);
             }
         }
 
@@ -167,7 +167,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, 1));
+                Action.TryMoveAction(actor, locomotion, Compass.NorthEast);
             }
         }
 
@@ -180,7 +180,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, 1));
+                Action.TryMoveAction(actor, locomotion, Compass.NorthWest);
             }
         }
 
@@ -193,7 +193,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(1, -1));
+                Action.TryMoveAction(actor, locomotion, Compass.SouthEast);
             }
         }
 
@@ -206,7 +206,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, new Vector2Int(-1, -1));
+                Action.TryMoveAction(actor, locomotion, Compass.SouthWest);
             }
         }
 

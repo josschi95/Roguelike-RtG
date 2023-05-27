@@ -71,7 +71,7 @@ namespace JS.WorldMap
             {
                 if (dir == Compass.SouthWest) return riverT_West;
                 if (dir == Compass.West || dir == Compass.East) return riverT_North;
-
+                if (dir == Compass.North || dir == Compass.South) return riverT_West;
                 if (dir == Compass.NorthEast) return riverT_North;
             }
             else if (tile == riverSouthEast)

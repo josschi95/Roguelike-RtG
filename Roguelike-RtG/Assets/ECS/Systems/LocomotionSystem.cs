@@ -1,5 +1,3 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace JS.ECS
@@ -10,15 +8,15 @@ namespace JS.ECS
 
         private const float movementDivident = 100000;
 
-        private Vector2Int _north = new Vector2Int(0, 1);
-        private Vector2Int _south = new Vector2Int(0, -1);
-        private Vector2Int _east = new Vector2Int(1, 0);
-        private Vector2Int _west = new Vector2Int(-1, 0);
-        
-        private Vector2Int _northEast = new Vector2Int(0,1);
-        private Vector2Int _northWest = new Vector2Int(0,1);
-        private Vector2Int _southEast = new Vector2Int(0,1);
-        private Vector2Int _southWest = new Vector2Int(0,1);
+        private Vector2Int _north = Vector2Int.up;
+        private Vector2Int _south = Vector2Int.down;
+        private Vector2Int _east = Vector2Int.right;
+        private Vector2Int _west = Vector2Int.left;
+
+        private Vector2Int _northEast = Vector2Int.one;
+        private Vector2Int _northWest = Vector2Int.up + Vector2Int.left;
+        private Vector2Int _southEast = Vector2Int.down + Vector2Int.right;
+        private Vector2Int _southWest = Vector2Int.down + Vector2Int.left;
 
         private void Awake()
         {
@@ -38,17 +36,19 @@ namespace JS.ECS
             return true;
         }
 
-        public static int MoveEntity(Locomotion entity, Compass direction)
+        public static bool TryMoveEntity(Locomotion entity, Compass direction, out int cost)
         {
-            if (!CanMoveToPosition(GetDirection(direction))) return 0;
+            cost = 0;
+            if (!CanMoveToPosition(GetDirection(direction))) return false;
 
             //Will also need to take into account difficult terrain, movement modifiers, etc. 
             //Movement modifiers should affect Locomotion directly, and have no impact on this
-            int cost = Mathf.RoundToInt(movementDivident / entity.MovementSpeed);
+            cost = Mathf.RoundToInt(movementDivident / entity.MovementSpeed);
 
             entity.Transform.localPosition += GetDirection(direction);
             entity.Transform.onTransformChanged?.Invoke();
-            return cost;
+
+            return true;
         }
 
         public static Vector2Int GetDirection(Compass compass)

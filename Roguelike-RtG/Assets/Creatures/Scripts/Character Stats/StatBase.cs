@@ -5,6 +5,13 @@ namespace JS.CharacterSystem
 {
     public abstract class StatBase
     {
+        public string Name { get; protected set; }
+        public string ShortName { get; protected set; }
+        public int MinValue { get; protected set; }
+        public int MaxValue { get; protected set; }
+
+
+
         public int BaseValue { get; protected set; } = 10;
         public int Value => GetModifiedValue();
         public int AbsoluteValue { get; protected set; }

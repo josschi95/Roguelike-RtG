@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c11ef345db8ee8479e68a4ebac6f5b5, type: 3}
-  m_Name: 04_Knowledge
+  m_Name: 03_Knowledge
   m_EditorClassIdentifier: 
-  <FullName>k__BackingField: Knowledge
-  <ShortName>k__BackingField: Kno
-  <PrimaryAttribute>k__BackingField: 1
+  id: 3
+  _name: Knowledge
+  shortName: KNO
+  minValue: 1
+  maxValue: 100
   <Description>k__BackingField: mental might
   developerNotes: 'skill point gain rate, ability to learn from reading
 

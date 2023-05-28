@@ -4,8 +4,13 @@ namespace JS.CharacterSystem
 {
     public class Skill : StatBase
     {
-        public Skill(int baseValue)
+        public Skill(string name, string shortName, int baseValue)
         {
+            Name = name;
+            ShortName = shortName;
+            MinValue = 1;
+            MaxValue = 100;
+
             BaseValue = baseValue;
             AbsoluteValue = 100;
 

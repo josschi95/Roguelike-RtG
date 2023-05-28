@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c11ef345db8ee8479e68a4ebac6f5b5, type: 3}
-  m_Name: 02_Agility
+  m_Name: 00_Strength
   m_EditorClassIdentifier: 
-  <FullName>k__BackingField: Agility
-  <ShortName>k__BackingField: Agi
-  <PrimaryAttribute>k__BackingField: 1
-  <Description>k__BackingField: physical maneuverability
-  developerNotes: 'Missile dmg, missile to-hit, +Speed
+  id: 0
+  _name: Strength
+  shortName: STR
+  minValue: 1
+  maxValue: 100
+  <Description>k__BackingField: physical might
+  developerNotes: 'melee dmg, melee to-hit,
 
-    +Dodge, trap avoidance'
+    slight missile dmg, carry capacity,
+    +HP'

@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c11ef345db8ee8479e68a4ebac6f5b5, type: 3}
-  m_Name: 03_Vitality
+  m_Name: 01_Agility
   m_EditorClassIdentifier: 
-  <FullName>k__BackingField: Vitality
-  <ShortName>k__BackingField: Vit
-  <PrimaryAttribute>k__BackingField: 1
-  <Description>k__BackingField: physical fortitude
-  developerNotes: '+HP, Stamina, HP Regen, +Protection
+  id: 1
+  _name: Agility
+  shortName: AGI
+  minValue: 1
+  maxValue: 100
+  <Description>k__BackingField: physical maneuverability
+  developerNotes: 'Missile dmg, missile to-hit, +Speed
 
-    Resist poison/infection/sickness'
+    +Dodge, trap avoidance'

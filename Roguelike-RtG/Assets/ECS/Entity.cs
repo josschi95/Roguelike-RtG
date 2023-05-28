@@ -15,7 +15,7 @@ namespace JS.ECS
             components = new List<ComponentBase>();
         }
 
-        
+        #region - Components -
         //Adds the referenced component to this entity and sets this as its entity
         public void AddComponent(ComponentBase component)
         {
@@ -67,6 +67,15 @@ namespace JS.ECS
             }
             return false;
         }
+        #endregion
+        
+        public void FireEvent(Event newEvent)
+        {
+            for (int i = 0; i < components.Count; i++)
+            {
+                components[i].FireEvent(newEvent);
+            }
+        }
 
         public void Destroy()
         {
@@ -75,14 +84,6 @@ namespace JS.ECS
                 RemoveComponent(components[i]);
             }
             //Will also need to unregister this likely
-        }
-        
-        public void SendEvent(Event newEvent)
-        {
-            for (int i = 0; i < components.Count; i++)
-            {
-                components[i].OnEvent(newEvent);
-            }
         }
     }
 }

@@ -12,13 +12,13 @@ namespace JS.ECS
             components.Add(component);
         }
 
-        public static void Update()
+        /*public static void Update()
         {
             foreach (var component in components)
             {
-                component.Update();
+                //component.Update();
             }
-        }
+        }*/
 
         public static void Unregister(T component)
         {

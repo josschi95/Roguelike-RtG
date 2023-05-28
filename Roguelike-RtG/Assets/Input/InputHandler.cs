@@ -7,7 +7,7 @@ namespace JS.ECS
     {
         public InputHandler(InputActionAsset asset,TimedActor actor, Locomotion locomotion)
         {
-            entity = actor.entity;
+            actor.entity.AddComponent(this);
             actionAsset = asset;
 
             this.actor = actor;
@@ -88,132 +88,97 @@ namespace JS.ECS
             _center.performed -= i => Center();
         }
 
+        //Check if a button is pressed at the start of the player's turn
         private void CheckForButtonDown()
         {
             if (_north.IsPressed()) North();
             else if (_south.IsPressed()) South();
             else if (_east.IsPressed()) East();
             else if (_west.IsPressed()) West();
+
             else if (_northEast.IsPressed()) NorthEast();
             else if (_northWest.IsPressed()) NorthWest();
             else if (_southEast.IsPressed()) SouthEast();
             else if (_southWest.IsPressed()) SouthWest();
         }
 
-
         private bool CanAct()
         {
             if (actor == null || !actor.IsTurn) return false; 
             return true;
         }
+
         private void North()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.North);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.North);
+            else TryMove(Compass.North);
         }
 
         private void South()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.South);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.South);
+            else TryMove(Compass.South);
         }
 
         private void East()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.East);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.East);
+            else TryMove(Compass.East);
         }
 
         private void West()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.West);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.West);
+            else TryMove(Compass.West);
         }
 
         private void NorthEast()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.NorthEast);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.NorthEast);
+            else TryMove(Compass.NorthEast);
         }
 
         private void NorthWest()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
+            if (_control.IsPressed()) TryAttack(Compass.NorthWest);
+            else TryMove(Compass.NorthWest);
 
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.NorthWest);
-            }
         }
 
         private void SouthEast()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.SouthEast);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.SouthEast);
+            else TryMove(Compass.SouthEast);
         }
 
         private void SouthWest()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-
-            }
-            else
-            {
-                PerformAction.TryMoveAction(actor, locomotion, Compass.SouthWest);
-            }
+            if (_control.IsPressed()) TryAttack(Compass.SouthWest);
+            else TryMove(Compass.SouthWest);
         }
 
         private void Center()
         {
             if (!CanAct()) return;
-            PerformAction.SkipAction(actor);
+            Actions.SkipAction(actor);
+        }
+
+        private void TryMove(Compass direction)
+        {
+            Actions.TryMoveAction(actor, locomotion, direction);
+        }
+
+        private void TryAttack(Compass direction)
+        {
+            Actions.TryAttack(actor, direction);
         }
     }
 }

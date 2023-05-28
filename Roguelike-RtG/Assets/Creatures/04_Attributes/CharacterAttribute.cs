@@ -5,12 +5,18 @@ namespace JS.CharacterSystem
     [CreateAssetMenu(menuName = "Characters/Stats/Attribute")]
     public class CharacterAttribute : ScriptableObject
     {
-        [field: SerializeField] public int ID { get; private set; }
+        [SerializeField] private int id;
+        public int ID => id;
 
-        [field: SerializeField] public string FullName { get; private set; }
-        [field: SerializeField] public string ShortName { get; private set; }
+        [SerializeField] private string _name;
+        public string Name => _name;
+        [SerializeField] private string shortName;
+        public string ShortName => shortName;
 
-        [field: SerializeField] public bool PrimaryAttribute { get; private set; }
+        [SerializeField] private int minValue;
+        public int MinValue => minValue;
+        [SerializeField] private int maxValue;
+        public int MaxValue => maxValue;
 
         [field: SerializeField] public string Description { get; private set; }
 
@@ -24,4 +30,14 @@ namespace JS.CharacterSystem
 #endif
 #pragma warning restore 0414
     }
+}
+
+public enum Attributes
+{
+    Strength,
+    Agility,
+    Vitality,
+    Knowledge,
+    Willpower,
+    Charisma,
 }

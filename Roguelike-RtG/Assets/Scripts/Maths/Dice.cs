@@ -28,7 +28,17 @@ public static class Dice
         if (value.Contains('d'))
         {
             var dice = value.Split('d');
-            if (int.TryParse(dice[0], out int count) && int.TryParse(dice[1], out int sides))
+            int.TryParse(dice[0], out int count);
+
+            if (dice[1].Contains("+"))
+            {
+                var num = dice[1].Split("+");
+                if (int.TryParse(num[0], out int sides) && int.TryParse(num[1], out int mod))
+                {
+                    return Roll(count, sides, mod);
+                }
+            }
+            else if(int.TryParse(dice[1], out int sides))
             {
                 return Roll(count, sides, 0);
             }
@@ -37,6 +47,7 @@ public static class Dice
         {
             return dmg;
         }
+
         return 0;
     }
 }

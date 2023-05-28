@@ -31,7 +31,7 @@ namespace JS.CharacterSystem
                     if (bonus.attribute.ID == i) baseValue += bonus.value;
                 }
 
-                attributes[i] = new Attribute(baseValue, 100, 100);
+                attributes[i] = new Attribute("Placeholder", "PH", baseValue, 100, 100);
             }
 
             skills = new Skill[skillScores.Length];
@@ -49,7 +49,7 @@ namespace JS.CharacterSystem
                     if (bonus.skill.ID == i) baseValue += bonus.value;
                 }
 
-                skills[i] = new Skill(baseValue);
+                skills[i] = new Skill("Placeholder", "PH", baseValue);
             }
         }
 

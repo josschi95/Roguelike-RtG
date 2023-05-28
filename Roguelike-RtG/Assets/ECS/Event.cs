@@ -3,7 +3,8 @@ using JS.ECS;
 
 public class Event
 {
-
+    //string ID;
+    //Dictionary<string, Object> Parameters;
 }
 
 public class MeleeAttackMade : Event
@@ -18,8 +19,8 @@ public class TargetedByMelee : Event
 
 public class MeleeAttackHit : Event
 {
-    public PhysicsBehavior target;
-    public MeleeAttackHit(PhysicsBehavior target)
+    public Physics target;
+    public MeleeAttackHit(Physics target)
     {
         this.target = target;
     }
@@ -27,8 +28,8 @@ public class MeleeAttackHit : Event
 
 public class RangedAttackHit : Event
 {
-    public PhysicsBehavior target;
-    public RangedAttackHit(PhysicsBehavior target)
+    public Physics target;
+    public RangedAttackHit(Physics target)
     {
         this.target = target;
     }

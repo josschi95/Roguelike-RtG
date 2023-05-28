@@ -6,8 +6,13 @@ namespace JS.CharacterSystem
     {
         public int PotentialValue { get; private set; }
 
-        public Attribute(int baseValue = 10, int potential = 100, int absolute = 100)
+        public Attribute(string name, string shortName, int baseValue = 10, int potential = 100, int absolute = 100)
         {
+            Name = name;
+            ShortName = shortName;
+            MinValue = 1;
+            MaxValue = 100;
+
             BaseValue = baseValue;
             PotentialValue = potential;
             AbsoluteValue = absolute;

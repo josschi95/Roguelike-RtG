@@ -6,10 +6,29 @@ public class Event
 
 }
 
+public class MeleeAttackMade : Event
+{
+
+}
+
+public class TargetedByMelee : Event
+{
+
+}
+
 public class MeleeAttackHit : Event
 {
     public PhysicsBehavior target;
     public MeleeAttackHit(PhysicsBehavior target)
+    {
+        this.target = target;
+    }
+}
+
+public class RangedAttackHit : Event
+{
+    public PhysicsBehavior target;
+    public RangedAttackHit(PhysicsBehavior target)
     {
         this.target = target;
     }
@@ -35,14 +54,5 @@ public class TakeDamage : Event
     {
         Amounts = amount;
         Types = type;
-    }
-}
-
-public class ApplyDamage : Event
-{
-    public int Amount;
-    public ApplyDamage(int amount)
-    {
-        Amount = amount;
     }
 }

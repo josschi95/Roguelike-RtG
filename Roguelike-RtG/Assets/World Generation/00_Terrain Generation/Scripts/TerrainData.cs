@@ -51,6 +51,16 @@ namespace JS.WorldMap
             set => originY = value;
         }
 
+        private int[,] seedMap;
+        public int[,] SeedMap
+        {
+            get => seedMap;
+            set
+            {
+                seedMap = value;
+            }
+        }
+
         //Elevation
         private float[,] heightMap;
         public float[,] HeightMap

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JS.ECS
@@ -6,29 +5,14 @@ namespace JS.ECS
     public class PhysicsBehavior : ComponentBase
     {
         public int hitPoints;
-        private List<ComponentBase> children;
 
         public PhysicsBehavior(Entity entity, int hitPoints)
         {
             this.entity = entity;
             this.hitPoints = hitPoints;
-            children = new List<ComponentBase>();
         }
 
-        public void AddChild(ComponentBase child)
-        {
-            for (int i = 0; i < children.Count; i++)
-            {
-                if (child.Priority > children[i].Priority)
-                {
-                    children.Insert(i, child);
-                    return;
-                }
-                children.Add(child);
-            }
-        }
-
-        public void SendEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             switch (newEvent)
             {
@@ -38,29 +22,31 @@ namespace JS.ECS
                 case DealingMeleeDamage dealing:
                     OnDealingMeleeDamage(dealing);
                     break;
-                case TakeDamage dmg: 
-                    OnTakeDamage(dmg); 
+                case TakeDamage dmg:
+                    OnTakeDamage(dmg);
                     break;
             }
+        }
+
+        private void OnMeleeAttackDeclared(MeleeAttackMade attack)
+        {
+
         }
 
         private void OnMeleeAttackHit(PhysicsBehavior target)
         {
             var E1 = new DealingMeleeDamage();
 
-            this.SendEvent(E1);
+            entity.SendEvent(E1);
 
             var E2 = new TakeDamage(E1.Amounts, E1.Types);
 
-            target.SendEvent(E2);
+            target.entity.SendEvent(E2);
         }
 
         private void OnDealingMeleeDamage(DealingMeleeDamage dmg)
         {
-            for (int i = 0; i < children.Count; i++)
-            {
-                //children[i].SendEvent(dmg);
-            }
+
         }
 
         private void OnTakeDamage(TakeDamage damage)
@@ -72,6 +58,14 @@ namespace JS.ECS
         }
     }
 
+    public class CombatBehavior
+    {
+        public void TryMeleeAttack()
+        {
+            
+        }
+    }
+
     public class WeaponBehaviour : ComponentBase
     {
         public int Amount;
@@ -79,12 +73,11 @@ namespace JS.ECS
         
         public WeaponBehaviour(PhysicsBehavior physics)
         {
-            entity = physics.entity;
             Priority = 1;
-            physics.AddChild(this);
+            physics.entity.AddComponent(this);
         }
 
-        public void OnEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is DealingMeleeDamage damage)
             {
@@ -98,12 +91,11 @@ namespace JS.ECS
     {
         public Fiery(PhysicsBehavior physics)
         {
-            entity = physics.entity;
             Priority = 2;
-            physics.AddChild(this);
+            physics.entity.AddComponent(this);
         }
 
-        public void OnEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is DealingMeleeDamage damage)
             {
@@ -133,13 +125,12 @@ namespace JS.ECS
 
         public FireResist(PhysicsBehavior physics, int amount)
         {
-            entity = physics.entity;
             Priority = 2;
             Amount = amount;
-            physics.AddChild(this);
+            physics.entity.AddComponent(this);
         }
 
-        public void OnEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is TakeDamage damage) ApplyResistance(damage);
         }

@@ -52,7 +52,7 @@ namespace JS.ECS
         private IEnumerator RoundDelay()
         {
             yield return new WaitForSeconds(0.2f);
-            Action.SkipAction(sentinel);
+            PerformAction.SkipAction(sentinel);
         }
 
         public static void Pause() => instance.PauseTime();

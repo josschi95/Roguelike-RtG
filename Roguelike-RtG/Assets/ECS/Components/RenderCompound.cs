@@ -21,9 +21,9 @@ namespace JS.ECS
             RenderSystem.NewCompound(this);
         }
 
-        public override void Release()
+        public override void Disassemble()
         {
-            base.Release();
+            base.Disassemble();
             transform = null;
             sprites = null;
             RenderSystem.RemoveCompound(this);

@@ -28,7 +28,7 @@ namespace JS.ECS
             TimeSystem.Register(this);
         }
 
-        public override void Release()
+        public override void Disassemble()
         {
             entity = null;
             onTurnStart = null;

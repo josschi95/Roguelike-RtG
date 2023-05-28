@@ -98,6 +98,21 @@ namespace JS.WorldMap.Generation
 
             mapGenerator.SetInitialValues(worldSize, seed); //also creates grid
             settlementGenerator.SetInitialValues(worldSize);
+
+            PlantSeeds();
+        }
+
+        private void PlantSeeds()
+        {
+            var seedMap = new int[worldMap.Width, worldMap.Height];
+            for (int x = 0; x < worldMap.Width; x++)
+            {
+                for (int y = 0; y < worldMap.Height; y++)
+                {
+                    seedMap[x, y] = rng.Next();
+                }
+            }
+            worldMap.TerrainData.SeedMap = seedMap;
         }
 
         private IEnumerator HandleTerrainGeneration()

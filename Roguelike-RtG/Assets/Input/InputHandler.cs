@@ -115,7 +115,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.North);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.North);
             }
         }
 
@@ -128,7 +128,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.South);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.South);
             }
         }
 
@@ -141,7 +141,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.East);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.East);
             }
         }
 
@@ -154,7 +154,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.West);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.West);
             }
         }
 
@@ -167,7 +167,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.NorthEast);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.NorthEast);
             }
         }
 
@@ -180,7 +180,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.NorthWest);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.NorthWest);
             }
         }
 
@@ -193,7 +193,7 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.SouthEast);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.SouthEast);
             }
         }
 
@@ -206,14 +206,14 @@ namespace JS.ECS
             }
             else
             {
-                Action.TryMoveAction(actor, locomotion, Compass.SouthWest);
+                PerformAction.TryMoveAction(actor, locomotion, Compass.SouthWest);
             }
         }
 
         private void Center()
         {
             if (!CanAct()) return;
-            Action.SkipAction(actor);
+            PerformAction.SkipAction(actor);
         }
     }
 }

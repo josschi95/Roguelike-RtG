@@ -14,9 +14,9 @@ namespace JS.ECS
             GasSystem.Register(this);
         }
 
-        public override void Release()
+        public override void Disassemble()
         {
-            base.Release();
+            base.Disassemble();
             GasSystem.Unregister(this);
         }
     }

@@ -13,7 +13,12 @@ namespace JS.ECS
             //Meant to be overwritten
         }
 
-        public virtual void Release()
+        public virtual void OnEvent(Event newEvent)
+        {
+            //Meant to be overwritten
+        }
+
+        public virtual void Disassemble()
         {
             entity = null;
             //System.Unregister(this);

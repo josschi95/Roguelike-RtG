@@ -15,9 +15,9 @@ namespace JS.ECS
             RenderSystem.NewSingle(this);
         }
 
-        public override void Release()
+        public override void Disassemble()
         {
-            base.Release();
+            base.Disassemble();
             transform = null;
             sprite = null;
             RenderSystem.RemoveSinge(this);

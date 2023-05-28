@@ -16,9 +16,9 @@ namespace JS.ECS
             this.entity = entity;
         }
 
-        public override void Release()
+        public override void Disassemble()
         {
-            base.Release();
+            base.Disassemble();
             onTransformChanged = null;
         }
     }

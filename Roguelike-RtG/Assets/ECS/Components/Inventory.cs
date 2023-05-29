@@ -22,6 +22,10 @@ namespace JS.ECS
             return true;
         }
 
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
     }
 }
 

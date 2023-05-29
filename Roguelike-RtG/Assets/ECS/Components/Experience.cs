@@ -6,5 +6,10 @@ namespace JS.ECS
     public class Experience : ComponentBase
     {
         public int Amount;
+
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
     }
 }

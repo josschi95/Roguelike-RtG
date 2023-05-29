@@ -31,8 +31,8 @@ namespace JS.ECS
 
         private void DisperseCloud(GasCloud cloud)
         {
-            var tile = Pathfinding.instance.GetNode(cloud.transform.localPosition);
-            if (tile == null) throw new System.Exception("Cloud at invalid position " +  cloud.transform.localPosition);
+            var tile = Pathfinding.instance.GetNode(cloud.transform.LocalPosition);
+            if (tile == null) throw new System.Exception("Cloud at invalid position " +  cloud.transform.LocalPosition);
 
             if (!tile.blocksGas)
             {

@@ -2,18 +2,6 @@ namespace JS.ECS
 {
     public static class Actions
     {
-        public static bool TryMoveAction(TimedActor actor, Locomotion entity, Compass direction)
-        {
-            if (!actor.IsTurn) return false;
-            if (LocomotionSystem.TryMoveEntity(entity, direction, out int cost))
-            {
-                TimeSystem.SpendActionPoints(actor, cost);
-                TimeSystem.EndTurn(actor);
-                return true;
-            }
-            return false;
-        }
-
         //is it in range?
         //does the attack hit? Accuracy vs. Dodge
         //(Done) Get the resulting damage from the attack
@@ -43,8 +31,6 @@ namespace JS.ECS
             if (!actor.IsTurn) return;
             TimeSystem.SpendActionPoints(actor);
             TimeSystem.EndTurn(actor);
-
-
         }
     }
 

@@ -21,8 +21,8 @@ namespace JS.CharacterSystem
         [SerializeField] private Domain domain;
         public Domain Domain => domain;
 
-        [SerializeField] private Gender characterGender;
-        public Gender CharacterGender => characterGender;
+        [SerializeField] private CharacterGender characterGender;
+        public CharacterGender CharacterGender => characterGender;
         
         [SerializeField] private int characterAge;
         [SerializeField] private AgeCategory ageCategory;

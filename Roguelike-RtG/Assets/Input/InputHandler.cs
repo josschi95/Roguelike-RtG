@@ -1,3 +1,4 @@
+using JS.CharacterSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,23 +6,63 @@ namespace JS.ECS
 {
     public class InputHandler : ComponentBase
     {
-        public InputHandler(InputActionAsset asset,TimedActor actor, Locomotion locomotion)
+        public InputHandler(InputActionAsset asset, TimedActor actor)
         {
-            actor.entity.AddComponent(this);
-            actionAsset = asset;
+            _actor = actor;
+            _actor.onTurnStart += CheckForButtonDown;
 
-            this.actor = actor;
-            this.locomotion = locomotion;
-            actor.onTurnStart += CheckForButtonDown;
-
-            MapActions();
+            MapActions(asset);
             SetActions();
         }
 
-        public TimedActor actor { get; set; }
-        public Locomotion locomotion { get; set; }
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
 
-        public InputActionAsset actionAsset { get; set; }
+        public override void Disassemble()
+        {
+            base.Disassemble();
+            ClearActions();
+        }
+
+        private TimedActor _actor;
+        public TimedActor Actor
+        {
+            get
+            {
+                if (_actor == null)
+                {
+                    _actor = entity.GetComponent<TimedActor>();
+                }
+                return _actor;
+            }
+        }
+
+        private Physics _physics;
+        public Physics Physics
+        {
+            get
+            {
+                if (_physics == null)
+                {
+                    _physics = entity.GetComponent<Physics>();
+                }
+                return _physics;
+            }
+        }
+
+        public int MoveSpeed
+        {
+            get
+            {
+                if (entity.TryGetStat("MoveSpeed", out StatBase stat))
+                {
+                    return stat.Value;
+                }
+                return 1;
+            }
+        }
 
         private InputAction _north;
         private InputAction _east;
@@ -38,7 +79,7 @@ namespace JS.ECS
         private InputAction _down;
         private InputAction _control;
 
-        private void MapActions()
+        private void MapActions(InputActionAsset actionAsset)
         {
             var input = actionAsset.FindActionMap("Player");
 
@@ -104,10 +145,11 @@ namespace JS.ECS
 
         private bool CanAct()
         {
-            if (actor == null || !actor.IsTurn) return false; 
+            if (Actor == null || !Actor.IsTurn) return false; 
             return true;
         }
 
+        #region - Directional Input -
         private void North()
         {
             if (!CanAct()) return;
@@ -168,17 +210,23 @@ namespace JS.ECS
         private void Center()
         {
             if (!CanAct()) return;
-            Actions.SkipAction(actor);
+            Actions.SkipAction(Actor);
         }
+        #endregion
 
         private void TryMove(Compass direction)
         {
-            Actions.TryMoveAction(actor, locomotion, direction);
+            if (LocomotionSystem.TryMoveObject(Physics, direction, out int cost))
+            {
+                int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
+                TimeSystem.SpendActionPoints(Actor, netCost);
+                TimeSystem.EndTurn(Actor);
+            }
         }
 
         private void TryAttack(Compass direction)
         {
-            Actions.TryAttack(actor, direction);
+            Actions.TryAttack(Actor, direction);
         }
     }
 }

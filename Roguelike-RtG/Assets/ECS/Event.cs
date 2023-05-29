@@ -7,7 +7,7 @@ public class Event
     //Dictionary<string, Object> Parameters;
 }
 
-public class MeleeAttackMade : Event
+public class DeclareMeleeAttack : Event
 {
 
 }

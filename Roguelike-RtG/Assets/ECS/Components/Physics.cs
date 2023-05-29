@@ -7,20 +7,33 @@ namespace JS.ECS
     /// </summary>
     public class Physics : ComponentBase
     {
+        private Transform _transform;
+        public Transform Transform
+        {
+            get
+            {
+                if (_transform == null)
+                {
+                    _transform = entity.GetComponent<Transform>();
+                }
+                return _transform;
+            }
+        }
+        
+
         public bool IsTakeable = true; //Can the object be picked up
         public bool IsSolid = false; //Does the object block gas from spreading
         public float Weight = 1.0f; //The weight of the object
-        public ObjectCategory category = ObjectCategory.Miscellaneous; //The type of object
+        public ObjectCategory Category = ObjectCategory.Miscellaneous; //The type of object
 
         //CoQ also has values for temp, but... yeah.
-        public int hitPoints;
 
-        public Physics(Entity entity, int hitPoints)
+        public Physics(bool takeable = true, bool solid = false, float weight = 1.0f, ObjectCategory category = ObjectCategory.Miscellaneous)
         {
-            entity.AddComponent(this);
-            this.hitPoints = hitPoints;
-
-            
+            IsTakeable = takeable;
+            IsSolid = solid;
+            Weight = weight;
+            Category = category;
         }
 
         public override void FireEvent(Event newEvent)
@@ -29,9 +42,6 @@ namespace JS.ECS
             {
                 case MeleeAttackHit hit:
                     OnMeleeAttackHit(hit.target);
-                    break;
-                case TakeDamage dmg:
-                    OnTakeDamage(dmg);
                     break;
             }
         }
@@ -45,14 +55,6 @@ namespace JS.ECS
             var E2 = new TakeDamage(E1.Amounts, E1.Types);
 
             target.entity.FireEvent(E2);
-        }
-
-        private void OnTakeDamage(TakeDamage damage)
-        {
-            for (int i = 0; i < damage.Amounts.Count; i++)
-            {
-                hitPoints -= damage.Amounts[i];
-            }
         }
     }
 

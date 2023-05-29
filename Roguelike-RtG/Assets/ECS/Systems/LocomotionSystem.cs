@@ -6,7 +6,7 @@ namespace JS.ECS
     {
         private static LocomotionSystem instance;
 
-        private const float movementDivident = 100000;
+        public const float movementDividend = 100000;
 
         private Vector2Int _north = Vector2Int.up;
         private Vector2Int _south = Vector2Int.down;
@@ -31,23 +31,20 @@ namespace JS.ECS
         public static bool CanMoveToPosition(Vector2Int position)
         {
             //Is position valid?
-            //Is position Obstructed?
+            //Is position Obstructed/Blocked?
 
             return true;
         }
 
-        public static bool TryMoveEntity(Locomotion entity, Compass direction, out int cost)
+        public static bool TryMoveObject(Physics obj, Compass direction, out int cost)
         {
             cost = 0;
             if (!CanMoveToPosition(GetDirection(direction))) return false;
 
-            //Will also need to take into account difficult terrain, movement modifiers, etc. 
-            //Movement modifiers should affect Locomotion directly, and have no impact on this
-            cost = Mathf.RoundToInt(movementDivident / entity.MovementSpeed);
+            //the returned cost will have to be equal to the movement penalty for the declared space
+            //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
-            entity.Transform.localPosition += GetDirection(direction);
-            entity.Transform.onTransformChanged?.Invoke();
-
+            obj.Transform.LocalPosition += GetDirection(direction);
             return true;
         }
 

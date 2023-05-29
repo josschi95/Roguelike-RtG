@@ -294,4 +294,4 @@ namespace JS.CharacterSystem.Creation
         }
     }
 }
-public enum Gender { Male, Female, Other }
+public enum CharacterGender { Male, Female, Other }

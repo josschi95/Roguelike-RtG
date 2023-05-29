@@ -22,7 +22,7 @@ namespace JS.CharacterSystem.Creation
         [Space]
 
         [SerializeField] private string characterName;
-        [SerializeField] private Gender characterGender;
+        [SerializeField] private CharacterGender characterGender;
         [SerializeField] private int characterAge;
         [SerializeField] private AgeCategory ageCategory;
         [SerializeField] private CharacterRace race;
@@ -48,7 +48,7 @@ namespace JS.CharacterSystem.Creation
         }
 
         public string CharacterName { get => characterName; set => SetName(value); }
-        public Gender CharacterGender { get => characterGender; set => SetGender(value); }
+        public CharacterGender CharacterGender { get => characterGender; set => SetGender(value); }
         public int CharacterAge { get => characterAge; set => SetAge(value); }
         public AgeCategory AgeCategory => ageCategory;
         public CharacterRace Race { get => race; set => SetRace(value); }
@@ -84,7 +84,7 @@ namespace JS.CharacterSystem.Creation
         public void ResetValues()
         {
             characterName = "";
-            characterGender = Gender.Male; 
+            characterGender = CharacterGender.Male; 
             characterAge = 0;
             race = null;
             isUndead = false;
@@ -123,26 +123,26 @@ namespace JS.CharacterSystem.Creation
         {
             if (race == null) return;
 
-            if (characterGender == Gender.Male)
+            if (characterGender == CharacterGender.Male)
             {
                 if (!race.HasMales)
                 {
-                    if (race.HasFemale) SetGender(Gender.Female);
-                    else SetGender(Gender.Other);
+                    if (race.HasFemale) SetGender(CharacterGender.Female);
+                    else SetGender(CharacterGender.Other);
                 }
             }
-            if (characterGender == Gender.Female)
+            if (characterGender == CharacterGender.Female)
             {
                 if (!race.HasFemale)
                 {
-                    if (race.HasMales) SetGender(Gender.Female);
-                    else SetGender(Gender.Other);
+                    if (race.HasMales) SetGender(CharacterGender.Female);
+                    else SetGender(CharacterGender.Other);
                 }
             }
-            else SetGender(Gender.Other);
+            else SetGender(CharacterGender.Other);
         }
 
-        private void SetGender(Gender gender)
+        private void SetGender(CharacterGender gender)
         {
             characterGender = gender;
             onCharacterChangeEvent?.Invoke();

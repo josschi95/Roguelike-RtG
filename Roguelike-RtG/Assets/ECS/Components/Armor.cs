@@ -5,7 +5,14 @@ namespace JS.ECS
         public int ArmorValue;
         public int DodgeValue;
         public int WornOn;
+
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
     }
+
+
 }
 
 public enum ArmorSlots
@@ -26,7 +33,7 @@ public enum WeaponSlots
 {
     Hand,               //Unarmed, Pugilist Weapons, Blades, Axes, Blunt, Polearms, 
     MissileWeapon,      //Bows, Crossbows, Javelins, Throwing Axes/Knives/Clubs
-    MissileAmmunition,  //Arrows, Bolts
+    //MissileAmmunition,  //Arrows, Bolts
 }
 
 /*

@@ -35,5 +35,10 @@ namespace JS.ECS
             onTurnEnd = null;
             TimeSystem.Unregister(this);
         }
+
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
     }
 }

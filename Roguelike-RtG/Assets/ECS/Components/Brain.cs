@@ -12,7 +12,7 @@ namespace JS.ECS
         public Habitat Habitat = Habitat.Terrestrial; //Can the object go on land/water? 
         public string Faction; //What faction does the object belong to?
         public int FactionDisposition; //What is the faction's dispositio towards this object
-        
+
         //Other CoQ properties
         //public int MaxWanderDist = 5;
         //public bool WandersRandomly = false;
@@ -25,6 +25,11 @@ namespace JS.ECS
         //Other possible properties
         //public int/enum Rationality
         //public int/enum DecisionMaking
+
+        public override void FireEvent(Event newEvent)
+        {
+            //
+        }
     }
 }
 

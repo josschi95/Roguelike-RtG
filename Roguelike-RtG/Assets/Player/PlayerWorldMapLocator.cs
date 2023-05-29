@@ -19,21 +19,25 @@ namespace JS.WorldMap
         public void PlacePlayer()
         {
             var playerEntity = new Entity();
-            var transform = new ECS.Transform(playerEntity);
-            transform.localPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
+            var transform = new ECS.Transform();
+            transform.LocalPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
+            
+            playerEntity.AddComponent(transform);
+            var physics = new ECS.Physics();
+            playerEntity.AddComponent(physics);
 
-            var locomotion = new Locomotion(transform);
             var actor = new TimedActor(playerEntity);
-            var input = new InputHandler(inputActionAsset, actor, locomotion);
+            playerEntity.AddComponent(new InputHandler(inputActionAsset, actor));
+
             new RenderCompound(transform, playerSprites);
 
-            CenterCameraOnPlayer(transform.localPosition);
+            CenterCameraOnPlayer(transform.LocalPosition);
             pixelCam.assetsPPU = 64;
-
             var cam = pixelCam.GetComponent<CameraController>();
+
             transform.onTransformChanged += delegate
             {
-                cam.SmoothToPosition(transform.localPosition);
+                cam.SmoothToPosition(transform.LocalPosition);
             };
         }
 

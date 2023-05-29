@@ -3,7 +3,7 @@ namespace JS.ECS
     /// <summary>
     /// A base class for all Components which will be attached to an Entity
     /// </summary>
-    public class ComponentBase
+    public abstract class ComponentBase
     {
         public Entity entity;
         public int Priority = int.MaxValue;
@@ -13,12 +13,11 @@ namespace JS.ECS
             //Meant to be overwritten
         }*/
 
-        public virtual void FireEvent(Event newEvent)
-        {
-            //Meant to be overwritten
-            //Each Component will take in the Event ID and decide if/how to handle it
-            //Should this be changed to a bool? return true if it was modified?
-        }
+        
+        //Each Component will take in the Event ID and decide if/how to handle it
+        //Should this be changed to a bool? return true if it was modified?
+        public abstract void FireEvent(Event newEvent);
+        
 
         public virtual void Disassemble()
         {

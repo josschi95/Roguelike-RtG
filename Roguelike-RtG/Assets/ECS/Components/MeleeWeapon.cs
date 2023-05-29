@@ -3,7 +3,24 @@ namespace JS.ECS
     public class MeleeWeapon : ComponentBase
     {
         public string BaseDamage = "1d2";
-        public int Stat = 0; //Strength
-        public int Proficiency = 0; //Blunt Weapons
+        public string Type = "Blunt";
+        public string Stat = "STR";
+        public string Proficiency = "BluntWeapons";
+
+        public MeleeWeapon(string baseDamage = "1d2", string type = "Blunt", string stat = "STR", string proficiency = "BluntWeapons")
+        {
+            BaseDamage = baseDamage;
+            Type = type;
+            Stat = stat;
+            Proficiency = proficiency;
+        }
+
+        public override void FireEvent(Event newEvent)
+        {
+            if (newEvent is DeclareMeleeAttack declaration)
+            {
+
+            }
+        }
     }
 }

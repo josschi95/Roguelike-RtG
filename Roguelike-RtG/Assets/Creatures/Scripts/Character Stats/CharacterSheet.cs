@@ -6,8 +6,11 @@ namespace JS.CharacterSystem
         public CharacterRace Race { get; private set; }
         public CharacterClass Class { get; private set; }
 
-        private Attribute[] attributes;
-        private Skill[] skills;
+        private StatBase[] attributes;
+        private StatBase[] skills;
+
+        private string[] attributeNames = { "Strength", "Agility", "Vitality", "Knowledge", "Willpower", "Charisma" };
+        private string[] attributeShorts = { "STR", "AGI", "VIT", "KNO", "WIL", "CHA" };
 
         public CharacterSheet(string name, CharacterRace race, CharacterClass job, 
             int[] attributeScores, int[] skillScores)
@@ -16,7 +19,7 @@ namespace JS.CharacterSystem
             Race = race;
             Class = job;
 
-            attributes = new Attribute[attributeScores.Length];
+            attributes = new StatBase[attributeScores.Length];
             for (int i = 0; i < attributes.Length; i++)
             {
                 int baseValue = attributeScores[i];
@@ -31,10 +34,10 @@ namespace JS.CharacterSystem
                     if (bonus.attribute.ID == i) baseValue += bonus.value;
                 }
 
-                attributes[i] = new Attribute("Placeholder", "PH", baseValue, 100, 100);
+                attributes[i] = new StatBase(attributeNames[i], attributeShorts[i], baseValue, 1, 40, 100);
             }
 
-            skills = new Skill[skillScores.Length];
+            skills = new StatBase[skillScores.Length];
             for (int i = 0; i < skills.Length; i++)
             {
                 int baseValue = skillScores[i];
@@ -49,7 +52,7 @@ namespace JS.CharacterSystem
                     if (bonus.skill.ID == i) baseValue += bonus.value;
                 }
 
-                skills[i] = new Skill("Placeholder", "PH", baseValue);
+                skills[i] = new StatBase("Placeholder", "PH", baseValue, 1, 100, 100);
             }
         }
 

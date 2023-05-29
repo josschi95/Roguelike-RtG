@@ -42,19 +42,19 @@ namespace JS.CharacterSystem.Creation
             #region - Gender -
             maleButton.onClick.AddListener(delegate
             {
-                characterBuilder.CharacterGender = Gender.Male;
+                characterBuilder.CharacterGender = CharacterGender.Male;
             });
             maleButton.interactable = characterBuilder.Race.HasMales;
 
             femaleButton.onClick.AddListener(delegate
             {
-                characterBuilder.CharacterGender = Gender.Female;
+                characterBuilder.CharacterGender = CharacterGender.Female;
             });
             femaleButton.interactable = characterBuilder.Race.HasFemale;
             
             otherButton.onClick.AddListener(delegate
             {
-                characterBuilder.CharacterGender = Gender.Other;
+                characterBuilder.CharacterGender = CharacterGender.Other;
             });
             otherButton.interactable = characterBuilder.Race.HasOther;
             #endregion

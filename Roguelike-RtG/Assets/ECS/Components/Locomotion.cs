@@ -2,14 +2,29 @@ namespace JS.ECS
 {
     public class Locomotion : ComponentBase
     {
-        public int MovementSpeed = 100;
-        public Transform Transform;
-
-        public Locomotion(Transform transform)
+        private Transform _transform;
+        public Transform Transform
         {
-            Transform = transform;
-            entity = transform.entity;
+            get
+            {
+                if (_transform == null)
+                {
+                    _transform = entity.GetComponent<Transform>();
+                }
+                return _transform;
+            }
+        }
+
+        public int MovementSpeed = 100;
+
+        public Locomotion()
+        {
             LocomotionSystem.Register(this);
+        }
+
+        public override void FireEvent(Event newEvent)
+        {
+            //
         }
     }
 }

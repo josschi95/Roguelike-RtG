@@ -89,7 +89,7 @@ namespace JS.CharacterSystem.Creation
             builder.Race = catalog.GetRace(preset.raceID);
             builder.Class = catalog.GetClass(preset.classID);
             builder.Domain = catalog.GetDomain(preset.domainID);
-            builder.CharacterGender = (Gender)preset.gender;
+            builder.CharacterGender = (CharacterGender)preset.gender;
             builder.IsUndead = preset.isUndead;
             builder.CharacterAge = preset.age;
             for (int i = 0; i < preset.attributeValues.Length; i++)

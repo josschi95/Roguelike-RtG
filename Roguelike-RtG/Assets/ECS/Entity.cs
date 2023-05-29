@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using JS.CharacterSystem;
+using JS.ECS.Tags;
 
 namespace JS.ECS
 {
@@ -7,12 +9,43 @@ namespace JS.ECS
     {
         //this might later be changed to a string
         public Guid ID { get; private set; }
+        public string Name { get; private set; }
         private List<ComponentBase> components;
+        private List<StatBase> _stats;
+        private List<TagBase> _tags;
 
-        public Entity()
+        public Entity(string name = "Entity")
         {
             ID = Guid.NewGuid();
             components = new List<ComponentBase>();
+            _stats = new List<StatBase>();
+            _tags = new List<TagBase>();
+            Name = name;
+        }
+
+        public void FireEvent(Event newEvent)
+        {
+            for (int i = 0; i < components.Count; i++)
+            {
+                components[i].FireEvent(newEvent);
+            }
+        }
+
+        public void Destroy()
+        {
+            for (int i = components.Count - 1; i >= 0; i--)
+            {
+                RemoveComponent(components[i]);
+            }
+            for (int i = 0; i < _stats.Count; i++)
+            {
+                RemoveStat(_stats[i]);
+            }
+            for (int i = 0; i < _tags.Count; i++)
+            {
+                RemoveTag(_tags[i]);
+            }
+            //Will also need to unregister this likely
         }
 
         #region - Components -
@@ -22,7 +55,7 @@ namespace JS.ECS
             component.entity = this;
             for (int i = 0; i < components.Count; i++)
             {
-                if (component.Priority > components[i].Priority)
+                if (component.Priority < components[i].Priority)
                 {
                     components.Insert(i, component);
                     return;
@@ -68,22 +101,70 @@ namespace JS.ECS
             return false;
         }
         #endregion
-        
-        public void FireEvent(Event newEvent)
+
+        #region - Stats -
+        public void AddStat(StatBase newStat)
         {
-            for (int i = 0; i < components.Count; i++)
-            {
-                components[i].FireEvent(newEvent);
-            }
+            _stats.Add(newStat);
         }
 
-        public void Destroy()
+        public void RemoveStat(StatBase stat)
         {
-            for (int i = components.Count - 1; i >= 0; i--)
-            {
-                RemoveComponent(components[i]);
-            }
-            //Will also need to unregister this likely
+            _stats.Remove(stat);
         }
+
+        public bool TryGetStat<T>(out StatBase stat) where T : StatBase
+        {
+            stat = null;
+            foreach(StatBase s in _stats)
+            {
+                if (s.GetType().Equals(typeof(T)))
+                {
+                    stat = (T)s;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool TryGetStat(string name, out StatBase stat)
+        {
+            stat = null;
+            foreach (StatBase s in _stats)
+            {
+                if (s.Name.Equals(name) || s.ShortName.Equals(name)) 
+                { 
+                    stat = (StatBase)s; 
+                    return true; 
+                }
+            }
+            return false;
+        }
+        #endregion
+
+        #region - Tags -
+        public void AddTag(TagBase tag)
+        {
+            if (_tags.Contains(tag)) return;
+            _tags.Add(tag);
+        }
+
+        public void RemoveTag(TagBase tag)
+        {
+            _tags.Remove(tag);
+        }
+
+        public bool GetTag<T>() where T : TagBase
+        {
+            foreach (TagBase tag in _tags)
+            {
+                if (tag.GetType().Equals(typeof(T)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }

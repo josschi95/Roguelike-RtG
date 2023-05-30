@@ -7,6 +7,8 @@ namespace JS.WorldMap
     {
         [field: SerializeField] public float SeaLevel { get; private set; } = 0.4f;
         [field: SerializeField] public float MountainHeight { get; private set; } = 0.8f;
+        [field: SerializeField] public Vector2Int RegionDimensions { get; private set; } = new Vector2Int(3, 3);
+        [field: SerializeField] public Vector2Int LocalDimensions { get; private set; } = new Vector2Int(100, 100);
         //[field: SerializeField] public int MaxStartingSettlementSize { get; private set; } = 750;
 
         [Header("Map Sizes")]

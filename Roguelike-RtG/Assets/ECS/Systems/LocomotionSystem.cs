@@ -1,3 +1,4 @@
+using JS.WorldMap;
 using UnityEngine;
 
 namespace JS.ECS
@@ -18,6 +19,9 @@ namespace JS.ECS
         private Vector2Int _southEast = Vector2Int.down + Vector2Int.right;
         private Vector2Int _southWest = Vector2Int.down + Vector2Int.left;
 
+        [SerializeField] private WorldGenerationParameters worldMapParams;
+        [SerializeField] private WorldData worldMap;
+
         private void Awake()
         {
             if (instance != null)
@@ -28,8 +32,10 @@ namespace JS.ECS
             instance = this;
         }
 
-        public static bool CanMoveToPosition(Vector2Int position)
+        public static bool CanMoveToPosition(Transform transform, Compass direction)
         {
+            if (!instance.WithinWorldBounds(transform, direction)) return false;
+
             //Is position valid?
             //Is position Obstructed/Blocked?
 
@@ -39,12 +45,38 @@ namespace JS.ECS
         public static bool TryMoveObject(Physics obj, Compass direction, out int cost)
         {
             cost = 0;
-            if (!CanMoveToPosition(GetDirection(direction))) return false;
+            if (!CanMoveToPosition(obj.Transform, direction)) return false;
 
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
-            obj.Transform.LocalPosition += GetDirection(direction);
+            switch (obj.Transform.MapLevel)
+            {
+                case MapLevel.Local:
+                    obj.Transform.LocalPosition += GetDirection(direction);
+                    break;
+                case MapLevel.World:
+                    obj.Transform.WorldPosition += GetDirection(direction);
+                    break;
+            }
+            return true;
+        }
+
+        private bool WithinWorldBounds(Transform transform, Compass direction)
+        {
+            if (transform.MapLevel == MapLevel.World)
+            {
+                var projectedPos = transform.WorldPosition + GetDirection(direction);
+                if (projectedPos.x < 0) return false;
+                if (projectedPos.y < 0) return false;
+                if (projectedPos.x > worldMap.Width - 1) return false;
+                if (projectedPos.y > worldMap.Height - 1) return false;
+            }
+            else
+            {
+                //first check if they're on the edge of the map
+            }
+
             return true;
         }
 

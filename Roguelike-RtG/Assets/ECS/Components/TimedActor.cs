@@ -21,9 +21,8 @@ namespace JS.ECS
         public int ActionPoints;
         public int Speed;
 
-        public TimedActor(Entity entity, int speed = 100)
+        public TimedActor(int speed = 100)
         {
-            this.entity = entity;
             Speed = speed;
             TimeSystem.Register(this);
         }

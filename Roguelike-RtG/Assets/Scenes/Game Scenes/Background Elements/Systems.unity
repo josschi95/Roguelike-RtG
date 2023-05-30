@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 607149220}
   - component: {fileID: 607149219}
   - component: {fileID: 607149221}
+  - component: {fileID: 607149222}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -196,8 +197,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   single: {fileID: 2689567875884823240, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
   compound: {fileID: 8335762976867246004, guid: 603ae19ce87e44242b7928501a8bfb47, type: 3}
-  defaultMaterial: {fileID: 0}
   flashMaterial: {fileID: 2100000, guid: c52e1a718d18f3f4d8b3a7bcb15e7332, type: 2}
+--- !u!114 &607149222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607149217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a994d09394f71f74486a897493f5fb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
 --- !u!1 &1790594448
 GameObject:
   m_ObjectHideFlags: 0

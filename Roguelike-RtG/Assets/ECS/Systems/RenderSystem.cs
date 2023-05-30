@@ -30,7 +30,7 @@ namespace JS.ECS
 
             var go = Instantiate(instance.single);
             go.sprite = render.sprite;
-            go.transform.position = render.transform.LocalPosition;
+            go.transform.position = (Vector3Int)render.transform.LocalPosition;
             render.renderer = go;
 
             render.transform.onTransformChanged += delegate
@@ -44,7 +44,7 @@ namespace JS.ECS
             Register(render);
             var go = Instantiate(instance.compound);
 
-            go.transform.position = render.transform.LocalPosition;
+            go.transform.position = (Vector3Int)render.transform.LocalPosition;
             render.renderer = go;
 
             for (int i = 0; i < render.sprites.Length; i++)
@@ -62,12 +62,12 @@ namespace JS.ECS
         //Update Position on change
         private static void UpdatePosition(RenderSingle single)
         {
-            single.renderer.transform.position = single.transform.LocalPosition;
+            single.renderer.transform.position = (Vector3Int)single.transform.LocalPosition;
         }
 
         private static void UpdatePosition(RenderCompound compound)
         {
-            compound.renderer.transform.position = compound.transform.LocalPosition;
+            compound.renderer.transform.position = (Vector3Int)compound.transform.LocalPosition;
         }
 
         //Flash Sprites on damage

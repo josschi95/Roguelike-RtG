@@ -31,11 +31,13 @@ namespace JS.ECS
 
         private IEnumerator Start()
         {
-            var entity = new Entity();
-            var sentinel = new TimedActor(entity);
-            sentinel.Speed = 100;
-            this.sentinel = sentinel;
-            this.sentinel.onTurnStart += OnNewRound;
+            var entity = new Entity("Sentinel");
+
+            var actor = new TimedActor();
+            entity.AddComponent(actor);
+
+            sentinel = actor;
+            sentinel.onTurnStart += OnNewRound;
 
             while(components.Count <= 1) yield return null;
 
@@ -44,7 +46,7 @@ namespace JS.ECS
 
         private void OnNewRound()
         {
-            //Debug.Log("OnNewRound");
+            Debug.Log("OnNewRound");
             onNewRound?.Invoke();
             StartCoroutine(RoundDelay());
         }
@@ -87,6 +89,7 @@ namespace JS.ECS
 
             for (int i = 0; i < components.Count; i++)
             {
+                //Debug.Log(components[i].entity.Name + " AP: " + components[i].ActionPoints);
                 if (EntityIsFaster(components[i], nextActor))
                 {
                     nextActor = components[i];
@@ -120,6 +123,8 @@ namespace JS.ECS
 
         private void StartTurn(TimedActor actor)
         {
+            Debug.Log(actor.entity.Name);
+            Debug.Log(components.Count);
             actor.IsTurn = true;
         }
 
@@ -136,6 +141,7 @@ namespace JS.ECS
 
         public static void SpendActionPoints(TimedActor actor, int points = pointsToAct)
         {
+            //Debug.Log(actor.entity.Name + " Spending " + points + " AP");
             actor.ActionPoints -= points;
         }
 

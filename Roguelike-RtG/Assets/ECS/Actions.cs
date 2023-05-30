@@ -29,6 +29,7 @@ namespace JS.ECS
         public static void SkipAction(TimedActor actor)
         {
             if (!actor.IsTurn) return;
+            UnityEngine.Debug.Log("SkipAction " + actor.entity.Name);
             TimeSystem.SpendActionPoints(actor);
             TimeSystem.EndTurn(actor);
         }

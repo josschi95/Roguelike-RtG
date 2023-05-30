@@ -69,23 +69,23 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void SmoothToPosition(Vector3 pos)
+    public void SmoothToPosition(Vector2Int pos)
     {
         if (smoothingCoroutine != null) StopCoroutine(smoothingCoroutine);
         smoothingCoroutine = StartCoroutine(SmoothCam(pos));
     }
 
-    private IEnumerator SmoothCam(Vector3 pos)
+    private IEnumerator SmoothCam(Vector2Int pos)
     {
         float t = 0, timeToMove = 0.2f;
-        pos.z = transform.position.z;
+        var newPos = new Vector3(pos.x, pos.y, transform.position.z);
         while(t < timeToMove)
         {
-            transform.position = Vector3.Lerp(transform.position, pos, t / timeToMove);
+            transform.position = Vector3.Lerp(transform.position, newPos, t / timeToMove);
             t += Time.deltaTime;
             yield return null;
         }
-        transform.position = pos;
+        transform.position = newPos;
     }
 
     private void ZoomCamera(float zoom)

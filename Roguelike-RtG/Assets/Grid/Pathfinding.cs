@@ -275,6 +275,11 @@ public class Pathfinding : MonoBehaviour
         return grid.GetGridObject(x, y);
     }
 
+    public GridNode GetNode(Vector2Int pos)
+    {
+        return grid.GetGridObject(pos.x, pos.y);
+    }
+
     public GridNode GetNode(Vector3 worldPosition)
     {
         return grid.GetGridObject(worldPosition);

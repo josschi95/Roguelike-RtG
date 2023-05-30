@@ -216,6 +216,7 @@ namespace JS.ECS
 
         private void TryMove(Compass direction)
         {
+            Debug.Log("TryMove " + _actor.entity.Name);
             if (LocomotionSystem.TryMoveObject(Physics, direction, out int cost))
             {
                 int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
@@ -226,6 +227,7 @@ namespace JS.ECS
 
         private void TryAttack(Compass direction)
         {
+            Debug.Log("TryAttack " + _actor.entity.Name);
             Actions.TryAttack(Actor, direction);
         }
     }

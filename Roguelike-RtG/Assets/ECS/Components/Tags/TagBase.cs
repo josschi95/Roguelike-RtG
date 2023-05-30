@@ -9,6 +9,13 @@ namespace JS.ECS.Tags
     }
 
     /// <summary>
+    /// Tag to mark the player entity
+    /// </summary>
+    public class PlayerTag : TagBase
+    {
+    }
+
+    /// <summary>
     /// Tag to mark an object as being immune to damage.
     /// </summary>
     public class NoDamage : TagBase
@@ -53,6 +60,10 @@ namespace JS.ECS.Tags
     }
 
     public class Item : TagBase
+    {
+    }
+
+    public class NeverStack : TagBase
     {
     }
 }

@@ -19,17 +19,24 @@ namespace JS.CharacterSystem
         //
         protected List<int> modifiers;
 
-        public StatBase(string name, string shortName, int value = 10, int min = 1, int potential = 100, int max = 100)
+        public StatBase(string name, string shortName, int value = 10, int potential = 100, int min = 1, int max = 100)
         {
             Name = name;
             ShortName = shortName;
-            MinValue = min;
-            Potential = potential;
-            MaxValue = max;
+
             BaseValue = value;
+            Potential = potential;
+            
+            MinValue = min;
+            MaxValue = max;
 
             modifiers = new List<int>();
             CalculateXPToNextLevel();
+        }
+
+        public void IncreaseBaseValue(int bonus)
+        {
+            BaseValue += bonus;
         }
 
         private int GetModifiedValue()

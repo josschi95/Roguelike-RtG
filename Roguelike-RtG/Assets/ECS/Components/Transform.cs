@@ -7,37 +7,46 @@ namespace JS.ECS
         public delegate void OnTransformChanged();
         public OnTransformChanged onTransformChanged;
 
-        private Vector2 _worldPosition;
-        private Vector2 _regionPosition;
-        private Vector2 _localPosition;
+        public OnTransformChanged onWorldTileChanged;
+        public OnTransformChanged onRegionTileChanged;
+        public OnTransformChanged onLocalTileChanged;
 
-        public Vector2 WorldPosition
+        public MapLevel MapLevel { get; private set; } = MapLevel.Local;
+
+        private Vector2Int _worldPosition;
+        private Vector2Int _regionPosition;
+        private Vector2Int _localPosition;
+
+        public Vector2Int WorldPosition
         {
             get => _worldPosition;
             set
             {
                 _worldPosition = value;
                 onTransformChanged?.Invoke();
+                onWorldTileChanged?.Invoke();
             }
         }
 
-        public Vector2 RegionPosition
+        public Vector2Int RegionPosition
         {
             get => _regionPosition;
             set
             {
                 _regionPosition = value;
                 onTransformChanged?.Invoke();
+                onRegionTileChanged?.Invoke();
             }
         }
 
-        public Vector2 LocalPosition
+        public Vector2Int LocalPosition
         {
             get => _localPosition; 
             set
             {
                 _localPosition = value;
                 onTransformChanged?.Invoke();
+                onLocalTileChanged?.Invoke();
             }
         }
 
@@ -54,9 +63,8 @@ namespace JS.ECS
     }
 }
 
-public enum PositionLevel
+public enum MapLevel
 {
     Local,
-    Region,
     World,
 }

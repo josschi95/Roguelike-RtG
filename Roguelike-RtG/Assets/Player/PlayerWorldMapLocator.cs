@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using JS.ECS;
 using UnityEngine.InputSystem;
+using JS.ECS.Tags;
 
 namespace JS.WorldMap
 {
@@ -18,16 +19,14 @@ namespace JS.WorldMap
 
         public void PlacePlayer()
         {
-            var playerEntity = new Entity();
-            var transform = new ECS.Transform();
-            transform.LocalPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
-            
-            playerEntity.AddComponent(transform);
-            var physics = new ECS.Physics();
-            playerEntity.AddComponent(physics);
+            var player = Blueprints.GetCreature("Player");
+            player.AddTag(new PlayerTag());
 
-            var actor = new TimedActor(playerEntity);
-            playerEntity.AddComponent(new InputHandler(inputActionAsset, actor));
+            var transform = player.GetComponent<ECS.Transform>();
+            transform.LocalPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
+
+            var actor = player.GetComponent<TimedActor>();
+            player.AddComponent(new InputHandler(inputActionAsset, actor));
 
             new RenderCompound(transform, playerSprites);
 

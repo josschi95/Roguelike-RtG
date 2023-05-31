@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using JS.WorldMap;
 
 namespace JS.WorldMap
 {
@@ -19,12 +18,15 @@ namespace JS.WorldMap
         [SerializeField] private Tilemap roadMap;
         [SerializeField] private Tilemap settlementMap;
         [SerializeField] private Tilemap infoMap;
+
+        [Space]
+
         [SerializeField] private TileBase highlightTile;
+        [SerializeField] private TileBase coastalWaterTile;
 
         [Space]
 
         [SerializeField] private TileBase[] windDirectionTiles;
-
         [Space]
 
         public Biome[] biomes;
@@ -56,16 +58,23 @@ namespace JS.WorldMap
 
         private void DisplayBiomes()
         {
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos =new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var biome = worldMap.TerrainData.GetBiome(x, y);
 
                     if (biome.isLand) landMap.SetTile(tilePos, biome.RuleTile);
                     else oceanMap.SetTile(tilePos, biome.RuleTile);
+
+                    var node = worldMap.GetNode(x,y);
+                    if (node != null && node.isCoast)
+                    {
+                        oceanMap.SetTile(tilePos, coastalWaterTile);
+                    }
                 }
             }
         }
@@ -73,20 +82,21 @@ namespace JS.WorldMap
         private void DisplayRivers()
         {
             riverMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
             foreach (var river in worldMap.TerrainData.Rivers)
             {
-                for (int i = 0; i < river.Coordinates.Length; i++)
+                for (int i = 0; i < river.Nodes.Length; i++)
                 {
-                    var tilePos = origin + new Vector3Int(river.Coordinates[i].x, river.Coordinates[i].y);
+                    var tilePos = new Vector3Int(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
+                    //var tilePos = origin + new Vector3Int(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
                     RuleTile tile = null;
                     var existingTile = riverMap.GetTile(tilePos) as RuleTile;
                     if (existingTile != null)
                     {
                         //Debug.Log("At " + tilePos);
-                        tile = tileHelper.GetIntersectionTile(existingTile, river.Flow[i]);
+                        tile = tileHelper.GetIntersectionTile(existingTile, river.Nodes[i].Flow);
                     }
-                    else tile = tileHelper.GetRiverTile(river.Flow[i]);
+                    else tile = tileHelper.GetRiverTile(river.Nodes[i].Flow);
                     riverMap.SetTile(tilePos, tile);
                 }
             }
@@ -109,11 +119,12 @@ namespace JS.WorldMap
         private void DisplaySettlements()
         {
             settlementMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
-                var tilePos = origin + new Vector3Int(settlement.X, settlement.Y);
+                var tilePos = new Vector3Int(settlement.X, settlement.Y);
+                //var tilePos = origin + new Vector3Int(settlement.X, settlement.Y);
                 settlementMap.SetTile(tilePos, settlementData.Types[settlement.TypeID].settlementTile);
             }
         }
@@ -127,13 +138,14 @@ namespace JS.WorldMap
         public void DisplayHeatMap()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos = new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
                     var zone = worldGenerationParameters.TemperatureZones[node.TempZoneID];
                     infoMap.SetTile(tilePos, zone.Tile);
@@ -145,13 +157,14 @@ namespace JS.WorldMap
         public void DisplayMoistureMap()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos = new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
                     var zone = worldGenerationParameters.PrecipitationZones[node.PrecipitationZoneID];
                     infoMap.SetTile(tilePos, zone.Tile);
@@ -162,13 +175,14 @@ namespace JS.WorldMap
         public void DisplayWindMap()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos = new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
 
                     infoMap.SetTile(tilePos, windDirectionTiles[(int)node.windDirection]);
@@ -181,13 +195,14 @@ namespace JS.WorldMap
         public void HighlightTectonicPlates()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos = new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
                     if (node.isTectonicPoint)
                     {
@@ -200,14 +215,15 @@ namespace JS.WorldMap
         public void HighlightBiome()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var biome in worldMap.TerrainData.BiomeGroups)
             {
                 if (biome.BiomeID != biomeToHighlight.ID) continue;
                 for (int i = 0; i < biome.Nodes.Count; i++)
                 {
-                    var tilePos = origin + new Vector3Int(biome.Nodes[i].x, biome.Nodes[i].y);
+                    var tilePos = new Vector3Int(biome.Nodes[i].x, biome.Nodes[i].y);
+                    //var tilePos = origin + new Vector3Int(biome.Nodes[i].x, biome.Nodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -216,13 +232,14 @@ namespace JS.WorldMap
         public void HighlightMountains()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var mountain in worldMap.TerrainData.Mountains)
             {
                 for (int i = 0; i < mountain.Nodes.Count; i++)
                 {
-                    var tilePos = origin + new Vector3Int(mountain.Nodes[i].x, mountain.Nodes[i].y);
+                    var tilePos = new Vector3Int(mountain.Nodes[i].x, mountain.Nodes[i].y);
+                    //var tilePos = origin + new Vector3Int(mountain.Nodes[i].x, mountain.Nodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -231,13 +248,14 @@ namespace JS.WorldMap
         public void HighlightIslands()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var island in worldMap.TerrainData.Islands)
             {
                 for (int i = 0; i < island.Nodes.Count; i++)
                 {
-                    var tilePos = origin + new Vector3Int(island.Nodes[i].x, island.Nodes[i].y);
+                    var tilePos = new Vector3Int(island.Nodes[i].x, island.Nodes[i].y);
+                    //var tilePos = origin + new Vector3Int(island.Nodes[i].x, island.Nodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -246,13 +264,14 @@ namespace JS.WorldMap
         public void HighlightLakes()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var lake in worldMap.TerrainData.Lakes)
             {
                 for (int i = 0; i < lake.Nodes.Count; i++)
                 {
-                    var tilePos = origin + new Vector3Int(lake.Nodes[i].x, lake.Nodes[i].y);
+                    var tilePos = new Vector3Int(lake.Nodes[i].x, lake.Nodes[i].y);
+                    //var tilePos = origin + new Vector3Int(lake.Nodes[i].x, lake.Nodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -261,13 +280,14 @@ namespace JS.WorldMap
         public void HighlightSettlements()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
                 for (int i = 0; i < settlement.Territory.Count; i++)
                 {
-                    var tilePos = origin + new Vector3Int(settlement.Territory[i].x, settlement.Territory[i].y);
+                    var tilePos = new Vector3Int(settlement.Territory[i].x, settlement.Territory[i].y);
+                    //var tilePos = origin + new Vector3Int(settlement.Territory[i].x, settlement.Territory[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -276,13 +296,14 @@ namespace JS.WorldMap
         public void HighlightCoasts()
         {
             infoMap.ClearAllTiles();
-            var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = origin + new Vector3Int(x, y);
+                    var tilePos = new Vector3Int(x, y);
+                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
                     if (node.isCoast)
                     {

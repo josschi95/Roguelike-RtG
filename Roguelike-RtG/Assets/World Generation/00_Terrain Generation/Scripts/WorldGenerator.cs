@@ -171,7 +171,7 @@ namespace JS.WorldMap.Generation
 
         private IEnumerator UpdateProgress(string message)
         {
-            Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
+            //Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = message;
             yield return new WaitForSeconds(0.01f);
             initialTime = Time.realtimeSinceStartup;
@@ -181,9 +181,15 @@ namespace JS.WorldMap.Generation
         {
             int index = rng.Next(0, settlementData.Settlements.Length);
             var settlement = settlementData.Settlements[index];
-
+            
             playerData.worldX = settlement.X;
             playerData.worldY = settlement.Y;
+
+            playerData.regionX = Mathf.FloorToInt(mapFeatures.RegionDimensions.x * 0.5f);
+            playerData.regionY = Mathf.FloorToInt(mapFeatures.RegionDimensions.y * 0.5f);
+
+            playerData.localX = Mathf.FloorToInt(mapFeatures.LocalDimensions.x * 0.5f);
+            playerData.localY = Mathf.FloorToInt(mapFeatures.LocalDimensions.y * 0.5f);
         }
     }
 }

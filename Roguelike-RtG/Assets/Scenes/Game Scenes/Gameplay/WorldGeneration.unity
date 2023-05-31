@@ -979,7 +979,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 261351982}
-  - component: {fileID: 261351987}
   - component: {fileID: 261351981}
   - component: {fileID: 261351985}
   - component: {fileID: 261351986}
@@ -1009,23 +1008,11 @@ MonoBehaviour:
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
-  noiseScale: 50
+  noiseScale: 30
   octaves: 5
   persistence: 0.5
   lacunarity: 2
   offset: {x: 0, y: 0}
-  Tundra: {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}
-  Taiga: {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
-  TemperateGrassland: {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
-  Shrubland: {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
-  DeciduousForest: {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
-  Desert: {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
-  TropicalSeasonalForest: {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
-  Savanna: {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
-  Jungle: {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
-  DeepOcean: {fileID: 11400000, guid: 7339a461c4bc6df4a8cf09f86a1c3fca, type: 2}
-  OceanSurface: {fileID: 11400000, guid: 15ffda11dff01bb4ba973fa86041f37f, type: 2}
-  Mountain: {fileID: 11400000, guid: b7473dfa573ff72409ee845417ab166e, type: 2}
 --- !u!4 &261351982
 Transform:
   m_ObjectHideFlags: 0
@@ -1056,6 +1043,7 @@ MonoBehaviour:
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   worldGenerator: {fileID: 1549498269}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
+  biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   MinRiverHeight: 0.6
   MaxRiverAttempts: 1000
   MinRiverTurns: 6
@@ -1087,35 +1075,6 @@ MonoBehaviour:
   maxDropletLifetime: 30
   initialWaterVolume: 1
   initialSpeed: 1
---- !u!114 &261351987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261351979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 4894fad63030aeb4ab71cc7e49076d2c, type: 2}
-  callbackEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 261351981}
-        m_TargetAssemblyTypeName: JS.WorldGeneration.TerrainGenerator, Assembly-CSharp
-        m_MethodName: BeginGenerateTerrain
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  developerNotes: Triggers the generation of the terrain
 --- !u!1 &285682156
 GameObject:
   m_ObjectHideFlags: 0
@@ -6497,6 +6456,7 @@ MonoBehaviour:
   settlementMap: {fileID: 0}
   infoMap: {fileID: 1309917771}
   highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
+  coastalWaterTile: {fileID: 0}
   windDirectionTiles:
   - {fileID: 11400000, guid: 01bf11602beee904098fe0a550f1df62, type: 2}
   - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}

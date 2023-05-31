@@ -1086,6 +1086,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -427416410678587396, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
+  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
 --- !u!1 &526793100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,6 +1674,7 @@ MonoBehaviour:
   settlementMap: {fileID: 1062285702}
   infoMap: {fileID: 1757720318}
   highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
+  coastalWaterTile: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
   windDirectionTiles:
   - {fileID: 11400000, guid: 01bf11602beee904098fe0a550f1df62, type: 2}
   - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}

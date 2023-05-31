@@ -23,20 +23,24 @@ namespace JS.WorldMap
             player.AddTag(new PlayerTag());
 
             var transform = player.GetComponent<ECS.Transform>();
-            transform.LocalPosition = new Vector2Int(playerData.worldX + worldMap.TerrainData.OriginX, playerData.worldY + worldMap.TerrainData.OriginY);
-
+            transform.Depth = 1;
+            transform.WorldPosition = new Vector2Int(playerData.worldX, playerData.worldY);
+            transform.RegionPosition = new Vector2Int(playerData.regionX, playerData.regionY);
+            transform.LocalPosition = new Vector2Int(playerData.localX, playerData.localY);
+            player.AddComponent(new WorldLocomotion());
             var actor = player.GetComponent<TimedActor>();
             player.AddComponent(new InputHandler(inputActionAsset, actor));
 
+
             new RenderCompound(transform, playerSprites);
 
-            CenterCameraOnPlayer(transform.LocalPosition);
+            CenterCameraOnPlayer(transform.WorldPosition);
             pixelCam.assetsPPU = 64;
             var cam = pixelCam.GetComponent<CameraController>();
 
             transform.onTransformChanged += delegate
             {
-                cam.SmoothToPosition(transform.LocalPosition);
+                cam.SmoothToPosition(transform.WorldPosition);
             };
         }
 

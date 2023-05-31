@@ -44,10 +44,6 @@ namespace JS.WorldMap.Generation
         private List<WorldTile> water;
         private List<WorldTile> land;
 
-        [SerializeField] private Biome Tundra, Taiga, TemperateGrassland, Shrubland, DeciduousForest, Desert, TropicalSeasonalForest, Savanna, Jungle;
-        [SerializeField] private Biome DeepOcean, OceanSurface;
-        [SerializeField] private Biome Mountain;
-
         public void SetInitialValues(WorldSize size, int seed)
         {
             this.seed = seed;
@@ -59,11 +55,12 @@ namespace JS.WorldMap.Generation
             land = new List<WorldTile>();
 
             mapSize = mapFeatures.MapSize(worldSize);
-            var origin = new Vector2Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
+            var origin = Vector2Int.zero;
+            //var origin = new Vector2Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
             terrainData.MapSize = mapSize;
             
-            terrainData.OriginX = origin.x;
-            terrainData.OriginY = origin.y;
+            //terrainData.OriginX = origin.x;
+            //terrainData.OriginY = origin.y;
 
             worldMap.CreateGrid(mapSize, mapSize);
         }
@@ -324,7 +321,7 @@ namespace JS.WorldMap.Generation
                     WorldTile node = worldMap.GetNode(x, y);
                     if (terrainData.HeightMap[node.x, node.y] >= mapFeatures.MountainHeight)
                         node.CheckNeighborMountains();
-                    node.SetBiome(Mountain);
+                    node.SetBiome(biomeHelper.Mountain);
                 }
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
@@ -375,7 +372,7 @@ namespace JS.WorldMap.Generation
         {
             var heightMap = terrainData.HeightMap;
             //Create Wind Map
-            SecondaryDirections[,] windMap = AirPressureData.GetWindMap(heightMap);
+            Compass[,] windMap = AirPressureData.GetWindMap(heightMap);
             //Other factors that need to be taken into account
                 //Coriolis effect
                 //Convergence zones
@@ -435,7 +432,7 @@ namespace JS.WorldMap.Generation
         /// <summary>
         /// Removes moisture from leeward side of mountains and moves to windward sides
         /// </summary>
-        private void CreateRainShadows(MountainRange[] mountains, SecondaryDirections[,] windMap)
+        private void CreateRainShadows(MountainRange[] mountains, Compass[,] windMap)
         {
             for (int i = 0; i < mountains.Length; i++)
             {
@@ -571,40 +568,10 @@ namespace JS.WorldMap.Generation
             if (lacunarity < 1) lacunarity = 1;
             if (octaves < 0) octaves = 0;
         }
-
-
-        #region - Obsolete -
-        /*
-        private Biome GetBiomeByTable(TerrainNode node)
-        {
-            int temperatureIndex = TemperatureIndex(node.temperatureZone);
-            int precipitationIndex = PrecipitationIndex(node.precipitationZone);
-
-            BiomeTypes type = BiomeTable[precipitationIndex, temperatureIndex];
-            for (int i = 0; i < mapFeatures.Biomes.Length; i++)
-            {
-                if (mapFeatures.Biomes[i].BiomeType == type) return mapFeatures.Biomes[i];
-            }
-            throw new UnityException("Node temperature and precipitation outside bounds of designated zones. " +
-                temperatureIndex + ", " + precipitationIndex);
-        }
-
-        private BiomeTypes[,] BiomeTable = new BiomeTypes[6, 6] {   
-        //COLDEST                   //COLDER                    //COLD                          //HOT                                   //HOTTER                            //HOTTEST
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.Desert,                   BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYEST
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.TemperateGrassland,    BiomeTypes.TemperateGrassland,       BiomeTypes.Desert,                   BiomeTypes.Desert },              //DRYER
-        { BiomeTypes.Tundra,        BiomeTypes.Tundra,       BiomeTypes.Woodland,              BiomeTypes.Woodland,                 BiomeTypes.Savanna,                  BiomeTypes.Savanna },             //DRY
-        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.Woodland,                 BiomeTypes.TropicalSeasonalForest,   BiomeTypes.Savanna },             //WET
-        { BiomeTypes.Tundra,        BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.DeciduousForest,          BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest },  //WETTER
-        { BiomeTypes.BorealForest,  BiomeTypes.BorealForest, BiomeTypes.DeciduousForest,       BiomeTypes.TropicalSeasonalForest,   BiomeTypes.TropicalRainforest,       BiomeTypes.TropicalRainforest }   //WETTEST
-        };
-        */
-        #endregion
     }
 }
 
 public enum WorldSize { Tiny, Small, Medium, Large, Huge }
 public enum Direction { North, South, East, West}
-public enum SecondaryDirections { NorthEast, NorthWest, SouthEast, SouthWest }
 
 public enum Compass { North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest }

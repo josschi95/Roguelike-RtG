@@ -24,7 +24,7 @@ namespace JS.WorldMap
         public float[] heatMap;
         public float[] moistureMap;
         //public float[] airPressureMap;
-        public SecondaryDirections[] windMap;
+        public Compass[] windMap;
 
         public int[] biomeMap; //reference to the ID of each biome
         public BiomeGroup[] BiomeGroups;

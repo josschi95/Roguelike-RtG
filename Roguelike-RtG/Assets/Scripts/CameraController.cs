@@ -1,3 +1,4 @@
+using JS.WorldMap;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private InputActionProperty mousePosition;
     [SerializeField] private InputActionProperty rightMouseButton;
     [SerializeField] private InputActionProperty mouseScroll;
-
+    [SerializeField] private WorldData worldData;
     private Camera cam;
     private PixelPerfectCamera pixelCam;
 
@@ -18,11 +19,14 @@ public class CameraController : MonoBehaviour
 
     private Coroutine smoothingCoroutine;
 
+    private float minX = -0.5f, minY = -0.5f, maxX = 200.5f, maxY = 200.5f;
+
     private void Start()
     {
         cam = GetComponent<Camera>();
         pixelCam = GetComponent<PixelPerfectCamera>();
-
+        maxX = worldData.Width + 0.5f;
+        maxY = worldData.Height + 0.5f;
     }
 
     private void OnEnable()
@@ -64,9 +68,22 @@ public class CameraController : MonoBehaviour
 
             Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(mousePosition.action.ReadValue<Vector2>());
             transform.position += difference;
-            
+            KeepCameraInBounds();
             yield return null;
         }
+    }
+
+    private void KeepCameraInBounds()
+    {
+        float height = cam.orthographicSize;
+        float width = height * cam.aspect;
+
+        transform.position = new Vector3
+            (
+                Mathf.Clamp(transform.position.x, minX + width, maxX - width),
+                Mathf.Clamp(transform.position.y, minY + height, maxY - height),
+                transform.position.z
+            );
     }
 
     public void SmoothToPosition(Vector2Int pos)
@@ -82,10 +99,12 @@ public class CameraController : MonoBehaviour
         while(t < timeToMove)
         {
             transform.position = Vector3.Lerp(transform.position, newPos, t / timeToMove);
+            KeepCameraInBounds();
             t += Time.deltaTime;
             yield return null;
         }
         transform.position = newPos;
+        KeepCameraInBounds();
     }
 
     private void ZoomCamera(float zoom)
@@ -114,5 +133,6 @@ public class CameraController : MonoBehaviour
                 pixelCam.assetsPPU = 32;
                 break;
         }
+        KeepCameraInBounds();
     }
 }

@@ -23,13 +23,13 @@ namespace JS.WorldMap
             return pressureMap;
         }
 
-        public static SecondaryDirections[,] GetWindMap(float[,] map)
+        public static Compass[,] GetWindMap(float[,] map)
         {
             int width = map.GetLength(0);
             int height = map.GetLength(1);
             var equator = height / 2f;
             float windZoneLength = equator / 3f;
-            SecondaryDirections[,] windMap = new SecondaryDirections[width, height];
+            Compass[,] windMap = new Compass[width, height];
 
             for (int x = 0; x < width; x++)
             {
@@ -40,13 +40,13 @@ namespace JS.WorldMap
 
                     if (windZone == 1) //Secondary Direction is East
                     {
-                        if (y > equator) windMap[x, y] = SecondaryDirections.NorthEast;
-                        else windMap[x, y] = SecondaryDirections.SouthEast;
+                        if (y > equator) windMap[x, y] = Compass.NorthEast;
+                        else windMap[x, y] = Compass.SouthEast;
                     }
                     else //Secondary direction is West
                     {
-                        if (y > equator) windMap[x, y] = SecondaryDirections.SouthWest;
-                        else windMap[x, y] = SecondaryDirections.NorthWest;
+                        if (y > equator) windMap[x, y] = Compass.SouthWest;
+                        else windMap[x, y] = Compass.NorthWest;
                     }
                 }
             }

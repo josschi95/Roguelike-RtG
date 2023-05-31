@@ -38,7 +38,7 @@ namespace JS.WorldMap
             set => mapSize = value;
         }
 
-        private int originX;
+        /*private int originX;
         private int originY;
         public int OriginX
         {
@@ -49,7 +49,7 @@ namespace JS.WorldMap
         {
             get => originY;
             set => originY = value;
-        }
+        }*/
 
         private int[,] seedMap;
         public int[,] SeedMap
@@ -128,5 +128,17 @@ namespace JS.WorldMap
             set => islands = value;
         }
         #endregion
+
+        public River FindRiverAt(int x, int y)
+        {
+            foreach (var river in rivers)
+            {
+                for (int i = 0; i < river.Nodes.Length; i++)
+                {
+                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y) return river;
+                }
+            }
+            return null;
+        }
     }
 }

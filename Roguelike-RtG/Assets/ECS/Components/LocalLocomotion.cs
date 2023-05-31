@@ -1,6 +1,8 @@
+using JS.CharacterSystem;
+
 namespace JS.ECS
 {
-    public class Locomotion : ComponentBase
+    public class LocalLocomotion : ComponentBase
     {
         private Transform _transform;
         public Transform Transform
@@ -15,11 +17,21 @@ namespace JS.ECS
             }
         }
 
-        public int MovementSpeed = 100;
-
-        public Locomotion()
+        public int MoveSpeed
         {
-            LocomotionSystem.Register(this);
+            get
+            {
+                if (entity.TryGetStat("MoveSpeed", out StatBase stat))
+                {
+                    return stat.Value;
+                }
+                return 1;
+            }
+        }
+
+        public LocalLocomotion()
+        {
+            LocalLocomotionSystem.Register(this);
         }
 
         public override void FireEvent(Event newEvent)

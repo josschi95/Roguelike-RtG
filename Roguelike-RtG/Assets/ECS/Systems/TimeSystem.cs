@@ -46,7 +46,7 @@ namespace JS.ECS
 
         private void OnNewRound()
         {
-            Debug.Log("OnNewRound");
+            //Debug.Log("OnNewRound");
             onNewRound?.Invoke();
             StartCoroutine(RoundDelay());
         }
@@ -123,8 +123,8 @@ namespace JS.ECS
 
         private void StartTurn(TimedActor actor)
         {
-            Debug.Log(actor.entity.Name);
-            Debug.Log(components.Count);
+            //Debug.Log(actor.entity.Name);
+            //Debug.Log(components.Count);
             actor.IsTurn = true;
         }
 

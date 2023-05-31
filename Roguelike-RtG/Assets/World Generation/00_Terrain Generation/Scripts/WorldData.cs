@@ -29,11 +29,12 @@ namespace JS.WorldMap
 
         public void CreateGrid(int width, int height)
         {
-            float halfWidth = width / 2f;
-            float halfHeight = height / 2f;
-            Vector3 origin = new Vector3(-halfWidth, -halfHeight);
+            //float halfWidth = width / 2f;
+            //float halfHeight = height / 2f;
+            //Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-            grid = new Grid<WorldTile>(width, height, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            grid = new Grid<WorldTile>(width, height, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            //grid = new Grid<WorldTile>(width, height, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
             for (int x = 0; x < width; x++)
             {
@@ -47,11 +48,12 @@ namespace JS.WorldMap
         public void CreateGridFromData(WorldSaveData data)
         {
             int size = data.mapWidth;
-            float halfWidth = size / 2f;
-            float halfHeight = size / 2f;
-            Vector3 origin = new Vector3(-halfWidth, -halfHeight);
+            //float halfWidth = size / 2f;
+            //float halfHeight = size / 2f;
+            //Vector3 origin = new Vector3(-halfWidth, -halfHeight);
 
-            grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            grid = new Grid<WorldTile>(size, size, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            //grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
             for (int x = 0; x < size; x++)
             {

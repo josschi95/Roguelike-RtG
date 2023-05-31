@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 607149218}
   - component: {fileID: 607149220}
   - component: {fileID: 607149219}
+  - component: {fileID: 607149223}
   - component: {fileID: 607149221}
   - component: {fileID: 607149222}
   m_Layer: 0
@@ -170,6 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5220cac6153e84da16c601f664b1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldMapParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
 --- !u!114 &607149220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +214,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+--- !u!114 &607149223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607149217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14047cf4a5a074342b6439484e9f52d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
 --- !u!1 &1790594448
 GameObject:
   m_ObjectHideFlags: 0

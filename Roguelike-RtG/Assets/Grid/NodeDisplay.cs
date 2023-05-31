@@ -51,7 +51,18 @@ namespace JS.WorldMap
             nodeTemperature.text = "Avg. Temperature: " + (Temperature.FloatToCelsius(terrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
             nodePrecipitation.text = "Annual Rainfall: " + (terrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
 
-            if (node.rivers.Count > 0) nodeRiverText.text = "River (" + node.rivers.Count + ")";
+            var river = terrainData.FindRiverAt(node.x, node.y);
+            if (river != null)
+            {
+                nodeRiverText.text = "River: " + river.ID;
+                for (int i = 0; i < river.Nodes.Length; i++)
+                {
+                    if (river.Nodes[i].Coordinates.x == node.x && river.Nodes[i].Coordinates.y == node.y)
+                    {
+                        nodeRiverText.text += ", Width: " + river.Nodes[i].Size;
+                    }
+                }
+            }
             else nodeRiverText.text = "";
         }
 

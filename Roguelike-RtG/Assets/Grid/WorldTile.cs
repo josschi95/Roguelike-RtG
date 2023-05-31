@@ -38,7 +38,7 @@ namespace JS.WorldMap
         public int PrecipitationZoneID { get; private set; }
         #endregion
 
-        public SecondaryDirections windDirection;// { get; private set; }
+        public Compass windDirection;// { get; private set; }
         public float airPressure; // { get; private set; }
         public bool isCoast { get; set; }
 
@@ -112,20 +112,20 @@ namespace JS.WorldMap
             }
         }
 
-        public Direction NeighborDirection_Adjacent(WorldTile tile)
+        public Compass NeighborDirection_Adjacent(WorldTile tile)
         {
             if (!neighbors_adj.Contains(tile)) throw new System.Exception(tile.x + "," + tile.y + 
                 " is is not an adjacent tile to " + x + "," + y + "." + "");
 
             if (tile.x != x)
             {
-                if (tile.x > x) return Direction.East;
-                return Direction.West;
+                if (tile.x > x) return Compass.East;
+                return Compass.West;
             }
             else
             {
-                if (tile.y > y) return Direction.North;
-                return Direction.South;
+                if (tile.y > y) return Compass.North;
+                return Compass.South;
             }
         }
 

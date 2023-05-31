@@ -60,7 +60,7 @@ public class GridSystem : MonoBehaviour
     /// <summary>
     /// The player has entered a new Local map, generate it
     /// </summary>
-    private void NewLocalMap(Vector2Int world, Vector2Int region, int depth)
+    private GameGrid NewLocalMap(Vector2Int world, Vector2Int region, int depth)
     {
         var newGrid = new GameGrid(world, region, depth);
         var width = worldGenParams.LocalDimensions.x;
@@ -70,6 +70,7 @@ public class GridSystem : MonoBehaviour
         gameGrids.Add(newGrid);
 
         //Reset current map, load in values of new map, change player position to appropriate position
+        return newGrid;
     }
 
     /// <summary>

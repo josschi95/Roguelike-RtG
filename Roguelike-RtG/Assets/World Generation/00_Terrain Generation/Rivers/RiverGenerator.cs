@@ -9,7 +9,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldData worldMap;
         [SerializeField] private WorldGenerator worldGenerator;
         [SerializeField] private TerrainData terrainData;
-        //private WorldMap worldMap;
+        [SerializeField] private BiomeHelper biomeHelper;
 
         [SerializeField] private float MinRiverHeight = 0.6f;
 
@@ -20,12 +20,14 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private int MinRiverLength = 15;
 
-        [SerializeField] private int MaxRiverIntersections = 2;
+        //[SerializeField] private int MaxRiverIntersections = 2;
 
         [SerializeField] private Biome riverBiome;
 
         private List<River> rivers;
         private List<RiverGroup> riverGroups;
+
+        private float headWaterHeight;
 
         public List<River> GenerateRivers(int mapSize, int count)
         {
@@ -63,6 +65,7 @@ namespace JS.WorldMap.Generation
 
             //Find river initial direction
             river.CurrentDirection = node.NeighborDirection_Adjacent(FindLowestNeighborNode(node));
+            headWaterHeight = node.Altitude; //set initial height
 
             //Recursively find a path to water
             FindPathToWater(node, river.CurrentDirection, river, tiles);
@@ -71,8 +74,13 @@ namespace JS.WorldMap.Generation
             if (river.TurnCount < MinRiverTurns) return false;
             if (river.TurnCount > MaxRiverTurns) return false;
             if (tiles.Count < MinRiverLength) return false;
-            if (river.Intersections > MaxRiverIntersections) return false;
+            //if (river.Intersections > MaxRiverIntersections) return false;
 
+            if (FindWaterTile(tiles[tiles.Count - 1]) == null)
+            {
+                var n = tiles[tiles.Count - 1];
+                //Debug.Log("Check for lake at " +  n.x + "," + n.y);
+            }
             return true;
         }
 
@@ -112,7 +120,7 @@ namespace JS.WorldMap.Generation
             return lowestNeighbor;
         }
 
-        private void FindPathToWater(WorldTile node, Direction direction, River river, List<WorldTile> tiles)
+        private void FindPathToWater(WorldTile node, Compass direction, River river, List<WorldTile> tiles)
         {
             //may need to do some additional checks...
             if (node.rivers.Contains(river))
@@ -125,10 +133,27 @@ namespace JS.WorldMap.Generation
                 Debug.LogWarning("River already contains unregistered node");
                 return;
             }
+            //Rivers can't flow up higher than they start
+            if (node.Altitude > headWaterHeight) return;
+            if (tiles.Count > 1 && node.Altitude > tiles[tiles.Count - 1].Altitude + 0.015f) return;
 
-            if (node.rivers.Count > 0) river.Intersections++;
+            if (tiles.Count > 1)
+            {
+                if (!node.hasBiome) Debug.LogWarning("Biome not assigned");
+                if (node.BiomeID == biomeHelper.Mountain.ID)
+                {
+                    //Debug.Log("River is in mountains at " + node.x + "," + node.y);
+                    if (tiles[tiles.Count - 1].BiomeID != biomeHelper.Mountain.ID)
+                    {
+                        Debug.Log("Cannot flow up mountain at " + node.x + "," + node.y);
+                        return; //Don't flow from a non-mountain tile to a mountain tile
+                    }
+                }
+            }
 
             tiles.Add(node);
+
+            if (node.rivers.Count > 0) return;
 
             if (node.x == 0 || node.y == 0 || node.x == worldMap.Width - 1 || node.y == worldMap.Height - 1) return;
 
@@ -146,19 +171,19 @@ namespace JS.WorldMap.Generation
             // override flow direction if a tile is significantly lower
             switch (direction)
             {
-                case Direction.North:
+                case Compass.North:
                     if (Mathf.Abs(northValue - southValue) < 0.1f)
                         southValue = int.MaxValue;
                     break;
-                case Direction.South:
+                case Compass.South:
                     if (Mathf.Abs(northValue - southValue) < 0.1f)
                         northValue = int.MaxValue;
                     break;
-                case Direction.East:
+                case Compass.East:
                     if (Mathf.Abs(eastValue - westValue) < 0.1f)
                         westValue = int.MaxValue;
                     break;
-                case Direction.West:
+                case Compass.West:
                     if (Mathf.Abs(eastValue - westValue) < 0.1f)
                         eastValue = int.MaxValue;
                     break;
@@ -171,10 +196,10 @@ namespace JS.WorldMap.Generation
             {
                 if (north.IsLand)
                 {
-                    if (river.CurrentDirection != Direction.North)
+                    if (river.CurrentDirection != Compass.North)
                     {
                         river.TurnCount++;
-                        river.CurrentDirection = Direction.North;
+                        river.CurrentDirection = Compass.North;
                     }
                     FindPathToWater(north, direction, river, tiles);
                 }
@@ -183,10 +208,10 @@ namespace JS.WorldMap.Generation
             {
                 if (south.IsLand)
                 {
-                    if (river.CurrentDirection != Direction.South)
+                    if (river.CurrentDirection != Compass.South)
                     {
                         river.TurnCount++;
-                        river.CurrentDirection = Direction.South;
+                        river.CurrentDirection = Compass.South;
                     }
                     FindPathToWater(south, direction, river, tiles);
                 }
@@ -195,10 +220,10 @@ namespace JS.WorldMap.Generation
             {
                 if (east.IsLand)
                 {
-                    if (river.CurrentDirection != Direction.East)
+                    if (river.CurrentDirection != Compass.East)
                     {
                         river.TurnCount++;
-                        river.CurrentDirection = Direction.East;
+                        river.CurrentDirection = Compass.East;
                     }
                     FindPathToWater(east, direction, river, tiles);
                 }
@@ -207,10 +232,10 @@ namespace JS.WorldMap.Generation
             {
                 if (west.IsLand)
                 {
-                    if (river.CurrentDirection != Direction.West)
+                    if (river.CurrentDirection != Compass.West)
                     {
                         river.TurnCount++;
-                        river.CurrentDirection = Direction.West;
+                        river.CurrentDirection = Compass.West;
                     }
                     FindPathToWater(west, direction, river, tiles);
                 }
@@ -246,6 +271,17 @@ namespace JS.WorldMap.Generation
             return count;
         }
 
+        private River FindRiverAt(int x, int y)
+        {
+            foreach (var river in rivers)
+            {
+                for (int i = 0; i < river.Nodes.Length; i++)
+                {
+                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y) return river;
+                }
+            }
+            return null;
+        }
         #region - River Groups -
         private void BuildRiverGroups(int mapSize)
         {
@@ -317,16 +353,20 @@ namespace JS.WorldMap.Generation
         private void FinalizeRiver(River river, List<WorldTile> tiles)
         {
             river.ID = rivers.Count;
-            river.Coordinates = new GridCoordinates[tiles.Count];
-            river.Flow = new Compass[tiles.Count];
+            river.Nodes = new RiverNode[tiles.Count];
             for (int i = 0; i < tiles.Count; i++)
             {
-                river.Coordinates[i] = new GridCoordinates(tiles[i].x, tiles[i].y);
+                river.Nodes[i] = new RiverNode();
+                if (i == 0) river.Nodes[i].Size = 1;
+                else if (worldGenerator.rng.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
+                else river.Nodes[i].Size = river.Nodes[i - 1].Size;
+                river.Nodes[i].Coordinates = new GridCoordinates(tiles[i].x, tiles[i].y);
+
                 tiles[i].SetRiverPath(river);
 
                 if (i == 0) //Direction is only dependent on following node
                 {
-                    river.Flow[i] = ConvertDirection(tiles[i].NeighborDirection_Adjacent(tiles[i + 1]));
+                    river.Nodes[i].Flow = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
                 }
                 else if (i == tiles.Count - 1) //Direction is only dependent on previous node
                 {
@@ -334,55 +374,43 @@ namespace JS.WorldMap.Generation
                     var water = FindWaterTile(tiles[i]);
                     if (water == null) //likely the edge of the map
                     {
-                        river.Flow[i] = ConvertDirection(tiles[i].NeighborDirection_Adjacent(tiles[i - 1]));
+                        river.Nodes[i].Flow = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
                     }
                     else
                     {
                         var to = tiles[i].NeighborDirection_Adjacent(water);
-                        river.Flow[i] = CombineDirections(from, to);
+                        river.Nodes[i].Flow = CombineDirections(from, to);
                     }
                 }
                 else
                 {
                     var from = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
                     var to = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
-                    river.Flow[i] = CombineDirections(from, to);
+                    river.Nodes[i].Flow = CombineDirections(from, to);
                 }
             }
             rivers.Add(river);
         }
 
-        private Compass ConvertDirection(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.North: return Compass.North;
-                case Direction.South: return Compass.South;
-                case Direction.East: return Compass.East;
-                case Direction.West: return Compass.West;
-                default: throw new Exception("Direction outside parameters");
-            }
-        }
-
-        private Compass CombineDirections(Direction fromDirection, Direction toDirection)
+        private Compass CombineDirections(Compass fromDirection, Compass toDirection)
         {
             switch (fromDirection)
             {
-                case Direction.North:
-                    if (toDirection == Direction.East) return Compass.NorthEast;
-                    else if (toDirection == Direction.West) return Compass.NorthWest;
+                case Compass.North:
+                    if (toDirection == Compass.East) return Compass.NorthEast;
+                    else if (toDirection == Compass.West) return Compass.NorthWest;
                     else return Compass.North;
-                case Direction.South:
-                    if (toDirection == Direction.East) return Compass.SouthEast;
-                    else if (toDirection == Direction.West) return Compass.SouthWest;
+                case Compass.South:
+                    if (toDirection == Compass.East) return Compass.SouthEast;
+                    else if (toDirection == Compass.West) return Compass.SouthWest;
                     else return Compass.North;
-                case Direction.East:
-                    if (toDirection == Direction.North) return Compass.NorthEast;
-                    else if (toDirection == Direction.South) return Compass.SouthEast;
+                case Compass.East:
+                    if (toDirection == Compass.North) return Compass.NorthEast;
+                    else if (toDirection == Compass.South) return Compass.SouthEast;
                     else return Compass.East;
-                case Direction.West:
-                    if (toDirection == Direction.North) return Compass.NorthWest;
-                    else if (toDirection == Direction.South) return Compass.SouthWest;
+                case Compass.West:
+                    if (toDirection == Compass.North) return Compass.NorthWest;
+                    else if (toDirection == Compass.South) return Compass.SouthWest;
                     else return Compass.East;
             }
             throw new System.Exception("Compass Direction outside parameters");
@@ -424,7 +452,7 @@ namespace JS.WorldMap.Generation
             River longest = group.Rivers[0];
             for (int i = 0; i < group.Rivers.Count; i++)
             {
-                if (group.Rivers[i].Coordinates.Length > longest.Coordinates.Length)
+                if (group.Rivers[i].Nodes.Length > longest.Nodes.Length)
                 {
                     longest = group.Rivers[i];
                 }
@@ -447,7 +475,7 @@ namespace JS.WorldMap.Generation
 
             // How wide are we digging this river?
             int size = worldGenerator.rng.Next(1, 5);
-            river.Length = river.Coordinates.Length;
+            river.Length = river.Nodes.Length;
 
             // randomize size change
             int two = river.Length / 2;
@@ -495,9 +523,9 @@ namespace JS.WorldMap.Generation
             }
 
             // Dig it out
-            for (int i = river.Coordinates.Length - 1; i >= 0; i--)
+            for (int i = river.Nodes.Length - 1; i >= 0; i--)
             {
-                WorldTile node = worldMap.GetNode(river.Coordinates[i].x, river.Coordinates[i].y);
+                WorldTile node = worldMap.GetNode(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
 
                 if (counter < count1) node.DigRiver(river, 4, riverBiome);
                 else if (counter < count2) node.DigRiver(river, 3, riverBiome);

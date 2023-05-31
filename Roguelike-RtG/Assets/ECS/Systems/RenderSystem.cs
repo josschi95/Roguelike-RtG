@@ -62,12 +62,14 @@ namespace JS.ECS
         //Update Position on change
         private static void UpdatePosition(RenderSingle single)
         {
-            single.renderer.transform.position = (Vector3Int)single.transform.LocalPosition;
+            if (single.transform.Depth == 1) single.renderer.transform.position = (Vector3Int)single.transform.WorldPosition;
+            else single.renderer.transform.position = (Vector3Int)single.transform.LocalPosition;
         }
 
         private static void UpdatePosition(RenderCompound compound)
         {
-            compound.renderer.transform.position = (Vector3Int)compound.transform.LocalPosition;
+            if (compound.transform.Depth == 1) compound.renderer.transform.position = (Vector3Int)compound.transform.WorldPosition;
+            else compound.renderer.transform.position = (Vector3Int)compound.transform.LocalPosition;
         }
 
         //Flash Sprites on damage

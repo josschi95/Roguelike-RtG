@@ -65,6 +65,7 @@ public class GridCursor : MonoBehaviour
     private void CheckNode()
     {
         var node = worldMap.GetNode(transform.position);
+        spriteRenderer.enabled = node != null;
         nodeDisplay.DisplayNodeValues(node);
 
         if (Input.GetMouseButtonDown(0))

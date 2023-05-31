@@ -11,11 +11,10 @@ namespace JS.ECS
         public OnTransformChanged onRegionTileChanged;
         public OnTransformChanged onLocalTileChanged;
 
-        public MapLevel MapLevel { get; private set; } = MapLevel.Local;
-
         private Vector2Int _worldPosition;
         private Vector2Int _regionPosition;
         private Vector2Int _localPosition;
+        private int _depth;
 
         public Vector2Int WorldPosition
         {
@@ -50,6 +49,16 @@ namespace JS.ECS
             }
         }
 
+        public int Depth
+        {
+            get => _depth;
+            set
+            {
+                _depth = Mathf.Clamp(value, -int.MaxValue, 1);
+                onTransformChanged?.Invoke();
+            }
+        }
+
         public override void Disassemble()
         {
             base.Disassemble();
@@ -61,10 +70,4 @@ namespace JS.ECS
             //
         }
     }
-}
-
-public enum MapLevel
-{
-    Local,
-    World,
 }

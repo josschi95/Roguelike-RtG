@@ -52,6 +52,19 @@ namespace JS.ECS
             }
         }
 
+        private Transform _transform;
+        public Transform Transform
+        {
+            get
+            {
+                if (_transform == null)
+                {
+                    _transform = entity.GetComponent<Transform>();
+                }
+                return _transform;
+            }
+        }
+
         public int MoveSpeed
         {
             get
@@ -214,20 +227,57 @@ namespace JS.ECS
         }
         #endregion
 
+        private void TryMoveUp()
+        {
+            if (Transform.Depth == 1) return;
+            else if (Transform.Depth == 0)
+            {
+                //Load World Map
+            }
+            else
+            {
+                //Look for stairs up
+            }
+        }
+
+        private void TryMoveDown()
+        {
+            if (Transform.Depth == 1) //World Map Movement
+            {
+                //Load Local Map
+            }
+            else
+            {
+                //Look for stairs down
+            }
+        }
+
         private void TryMove(Compass direction)
         {
-            Debug.Log("TryMove " + _actor.entity.Name);
-            if (LocomotionSystem.TryMoveObject(Physics, direction, out int cost))
+            //Debug.Log("TryMove " + _actor.entity.Name);
+
+            if (Transform.Depth == 1) //World Map Movement
             {
-                int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
-                TimeSystem.SpendActionPoints(Actor, netCost);
-                TimeSystem.EndTurn(Actor);
+                if (WorldLocomotionSystem.TryMoveWorld(Physics, direction, out int cost1))
+                {
+                    int netCost = Mathf.RoundToInt(LocalLocomotionSystem.movementDividend / (MoveSpeed - cost1));
+                    TimeSystem.SpendActionPoints(Actor, netCost);
+                    TimeSystem.EndTurn(Actor);
+                }
+            }
+            else
+            {
+                if (LocalLocomotionSystem.TryMoveLocal(Physics, direction, out int cost))
+                {
+                    int netCost = Mathf.RoundToInt(LocalLocomotionSystem.movementDividend / (MoveSpeed - cost));
+                    TimeSystem.SpendActionPoints(Actor, netCost);
+                    TimeSystem.EndTurn(Actor);
+                }
             }
         }
 
         private void TryAttack(Compass direction)
         {
-            Debug.Log("TryAttack " + _actor.entity.Name);
             Actions.TryAttack(Actor, direction);
         }
     }

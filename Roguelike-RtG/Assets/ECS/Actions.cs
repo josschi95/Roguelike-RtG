@@ -17,6 +17,7 @@ namespace JS.ECS
         public static void TryAttack(TimedActor actor, Compass direction)
         {
             if (!actor.IsTurn) return;
+            //Debug.Log("TryAttack " + _actor.entity.Name);
             //Is there an adjacent creature? What is the attacker's range? is there a target within range?
 
             //If there is, make an attack
@@ -29,7 +30,7 @@ namespace JS.ECS
         public static void SkipAction(TimedActor actor)
         {
             if (!actor.IsTurn) return;
-            UnityEngine.Debug.Log("SkipAction " + actor.entity.Name);
+            //UnityEngine.Debug.Log("SkipAction " + actor.entity.Name);
             TimeSystem.SpendActionPoints(actor);
             TimeSystem.EndTurn(actor);
         }

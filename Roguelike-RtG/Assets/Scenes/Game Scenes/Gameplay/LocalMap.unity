@@ -1632,7 +1632,6 @@ GameObject:
   m_Component:
   - component: {fileID: 713516213}
   - component: {fileID: 713516212}
-  - component: {fileID: 713516210}
   - component: {fileID: 713516214}
   m_Layer: 0
   m_Name: Grid
@@ -1641,46 +1640,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &713516210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713516209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ae2ed5ea9a334b46824d6b908c8406a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
-  tileHelper: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
-  worldGenerationParameters: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
-  oceanMap: {fileID: 1805211640}
-  landMap: {fileID: 2049578736}
-  terrainFeatureMap: {fileID: 1002168319}
-  riverMap: {fileID: 337883118}
-  roadMap: {fileID: 620276097}
-  settlementMap: {fileID: 1062285702}
-  infoMap: {fileID: 1757720318}
-  highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
-  coastalWaterTile: {fileID: 0}
-  windDirectionTiles:
-  - {fileID: 11400000, guid: 01bf11602beee904098fe0a550f1df62, type: 2}
-  - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}
-  - {fileID: 11400000, guid: b31f1e6ab5246d14eab4e31ba7649bde, type: 2}
-  - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
-  biomes:
-  - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
-  - {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}
-  - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
-  - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}
-  - {fileID: 11400000, guid: c7f917d9bb5b1204e8ddcaedc447888f, type: 2}
-  - {fileID: 11400000, guid: 2803f53494f669346923b203b0541b7c, type: 2}
-  - {fileID: 11400000, guid: 0c5c0924e0f9b3e458ab4cbaf3c7ad83, type: 2}
-  - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}
-  - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}
 --- !u!156049354 &713516212
 Grid:
   m_ObjectHideFlags: 0
@@ -2061,7 +2020,7 @@ MonoBehaviour:
   callbackEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 713516210}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MapDisplay, Assembly-CSharp
         m_MethodName: DisplayWorldMap
         m_Mode: 1

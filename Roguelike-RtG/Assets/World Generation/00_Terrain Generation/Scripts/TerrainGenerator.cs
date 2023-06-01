@@ -23,9 +23,10 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldGenerator worldGenerator;
         [SerializeField] private RiverGenerator riverGenerator;
         [SerializeField] private Erosion erosion;
-        //private WorldMap worldMap;
 
-        [SerializeField] private WorldGenerationParameters mapFeatures;
+        [Space]
+
+        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private BiomeHelper biomeHelper;
@@ -50,11 +51,11 @@ namespace JS.WorldMap.Generation
             worldSize = size;
 
             terrainData.ClearData();
-            seaLevel = mapFeatures.SeaLevel;
+            seaLevel = worldGenParams.SeaLevel;
             water = new List<WorldTile>();
             land = new List<WorldTile>();
 
-            mapSize = mapFeatures.MapSize(worldSize);
+            mapSize = worldGenParams.MapSize(worldSize);
             var origin = Vector2Int.zero;
             //var origin = new Vector2Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
             terrainData.MapSize = mapSize;
@@ -76,29 +77,28 @@ namespace JS.WorldMap.Generation
             //place fault lines using Voronoi polygons, this is where volcanoes and mountains will be added
             float[,] heightMap = new float[mapSize, mapSize];
 
-            int count = mapFeatures.TectonicPlates(worldSize);
-            
+            int count = worldGenParams.TectonicPlates(worldSize);
+            int border = Mathf.RoundToInt(worldGenParams.MinPlateSize(worldSize) * 0.5f);
             for (int points = 0; points < count; points++)
             {
                 
                 int nodeX, nodeY; //select a random point on the map
-                nodeX = worldGenerator.rng.Next(0, mapSize - 1);
-                nodeY = worldGenerator.rng.Next(0, mapSize - 1);
-                /*if (points < count / 2) //First half points will favor the center of the map
+                //nodeX = worldGenerator.rng.Next(border, mapSize - border);
+                //nodeY = worldGenerator.rng.Next(border, mapSize - border);
+                if (points < count / 2) //First half will favor the center of the map
                 {
-                    int border = mapSize / 5;
-                    nodeX = worldGenerator.rng.Next(border, mapSize - border - 1);
-                    nodeY = worldGenerator.rng.Next(border, mapSize - border - 1);
+                    nodeX = worldGenerator.rng.Next(border * 2, mapSize - border * 2);
+                    nodeY = worldGenerator.rng.Next(border * 2, mapSize - border * 2);
                 }
                 else
                 {
-                    nodeX = worldGenerator.rng.Next(0, mapSize - 1);
-                    nodeY = worldGenerator.rng.Next(0, mapSize - 1);
-                }*/
+                    nodeX = worldGenerator.rng.Next(border, mapSize - border);
+                    nodeY = worldGenerator.rng.Next(border, mapSize - border);
+                }
 
                 WorldTile tectonicNode = worldMap.GetNode(nodeX, nodeY);
                 tectonicNode.isTectonicPoint = true;
-                float range = worldGenerator.rng.Next(mapFeatures.MinPlateSize(worldSize), mapFeatures.MaxPlateSize(worldSize));
+                float range = worldGenerator.rng.Next(worldGenParams.MinPlateSize(worldSize), worldGenParams.MaxPlateSize(worldSize));
 
                 //Grab all nodes within range
                 var nodesInRange = worldMap.GetNodesInRange_Circle(tectonicNode, (int)range);
@@ -106,7 +106,7 @@ namespace JS.WorldMap.Generation
                 //Calculate their base height based on distance from the tectonic point
                 for (int i = 0; i < nodesInRange.Count; i++)
                 {
-                    nodesInRange[i].isTectonicPoint = true; //Mark as tectonic node, mainly for visual referencing
+                    //nodesInRange[i].isTectonicPoint = true; //Mark as tectonic node, mainly for visual referencing
 
                     //The relative distance from this node to the tectonic node
                     float x = GridMath.GetStraightDist(tectonicNode.x, tectonicNode.y, nodesInRange[i].x, nodesInRange[i].y) / range;
@@ -148,7 +148,7 @@ namespace JS.WorldMap.Generation
         public void ErodeLandMasses()
         {
             float[,] heightMap = terrainData.HeightMap;
-            heightMap = erosion.Erode(heightMap, mapFeatures.Raindrops(worldSize), seed);
+            heightMap = erosion.Erode(heightMap, worldGenParams.Raindrops(worldSize), seed);
             terrainData.HeightMap = heightMap;
         }
 
@@ -165,7 +165,7 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    bool isLand = heightMap[x, y] >= mapFeatures.SeaLevel;
+                    bool isLand = heightMap[x, y] >= worldGenParams.SeaLevel;
 
                     node.SetAltitude(heightMap[x, y], isLand);
                     if (isLand) land.Add(node);
@@ -319,7 +319,7 @@ namespace JS.WorldMap.Generation
                 for (int y = 0; y < mapSize; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
-                    if (terrainData.HeightMap[node.x, node.y] >= mapFeatures.MountainHeight)
+                    if (terrainData.HeightMap[node.x, node.y] >= worldGenParams.MountainHeight)
                         node.CheckNeighborMountains();
                     node.SetBiome(biomeHelper.Mountain);
                 }
@@ -331,7 +331,7 @@ namespace JS.WorldMap.Generation
         public void GenerateRivers()
         {
             //Create rivers
-            terrainData.Rivers = riverGenerator.GenerateRivers(mapSize, mapFeatures.RiverCount(worldSize)).ToArray();
+            terrainData.Rivers = riverGenerator.GenerateRivers(mapSize, worldGenParams.RiverCount(worldSize)).ToArray();
         }
         #endregion
 
@@ -356,11 +356,11 @@ namespace JS.WorldMap.Generation
 
         private int GetTemperatureZone(float heatValue)
         {
-            for (int i = 0; i < mapFeatures.TemperatureZones.Length; i++)
+            for (int i = 0; i < worldGenParams.TemperatureZones.Length; i++)
             {
-                if (heatValue <= mapFeatures.TemperatureZones[i].TemperatureValue)
+                if (heatValue <= worldGenParams.TemperatureZones[i].TemperatureValue)
                 {
-                    return mapFeatures.TemperatureZones[i].ID;
+                    return worldGenParams.TemperatureZones[i].ID;
                 }
             }
             throw new UnityException("Node temperature is outside bounds of designated zones. " + heatValue);
@@ -419,11 +419,11 @@ namespace JS.WorldMap.Generation
 
         private int GetPrecipitationZone(float moistureValue)
         {
-            for (int i = mapFeatures.PrecipitationZones.Length - 1; i >= 0; i--)
+            for (int i = worldGenParams.PrecipitationZones.Length - 1; i >= 0; i--)
             {
-                if (moistureValue >= mapFeatures.PrecipitationZones[i].PrecipitationValue)
+                if (moistureValue >= worldGenParams.PrecipitationZones[i].PrecipitationValue)
                 {
-                    return mapFeatures.PrecipitationZones[i].ID;
+                    return worldGenParams.PrecipitationZones[i].ID;
                 }
             }
             throw new UnityException("Node precipitation is outside bounds of designated zones. " + moistureValue);
@@ -502,7 +502,7 @@ namespace JS.WorldMap.Generation
 
         private void AdjustNodeBiome(WorldTile tile, int biomeID)
         {
-            var newBiome = mapFeatures.Biomes[biomeID];
+            var newBiome = biomeHelper.GetBiome(biomeID);
 
             tile.SetBiome(newBiome);
             var newTemp = Mathf.Clamp(tile.heatValue,
@@ -560,7 +560,61 @@ namespace JS.WorldMap.Generation
                     range.Nodes[i].SetBiome(biomeHelper.Mountain);
                 }
             }
-        } 
+        }
+        #endregion
+
+        #region - Resources -
+        /// <summary>
+        /// Generates maps for precious metals and gemstones
+        /// </summary>
+        public void GenerateOreDeposits()
+        {
+            float[,] coalMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] copperMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] ironMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] silverMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] goldMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] mithrilMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] adamantineMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] gemstoneMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    if (terrainData.HeightMap[x, y] < worldGenParams.SeaLevel)
+                    {
+                        coalMap[x, y] = 0;
+                        copperMap[x, y] = 0;
+                        ironMap[x, y] = 0;
+                        silverMap[x, y] = 0;
+                        goldMap[x, y] = 0;
+                        gemstoneMap[x, y] = 0;
+                        mithrilMap[x, y] = 0;
+                        adamantineMap[x, y] = 0;
+                        continue;
+                    }
+
+                    if (coalMap[x, y] < 1 - worldGenParams.CoalPrevalence) coalMap[x, y] = 0;
+                    if (copperMap[x, y] < 1 - worldGenParams.CopperPrevalence) copperMap[x, y] = 0;
+                    if (ironMap[x, y] < 1 - worldGenParams.IronPrevalence) ironMap[x, y] = 0;
+                    if (silverMap[x, y] < 1 - worldGenParams.SilverPrevalence) silverMap[x, y] = 0;
+                    if (goldMap[x, y] < 1 - worldGenParams.GoldPrevalence) goldMap[x, y] = 0;
+                    if (gemstoneMap[x, y] < 1 - worldGenParams.GemstonesPrevalence) gemstoneMap[x, y] = 0;
+                    if (mithrilMap[x, y] < 1 - worldGenParams.MithrilPrevalence) mithrilMap[x, y] = 0;
+                    if (adamantineMap[x, y] < 1 - worldGenParams.AdamantinePrevalence) adamantineMap[x, y] = 0;
+                }
+            }
+
+            terrainData.CoalMap = coalMap;
+            terrainData.CopperMap = copperMap;
+            terrainData.IronMap = ironMap;
+            terrainData.SilverMap = silverMap;
+            terrainData.GoldMap = goldMap;
+            terrainData.MithrilMap = mithrilMap;
+            terrainData.AdmanatineMap = adamantineMap;
+            terrainData.GemstoneMap = gemstoneMap;
+        }
         #endregion
 
         private void OnValidate()

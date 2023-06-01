@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43964712ba3b8649828a7200dfb9b7b, type: 3}
+  m_Name: Direction Tiles
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: dac11f11046043846a02906565ee6f80, type: 2}
+  - {fileID: 11400000, guid: 3d0fcbd06886b3949b090b7e5f6eace7, type: 2}
+  - {fileID: 11400000, guid: 3886668acf177f14086a178dba7bda7a, type: 2}
+  - {fileID: 11400000, guid: fd7218df903cdf149abae14b0d5d4612, type: 2}
+  - {fileID: 11400000, guid: 3638efce86a945448b2ed3a6558cc280, type: 2}
+  - {fileID: 11400000, guid: 6771968734639fe4c89f8cf073cdc016, type: 2}
+  - {fileID: 11400000, guid: b43ccc3b2f5a5734bb064940873494d5, type: 2}
+  - {fileID: 11400000, guid: e13632891cc9f6c4a8a298f2043c06e9, type: 2}

@@ -125,13 +125,13 @@ namespace JS.WorldMap
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14;
 
-        public int GetPathCount(WorldTile startNode, WorldTile endNode, Settlement settlement = null)
+        public int GetPathCount(WorldTile startNode, WorldTile endNode, bool allowDiagonals = false, Settlement settlement = null)
         {
-            return (FindNodePath(startNode.x, startNode.y, endNode.x, endNode.y, settlement)).Count;
+            return (FindNodePath(startNode.x, startNode.y, endNode.x, endNode.y, allowDiagonals, settlement)).Count;
         }
 
         //Returns a list of nodes that can be travelled to reach a target destination
-        public List<WorldTile> FindNodePath(int startX, int startY, int endX, int endY, Settlement settlement = null)
+        public List<WorldTile> FindNodePath(int startX, int startY, int endX, int endY, bool allowDiagonals = false, Settlement settlement = null)
         {
             WorldTile startNode = grid.GetGridObject(startX, startY);
             //Debug.Log("Start: " + startNode.x + "," + startNode.y);
@@ -169,13 +169,13 @@ namespace JS.WorldMap
                 openList.Remove(currentNode);
                 closedList.Add(currentNode);
 
-                foreach (WorldTile neighbour in currentNode.neighbors_all)
+                foreach (WorldTile neighbour in GetNeighbourList(currentNode, allowDiagonals))
                 {
                     if (closedList.Contains(neighbour)) continue;
 
                     if (!neighbour.IsLand)// || neighbour.isOccupied)
                     {
-                        //Debug.Log("Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
+                        //Debug.Log(startX + "," + startY +  ": Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
                         closedList.Add(neighbour);
                         continue;
                     }
@@ -192,7 +192,7 @@ namespace JS.WorldMap
                     }
 
                     //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
-                    int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour);
+                    int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour) + neighbour.movementCost;
 
                     if (tentativeGCost < neighbour.gCost)
                     {
@@ -210,6 +210,12 @@ namespace JS.WorldMap
             //Out of nodes on the openList
             Debug.Log("Path could not be found");
             return null;
+        }
+
+        private List<WorldTile> GetNeighbourList(WorldTile currentNode, bool allowDiagonals)
+        {
+            if (allowDiagonals) return currentNode.neighbors_all;
+            return currentNode.neighbors_adj;
         }
 
         private int CalculateDistanceCost(WorldTile a, WorldTile b)

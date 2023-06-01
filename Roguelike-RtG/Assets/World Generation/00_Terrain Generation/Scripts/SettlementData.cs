@@ -19,7 +19,7 @@ public class SettlementData : ScriptableObject
     //later also include roads
     //maybe bridges, etc.
 
-    public void AddSettlements(Settlement[] settlements)
+    public void PlaceSettlements(Settlement[] settlements)
     {
         this.settlements = settlements;
     }

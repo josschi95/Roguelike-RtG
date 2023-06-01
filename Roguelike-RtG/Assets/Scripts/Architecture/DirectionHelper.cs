@@ -19,4 +19,28 @@ public static class DirectionHelper
             default: return Vector2Int.zero;
         }
     }
+
+    public static Compass CombineDirections(Compass fromDirection, Compass toDirection)
+    {
+        switch (fromDirection)
+        {
+            case Compass.North:
+                if (toDirection == Compass.East) return Compass.NorthEast;
+                else if (toDirection == Compass.West) return Compass.NorthWest;
+                else return Compass.North;
+            case Compass.South:
+                if (toDirection == Compass.East) return Compass.SouthEast;
+                else if (toDirection == Compass.West) return Compass.SouthWest;
+                else return Compass.North;
+            case Compass.East:
+                if (toDirection == Compass.North) return Compass.NorthEast;
+                else if (toDirection == Compass.South) return Compass.SouthEast;
+                else return Compass.East;
+            case Compass.West:
+                if (toDirection == Compass.North) return Compass.NorthWest;
+                else if (toDirection == Compass.South) return Compass.SouthWest;
+                else return Compass.East;
+        }
+        throw new System.Exception("Compass Direction outside parameters");
+    }
 }

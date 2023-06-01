@@ -1050,6 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa527162b80434e44b22af2cdca0da6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   mousePosition:
     m_UseReference: 1
     m_Action:
@@ -1086,7 +1087,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -427416410678587396, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
 --- !u!1 &526793100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,8 +1664,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
-  tileHelper: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
+  riverTiles: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
+  roadTiles: {fileID: 11400000, guid: 4d51d9e667f1f064d9e0d8e1d21aa139, type: 2}
   worldGenerationParameters: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+  biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   oceanMap: {fileID: 1805211640}
   landMap: {fileID: 2049578736}
   terrainFeatureMap: {fileID: 1002168319}
@@ -1673,13 +1675,9 @@ MonoBehaviour:
   roadMap: {fileID: 620276097}
   settlementMap: {fileID: 1062285702}
   infoMap: {fileID: 1757720318}
+  directionTiles: {fileID: 11400000, guid: 29ab257042f82184ab122cec1e8a3a08, type: 2}
   highlightTile: {fileID: 11400000, guid: bb1a3b5d88ebf9d418f52aadc5da02c9, type: 2}
   coastalWaterTile: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
-  windDirectionTiles:
-  - {fileID: 11400000, guid: 01bf11602beee904098fe0a550f1df62, type: 2}
-  - {fileID: 11400000, guid: 5b12565c565821949b67a30ed2f9eceb, type: 2}
-  - {fileID: 11400000, guid: b31f1e6ab5246d14eab4e31ba7649bde, type: 2}
-  - {fileID: 11400000, guid: 7b7181353add6d947a9ed9ebcc305c81, type: 2}
   biomes:
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
   - {fileID: 11400000, guid: cb0be60cd21066e4a97938dc40b850c9, type: 2}

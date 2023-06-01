@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200a02aba23085f49af2744b4160f3dc, type: 3}
+  m_Name: River_Secondary
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 3
+  <BiomeName>k__BackingField: River
+  <WorldTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
+  <LocalTile>k__BackingField: {fileID: 0}
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 443c46da7153fc0469ec408e515159e1, type: 2}
+  <isLand>k__BackingField: 0
+  minAvgAnnualTemperature: 0
+  maxAvgAnnualTemperature: 100
+  minAnnualPrecipitation: 0
+  maxAnnualPrecipitation: 1000
+  treeDensity: 0
+  shrubDensity: 0
+  grassDensity: 0
+  foodAvailability: 1
+  waterAvailability: 1
+  lumberAvailability: 0
+  vegetation: []
+  animals: []
+  monsters: []
+  developerNotes: 

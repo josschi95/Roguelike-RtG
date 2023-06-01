@@ -18,10 +18,6 @@ namespace JS.WorldMap
         [SerializeField] private WorldFeatures largeMap;
         [SerializeField] private WorldFeatures hugeMap;
 
-        //[Header("Altitude")]
-        //[SerializeField] private AltitudeZone[] altitudeZones;
-        //public AltitudeZone[] AltitudeZones => altitudeZones;
-
         [Header("Temperature")]
         [SerializeField] private TemperatureZone[] temperatureZones;
         public TemperatureZone[] TemperatureZones => temperatureZones;
@@ -30,9 +26,31 @@ namespace JS.WorldMap
         [SerializeField] private PrecipitationZone[] precipitationZones;
         public PrecipitationZone[] PrecipitationZones => precipitationZones;
 
-        [Header("Biomes")]
-        [SerializeField] private Biome[] biomes;
-        public Biome[] Biomes => biomes;
+        [Header("Resources")]
+        [Range(0, 1)]
+        [SerializeField] private float coalPrevalence = 0.4f;
+        public float CoalPrevalence => coalPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float copperPrevalence = 0.35f;
+        public float CopperPrevalence => copperPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float ironPrevalence = 0.3f;
+        public float IronPrevalence => ironPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float silverPrevalence = 0.25f;
+        public float SilverPrevalence => silverPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float goldPrevalence = 0.2f;
+        public float GoldPrevalence => goldPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float gemstonesPrevalence = 0.15f;
+        public float GemstonesPrevalence => gemstonesPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float mithrilPrevalence = 0.1f;
+        public float MithrilPrevalence => mithrilPrevalence;
+        [Range(0, 1)]
+        [SerializeField] private float adamantinePrevalence = 0.05f;
+        public float AdamantinePrevalence => adamantinePrevalence;
 
         #region - Terrain Generation -
         //MapDimensions
@@ -125,6 +143,20 @@ namespace JS.WorldMap
         #endregion
 
         #region - Settlement Generation -
+        public int[] SettlementCount(WorldSize s) => GetSettlementCounts(s);
+        private int[] GetSettlementCounts(WorldSize size)
+        {
+            int[] settlements = new int[4]
+            {
+                GetCityCount(size),
+                GetTownCount(size),
+                GetVillageCount(size),
+                GetHamletCount(size),
+            };
+
+            return settlements;
+        }
+
         public int CityCount(WorldSize s) => GetCityCount(s);
         private int GetCityCount(WorldSize size)
         {
@@ -167,8 +199,8 @@ namespace JS.WorldMap
             }
         }
 
-        public int HamletCount(WorldSize s) => GetTribeCount(s);
-        private int GetTribeCount(WorldSize size)
+        public int HamletCount(WorldSize s) => GetHamletCount(s);
+        private int GetHamletCount(WorldSize size)
         {
             switch (size)
             {

@@ -38,19 +38,6 @@ namespace JS.WorldMap
             set => mapSize = value;
         }
 
-        /*private int originX;
-        private int originY;
-        public int OriginX
-        {
-            get => originX;
-            set => originX = value;
-        }
-        public int OriginY
-        {
-            get => originY;
-            set => originY = value;
-        }*/
-
         private int[,] seedMap;
         public int[,] SeedMap
         {
@@ -93,6 +80,59 @@ namespace JS.WorldMap
             set => biomeMap = value;
         }
 
+        #region - Resources -
+        //Resources
+        private float[,] coalMap;
+        public float[,] CoalMap
+        {
+            get => coalMap;
+            set => coalMap = value;
+        }
+        private float[,] copperMap;
+        public float[,] CopperMap
+        {
+            get => copperMap;
+            set => copperMap = value;
+        }
+        private float[,] ironMap;
+        public float[,] IronMap
+        {
+            get => ironMap;
+            set => ironMap = value;
+        }
+        private float[,] silverMap;
+        public float[,] SilverMap
+        {
+            get => silverMap;
+            set => silverMap = value;
+        }
+        private float[,] goldMap;
+        public float[,] GoldMap
+        {
+            get => goldMap;
+            set => goldMap = value;
+        }
+        private float[,] mithrilMap;
+        public float[,] MithrilMap
+        {
+            get => mithrilMap;
+            set => mithrilMap = value;
+        }
+        private float[,] adamantineMap;
+        public float[,] AdmanatineMap
+        {
+            get => adamantineMap;
+            set => adamantineMap = value;
+        }
+        private float[,] gemstoneMap;
+        public float[,] GemstoneMap
+        {
+            get => gemstoneMap;
+            set => gemstoneMap = value;
+        }
+        #endregion
+
+        #region - Terrain Features -
         private MountainRange[] mountains;
         public MountainRange[] Mountains
         {
@@ -127,15 +167,29 @@ namespace JS.WorldMap
             get => islands;
             set => islands = value;
         }
+
+        private Road[] roads;
+        public Road[] Roads
+        {
+            get => roads;
+            set => roads = value;
+        }
         #endregion
 
-        public River FindRiverAt(int x, int y)
+        #endregion
+
+        public River FindRiverAt(int x, int y, out int index)
         {
+            index = 0;
             foreach (var river in rivers)
             {
                 for (int i = 0; i < river.Nodes.Length; i++)
                 {
-                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y) return river;
+                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y)
+                    {
+                        index = i;
+                        return river;
+                    }
                 }
             }
             return null;

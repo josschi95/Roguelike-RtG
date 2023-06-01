@@ -21,8 +21,9 @@ namespace JS.WorldMap.Generation
 
         [Space]
 
-        [SerializeField] private TerrainGenerator mapGenerator;
+        [SerializeField] private TerrainGenerator terrainGenerator;
         [SerializeField] private SettlementGenerator settlementGenerator;
+        [SerializeField] private RoadGenerator roadGenerator;
         //private FloraFaunaGenerator floraFaunaGenerator;
         //private ResourceGenerator resourceGenerator;
         //private HistoryGenerator historyGenerator
@@ -66,25 +67,29 @@ namespace JS.WorldMap.Generation
         public void OnBeginWorldGeneration()
         {
             timeKeeper.ResetTime();
+            SetNewWorldValues();
+            initialTime = Time.realtimeSinceStartup;
+
+            progressText.text = "Loading";
+            progressBar.fillAmount = 0;
 
             StartCoroutine(GenerateWorld());
-
-            //Generate Plant and Wildlife
-
-            //Generate Resources
-
-            //Generate Settlements
-
-            //Generate Historical Figures, Locations, Items, and Events
         }
 
         private IEnumerator GenerateWorld()
         {
+            //Generate Terrain and Terrain Features
             yield return StartCoroutine(HandleTerrainGeneration());
+            
+            //Generate Settlements, Roads, and Relations
+            yield return StartCoroutine(HandleSettlementGeneration());
 
-            yield return StartCoroutine(settlementGenerator.PlaceSettlements());
-            progressBar.fillAmount = 0.9f;
-            yield return StartCoroutine(UpdateProgress("Finalizing"));
+            //Generate Plant and Wildlife
+
+            //Generate Historical Figures, Locations, Items, and Events
+
+            //Place points of interest using Poisson
+
 
             PlacePlayerAtStart();
 
@@ -96,12 +101,15 @@ namespace JS.WorldMap.Generation
         {
             rng = new System.Random(seed);
 
-            mapGenerator.SetInitialValues(worldSize, seed); //also creates grid
+            terrainGenerator.SetInitialValues(worldSize, seed); //also creates grid
             settlementGenerator.SetInitialValues(worldSize);
 
             PlantSeeds();
         }
 
+        /// <summary>
+        /// Assigns a random seed to each World Tile
+        /// </summary>
         private void PlantSeeds()
         {
             var seedMap = new int[worldMap.Width, worldMap.Height];
@@ -115,60 +123,79 @@ namespace JS.WorldMap.Generation
             worldMap.TerrainData.SeedMap = seedMap;
         }
 
+        /// <summary>
+        /// Generate terrestrial features and environments
+        /// </summary>
         private IEnumerator HandleTerrainGeneration()
         {
-            initialTime = Time.realtimeSinceStartup;
-            progressText.text = "Loading";
-            progressBar.fillAmount = 0;
-            SetNewWorldValues();
             yield return StartCoroutine(UpdateProgress("Generating Tectonic Plates"));
-
-            mapGenerator.PlaceTectonicPlates();
+            terrainGenerator.PlaceTectonicPlates();
             progressBar.fillAmount = 0.1f;
             yield return StartCoroutine(UpdateProgress("Generating Land Masses"));
 
-            mapGenerator.GenerateHeightMap();
+            terrainGenerator.GenerateHeightMap();
             progressBar.fillAmount = 0.2f;
             yield return StartCoroutine(UpdateProgress("Eroding Land Masses"));
 
-            mapGenerator.ErodeLandMasses();
+            terrainGenerator.ErodeLandMasses();
             progressBar.fillAmount = 0.2f;
             yield return StartCoroutine(UpdateProgress("Allocating Height Map"));
 
-            mapGenerator.SetNodeAltitudeValues();
+            terrainGenerator.SetNodeAltitudeValues();
             progressBar.fillAmount = 0.2f;
             yield return StartCoroutine(UpdateProgress("Identifying Mountains"));
 
-            mapGenerator.IdentifyCoasts();
-            mapGenerator.IdentifyMountains();
+            terrainGenerator.IdentifyCoasts();
+            terrainGenerator.IdentifyMountains();
             progressBar.fillAmount = 0.3f;
             yield return StartCoroutine(UpdateProgress("Identifying Bodies of Water"));
 
-            yield return StartCoroutine(mapGenerator.IdentifyBodiesOfWater());
+            yield return StartCoroutine(terrainGenerator.IdentifyBodiesOfWater());
             progressBar.fillAmount = 0.3f;
             yield return StartCoroutine(UpdateProgress("Identifying Land Masses"));
 
-            yield return StartCoroutine(mapGenerator.IdentifyLandMasses());
+            yield return StartCoroutine(terrainGenerator.IdentifyLandMasses());
             progressBar.fillAmount = 0.3f;
             yield return StartCoroutine(UpdateProgress("Generating Rivers"));
 
-            mapGenerator.GenerateRivers();
+            terrainGenerator.GenerateRivers();
             progressBar.fillAmount = 0.5f;
             yield return StartCoroutine(UpdateProgress("Generating Heat Map"));
 
-            mapGenerator.GenerateHeatMap();
+            terrainGenerator.GenerateHeatMap();
             progressBar.fillAmount = 0.6f;
             yield return StartCoroutine(UpdateProgress("Generating Precipitation Map"));
 
-            mapGenerator.GeneratePrecipitationMap();
+            terrainGenerator.GeneratePrecipitationMap();
             progressBar.fillAmount = 0.7f;
             yield return StartCoroutine(UpdateProgress("Generating Biomes"));
 
-            mapGenerator.GenerateBiomes();
+            terrainGenerator.GenerateBiomes();
+            progressBar.fillAmount = 0.8f;
+            yield return StartCoroutine(UpdateProgress("Generating Resources"));
+
+            terrainGenerator.GenerateOreDeposits();
             progressBar.fillAmount = 0.8f;
             yield return StartCoroutine(UpdateProgress("Generating Settlements"));
         }
 
+        /// <summary>
+        /// Generates settlements and connections
+        /// </summary>
+        private IEnumerator HandleSettlementGeneration()
+        {
+            settlementGenerator.PlaceSettlements();
+            progressBar.fillAmount = 0.9f;
+            yield return StartCoroutine(UpdateProgress("Generating Roads"));
+
+            roadGenerator.GenerateRoads();
+            progressBar.fillAmount = 0.9f;
+            yield return StartCoroutine(UpdateProgress("Finalizing"));
+        }
+
+        /// <summary>
+        /// Updates loading bar text and adds short delay before next method
+        /// </summary>
         private IEnumerator UpdateProgress(string message)
         {
             //Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
@@ -177,6 +204,9 @@ namespace JS.WorldMap.Generation
             initialTime = Time.realtimeSinceStartup;
         }
 
+        /// <summary>
+        /// Places player at a random settlement
+        /// </summary>
         private void PlacePlayerAtStart()
         {
             int index = rng.Next(0, settlementData.Settlements.Length);

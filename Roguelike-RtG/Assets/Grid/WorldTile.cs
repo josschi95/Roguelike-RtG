@@ -15,6 +15,7 @@ namespace JS.WorldMap
         public int gCost; //the movement cost to move from the start tile to this tile, following the existing path
         public int hCost; //the estimated movement cost to move from this tile to the end tile
         public int fCost; //the current best guess as to the cost of the path
+        public int movementCost;
         public WorldTile cameFromTile;
 
         public void CalculateFCost()

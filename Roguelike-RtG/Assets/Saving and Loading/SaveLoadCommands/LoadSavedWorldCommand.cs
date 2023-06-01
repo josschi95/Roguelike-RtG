@@ -86,7 +86,7 @@ namespace JS.CommandSystem
         private void SetSettlementValues(WorldSaveData data)
         {
             var settlements = _worldMapData.SettlementData;
-            settlements.AddSettlements(data.Settlements);
+            settlements.PlaceSettlements(data.Settlements);
         }
     }
 }

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a271b06eedb055f4bb3fa79f1cf9dfd6, type: 3}
+  m_Name: Road Tiles
+  m_EditorClassIdentifier: 
+  riverVertical: {fileID: 11400000, guid: cf6875d25ae4a4843bbb317070387334, type: 2}
+  pathVertical: {fileID: 11400000, guid: cf6875d25ae4a4843bbb317070387334, type: 2}
+  riverHorizontal: {fileID: 11400000, guid: d596572e803e11b43a8e623f16b5b123, type: 2}
+  pathHorizontal: {fileID: 11400000, guid: d596572e803e11b43a8e623f16b5b123, type: 2}
+  riverNorthEast: {fileID: 11400000, guid: c113e586afe92e74bab724dda8fbeec1, type: 2}
+  pathNorthEast: {fileID: 11400000, guid: c113e586afe92e74bab724dda8fbeec1, type: 2}
+  riverNorthWest: {fileID: 11400000, guid: 381ebb457cbc3e14ca3b1cafb93c39a6, type: 2}
+  pathNorthWest: {fileID: 11400000, guid: 381ebb457cbc3e14ca3b1cafb93c39a6, type: 2}
+  riverSouthEast: {fileID: 11400000, guid: 077101d14d7083c4b95af43b32c3a32a, type: 2}
+  pathSouthEast: {fileID: 11400000, guid: 077101d14d7083c4b95af43b32c3a32a, type: 2}
+  riverSouthWest: {fileID: 11400000, guid: 449c54a95c11b3d428be958687fbcd72, type: 2}
+  pathSouthWest: {fileID: 11400000, guid: 449c54a95c11b3d428be958687fbcd72, type: 2}
+  riverT_North: {fileID: 11400000, guid: f01c15a2e9ba795439418b6b2c4afd38, type: 2}
+  pathT_North: {fileID: 11400000, guid: f01c15a2e9ba795439418b6b2c4afd38, type: 2}
+  riverT_South: {fileID: 11400000, guid: 8bb2be848c09edf46a2d47e77d6e1fa5, type: 2}
+  pathT_South: {fileID: 11400000, guid: 8bb2be848c09edf46a2d47e77d6e1fa5, type: 2}
+  riverT_East: {fileID: 11400000, guid: e42d1a57eacca10468f0a0310b4aaca5, type: 2}
+  pathT_East: {fileID: 11400000, guid: e42d1a57eacca10468f0a0310b4aaca5, type: 2}
+  riverT_West: {fileID: 11400000, guid: 2be64a82ac80d404d8522505b492bb5b, type: 2}
+  pathT_West: {fileID: 11400000, guid: 2be64a82ac80d404d8522505b492bb5b, type: 2}
+  pathIntersection: {fileID: 11400000, guid: 281e8c6b9e48b87499f55284c8e50759, type: 2}
+  riverIntersection: {fileID: 11400000, guid: 281e8c6b9e48b87499f55284c8e50759, type: 2}

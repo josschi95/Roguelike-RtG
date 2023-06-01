@@ -28,9 +28,15 @@ namespace JS.WorldMap
             GUILayout.Space(10);
 
             int index = EditorGUILayout.Popup("Highlight Biome", BiomeIndex(), BiomeDisplayOptions());
-            display.biomeToHighlight = display.biomes[index];
+            display.biomeToHighlight = display.biomeHelper.Biomes[index];
 
             if (GUILayout.Button("Find " + display.biomeToHighlight.name.Replace("_", " ") + "s")) display.HighlightBiome();
+
+            GUILayout.Space(10);
+
+            var resource = EditorGUILayout.EnumPopup("Highlight Resources", display.resourceToHighlight);
+            display.resourceToHighlight = (Resources)resource;
+            if (GUILayout.Button("Find " + display.resourceToHighlight.ToString())) display.HighlightResources();
 
             GUILayout.Space(10);
 
@@ -52,9 +58,9 @@ namespace JS.WorldMap
         private int BiomeIndex()
         {
             MapDisplay display = (MapDisplay)target;
-            for (int i = 0; i < display.biomes.Length; i++)
+            for (int i = 0; i < display.biomeHelper.Biomes.Length; i++)
             {
-                if (display.biomeToHighlight == display.biomes[i]) return i;
+                if (display.biomeToHighlight == display.biomeHelper.Biomes[i]) return i;
             }
             return 0;
         }
@@ -62,10 +68,10 @@ namespace JS.WorldMap
         private string[] BiomeDisplayOptions()
         {
             MapDisplay display = (MapDisplay)target;
-            var options = new string[display.biomes.Length];
+            var options = new string[display.biomeHelper.Biomes.Length];
             for (int i = 0; i < options.Length; i++)
             {
-                options[i] = display.biomes[i].name;
+                options[i] = display.biomeHelper.Biomes[i].name;
             }
             return options;
         }

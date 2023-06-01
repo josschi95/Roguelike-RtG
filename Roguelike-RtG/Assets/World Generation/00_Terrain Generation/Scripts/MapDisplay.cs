@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,8 +8,11 @@ namespace JS.WorldMap
     {
         [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
-        [SerializeField] private RiverTileHelper tileHelper;
+        [SerializeField] private PathTileHelper riverTiles;
+        [SerializeField] private PathTileHelper roadTiles;
         [SerializeField] private WorldGenerationParameters worldGenerationParameters;
+        public BiomeHelper biomeHelper;
+
         [Space]
 
         [SerializeField] private Tilemap oceanMap;
@@ -21,30 +25,17 @@ namespace JS.WorldMap
 
         [Space]
 
+        [SerializeField] private DirectionTiles directionTiles;
         [SerializeField] private TileBase highlightTile;
         [SerializeField] private TileBase coastalWaterTile;
 
         [Space]
 
-        [SerializeField] private TileBase[] windDirectionTiles;
-        [Space]
-
         public Biome[] biomes;
         public Biome biomeToHighlight { get; set; }
+        public Resources resourceToHighlight { get; set; }
 
-        //Ok so this is how I'm going to have to do this
-        //ocean map goes at the bottom
-        //flat biome map goes on top of that
-        //feature map goes on top of that - 
-
-
-        //you know what, features can just go over biomes
-        //so have the normal biome map
-        //mountains, trees, etc. go on top of that or are included
-        //then rivers go over top of that
-        //then roads go over top of that
-        //then settlements go over top of that
-
+        //Called on scene load from GameEventListener
         public void DisplayWorldMap()
         {
             oceanMap.ClearAllTiles();
@@ -58,19 +49,21 @@ namespace JS.WorldMap
 
         private void DisplayBiomes()
         {
-            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            var list = new List<WorldTile>();
+
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
                     var tilePos =new Vector3Int(x, y);
-                    //var tilePos = origin + new Vector3Int(x, y);
+
                     var biome = worldMap.TerrainData.GetBiome(x, y);
 
-                    if (biome.isLand) landMap.SetTile(tilePos, biome.RuleTile);
-                    else oceanMap.SetTile(tilePos, biome.RuleTile);
+                    if (biome.isLand) landMap.SetTile(tilePos, biome.WorldTile);
+                    else oceanMap.SetTile(tilePos, biome.WorldTile);
 
                     var node = worldMap.GetNode(x,y);
+                    if (node.isTectonicPoint) list.Add(node);
                     if (node != null && node.isCoast)
                     {
                         oceanMap.SetTile(tilePos, coastalWaterTile);
@@ -94,9 +87,9 @@ namespace JS.WorldMap
                     if (existingTile != null)
                     {
                         //Debug.Log("At " + tilePos);
-                        tile = tileHelper.GetIntersectionTile(existingTile, river.Nodes[i].Flow);
+                        tile = riverTiles.GetIntersectionTile(existingTile, river.Nodes[i].Flow);
                     }
-                    else tile = tileHelper.GetRiverTile(river.Nodes[i].Flow);
+                    else tile = riverTiles.GetRiverTile(river.Nodes[i].Flow);
                     riverMap.SetTile(tilePos, tile);
                 }
             }
@@ -104,16 +97,25 @@ namespace JS.WorldMap
 
         private void DisplayRoads()
         {
-            /*roadMap.ClearAllTiles();
+            roadMap.ClearAllTiles();
 
-            foreach (var road in worldMap.SettlementData.Roads)
+            foreach (var road in worldMap.TerrainData.Roads)
             {
-                for (int i = 0; i < road.Nodes.Count; i++)
+                for (int i = 0; i < road.Nodes.Length; i++)
                 {
-                    var tilePos = worldMap.TerrainData.mapOrigin + new Vector3Int(road.Nodes[i].x, road.Nodes[i].y);
-                    riverMap.SetTile(tilePos, worldMap.TerrainData.RiverTile);
+                    var tilePos = new Vector3Int(road.Nodes[i].Coordinates.x, road.Nodes[i].Coordinates.y);
+
+                    RuleTile tile = null;
+                    var existingTile = roadMap.GetTile(tilePos) as RuleTile;
+                    if (existingTile != null)
+                    {
+                        //Debug.Log("At " + tilePos);
+                        tile = roadTiles.GetIntersectionTile(existingTile, road.Nodes[i].Flow);
+                    }
+                    else tile = roadTiles.GetRiverTile(road.Nodes[i].Flow);
+                    roadMap.SetTile(tilePos, tile);
                 }
-            }*/
+            }
         }
 
         private void DisplaySettlements()
@@ -184,8 +186,7 @@ namespace JS.WorldMap
                     var tilePos = new Vector3Int(x, y);
                     //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-
-                    infoMap.SetTile(tilePos, windDirectionTiles[(int)node.windDirection]);
+                    infoMap.SetTile(tilePos, directionTiles.GetTile(node.windDirection));
                 }
             }
         }
@@ -194,20 +195,22 @@ namespace JS.WorldMap
         #region - Highlight Features -
         public void HighlightTectonicPlates()
         {
-            infoMap.ClearAllTiles();
-            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+            var list = new List<WorldTile>();
 
             for (int x = 0; x < worldMap.Width; x++)
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var tilePos = new Vector3Int(x, y);
-                    //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-                    if (node.isTectonicPoint)
-                    {
-                        infoMap.SetTile(tilePos, highlightTile);
-                    }
+                    if (node.isTectonicPoint) list.Add(node);
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = 0; j < list.Count; j++)
+                {
+                    Debug.DrawLine(new Vector3(list[i].x, list[i].y), new Vector3(list[j].x, list[j].y), Color.blue, 20f);
                 }
             }
         }
@@ -313,6 +316,81 @@ namespace JS.WorldMap
             }
         }
 
+        public void HighlightResources()
+        {
+            infoMap.ClearAllTiles();
+            int totalCount = 0;
+            for (int x = 0; x < worldMap.Width; x++)
+            {
+                for (int y = 0; y < worldMap.Height; y++)
+                {
+                    var tilePos = new Vector3Int(x, y);
+
+                    switch (resourceToHighlight)
+                    {
+                        case Resources.Coal:
+                            if (worldMap.TerrainData.CoalMap[x,y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Copper:
+                            if (worldMap.TerrainData.CopperMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Iron:
+                            if (worldMap.TerrainData.IronMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Silver:
+                            if (worldMap.TerrainData.SilverMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Gold:
+                            if (worldMap.TerrainData.GoldMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Gemstones:
+                            if (worldMap.TerrainData.GemstoneMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Mithril:
+                            if (worldMap.TerrainData.MithrilMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                        case Resources.Adamantine:
+                            if (worldMap.TerrainData.AdmanatineMap[x, y] > 0)
+                            {
+                                infoMap.SetTile(tilePos, highlightTile);
+                                totalCount++;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            Debug.Log(resourceToHighlight.ToString() + ": " + totalCount);
+        }
+
         public void HighlightNode(WorldTile node)
         {
             infoMap.ClearAllTiles();
@@ -328,22 +406,6 @@ namespace JS.WorldMap
             var pos = worldMap.GetWorldPosition(node);
             Vector3Int newPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
             infoMap.SetTile(newPos, highlightTile);
-
-            /*if (node.rivers.Count > 0)
-            {
-                Debug.Log("River Info:");
-                for (int i = 0; i < node.rivers[0].Coordinates.Length; i++)
-                {
-                    Debug.Log(node.rivers[0].Coordinates[i].x + "," + node.rivers[0].Coordinates[i].y + " : " + node.rivers[0].Flow[i].ToString());
-                }
-            }*/
-
-            /*for (int i = 0; i < node.neighbors.Length; i++)
-            {
-                var neighbor = map.GetPosition(node.neighbors[i]);
-                Vector3Int nPos = new Vector3Int(Mathf.FloorToInt(neighbor.x), Mathf.FloorToInt(neighbor.y));
-                infoMap.SetTile(nPos, highlightTile);
-            }*/
         }
 
         private void HighlightSettlement(Settlement settlement)
@@ -359,4 +421,16 @@ namespace JS.WorldMap
         }
         #endregion
     }
+}
+
+public enum Resources
+{
+    Coal,
+    Copper,
+    Iron,
+    Silver,
+    Gold,
+    Gemstones,
+    Mithril,
+    Adamantine,
 }

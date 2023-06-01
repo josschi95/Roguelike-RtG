@@ -51,7 +51,7 @@ namespace JS.WorldMap
             nodeTemperature.text = "Avg. Temperature: " + (Temperature.FloatToCelsius(terrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
             nodePrecipitation.text = "Annual Rainfall: " + (terrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
 
-            var river = terrainData.FindRiverAt(node.x, node.y);
+            var river = terrainData.FindRiverAt(node.x, node.y, out var index);
             if (river != null)
             {
                 nodeRiverText.text = "River: " + river.ID;

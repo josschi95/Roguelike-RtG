@@ -6,10 +6,10 @@ using UnityEngine.U2D;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private WorldData worldData;
     [SerializeField] private InputActionProperty mousePosition;
     [SerializeField] private InputActionProperty rightMouseButton;
     [SerializeField] private InputActionProperty mouseScroll;
-    [SerializeField] private WorldData worldData;
     private Camera cam;
     private PixelPerfectCamera pixelCam;
 
@@ -19,14 +19,14 @@ public class CameraController : MonoBehaviour
 
     private Coroutine smoothingCoroutine;
 
-    private float minX = -0.5f, minY = -0.5f, maxX = 200.5f, maxY = 200.5f;
+    //private float minX = -10.5f, minY = -10.5f, maxX = 200.5f, maxY = 200.5f;
 
     private void Start()
     {
         cam = GetComponent<Camera>();
         pixelCam = GetComponent<PixelPerfectCamera>();
-        maxX = worldData.Width + 0.5f;
-        maxY = worldData.Height + 0.5f;
+        //maxX = worldData.Width + 10.5f;
+        //maxY = worldData.Height + 10.5f;
     }
 
     private void OnEnable()
@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
 
     private void KeepCameraInBounds()
     {
+        /*
         float height = cam.orthographicSize;
         float width = height * cam.aspect;
 
@@ -84,6 +85,7 @@ public class CameraController : MonoBehaviour
                 Mathf.Clamp(transform.position.y, minY + height, maxY - height),
                 transform.position.z
             );
+        */
     }
 
     public void SmoothToPosition(Vector2Int pos)

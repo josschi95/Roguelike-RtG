@@ -2,22 +2,7 @@ namespace JS.ECS
 {
     public class TimedActor : ComponentBase
     {
-        public delegate void OnTurnChangeCallback();
-        public OnTurnChangeCallback onTurnStart;
-        public OnTurnChangeCallback onTurnEnd;
-
-        private bool isTurn = false;
-        public bool IsTurn
-        {
-            get => isTurn;
-            set
-            {
-                isTurn = value;
-                if (isTurn) onTurnStart?.Invoke();
-                else onTurnEnd?.Invoke();
-            }
-        }
-
+        public bool IsTurn { get; private set; }
         public int ActionPoints;
         public int Speed;
 
@@ -30,14 +15,13 @@ namespace JS.ECS
         public override void Disassemble()
         {
             entity = null;
-            onTurnStart = null;
-            onTurnEnd = null;
             TimeSystem.Unregister(this);
         }
 
         public override void FireEvent(Event newEvent)
         {
-            //
+            if (newEvent is TurnStart) IsTurn = true;
+            else if (newEvent is TurnEnd) IsTurn = false;
         }
     }
 }

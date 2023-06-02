@@ -16,8 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Savanna
   <WorldTile>k__BackingField: {fileID: 11400000, guid: a4fdc191f8710d541b8984735b9edf7f, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: a4fdc191f8710d541b8984735b9edf7f, type: 2}
   <isLand>k__BackingField: 1
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 75

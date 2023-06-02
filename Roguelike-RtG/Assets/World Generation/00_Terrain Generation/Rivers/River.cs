@@ -8,7 +8,6 @@ namespace JS.WorldMap
 
 		public RiverNode[] Nodes;
 
-		//public int Intersections;
 		public int TurnCount;
 		public Compass CurrentDirection;
 
@@ -18,8 +17,14 @@ namespace JS.WorldMap
 	[System.Serializable]
 	public class RiverNode
 	{
-		public GridCoordinates Coordinates;
+		public int x, y;
 		public Compass Flow;
 		public int Size;
+
+		public RiverNode(int x = 0, int y = 0)
+		{
+			this.x = x;
+			this.y = y;
+		}
 	}
 }

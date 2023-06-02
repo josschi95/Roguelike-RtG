@@ -10,6 +10,8 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private BiomeHelper biomeHelper;
+        private List<Bridge> bridges;
+        private List<Road> roads;
 
         public void GenerateRoads()
         {
@@ -19,7 +21,9 @@ namespace JS.WorldMap.Generation
 
         private void FindPaths()
         {
-            var roads = new List<Road>();
+            roads = new List<Road>();
+            bridges = new List<Bridge>();
+
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
                 var newRoad = new Road();
@@ -31,25 +35,39 @@ namespace JS.WorldMap.Generation
                 var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);
                 if (path == null)
                 {
-                    Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                    //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
                     Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
                     continue;
                 }
                 BuildRoad(newRoad, path);
                 roads.Add(newRoad);
-                Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
                 Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
             }
+
             worldMap.TerrainData.Roads = roads.ToArray();
+            worldMap.TerrainData.Bridges = bridges.ToArray();
         }
 
         private Settlement FindNearest(Settlement start)
         {
             float minDist = int.MaxValue;
             Settlement closestSettlement = null;
+
             foreach(var settlement in worldMap.SettlementData.Settlements)
             {
                 if (settlement == start) continue;
+
+                bool duplicate = false;
+                for (int i = 0; i < roads.Count; i++)
+                {
+                    if ((roads[i].pointA == start.ID || roads[i].pointB == start.ID) && (roads[i].pointA == settlement.ID || roads[i].pointB == settlement.ID))
+                    {
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (duplicate) continue;
 
                 var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
                 if (dist < minDist)
@@ -67,12 +85,12 @@ namespace JS.WorldMap.Generation
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var cost = 1;
+                    var cost = 2;
                     var node = worldMap.GetNode(x, y);
-                    if (node.isCoast) cost = 2;
+                    if (node.isCoast) cost = 3;
 
                     var biome = biomeHelper.GetBiome(node.BiomeID);
-                    if (biome.isDifficultTerrain) cost = 3;
+                    if (biome.isDifficultTerrain) cost = 4;
 
                     var river = worldMap.TerrainData.FindRiverAt(x, y, out var index);
                     if (river != null)
@@ -83,7 +101,7 @@ namespace JS.WorldMap.Generation
                             cost = 500;
                     }
 
-                    if (node.BiomeID == biomeHelper.Mountain.ID) cost = 50;
+                    if (node.BiomeID == biomeHelper.Mountain.ID) cost = 100;
                     if (node.rivers.Count > 1) cost = 500;
                     if (!node.IsLand) cost = 500;
 
@@ -99,9 +117,8 @@ namespace JS.WorldMap.Generation
             {
                 list[i].movementCost = 0;
 
-                var newNode = new RiverNode();
+                var newNode = new RiverNode(list[i].x, list[i].y);
                 road.Nodes[i] = newNode;
-                newNode.Coordinates = new GridCoordinates(list[i].x, list[i].y);
 
                 if (i == 0) newNode.Flow = list[i].NeighborDirection_Adjacent(list[i + 1]);
                 else if (i == list.Count - 1) newNode.Flow = list[i].NeighborDirection_Adjacent(list[i - 1]);
@@ -114,7 +131,14 @@ namespace JS.WorldMap.Generation
 
                 if (list[i].rivers.Count > 0)
                 {
-                    Debug.LogWarning("Need to generate new bridge.");
+                    //Debug.LogWarning("Need to generate new bridge.");
+                    var bridge = new Bridge();
+                    bridge.x = list[i].x; 
+                    bridge.y = list[i].y;
+                    if (newNode.Flow == Compass.North || newNode.Flow == Compass.South)
+                        bridge.isVertical = true;
+                    
+                    bridges.Add(bridge);
                 }
             }
         }
@@ -127,4 +151,11 @@ public class Road
     public int pointA;
     public int pointB;
     public RiverNode[] Nodes;
+}
+
+[System.Serializable]
+public class Bridge
+{
+    public int x, y;
+    public bool isVertical;
 }

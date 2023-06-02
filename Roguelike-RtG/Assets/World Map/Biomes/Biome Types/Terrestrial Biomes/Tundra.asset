@@ -16,8 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Tundra
   <WorldTile>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
   <isLand>k__BackingField: 1
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: -100
   maxAvgAnnualTemperature: 0
   minAnnualPrecipitation: 0

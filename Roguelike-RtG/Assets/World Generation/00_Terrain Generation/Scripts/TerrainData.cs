@@ -5,31 +5,6 @@ namespace JS.WorldMap
     [CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
     public class TerrainData : ScriptableObject
     {
-        [SerializeField] private Biome[] biomes;
-
-        public Biome GetBiome(int id)
-        {
-            for (int i = 0; i < biomes.Length; i++)
-            {
-                if (biomes[i].ID == id) return biomes[i];
-            }
-            throw new System.Exception("Biome ID not valid.");
-        }
-
-        public Biome GetBiome(int x, int y)
-        {
-            return GetBiome(biomeMap[x, y]);
-        }
-
-        public void ClearData()
-        {
-            Mountains = null;
-            Lakes = null;
-            Rivers = null;
-            BiomeGroups = null;
-            Islands = null;
-        }
-
         #region - Map Data -
         private int mapSize;
         public int MapSize
@@ -174,9 +149,25 @@ namespace JS.WorldMap
             get => roads;
             set => roads = value;
         }
+
+        private Bridge[] bridges;
+        public Bridge[] Bridges
+        {
+            get => bridges;
+            set => bridges = value;
+        }
         #endregion
 
         #endregion
+
+        public void ClearData()
+        {
+            Mountains = null;
+            Lakes = null;
+            Rivers = null;
+            BiomeGroups = null;
+            Islands = null;
+        }
 
         public River FindRiverAt(int x, int y, out int index)
         {
@@ -185,7 +176,7 @@ namespace JS.WorldMap
             {
                 for (int i = 0; i < river.Nodes.Length; i++)
                 {
-                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y)
+                    if (river.Nodes[i].x == x && river.Nodes[i].y == y)
                     {
                         index = i;
                         return river;

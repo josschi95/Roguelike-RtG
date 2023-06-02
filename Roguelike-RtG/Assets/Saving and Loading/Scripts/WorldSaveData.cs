@@ -19,13 +19,23 @@ namespace JS.WorldMap
 
         //Terrain Data
         public int mapWidth, mapHeight;
-        public int originX, originY; //honestly probably not needed
         public float[] heightMap;
         public float[] heatMap;
         public float[] moistureMap;
         //public float[] airPressureMap;
         public Compass[] windMap;
 
+        //Resources
+        public float[] CoalMap;
+        public float[] CopperMap;
+        public float[] IronMap;
+        public float[] SilverMap;
+        public float[] GoldMap;
+        public float[] MithrilMap;
+        public float[] AdmanatineMap;
+        public float[] GemstoneMap;
+
+        //Features
         public int[] biomeMap; //reference to the ID of each biome
         public BiomeGroup[] BiomeGroups;
 
@@ -37,5 +47,7 @@ namespace JS.WorldMap
 
         //Settlement Data
         public Settlement[] Settlements;
+        public Road[] Roads;
+        public Bridge[] Bridges;
     }
 }

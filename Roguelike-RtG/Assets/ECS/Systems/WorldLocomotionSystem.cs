@@ -1,3 +1,4 @@
+using JS.EventSystem;
 using JS.WorldMap;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ namespace JS.ECS
         private static WorldLocomotionSystem instance;
 
         [SerializeField] private WorldData worldMap;
-
+        [SerializeField] private NodeReference nodeReference;
+        [SerializeField] private GameEvent worldToLocalEvent;
         private void Awake()
         {
             if (instance != null)
@@ -28,6 +30,17 @@ namespace JS.ECS
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
             obj.Transform.WorldPosition += DirectionHelper.GetVector(direction);
+            return true;
+        }
+
+        public static bool SwitchToLocalMap(Physics obj)
+        {
+            //What would prevent this? I can probably think of some that will stop swithcing to world from local, but...
+
+            instance.nodeReference.x = obj.Transform.WorldPosition.x;
+            instance.nodeReference.y = obj.Transform.WorldPosition.y;
+            //GridSystem.OnEnterNewMap(obj.Transform.WorldPosition, Vector2Int.one, 0);
+            instance.worldToLocalEvent?.Invoke();
             return true;
         }
 

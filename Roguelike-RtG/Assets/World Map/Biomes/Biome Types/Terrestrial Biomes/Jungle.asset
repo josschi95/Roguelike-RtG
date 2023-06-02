@@ -16,8 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Jungle
   <WorldTile>k__BackingField: {fileID: 11400000, guid: 6e0fd37c95d6c7943b41c15a29cce30a, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 6e0fd37c95d6c7943b41c15a29cce30a, type: 2}
   <isLand>k__BackingField: 1
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 250

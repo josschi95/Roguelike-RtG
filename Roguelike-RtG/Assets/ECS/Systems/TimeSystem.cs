@@ -13,9 +13,11 @@ namespace JS.ECS
         public OnTimeProgressCallback onTick;
         public OnTimeProgressCallback onNewRound;
 
-        private TimedActor sentinel;
         public const int pointsToAct = 1000;
         private bool runTurnCounter = true;
+        private TimedActor sentinel;
+        private TurnStart turnStartEvent;
+        private TurnEnd turnEndEvent;
 
         [SerializeField] private GameEvent gameTickEvent;
 
@@ -27,21 +29,25 @@ namespace JS.ECS
                 return;
             }
             instance = this;
+            turnStartEvent = new TurnStart();
+            turnEndEvent = new TurnEnd();
         }
 
         private IEnumerator Start()
         {
-            var entity = new Entity("Sentinel");
+            CreateSentinelt();
 
-            var actor = new TimedActor();
-            entity.AddComponent(actor);
-
-            sentinel = actor;
-            sentinel.onTurnStart += OnNewRound;
-
-            while(components.Count <= 1) yield return null;
+            while (components.Count <= 1) yield return null;
 
             TurnTransition();
+        }
+
+        private void CreateSentinelt()
+        {
+            var entity = new Entity("Sentinel");
+            var actor = new TimedActor();
+            entity.AddComponent(actor);
+            sentinel = actor;
         }
 
         private void OnNewRound()
@@ -125,7 +131,8 @@ namespace JS.ECS
         {
             //Debug.Log(actor.entity.Name);
             //Debug.Log(components.Count);
-            actor.IsTurn = true;
+            actor.entity.FireEvent(turnStartEvent);
+            if (actor == sentinel) OnNewRound();
         }
 
         public static void EndTurn(TimedActor actor)
@@ -135,7 +142,7 @@ namespace JS.ECS
 
         private void EndActorTurn(TimedActor actor)
         {
-            actor.IsTurn = false;
+            actor.entity.FireEvent(turnEndEvent);
             TurnTransition();
         }
 

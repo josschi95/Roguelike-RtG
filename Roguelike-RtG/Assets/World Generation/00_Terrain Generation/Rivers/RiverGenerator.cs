@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,17 +11,10 @@ namespace JS.WorldMap.Generation
         [SerializeField] private BiomeHelper biomeHelper;
 
         [SerializeField] private float MinRiverHeight = 0.6f;
-
         [SerializeField] private int MaxRiverAttempts = 1000;
-
         [SerializeField] private int MinRiverTurns = 6;
         [SerializeField] private int MaxRiverTurns = 15;
-
         [SerializeField] private int MinRiverLength = 15;
-
-        //[SerializeField] private int MaxRiverIntersections = 2;
-
-        [SerializeField] private Biome riverBiome;
 
         private List<River> rivers;
         private List<RiverGroup> riverGroups;
@@ -139,8 +131,8 @@ namespace JS.WorldMap.Generation
 
             if (tiles.Count > 1)
             {
-                if (!node.hasBiome) Debug.LogWarning("Biome not assigned");
-                if (node.BiomeID == biomeHelper.Mountain.ID)
+                //if (!node.hasBiome) Debug.LogWarning("Biome not assigned");
+                if (node.hasBiome && node.BiomeID == biomeHelper.Mountain.ID)
                 {
                     //Debug.Log("River is in mountains at " + node.x + "," + node.y);
                     if (tiles[tiles.Count - 1].BiomeID != biomeHelper.Mountain.ID)
@@ -277,7 +269,7 @@ namespace JS.WorldMap.Generation
             {
                 for (int i = 0; i < river.Nodes.Length; i++)
                 {
-                    if (river.Nodes[i].Coordinates.x == x && river.Nodes[i].Coordinates.y == y) return river;
+                    if (river.Nodes[i].x == x && river.Nodes[i].y == y) return river;
                 }
             }
             return null;
@@ -356,11 +348,11 @@ namespace JS.WorldMap.Generation
             river.Nodes = new RiverNode[tiles.Count];
             for (int i = 0; i < tiles.Count; i++)
             {
-                river.Nodes[i] = new RiverNode();
+                river.Nodes[i] = new RiverNode(tiles[i].x, tiles[i].y);
+
                 if (i == 0) river.Nodes[i].Size = 1;
                 else if (worldGenerator.rng.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
                 else river.Nodes[i].Size = river.Nodes[i - 1].Size;
-                river.Nodes[i].Coordinates = new GridCoordinates(tiles[i].x, tiles[i].y);
 
                 tiles[i].SetRiverPath(river);
 
@@ -440,75 +432,17 @@ namespace JS.WorldMap.Generation
         {
             for (int i = 0; i < rivers.Count; i++)
             {
-                if (rivers[i].hasBeenDug) continue;
-                DigRiver(rivers[i]);
+                if (!rivers[i].hasBeenDug) DigRiver(rivers[i]);
             }
         }
 
         private void DigRiver(River river)
         {
-            int counter = 0;
-
-            // How wide are we digging this river?
-            int size = worldGenerator.rng.Next(1, 5);
             river.Length = river.Nodes.Length;
-
-            // randomize size change
-            int two = river.Length / 2;
-            int three = two / 2;
-            int four = three / 2;
-            int five = four / 2;
-
-            int twomin = two / 3;
-            int threemin = three / 3;
-            int fourmin = four / 3;
-            int fivemin = five / 3;
-
-            // randomize lenght of each size
-            int count1 = worldGenerator.rng.Next(fivemin, five);
-            if (size < 4)
-            {
-                count1 = 0;
-            }
-            int count2 = count1 + worldGenerator.rng.Next(fourmin, four);
-            if (size < 3)
-            {
-                count2 = 0;
-                count1 = 0;
-            }
-            int count3 = count2 + worldGenerator.rng.Next(threemin, three);
-            if (size < 2)
-            {
-                count3 = 0;
-                count2 = 0;
-                count1 = 0;
-            }
-            int count4 = count3 + worldGenerator.rng.Next(twomin, two);
-
-            // Make sure we are not digging past the river path
-            if (count4 > river.Length)
-            {
-                int extra = count4 - river.Length;
-                while (extra > 0)
-                {
-                    if (count1 > 0) { count1--; count2--; count3--; count4--; extra--; }
-                    else if (count2 > 0) { count2--; count3--; count4--; extra--; }
-                    else if (count3 > 0) { count3--; count4--; extra--; }
-                    else if (count4 > 0) { count4--; extra--; }
-                }
-            }
-
-            // Dig it out
             for (int i = river.Nodes.Length - 1; i >= 0; i--)
             {
-                WorldTile node = worldMap.GetNode(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
-
-                if (counter < count1) node.DigRiver(river, 4, riverBiome);
-                else if (counter < count2) node.DigRiver(river, 3, riverBiome);
-                else if (counter < count3) node.DigRiver(river, 2, riverBiome);
-                else if (counter < count4) node.DigRiver(river, 1, riverBiome);
-                else node.DigRiver(river, 0, riverBiome);
-                counter++;
+                WorldTile node = worldMap.GetNode(river.Nodes[i].x, river.Nodes[i].y);
+                node.AddRiver(river);
             }
             river.hasBeenDug = true;
         }

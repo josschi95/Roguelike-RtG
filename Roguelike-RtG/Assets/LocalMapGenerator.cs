@@ -1,14 +1,13 @@
-using JS.WorldMap;
-using JS.WorldMap.Generation;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 namespace JS.WorldMap
 {
     public class LocalMapGenerator : MonoBehaviour
     {
+        [SerializeField] private NodeReference nodeReference;
+        [SerializeField] private LocalMapDisplay localMapDisplay;
         [SerializeField] private WorldData worldData;
 
         [SerializeField] private BiomeHelper biomeHelper;
@@ -16,14 +15,11 @@ namespace JS.WorldMap
 
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private PathTileHelper riverTiles;
-        [SerializeField] private DirectionTiles directionTiles;
         [Space]
 
-        [SerializeField] private Tilemap oceanMap;
         [SerializeField] private Tilemap landMap;
-        [SerializeField] private Tilemap terrainFeatureMap;
+        [SerializeField] private Tilemap featuresMap;
         [SerializeField] private Tilemap riverMap;
-        [SerializeField] private Tilemap roadMap;
 
         [Header("Perlin Noise")]
         [SerializeField] private float noiseScale = 30;
@@ -38,69 +34,31 @@ namespace JS.WorldMap
 
         [Space]
 
-        public int nodeX, nodeY;
-
-        [Space]
-        public RuleTile lowTile;
-        public RuleTile highTile;
-        public RuleTile treeTile;
-        public int seed = 50;
-
-        [Space]
-
-        public bool hasRiver;
-        public Compass riverDirection;
-        public int riverWidth;
         public bool roundCorner = true;
+        private int seed;
+        private System.Random prng;
 
-
-        private System.Random rng;
-
-        private void Start()
+        public void CheckForNode()
         {
-            GenerateLocalMap(nodeX, nodeY);
-            PlaceTrees();
-            if (hasRiver) PlaceRiver();
-            PlaceOutline();
+            GenerateLocalMap(nodeReference.x, nodeReference.y);
         }
 
-        public void GenerateLocalMap(int worldX, int worldY)
+        private void GenerateLocalMap(int worldX, int worldY)
         {
-            //var seed = worldData.TerrainData.SeedMap[worldX, worldY];
-            rng = new System.Random(seed);
+            var node = worldData.GetNode(worldX, worldY);
+            seed = worldData.TerrainData.SeedMap[worldX, worldY];
+            prng = new System.Random(seed);
+            var biome = biomeHelper.GetBiome(node.BiomeID);
 
-            //var biome = worldData.TerrainData.GetBiome(worldX, worldY);
+            LocalMapInfo info = new LocalMapInfo();
+            info.x = worldX; info.y = worldY;
+            info.PerlinMap = PerlinNoise.GenerateHeightMap(worldGenParams.LocalDimensions.x, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            info.featurePoints = Poisson.GeneratePoints(seed, 10, worldGenParams.LocalDimensions);
 
-            float[,] perlinMap = PerlinNoise.GenerateHeightMap(worldGenParams.LocalDimensions.x, seed, noiseScale, octaves, persistence, lacunarity, offset);
-
-            for (int x = 0; x < perlinMap.GetLength(0); x++)
+            var river = worldData.TerrainData.FindRiverAt(worldX, worldY, out var index);
+            if (river != null)
             {
-                for (int y = 0; y < perlinMap.GetLength(1); y++)
-                {
-                    var tilePos = new Vector3Int(x, y);
-                    if (perlinMap[x,y] > 0.5f)
-                    {
-                        landMap.SetTile(tilePos, highTile);
-                    }
-                    else
-                    {
-                        landMap.SetTile(tilePos, lowTile);
-                    }
-                }
-            }
-            for (int x = 0; x < worldGenParams.LocalDimensions.x; x++)
-            {
-                var south = new Vector3Int(x, -1);
-                roadMap.SetTile(south, directionTiles.GetTile(Compass.South));
-                var north = new Vector3Int(x, perlinMap.GetLength(1));
-                roadMap.SetTile(north, directionTiles.GetTile(Compass.North));
-            }
-            for (int y = 0; y < perlinMap.GetLength(1); y++)
-            {
-                var east = new Vector3Int(worldGenParams.LocalDimensions.x, y);
-                roadMap.SetTile(east, directionTiles.GetTile(Compass.East));
-                var west = new Vector3Int(-1, y);
-                roadMap.SetTile(west, directionTiles.GetTile(Compass.West));
+                //Block out poisson map
             }
 
             //ok so.... 
@@ -115,90 +73,60 @@ namespace JS.WorldMap
             // pathfinding information g/h/f costs
             // do I need to hold entities? 
 
-
-        }
-
-        private void PlaceTrees()
-        {
-            var points = Poisson.GeneratePoints(seed, 10, worldGenParams.LocalDimensions);
-            for (int i = 0; i < points.Count; i++)
-            {
-                var pos = new Vector3Int((int)points[i].x, (int)points[i].y);
-                terrainFeatureMap.SetTile(pos, treeTile);
-            }
-        }
-
-        private void PlaceOutline()
-        {
-            var width = worldGenParams.LocalDimensions.x;
-            var height = worldGenParams.LocalDimensions.y;
-
-            for (int x = 0; x < width; x++)
-            {
-                var south = new Vector3Int(x, -1);
-                roadMap.SetTile(south, directionTiles.GetTile(Compass.South));
-                var north = new Vector3Int(x, height);
-                roadMap.SetTile(north, directionTiles.GetTile(Compass.North));
-            }
-            for (int y = 0; y < height; y++)
-            {
-                var east = new Vector3Int(width, y);
-                roadMap.SetTile(east, directionTiles.GetTile(Compass.East));
-                var west = new Vector3Int(-1, y);
-                roadMap.SetTile(west, directionTiles.GetTile(Compass.West));
-            }
+            localMapDisplay.DisplayMap(info);
         }
 
         #region - Rivers -
         //Note that I can use this same stuff for a road with a simple bool
-        private void PlaceRiver()
+        private void PlaceRiver(RiverNode node)
         {
             var width = worldGenParams.LocalDimensions.x;
             var height = worldGenParams.LocalDimensions.y;
             int verticalOffset = Mathf.RoundToInt(width / 2);
-            verticalOffset -= Mathf.RoundToInt(riverWidth / 2);
-            int horizontalOffset = Mathf.RoundToInt(height / 2);
-            horizontalOffset -= Mathf.RoundToInt(riverWidth / 2);
+            verticalOffset -= Mathf.RoundToInt(node.Size / 2);
 
-            if (riverDirection == Compass.North || riverDirection == Compass.South)
+            int horizontalOffset = Mathf.RoundToInt(height / 2);
+            horizontalOffset -= Mathf.RoundToInt(node.Size / 2);
+
+            if (node.Flow == Compass.North || node.Flow == Compass.South)
             {
                 //Vertical river
-                PlaceNorthRiver(height, verticalOffset, riverWidth);
-                PlaceSouthRiver(height, verticalOffset, riverWidth);
+                PlaceNorthRiver(height, verticalOffset, node.Size, node.Flow);
+                PlaceSouthRiver(height, verticalOffset, node.Size, node.Flow);
             }
-            else if (riverDirection == Compass.East || riverDirection == Compass.West)
+            else if (node.Flow == Compass.East || node.Flow == Compass.West)
             {
                 //Horizontal river
-                PlaceEastRiver(height, horizontalOffset, riverWidth);
-                PlaceWestRiver(height, horizontalOffset, riverWidth);
+                PlaceEastRiver(height, horizontalOffset, node.Size, node.Flow);
+                PlaceWestRiver(height, horizontalOffset, node.Size, node.Flow);
             }
-            else if (riverDirection == Compass.NorthEast)
+            else if (node.Flow == Compass.NorthEast)
             {
-                PlaceNorthRiver(height, verticalOffset, riverWidth);
-                PlaceEastRiver(height, horizontalOffset, riverWidth);
-                RoundCorner(riverDirection, riverWidth);
+                PlaceNorthRiver(height, verticalOffset, node.Size, node.Flow);
+                PlaceEastRiver(height, horizontalOffset, node.Size, node.Flow);
+                RoundCorner(node.Flow, node.Size);
             }
-            else if (riverDirection == Compass.SouthEast)
+            else if (node.Flow == Compass.SouthEast)
             {
-                PlaceSouthRiver(height, verticalOffset, riverWidth);
-                PlaceEastRiver(height, horizontalOffset, riverWidth);
-                RoundCorner(riverDirection, riverWidth);
+                PlaceSouthRiver(height, verticalOffset, node.Size, node.Flow);
+                PlaceEastRiver(height, horizontalOffset, node.Size, node.Flow);
+                RoundCorner(node.Flow, node.Size);
             }
-            else if (riverDirection == Compass.SouthWest)
+            else if (node.Flow == Compass.SouthWest)
             {
-                PlaceSouthRiver(height, verticalOffset, riverWidth);
-                PlaceWestRiver(height, horizontalOffset, riverWidth);
-                RoundCorner(riverDirection, riverWidth);
+                PlaceSouthRiver(height, verticalOffset, node.Size, node.Flow);
+                PlaceWestRiver(height, horizontalOffset, node.Size, node.Flow);
+                RoundCorner(node.Flow, node.Size);
             }
-            else if (riverDirection == Compass.NorthWest)
+            else if (node.Flow == Compass.NorthWest)
             {
-                PlaceNorthRiver(height, verticalOffset, riverWidth);
-                PlaceWestRiver(height, horizontalOffset, riverWidth);
-                RoundCorner(riverDirection, riverWidth);
+                PlaceNorthRiver(height, verticalOffset, node.Size, node.Flow);
+                PlaceWestRiver(height, horizontalOffset, node.Size, node.Flow);
+                RoundCorner(node.Flow, node.Size);
             }
         }
 
-        private void PlaceNorthRiver(int height, int offset, int riverWidth)
+        private void PlaceNorthRiver(int height, int offset, int riverWidth, Compass direction)
         {
             //Vertical river
             var halfHeight = height / 2;
@@ -207,13 +135,13 @@ namespace JS.WorldMap
                 for (int j = 0; j < riverWidth; j++)
                 {
                     var pos = new Vector3Int(offset + j, i);
-                    riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                    riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                 }
 
             }
         }
 
-        private void PlaceSouthRiver(int height, int offset, int riverWidth)
+        private void PlaceSouthRiver(int height, int offset, int riverWidth, Compass direction)
         {
             var halfHeight = height / 2;
             for (int i = 0; i < halfHeight; i++)
@@ -221,12 +149,12 @@ namespace JS.WorldMap
                 for (int j = 0; j < riverWidth; j++)
                 {
                     var pos = new Vector3Int(offset + j, i);
-                    riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                    riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                 }
             }
         }
 
-        private void PlaceEastRiver(int width, int offset, int riverWidth)
+        private void PlaceEastRiver(int width, int offset, int riverWidth, Compass direction)
         {
             var halfWidth = width / 2;
             for (int i = halfWidth; i < width; i++)
@@ -234,12 +162,12 @@ namespace JS.WorldMap
                 for (int j = 0; j < riverWidth; j++)
                 {
                     var pos = new Vector3Int(i, offset + j);
-                    riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                    riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                 }
             }
         }
 
-        private void PlaceWestRiver(int width, int offset, int riverWidth)
+        private void PlaceWestRiver(int width, int offset, int riverWidth, Compass direction)
         {
             var halfWidth = width / 2;
             for (int i = 0; i < halfWidth; i++)
@@ -247,7 +175,7 @@ namespace JS.WorldMap
                 for (int j = 0; j < riverWidth; j++)
                 {
                     var pos = new Vector3Int(i, offset + j);
-                    riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                    riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                 }
             }
         }
@@ -283,7 +211,7 @@ namespace JS.WorldMap
                         if (corner[i].x < halfWidth && corner[i].y < halfHeight)
                         {
                             var pos = new Vector3Int(corner[i].x, corner[i].y);
-                            riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                            riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                         }
                     }
                     break;
@@ -293,7 +221,7 @@ namespace JS.WorldMap
                         if (corner[i].x < halfWidth && corner[i].y > halfHeight)
                         {
                             var pos = new Vector3Int(corner[i].x, corner[i].y);
-                            riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                            riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                         }
                     }
                     break;
@@ -303,7 +231,7 @@ namespace JS.WorldMap
                         if (corner[i].x > halfWidth - 1 && corner[i].y > halfHeight)
                         {
                             var pos = new Vector3Int(corner[i].x, corner[i].y);
-                            riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                            riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                         }
                     }
                     break;
@@ -313,7 +241,7 @@ namespace JS.WorldMap
                         if (corner[i].x > halfWidth - 1 && corner[i].y < halfHeight)
                         {
                             var pos = new Vector3Int(corner[i].x, corner[i].y);
-                            riverMap.SetTile(pos, riverTiles.GetRiverTile(riverDirection));
+                            riverMap.SetTile(pos, riverTiles.GetRiverTile(direction));
                         }
                     }
                     break;

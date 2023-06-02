@@ -16,8 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Tropical Seasonal Forest
   <WorldTile>k__BackingField: {fileID: 11400000, guid: 839faba153141c149bbbb78ff52ef7a9, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 839faba153141c149bbbb78ff52ef7a9, type: 2}
   <isLand>k__BackingField: 1
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 125

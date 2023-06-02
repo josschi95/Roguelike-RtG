@@ -205,7 +205,8 @@ namespace JS.WorldMap.Generation
                 var body = FloodFillRegion(water[0], false);
                 Lake newLake = new Lake();
                 newLake.AddRange(body);
-                if (newLake.IsLandLocked(mapSize))
+                bool trueLake = newLake.IsLandLocked(mapSize);
+                if (trueLake)
                 {
                     newLake.ID = lakes.Count;
                     lakes.Add(newLake);
@@ -215,6 +216,7 @@ namespace JS.WorldMap.Generation
                 for (int i = 0; i < body.Count; i++)
                 {
                     water.Remove(body[i]);
+                    if (trueLake) body[i].SetBiome(biomeHelper.Lake);
                 }
 
                 yield return null;
@@ -242,7 +244,6 @@ namespace JS.WorldMap.Generation
                         {
                             newIsland.Nodes.Add(body[i]);
                         }
-                        //body[i].Island = newIsland;
                     }
                     newIsland.GridNodes = coords;
                     islands.Add(newIsland);
@@ -298,9 +299,9 @@ namespace JS.WorldMap.Generation
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     if (!node.IsLand) continue;
-                    for (int i = 0; i < node.neighbors_adj.Count; i++)
+                    for (int i = 0; i < node.neighbors_all.Count; i++)
                     {
-                        if (!node.neighbors_adj[i].IsLand && node.rivers.Count == 0)
+                        if (!node.neighbors_all[i].IsLand && node.rivers.Count == 0)
                         {
                             node.isCoast = true;
                         }
@@ -320,8 +321,10 @@ namespace JS.WorldMap.Generation
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     if (terrainData.HeightMap[node.x, node.y] >= worldGenParams.MountainHeight)
+                    {
+                        node.SetBiome(biomeHelper.Mountain);
                         node.CheckNeighborMountains();
-                    node.SetBiome(biomeHelper.Mountain);
+                    }
                 }
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
@@ -456,7 +459,7 @@ namespace JS.WorldMap.Generation
                 {
                     WorldTile node = worldMap.GetNode(x, y);
                     if (node.IsLand) node.SetBiome(biomeHelper.GetWhittakerTableBiome(node));
-                    else node.SetBiome(biomeHelper.GetAquaticBiome(node));
+                    else if (!node.hasBiome) node.SetBiome(biomeHelper.GetOceanBiome(node)); //exclude lakes
                 }
             }
 

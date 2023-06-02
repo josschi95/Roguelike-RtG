@@ -197,8 +197,6 @@ namespace JS.WorldMap
             {
                 neighbors_adj[i].AddMoisture(0.15f);
             }
-
-            //Either some kind of callback or loop through everything again at the end
         }
 
         public void SetRiverPath(River river)
@@ -208,13 +206,6 @@ namespace JS.WorldMap
 
             //Debug.Log("Adding River " + river.ID + " to tile " + x + "," + y);
             rivers.Add(river);
-        }
-
-        public void DigRiver(River river, int size, Biome riverBiome)
-        {
-            if (size < 1) return; //Will need to adjust this later, the size of the river will ultimately decide its width in Local Tiles
-
-            AddRiver(river);
         }
         #endregion
 

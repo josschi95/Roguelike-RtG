@@ -20,16 +20,17 @@ namespace JS.WorldMap
         [SerializeField] private Biome tropicalSeasonalForest;
         [SerializeField] private Biome savanna;
         [SerializeField] private Biome jungle;
+        [SerializeField] private Biome mountain;
 
         [Space]
 
+        [SerializeField] private Biome river;
+        [SerializeField] private Biome lake;
         [SerializeField] private Biome oceanSurface;
         [SerializeField] private Biome oceanDeep;
 
-        [Space]
-
-        [SerializeField] private Biome mountain;
         public Biome Mountain => mountain;
+        public Biome Lake => lake;
 
         public Biome GetWhittakerTableBiome(WorldTile node)
         {
@@ -67,7 +68,7 @@ namespace JS.WorldMap
             }
         }
 
-        public Biome GetAquaticBiome(WorldTile tile)
+        public Biome GetOceanBiome(WorldTile tile)
         {
             if (tile.Altitude >= worldParams.SeaLevel * 0.5f) return oceanSurface;
             else return oceanDeep;

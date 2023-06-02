@@ -28,9 +28,7 @@ namespace JS.WorldMap
             transform.RegionPosition = new Vector2Int(playerData.regionX, playerData.regionY);
             transform.LocalPosition = new Vector2Int(playerData.localX, playerData.localY);
             player.AddComponent(new WorldLocomotion());
-            var actor = player.GetComponent<TimedActor>();
-            player.AddComponent(new InputHandler(inputActionAsset, actor));
-
+            player.AddComponent(new InputHandler(inputActionAsset));
 
             new RenderCompound(transform, playerSprites);
 

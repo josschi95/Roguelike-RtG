@@ -16,8 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Deciduous Forest
   <WorldTile>k__BackingField: {fileID: 11400000, guid: 767bc281021de684193cc8a11e61e2f4, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 767bc281021de684193cc8a11e61e2f4, type: 2}
   <isLand>k__BackingField: 1
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: 7
   maxAvgAnnualTemperature: 20
   minAnnualPrecipitation: 85

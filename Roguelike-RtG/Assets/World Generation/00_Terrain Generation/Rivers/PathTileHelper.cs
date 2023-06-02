@@ -88,8 +88,8 @@ namespace JS.WorldMap
             if (tile == pathT_North || tile == pathT_South ||
                 tile == pathT_East || tile == pathT_West) return pathIntersection;
 
-            Debug.Log(tile.m_DefaultSprite.name + " from " + dir.ToString());
-            Debug.LogWarning("Returning default.");
+            //Debug.Log(tile.m_DefaultSprite.name + " from " + dir.ToString());
+            //Debug.LogWarning("Returning default.");
             return GetRiverTile(dir);
         }
     }

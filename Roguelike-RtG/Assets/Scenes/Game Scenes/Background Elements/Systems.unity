@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+  worldToLocalGenerationEvent: {fileID: 0}
 --- !u!114 &607149223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  nodeReference: {fileID: 11400000, guid: f453057874345994d8ebdc0de784d375, type: 2}
+  worldToLocalEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
 --- !u!1 &1790594448
 GameObject:
   m_ObjectHideFlags: 0

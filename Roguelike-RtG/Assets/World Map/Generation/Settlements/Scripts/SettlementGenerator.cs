@@ -191,7 +191,7 @@ namespace JS.WorldMap.Generation
         private Settlement PlaceSettlement(WorldTile node, SettlementType type, HumanoidTribe tribe)
         {
             int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
-            var newSettlement = new Settlement("", settlements.Count, node, type, tribe, population);
+            var newSettlement = new Settlement("[PLACEHOLDER]", settlements.Count, node, type, tribe, population);
 
             //availableNodes?.Remove(node);
             biomes[biomeHelper.GetBiome(node.BiomeID)].Remove(node);
@@ -314,6 +314,9 @@ namespace JS.WorldMap.Generation
             }
         }
 
+        /// <summary>
+        /// Prints a report of the spread of settlement types for each tribe
+        /// </summary>
         private void GetTerritoryReport()
         {
             for (int i = 0; i < tribes.Length; i++)

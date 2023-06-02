@@ -1,3 +1,4 @@
+using JS.EventSystem;
 using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,10 @@ public class GridSystem : MonoBehaviour
 
     [SerializeField] private WorldGenerationParameters worldGenParams;
     private List<GameGrid> gameGrids;
+
+    [Space]
+    [SerializeField] private GameEvent worldToLocalGenerationEvent;
+    public bool waitingForLocalGenerationToLoad { get; set; }
 
     private void Awake()
     {

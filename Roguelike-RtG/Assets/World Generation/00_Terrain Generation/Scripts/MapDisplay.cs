@@ -7,10 +7,9 @@ namespace JS.WorldMap
     public class MapDisplay : MonoBehaviour
     {
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private SettlementData settlementData;
+        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private PathTileHelper riverTiles;
         [SerializeField] private PathTileHelper roadTiles;
-        [SerializeField] private WorldGenerationParameters worldGenerationParameters;
         public BiomeHelper biomeHelper;
 
         [Space]
@@ -25,13 +24,11 @@ namespace JS.WorldMap
 
         [Space]
 
-        [SerializeField] private DirectionTiles directionTiles;
         [SerializeField] private TileBase highlightTile;
+        [SerializeField] private DirectionTiles directionTiles;
         [SerializeField] private TileBase coastalWaterTile;
+        [SerializeField] private RuleTile bridgeVertical, bridgeHorizontal;
 
-        [Space]
-
-        public Biome[] biomes;
         public Biome biomeToHighlight { get; set; }
         public Resources resourceToHighlight { get; set; }
 
@@ -56,13 +53,13 @@ namespace JS.WorldMap
                 for (int y = 0; y < worldMap.Height; y++)
                 {
                     var tilePos =new Vector3Int(x, y);
+                    var node = worldMap.GetNode(x,y);
 
-                    var biome = worldMap.TerrainData.GetBiome(x, y);
+                    var biome = biomeHelper.GetBiome(node.BiomeID);
 
                     if (biome.isLand) landMap.SetTile(tilePos, biome.WorldTile);
                     else oceanMap.SetTile(tilePos, biome.WorldTile);
 
-                    var node = worldMap.GetNode(x,y);
                     if (node.isTectonicPoint) list.Add(node);
                     if (node != null && node.isCoast)
                     {
@@ -75,13 +72,13 @@ namespace JS.WorldMap
         private void DisplayRivers()
         {
             riverMap.ClearAllTiles();
-            //var origin = new Vector3Int(worldMap.TerrainData.OriginX, worldMap.TerrainData.OriginY);
+
             foreach (var river in worldMap.TerrainData.Rivers)
             {
                 for (int i = 0; i < river.Nodes.Length; i++)
                 {
-                    var tilePos = new Vector3Int(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
-                    //var tilePos = origin + new Vector3Int(river.Nodes[i].Coordinates.x, river.Nodes[i].Coordinates.y);
+                    var tilePos = new Vector3Int(river.Nodes[i].x, river.Nodes[i].y);
+
                     RuleTile tile = null;
                     var existingTile = riverMap.GetTile(tilePos) as RuleTile;
                     if (existingTile != null)
@@ -103,7 +100,7 @@ namespace JS.WorldMap
             {
                 for (int i = 0; i < road.Nodes.Length; i++)
                 {
-                    var tilePos = new Vector3Int(road.Nodes[i].Coordinates.x, road.Nodes[i].Coordinates.y);
+                    var tilePos = new Vector3Int(road.Nodes[i].x, road.Nodes[i].y);
 
                     RuleTile tile = null;
                     var existingTile = roadMap.GetTile(tilePos) as RuleTile;
@@ -116,6 +113,13 @@ namespace JS.WorldMap
                     roadMap.SetTile(tilePos, tile);
                 }
             }
+
+            foreach(var bridge in worldMap.TerrainData.Bridges)
+            {
+                var tilePos = new Vector3Int(bridge.x, bridge.y);
+                if (bridge.isVertical) roadMap.SetTile(tilePos, bridgeVertical);
+                else roadMap.SetTile(tilePos, bridgeHorizontal);
+            }
         }
 
         private void DisplaySettlements()
@@ -127,7 +131,7 @@ namespace JS.WorldMap
             {
                 var tilePos = new Vector3Int(settlement.X, settlement.Y);
                 //var tilePos = origin + new Vector3Int(settlement.X, settlement.Y);
-                settlementMap.SetTile(tilePos, settlementData.Types[settlement.TypeID].settlementTile);
+                settlementMap.SetTile(tilePos, worldMap.SettlementData.Types[settlement.TypeID].settlementTile);
             }
         }
 
@@ -149,7 +153,7 @@ namespace JS.WorldMap
                     var tilePos = new Vector3Int(x, y);
                     //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-                    var zone = worldGenerationParameters.TemperatureZones[node.TempZoneID];
+                    var zone = worldGenParams.TemperatureZones[node.TempZoneID];
                     infoMap.SetTile(tilePos, zone.Tile);
 
                 }
@@ -168,7 +172,7 @@ namespace JS.WorldMap
                     var tilePos = new Vector3Int(x, y);
                     //var tilePos = origin + new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-                    var zone = worldGenerationParameters.PrecipitationZones[node.PrecipitationZoneID];
+                    var zone = worldGenParams.PrecipitationZones[node.PrecipitationZoneID];
                     infoMap.SetTile(tilePos, zone.Tile);
                 }
             }
@@ -396,7 +400,7 @@ namespace JS.WorldMap
             infoMap.ClearAllTiles();
             //var worldMap = WorldMap.instance;
 
-            var settlement = settlementData.FindSettlement(node.x, node.y);
+            var settlement = worldMap.SettlementData.FindSettlement(node.x, node.y);
             if (settlement != null)
             {
                 HighlightSettlement(settlement);

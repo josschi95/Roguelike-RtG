@@ -208,7 +208,7 @@ namespace JS.WorldMap
             }
 
             //Out of nodes on the openList
-            Debug.Log("Path could not be found");
+            //Debug.Log("Path could not be found");
             return null;
         }
 

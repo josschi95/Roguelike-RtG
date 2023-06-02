@@ -21,7 +21,7 @@ public class TimeKeeper : ScriptableObject
     [SerializeField] private int _hours;
     [SerializeField] private int _days = 1;
     [SerializeField] private int _months = 1;
-    [SerializeField] private int _years;
+    [SerializeField] private int _year = 1;
 
     [Space] 
     [SerializeField] private MoonPhase _phase;
@@ -32,7 +32,8 @@ public class TimeKeeper : ScriptableObject
     public int Hours => _hours;
     public int Days => _days;
     public int Months => _months;
-    public int Years => _years;
+    public int Year => _year;
+    public MonthsOfYear Month => (MonthsOfYear)Months;
     public MoonPhase MoonPhase => _phase;
     public Season Season => _season;
     #endregion
@@ -112,7 +113,7 @@ public class TimeKeeper : ScriptableObject
 
     private void OnYearChange(int year = 1)
     {
-        _years += year;
+        _year += year;
     }
     #endregion
 
@@ -142,14 +143,24 @@ public class TimeKeeper : ScriptableObject
         return Mathf.Sin(0.0028f * Mathf.PI * (_days / daysInYear) - 0.5f);
     }
 
+    //Resets clock to 6th hour on first day of first month of first year
     public void ResetTime()
     {
         _seconds = 0;
         _minutes = 0;
-        _hours = 0;
+        _hours = 6;
         _days = 1;
         _months = 1;
-        _years = 0;
+        _year = 1;
+    }
+
+    public string GetSuperScriptOrdinals(int num)
+    {
+        int lastDigit = (num % 10);
+        if (lastDigit == 1 && num != 11) return "st";
+        else if (lastDigit == 2 && num != 12) return "nd";
+        else if (lastDigit == 3 && num != 13) return "rd";
+        return "th";
     }
 
     public void SetSavedTime(int seconds, int minutes, int hours, int days, int months, int years)
@@ -159,7 +170,7 @@ public class TimeKeeper : ScriptableObject
         _hours = hours;
         _days = days;
         _months = months;
-        _years = years;
+        _year = years;
     }
 }
 

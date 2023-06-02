@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 345412767}
   - component: {fileID: 345412769}
   - component: {fileID: 345412770}
+  - component: {fileID: 345412771}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -316,6 +317,47 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   developerNotes: Loads World Map after generating world
+--- !u!114 &345412771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345412765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519a276b1dd39c446a93e83454622578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
+  callbackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: UnloadScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 60b58e4fd1deb8f4c8c3628b6626515a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1976489675}
+        m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
+        m_MethodName: LoadSceneAdditiveWithSplashScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: aadaeaf7673021c459950e22efa82c2b, type: 2}
+          m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  developerNotes: 
 --- !u!1 &601089860
 GameObject:
   m_ObjectHideFlags: 0

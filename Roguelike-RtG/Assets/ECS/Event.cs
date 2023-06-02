@@ -9,6 +9,20 @@ namespace JS.ECS
         //Dictionary<string, Object> Parameters;
     }
 
+    /// <summary>
+    /// Tells an entity that their turn has started
+    /// </summary>
+    public class TurnStart : Event 
+    {
+    }
+
+    /// <summary>
+    /// Tells and entity that their turn has ended
+    /// </summary>
+    public class TurnEnd : Event
+    {
+    }
+
     public class DeclareMeleeAttack : Event
     {
 

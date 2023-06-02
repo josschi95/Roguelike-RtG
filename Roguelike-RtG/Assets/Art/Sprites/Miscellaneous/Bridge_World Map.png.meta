@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4702bebb561109f45ab0b6738bda2015
+guid: 31a08e4b98e804844a9c46f105387e8f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,85 +105,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Docks_00
+      name: Bridge_Vertical
       rect:
         serializedVersion: 2
         x: 0
         y: 16
-        width: 32
+        width: 16
         height: 16
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d65796257fa1d459dc49c9ec876092
-      internalID: -466140164
+      spriteID: f394eecc2e04aa1458ffecab375c64a1
+      internalID: 47581007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Docks_02
+      name: Bridge_Horizontal
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 0
         width: 16
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9bf7f4624349a8d41afe44bc151c416e
-      internalID: 1065043165
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Docks_01
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
         height: 16
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8bf770d8aced604b93467c64395a4a9
-      internalID: 1872713991
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Docks_03
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3ff9ec4f4466614cac46fe3b7459f5e
-      internalID: -696135013
+      spriteID: cc93b068bca482f4d9eb30314fa8fba7
+      internalID: 234245038
       vertices: []
       indices: 
       edges: []
@@ -199,15 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Docks_0: 727651417
-      Docks_00: -466140164
-      Docks_01: 1872713991
-      Docks_02: 1065043165
-      Docks_03: -696135013
-      Docks_1: -1355672772
-      Docks_3: 135447141
-      Docks_5: 20432419
-      Docks_6: -1618841402
+      Bridge_Horizontal: 234245038
+      Bridge_Vertical: 47581007
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

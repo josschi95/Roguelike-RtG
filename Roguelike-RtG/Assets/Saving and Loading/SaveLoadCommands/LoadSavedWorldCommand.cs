@@ -66,13 +66,20 @@ namespace JS.CommandSystem
             var terrain = _worldMapData.TerrainData;
 
             terrain.MapSize = data.mapWidth;
-            //terrain.OriginX = data.originX;
-            //terrain.OriginY = data.originY;
+
             terrain.HeightMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heightMap, data.mapWidth, data.mapHeight);
             terrain.HeatMap = ArrayHelper.Convert1DFloatArrayTo2D(data.heatMap, data.mapWidth, data.mapHeight);
             terrain.MoistureMap = ArrayHelper.Convert1DFloatArrayTo2D(data.moistureMap, data.mapWidth, data.mapHeight);
-
             terrain.BiomeMap = ArrayHelper.Convert1DIntArrayTo2D(data.biomeMap, data.mapWidth, data.mapHeight);
+
+            terrain.CoalMap = ArrayHelper.Convert1DFloatArrayTo2D(data.CoalMap, data.mapWidth, data.mapHeight);
+            terrain.CopperMap = ArrayHelper.Convert1DFloatArrayTo2D(data.CopperMap, data.mapWidth, data.mapHeight);
+            terrain.IronMap = ArrayHelper.Convert1DFloatArrayTo2D(data.IronMap, data.mapWidth, data.mapHeight);
+            terrain.SilverMap = ArrayHelper.Convert1DFloatArrayTo2D(data.SilverMap, data.mapWidth, data.mapHeight);
+            terrain.GoldMap = ArrayHelper.Convert1DFloatArrayTo2D(data.GoldMap, data.mapWidth, data.mapHeight);
+            terrain.MithrilMap = ArrayHelper.Convert1DFloatArrayTo2D(data.MithrilMap, data.mapWidth, data.mapHeight);
+            terrain.AdmanatineMap = ArrayHelper.Convert1DFloatArrayTo2D(data.AdmanatineMap, data.mapWidth, data.mapHeight);
+            terrain.GemstoneMap = ArrayHelper.Convert1DFloatArrayTo2D(data.GemstoneMap, data.mapWidth, data.mapHeight);
 
             terrain.Mountains = data.Mountains;
             terrain.Lakes = data.Lakes;
@@ -87,6 +94,8 @@ namespace JS.CommandSystem
         {
             var settlements = _worldMapData.SettlementData;
             settlements.PlaceSettlements(data.Settlements);
+            _worldMapData.TerrainData.Roads = data.Roads;
+            _worldMapData.TerrainData.Bridges = data.Bridges;
         }
     }
 }

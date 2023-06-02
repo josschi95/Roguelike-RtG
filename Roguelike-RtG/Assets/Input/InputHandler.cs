@@ -6,18 +6,15 @@ namespace JS.ECS
 {
     public class InputHandler : ComponentBase
     {
-        public InputHandler(InputActionAsset asset, TimedActor actor)
+        public InputHandler(InputActionAsset asset)
         {
-            _actor = actor;
-            _actor.onTurnStart += CheckForButtonDown;
-
             MapActions(asset);
             SetActions();
         }
 
         public override void FireEvent(Event newEvent)
         {
-            //
+            if (newEvent is TurnStart) CheckForButtonDown();
         }
 
         public override void Disassemble()
@@ -125,6 +122,8 @@ namespace JS.ECS
             _southWest.performed += i => SouthWest();
 
             _center.performed += i => Center();
+            _up.performed += i => Up();
+            _down.performed += i => Down();
         }
 
         private void ClearActions()
@@ -140,6 +139,8 @@ namespace JS.ECS
             _southWest.performed -= i => SouthWest();
 
             _center.performed -= i => Center();
+            _up.performed -= i => Up();
+            _down.performed -= i => Down();
         }
 
         //Check if a button is pressed at the start of the player's turn
@@ -154,6 +155,8 @@ namespace JS.ECS
             else if (_northWest.IsPressed()) NorthWest();
             else if (_southEast.IsPressed()) SouthEast();
             else if (_southWest.IsPressed()) SouthWest();
+
+            else if (_center.IsPressed()) Center();
         }
 
         private bool CanAct()
@@ -223,8 +226,34 @@ namespace JS.ECS
         private void Center()
         {
             if (!CanAct()) return;
-            Actions.SkipAction(Actor);
+            if (_control.IsPressed())
+            {
+                //Try to attack a creature occupying the same space, don't attack self
+                //Examples might be swarms, oozes, etc. or attacking at the player's feet/the ground
+            }
+            else Actions.SkipAction(Actor);
         }
+
+        private void Up()
+        {
+            if (!CanAct()) return;
+            if (_control.IsPressed())
+            {
+                //Try to attack up, only possible when standing on stairs
+            }
+            else TryMoveUp();
+        }
+
+        private void Down()
+        {
+            if (!CanAct()) return;
+            if (_control.IsPressed())
+            {
+                //Try to attack down, only possible when standing on stairs
+            }
+            else TryMoveDown();
+        }
+
         #endregion
 
         private void TryMoveUp()
@@ -245,6 +274,7 @@ namespace JS.ECS
             if (Transform.Depth == 1) //World Map Movement
             {
                 //Load Local Map
+                WorldLocomotionSystem.SwitchToLocalMap(Physics);
             }
             else
             {

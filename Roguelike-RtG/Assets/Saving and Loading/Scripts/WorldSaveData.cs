@@ -7,25 +7,27 @@ namespace JS.WorldMap
         //Seriously, I don't need a JSON with 5 sets of 40,000 item length arrays
         //However, the features (Mountains, Lakes, Rivers, Islands, etc.) take quite a bit more time and should definitely be saved
 
-        //Time
-        public int seconds;
+        public int seed; //this needs to be saved
+        public int[] seedMap; //No need to save
+
+        //Time              // all of this info needs to be saved
+        public int seconds; 
         public int minutes;
         public int hours;
         public int days;
         public int months;
         public int years;
 
-        public int seed;
-
         //Terrain Data
-        public int mapWidth, mapHeight;
-        public float[] heightMap;
-        public float[] heatMap;
-        public float[] moistureMap;
+        public int mapWidth, mapHeight; //this needs to be saved if I have variable map sizes
+        public float[] heightMap; //No need to save
+        public float[] heatMap; //No need to save
+        public float[] moistureMap; //No need to save
         //public float[] airPressureMap;
-        public Compass[] windMap;
+        public Compass[] windMap; //No need to save, this isn't even being used
+        public bool[] coasts;
 
-        //Resources
+        //Resources              //No need to save
         public float[] CoalMap;
         public float[] CopperMap;
         public float[] IronMap;
@@ -35,7 +37,7 @@ namespace JS.WorldMap
         public float[] AdmanatineMap;
         public float[] GemstoneMap;
 
-        //Features
+        //Features              //these should be saved
         public int[] biomeMap; //reference to the ID of each biome
         public BiomeGroup[] BiomeGroups;
 
@@ -47,7 +49,7 @@ namespace JS.WorldMap
 
         //Settlement Data
         public Settlement[] Settlements;
-        public Road[] Roads;
+        public Road[] Roads;    //Roads definitely needs to be saved, the pathfinding takes some time
         public Bridge[] Bridges;
     }
 }

@@ -11,7 +11,7 @@ namespace JS.ECS
             physics.entity.AddComponent(this);
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is DealingMeleeDamage damage)
             {

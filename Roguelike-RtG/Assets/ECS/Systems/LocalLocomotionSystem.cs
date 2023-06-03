@@ -34,15 +34,22 @@ namespace JS.ECS
 
         public static bool TryMoveLocal(Physics obj, Compass direction, out int cost)
         {
-            cost = 0;
-            instance.GetProjectedPosition(obj.Transform, direction);
+            return instance.TryMove(obj, direction, out cost);
+        }
 
-            if (!instance.CanMoveToPosition(obj.Transform, direction)) return false;
+        private bool TryMove(Physics obj, Compass direction, out int cost)
+        {
+            cost = 0;
+            if (!ProjectedPositionIsValid(obj.Transform, direction)) return false;
 
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
-            obj.Transform.LocalPosition += DirectionHelper.GetVector(direction);
+            //Change the Transform of the object to match the tracer's valid position
+            obj.Transform.LocalPosition = tracer.LocalPosition;
+            if (obj.Transform.RegionPosition != tracer.RegionPosition) obj.Transform.RegionPosition = tracer.RegionPosition;
+            if (obj.Transform.WorldPosition != tracer.WorldPosition) obj.Transform.WorldPosition = tracer.WorldPosition;
+
             return true;
         }
 
@@ -55,20 +62,10 @@ namespace JS.ECS
             return true;
         }
 
-
-
-        private bool CanMoveToPosition(Transform transform, Compass direction)
-        {
-            if (!WithinWorldBounds(transform, direction)) return false;
-
-
-            //Is position valid?
-            //Is position Obstructed/Blocked?
-
-            return true;
-        }
-
-        private bool GetProjectedPosition(Transform transform, Compass direction)
+        /// <summary>
+        /// Places a tracer at the projected position and returns true if it is valid.
+        /// </summary>
+        private bool ProjectedPositionIsValid(Transform transform, Compass direction)
         {
             tracer.LocalPosition = transform.LocalPosition;
             tracer.RegionPosition = transform.RegionPosition;
@@ -76,6 +73,7 @@ namespace JS.ECS
 
             if (WithinLocalMap(tracer, direction))
             {
+
                 //Can move here, no change in local map
                 tracer.LocalPosition += DirectionHelper.GetVector(direction);
                 return true;
@@ -93,7 +91,7 @@ namespace JS.ECS
 
             WrapRegion(tracer);
 
-            if (WithinWorldBounds(tracer, direction))
+            if (WithinWorldMap(tracer, direction))
             {
                 tracer.WorldPosition += DirectionHelper.GetVector(direction);
                 return true;
@@ -149,7 +147,7 @@ namespace JS.ECS
             return true;
         }
 
-        private bool WithinWorldBounds(Transform transform, Compass direction)
+        private bool WithinWorldMap(Transform transform, Compass direction)
         {
             var projectedPos = transform.WorldPosition + DirectionHelper.GetVector(direction);
             if (projectedPos.x < 0) return false;

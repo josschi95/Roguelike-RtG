@@ -6,11 +6,18 @@ namespace JS.WorldMap
     [CreateAssetMenu(menuName = "Scriptable Objects/World Data")]
     public class WorldData : ScriptableObject
     {
-        [SerializeField] private bool saveExists = false;
+        [SerializeField] private bool saveExists = false; //Does a WorldSaveData file exist in the directory?
+        [SerializeField] private bool saveIsLoaded = false; //Has the data from that file been loaded in?
         public bool SaveExists
         {
             get => saveExists;
             set => saveExists = value;
+        }
+
+        public bool IsLoaded
+        {
+            get => saveExists && saveIsLoaded;
+            set => saveIsLoaded = value;
         }
 
         private int seed;
@@ -24,45 +31,18 @@ namespace JS.WorldMap
         [field: SerializeField] public SettlementData SettlementData { get; private set; }
         private Grid<WorldTile> grid;
 
-        public int Height => grid.GetHeight();
-        public int Width => grid.GetWidth();
+        public int Height => grid.Height;
+        public int Width => grid.Width;
 
         public void CreateGrid(int width, int height)
         {
-            //float halfWidth = width / 2f;
-            //float halfHeight = height / 2f;
-            //Vector3 origin = new Vector3(-halfWidth, -halfHeight);
-
-            grid = new Grid<WorldTile>(width, height, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
-            //grid = new Grid<WorldTile>(width, height, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            grid = new Grid<WorldTile>(width, height, 1, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
                     grid.GetGridObject(x, y).SetNeighbors();
-                }
-            }
-        }
-
-        public void CreateGridFromData(WorldSaveData data)
-        {
-            int size = data.mapWidth;
-            //float halfWidth = size / 2f;
-            //float halfHeight = size / 2f;
-            //Vector3 origin = new Vector3(-halfWidth, -halfHeight);
-
-            grid = new Grid<WorldTile>(size, size, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
-            //grid = new Grid<WorldTile>(size, size, 1, origin, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
-
-            for (int x = 0; x < size; x++)
-            {
-                for (int y = 0; y < size; y++)
-                {
-                    var node = grid.GetGridObject(x, y);
-                    node.SetNeighbors();
-
-                    //will also need reference to scriptable objects for abstract values
                 }
             }
         }
@@ -90,8 +70,8 @@ namespace JS.WorldMap
             {
                 for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
                 {
-                    if (x < 0 || x > grid.GetWidth() - 1) continue;
-                    if (y < 0 || y > grid.GetHeight() - 1) continue;
+                    if (x < 0 || x > grid.Width - 1) continue;
+                    if (y < 0 || y > grid.Height - 1) continue;
 
                     var toNode = grid.GetGridObject(x, y);
                     if (GridMath.GetStraightDist(fromNode.x, fromNode.y, toNode.x, toNode.y) <= range) nodes.Add(toNode);
@@ -108,8 +88,8 @@ namespace JS.WorldMap
             {
                 for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
                 {
-                    if (x < 0 || x > grid.GetWidth() - 1) continue;
-                    if (y < 0 || y > grid.GetHeight() - 1) continue;
+                    if (x < 0 || x > grid.Width - 1) continue;
+                    if (y < 0 || y > grid.Height - 1) continue;
 
                     var toNode = grid.GetGridObject(x, y);
                     nodes.Add(toNode);
@@ -117,7 +97,6 @@ namespace JS.WorldMap
             }
             return nodes;
         }
-
 
         #region - Pathfinding -
         private List<WorldTile> openList; //nodes to search
@@ -141,9 +120,9 @@ namespace JS.WorldMap
             openList = new List<WorldTile> { startNode };
             closedList = new List<WorldTile>();
 
-            for (int x = 0; x < grid.GetWidth(); x++)
+            for (int x = 0; x < grid.Width; x++)
             {
-                for (int y = 0; y < grid.GetHeight(); y++)
+                for (int y = 0; y < grid.Height; y++)
                 {
                     WorldTile pathNode = grid.GetGridObject(x, y);
                     pathNode.gCost = int.MaxValue;

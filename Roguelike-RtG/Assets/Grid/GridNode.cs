@@ -7,6 +7,7 @@ public class GridNode
     public int x { get; private set; }
     public int y { get; private set; }
 
+    //A* Pathfinding
     public int gCost; //the movement cost to move from the start node to this node, following the existing path
     public int hCost; //the estimated movement cost to move from this node to the end node
     public int fCost; //the current best guess as to the cost of the path
@@ -36,7 +37,7 @@ public class GridNode
 
     public void GetNeighbors()
     {       
-        if (y + 1 < grid.GetHeight())
+        if (y + 1 < grid.Height)
         {
             neighbors_adj.Add(grid.GetGridObject(x, y + 1)); //N
             neighbors_all.Add(grid.GetGridObject(x, y + 1));
@@ -47,13 +48,13 @@ public class GridNode
             neighbors_all.Add(grid.GetGridObject(x, y - 1));
         }
         
-        if (x + 1 < grid.GetWidth())
+        if (x + 1 < grid.Width)
         {
             neighbors_adj.Add(grid.GetGridObject(x + 1, y)); //E
             neighbors_all.Add(grid.GetGridObject(x + 1, y));
 
             if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x + 1, y - 1)); //SW
-            if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x + 1, y + 1)); //NW
+            if (y + 1 < grid.Height) neighbors_all.Add(grid.GetGridObject(x + 1, y + 1)); //NW
         }
         if (x - 1 >= 0)
         {
@@ -61,7 +62,7 @@ public class GridNode
             neighbors_all.Add(grid.GetGridObject(x - 1, y));
 
             if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x - 1, y - 1)); //SW
-            if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x - 1, y + 1)); //NW
+            if (y + 1 < grid.Height) neighbors_all.Add(grid.GetGridObject(x - 1, y + 1)); //NW
         }
     }
 

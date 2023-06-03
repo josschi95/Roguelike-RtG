@@ -23,23 +23,19 @@ namespace JS.WorldMap
             player.AddTag(new PlayerTag());
 
             var transform = player.GetComponent<ECS.Transform>();
+
             transform.Depth = 1;
             transform.WorldPosition = new Vector2Int(playerData.worldX, playerData.worldY);
             transform.RegionPosition = new Vector2Int(playerData.regionX, playerData.regionY);
             transform.LocalPosition = new Vector2Int(playerData.localX, playerData.localY);
+
             player.AddComponent(new WorldLocomotion());
             player.AddComponent(new InputHandler(inputActionAsset));
-
-            new RenderCompound(transform, playerSprites);
+            player.AddComponent(new RenderCompound(transform, playerSprites));
+            player.AddComponent(new CameraFocus());
 
             CenterCameraOnPlayer(transform.WorldPosition);
             pixelCam.assetsPPU = 64;
-            var cam = pixelCam.GetComponent<CameraController>();
-
-            transform.onTransformChanged += delegate
-            {
-                cam.SmoothToPosition(transform.WorldPosition);
-            };
         }
 
         private void CenterCameraOnPlayer(Vector2 pos)

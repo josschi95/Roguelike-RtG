@@ -7,7 +7,6 @@ namespace JS.ECS
 {
     public class Entity
     {
-        //this might later be changed to a string
         public Guid ID { get; private set; }
         public string Name { get; private set; }
         private List<ComponentBase> components;
@@ -27,7 +26,7 @@ namespace JS.ECS
         {
             for (int i = 0; i < components.Count; i++)
             {
-                components[i].FireEvent(newEvent);
+                components[i].OnEvent(newEvent);
             }
         }
 
@@ -68,7 +67,7 @@ namespace JS.ECS
         public void RemoveComponent(ComponentBase component)
         {
             if (!components.Contains(component)) return;
-
+            component.entity = null;
             components.Remove(component);
             component.Disassemble();
         }

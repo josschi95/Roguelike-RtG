@@ -16,7 +16,7 @@ namespace JS.ECS
             Resistances = resistances;
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is TakeDamage damage) ApplyResistances(damage);
         }

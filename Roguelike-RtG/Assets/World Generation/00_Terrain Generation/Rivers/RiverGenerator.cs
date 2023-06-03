@@ -50,8 +50,8 @@ namespace JS.WorldMap.Generation
             var mountain = FindRiverSource(findEmptyMountain);
             WorldTile node;
 
-            if (mountain != null) node = mountain.Nodes[worldGenerator.rng.Next(0, mountain.Nodes.Count)];
-            else node = worldMap.GetNode(worldGenerator.rng.Next(0, worldMap.Width - 1), worldGenerator.rng.Next(0, worldMap.Height - 1));
+            if (mountain != null) node = mountain.Nodes[worldGenerator.PRNG.Next(0, mountain.Nodes.Count)];
+            else node = worldMap.GetNode(worldGenerator.PRNG.Next(0, worldMap.Width - 1), worldGenerator.PRNG.Next(0, worldMap.Height - 1));
 
             if (terrainData.HeightMap[node.x, node.y] < MinRiverHeight) return false;
 
@@ -80,23 +80,23 @@ namespace JS.WorldMap.Generation
         {
             var mountains = worldMap.TerrainData.Mountains;
             if (mountains.Length == 0) return null;
-            if (!riverLessMountain) return worldMap.TerrainData.Mountains[worldGenerator.rng.Next(0, mountains.Length)];
+            if (!riverLessMountain) return worldMap.TerrainData.Mountains[worldGenerator.PRNG.Next(0, mountains.Length)];
 
             var shuffledList = new List<MountainRange>(mountains);
             for (int i = 0; i < shuffledList.Count; i++)
             {
                 var temp = shuffledList[i];
-                int randomIndex = worldGenerator.rng.Next(i, shuffledList.Count);
+                int randomIndex = worldGenerator.PRNG.Next(i, shuffledList.Count);
                 shuffledList[i] = shuffledList[randomIndex];
                 shuffledList[randomIndex] = temp;
             }
 
             for (int i = 0; i < shuffledList.Count; i++)
             {
-                if (shuffledList[i].Rivers.Count == 0) return shuffledList[i];
+                if (shuffledList[i].MountainRivers.Count == 0) return shuffledList[i];
             }
 
-            return mountains[worldGenerator.rng.Next(0, mountains.Length)];
+            return mountains[worldGenerator.PRNG.Next(0, mountains.Length)];
         }
 
         private WorldTile FindLowestNeighborNode(WorldTile node)
@@ -137,7 +137,7 @@ namespace JS.WorldMap.Generation
                     //Debug.Log("River is in mountains at " + node.x + "," + node.y);
                     if (tiles[tiles.Count - 1].BiomeID != biomeHelper.Mountain.ID)
                     {
-                        Debug.Log("Cannot flow up mountain at " + node.x + "," + node.y);
+                        //Debug.Log("Cannot flow up mountain at " + node.x + "," + node.y);
                         return; //Don't flow from a non-mountain tile to a mountain tile
                     }
                 }
@@ -351,7 +351,7 @@ namespace JS.WorldMap.Generation
                 river.Nodes[i] = new RiverNode(tiles[i].x, tiles[i].y);
 
                 if (i == 0) river.Nodes[i].Size = 1;
-                else if (worldGenerator.rng.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
+                else if (worldGenerator.PRNG.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
                 else river.Nodes[i].Size = river.Nodes[i - 1].Size;
 
                 tiles[i].SetRiverPath(river);

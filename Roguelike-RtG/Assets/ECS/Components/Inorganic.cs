@@ -5,7 +5,7 @@ namespace JS.ECS
     /// </summary>
     public class Inorganic : ComponentBase
     {
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             switch (newEvent)
             {

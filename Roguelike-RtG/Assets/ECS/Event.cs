@@ -10,16 +10,30 @@ namespace JS.ECS
     }
 
     /// <summary>
-    /// Tells an entity that their turn has started
+    /// Tells an entity that a new round has started.
+    /// </summary>
+    public class NewRound: Event
+    {
+    }
+
+    /// <summary>
+    /// Tells an entity that their turn has started.
     /// </summary>
     public class TurnStart : Event 
     {
     }
 
     /// <summary>
-    /// Tells and entity that their turn has ended
+    /// Tells an entity that their turn has ended.
     /// </summary>
     public class TurnEnd : Event
+    {
+    }
+
+    /// <summary>
+    /// Tells an entity that their transform has changed.
+    /// </summary>
+    public class TransformChanged : Event
     {
     }
 

@@ -20,7 +20,7 @@ namespace JS.ECS
             GasSystem.Unregister(this);
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

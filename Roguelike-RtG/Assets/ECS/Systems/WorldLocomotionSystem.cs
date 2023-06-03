@@ -1,4 +1,5 @@
 using JS.EventSystem;
+using JS.Primitives;
 using JS.WorldMap;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace JS.ECS
         private static WorldLocomotionSystem instance;
 
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private NodeReference nodeReference;
+        [SerializeField] private Vector3IntVariable playerGlobalPosition;
         [SerializeField] private GameEvent worldToLocalEvent;
         private void Awake()
         {
@@ -36,10 +37,14 @@ namespace JS.ECS
         public static bool SwitchToLocalMap(Physics obj)
         {
             //What would prevent this? I can probably think of some that will stop swithcing to world from local, but...
+            obj.Transform.Depth = 0;
 
-            instance.nodeReference.x = obj.Transform.WorldPosition.x;
-            instance.nodeReference.y = obj.Transform.WorldPosition.y;
-            //GridSystem.OnEnterNewMap(obj.Transform.WorldPosition, Vector2Int.one, 0);
+            instance.playerGlobalPosition.Value.x = obj.Transform.WorldPosition.x;
+            instance.playerGlobalPosition.Value.y = obj.Transform.WorldPosition.y;
+            instance.playerGlobalPosition.Value.z = obj.Transform.Depth;
+
+            GridManager.OnEnterNewMap(obj.Transform.WorldPosition, Vector2Int.one, 0);
+
             instance.worldToLocalEvent?.Invoke();
             return true;
         }

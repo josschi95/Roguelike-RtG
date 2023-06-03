@@ -1,3 +1,4 @@
+using JS.Primitives;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,7 +7,10 @@ namespace JS.WorldMap
 {
     public class LocalMapGenerator : MonoBehaviour
     {
-        [SerializeField] private NodeReference nodeReference;
+        [SerializeField] private Vector3IntVariable globalPosition;
+
+        [Space]
+
         [SerializeField] private LocalMapDisplay localMapDisplay;
         [SerializeField] private WorldData worldData;
 
@@ -40,7 +44,7 @@ namespace JS.WorldMap
 
         public void CheckForNode()
         {
-            GenerateLocalMap(nodeReference.x, nodeReference.y);
+            GenerateLocalMap(globalPosition.Value.x, globalPosition.Value.y);
         }
 
         private void GenerateLocalMap(int worldX, int worldY)

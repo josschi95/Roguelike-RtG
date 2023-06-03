@@ -25,6 +25,8 @@ namespace JS.CommandSystem
         private void SaveWorldData()
         {
             var data = new WorldSaveData();
+            data.seed = worldData.Seed;
+            data.seedMap = ArrayHelper.Convert2DIntArrayTo1D(worldData.TerrainData.SeedMap);
 
             //Time
             data.seconds = timeData.Seconds;
@@ -43,7 +45,7 @@ namespace JS.CommandSystem
             data.heatMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeatMap);
             data.moistureMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.MoistureMap);
             data.biomeMap = ArrayHelper.Convert2DIntArrayTo1D(terrain.BiomeMap);
-
+            data.coasts = ArrayHelper.Convert2DBoolArrayTo1D(terrain.Coasts);
             data.CoalMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.CoalMap);
             data.CopperMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.CopperMap);
             data.IronMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.IronMap);
@@ -66,8 +68,9 @@ namespace JS.CommandSystem
             data.Bridges = terrain.Bridges;
 
 
-
             SaveToJSON(data);
+            worldData.SaveExists = true;
+            worldData.IsLoaded = true;
         }
 
         private void SaveToJSON(WorldSaveData data)

@@ -2,15 +2,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using JS.EventSystem;
-using TMPro;
 using JS.CommandSystem;
+using TMPro;
+using JS.Primitives;
 
 namespace JS.WorldMap.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {
-        public System.Random rng { get; private set; }
+        public System.Random PRNG { get; private set; }
         public int seed { get; private set; }
+
+        [SerializeField] private BoolVariable AutoGenSavedWorld;
+        [SerializeField] private GameObject generationPanel;
+        [Space]
             
         [SerializeField] private WorldSize worldSize;
         [SerializeField] private WorldGenerationParameters mapFeatures;
@@ -32,16 +37,30 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private Image progressBar;
         [SerializeField] private TMP_Text progressText;
+        private float initialTime; //Used for debugging times
 
         [Header("Game Events")]
         [SerializeField] private GameEvent worldGenCompleteEvent;
-
-        [Space]
-
+        [SerializeField] private GetWorldSaveCommand loadSavedWorldCommand;
         [SerializeField] private SaveWorldDataCommand saveWorldDataCommand;
 
-        private float initialTime;
-        //private void Awake() => SetRandomSeed();
+        private void Awake() => CheckForAutoGen();
+
+        private void CheckForAutoGen()
+        {
+            if (AutoGenSavedWorld.Value == true)
+            {
+                //recreate world from save
+                var data = loadSavedWorldCommand.GetWorldSaveData();
+                if (data != null) OnBeginWorldRecreation(data);
+                else generationPanel.SetActive(true);
+            }
+            else
+            {
+                //behave normally
+                generationPanel.SetActive(true);
+            }
+        }
 
         //Set from the World Generation Settings Menu
         public void SetSize(int size)
@@ -67,13 +86,43 @@ namespace JS.WorldMap.Generation
         public void OnBeginWorldGeneration()
         {
             timeKeeper.ResetTime();
-            SetNewWorldValues();
+            SetWorldValues();
             initialTime = Time.realtimeSinceStartup;
 
             progressText.text = "Loading";
             progressBar.fillAmount = 0;
 
             StartCoroutine(GenerateWorld());
+        }
+
+        private void SetWorldValues()
+        {
+            PRNG = new System.Random(seed);
+
+            terrainGenerator.SetInitialValues(worldSize);
+
+            var size = worldMap.TerrainData.MapSize;
+            worldMap.CreateGrid(size, size);
+
+            settlementGenerator.SetInitialValues(worldSize);
+
+            PlantSeeds();
+        }
+
+        /// <summary>
+        /// Assigns a random seed to each World Tile
+        /// </summary>
+        private void PlantSeeds()
+        {
+            var seedMap = new int[worldMap.Width, worldMap.Height];
+            for (int x = 0; x < worldMap.Width; x++)
+            {
+                for (int y = 0; y < worldMap.Height; y++)
+                {
+                    seedMap[x, y] = PRNG.Next();
+                }
+            }
+            worldMap.TerrainData.SeedMap = seedMap;
         }
 
         private IEnumerator GenerateWorld()
@@ -95,32 +144,6 @@ namespace JS.WorldMap.Generation
 
             saveWorldDataCommand?.Invoke();
             worldGenCompleteEvent?.Invoke();
-        }
-
-        private void SetNewWorldValues()
-        {
-            rng = new System.Random(seed);
-
-            terrainGenerator.SetInitialValues(worldSize, seed); //also creates grid
-            settlementGenerator.SetInitialValues(worldSize);
-
-            PlantSeeds();
-        }
-
-        /// <summary>
-        /// Assigns a random seed to each World Tile
-        /// </summary>
-        private void PlantSeeds()
-        {
-            var seedMap = new int[worldMap.Width, worldMap.Height];
-            for (int x = 0; x < worldMap.Width; x++)
-            {
-                for (int y = 0; y < worldMap.Height; y++)
-                {
-                    seedMap[x, y] = rng.Next();
-                }
-            }
-            worldMap.TerrainData.SeedMap = seedMap;
         }
 
         /// <summary>
@@ -209,7 +232,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private void PlacePlayerAtStart()
         {
-            int index = rng.Next(0, settlementData.Settlements.Length);
+            int index = PRNG.Next(0, settlementData.Settlements.Length);
             var settlement = settlementData.Settlements[index];
             
             playerData.worldX = settlement.X;
@@ -221,5 +244,54 @@ namespace JS.WorldMap.Generation
             playerData.localX = Mathf.FloorToInt(mapFeatures.LocalDimensions.x * 0.5f);
             playerData.localY = Mathf.FloorToInt(mapFeatures.LocalDimensions.y * 0.5f);
         }
+
+        #region - World Recreation -
+        /// <summary>
+        /// Recreate the world map given the save data
+        /// </summary>
+        private void OnBeginWorldRecreation(WorldSaveData data)
+        {
+            SetWorldValues();
+            StartCoroutine(RecreateWorld(data));
+        }
+
+        private IEnumerator RecreateWorld(WorldSaveData data)
+        {
+            HandleTerrainRecreation(data);
+            yield return new WaitForSeconds(0.01f);
+            RecreateSettlements(data);
+
+            worldGenCompleteEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// Recreates the world using saved data and seed
+        /// </summary>
+        private void HandleTerrainRecreation(WorldSaveData data)
+        {
+            terrainGenerator.PlaceTectonicPlates();
+            terrainGenerator.GenerateHeightMap();
+            terrainGenerator.ErodeLandMasses();
+            terrainGenerator.SetNodeAltitudeValues();
+            terrainGenerator.IdentifyCoasts();
+
+            terrainGenerator.IdentifyMountains();
+            //worldMap.TerrainData.Mountains = data.Mountains;
+            worldMap.TerrainData.Lakes = data.Lakes;
+            worldMap.TerrainData.Islands = data.Islands;
+
+            terrainGenerator.GenerateRivers();
+            terrainGenerator.GenerateHeatMap();
+            terrainGenerator.GeneratePrecipitationMap();
+            terrainGenerator.GenerateBiomes();
+            terrainGenerator.GenerateOreDeposits();
+        }
+
+        private void RecreateSettlements(WorldSaveData data)
+        {
+            settlementGenerator.PlaceSettlements();
+            roadGenerator.GenerateRoads();
+        }
+        #endregion
     }
 }

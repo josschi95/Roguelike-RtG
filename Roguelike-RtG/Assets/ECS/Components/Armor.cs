@@ -6,7 +6,7 @@ namespace JS.ECS
         public int DodgeValue;
         public ArmorSlots Slot;
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

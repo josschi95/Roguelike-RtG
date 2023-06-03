@@ -7,7 +7,7 @@ namespace JS.WorldMap
     {
         public int ID { get; private set; }
         public List<WorldTile> Nodes;
-        public List<River> Rivers;
+        public List<River> MountainRivers;
 
         public float AverageAltitude;
         public float peakAltitude;
@@ -15,7 +15,7 @@ namespace JS.WorldMap
         public MountainRange()
         {
             Nodes = new List<WorldTile>();
-            Rivers = new List<River>();
+            MountainRivers = new List<River>();
         }
 
         public void MergeMountain(MountainRange otherMountain)

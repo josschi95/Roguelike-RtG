@@ -6,7 +6,7 @@ namespace JS.ECS
     public abstract class ComponentBase
     {
         public Entity entity;
-        public int Priority = int.MaxValue;
+        public int Priority = 100;
 
         /*public virtual void Update()
         {
@@ -16,13 +16,12 @@ namespace JS.ECS
         
         //Each Component will take in the Event ID and decide if/how to handle it
         //Should this be changed to a bool? return true if it was modified?
-        public abstract void FireEvent(Event newEvent);
-        
+        public abstract void OnEvent(Event newEvent);
+
 
         public virtual void Disassemble()
         {
-            entity = null;
-            //System.Unregister(this);
+            //Meant to be overwritten
         }
     }
 }

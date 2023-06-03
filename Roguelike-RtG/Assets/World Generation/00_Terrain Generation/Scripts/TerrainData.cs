@@ -55,6 +55,14 @@ namespace JS.WorldMap
             set => biomeMap = value;
         }
 
+        //Coasts
+        private bool[,] coasts;
+        public bool[,] Coasts
+        {
+            get => coasts;
+            set => coasts = value;
+        }
+
         #region - Resources -
         //Resources
         private float[,] coalMap;
@@ -159,15 +167,6 @@ namespace JS.WorldMap
         #endregion
 
         #endregion
-
-        public void ClearData()
-        {
-            Mountains = null;
-            Lakes = null;
-            Rivers = null;
-            BiomeGroups = null;
-            Islands = null;
-        }
 
         public River FindRiverAt(int x, int y, out int index)
         {

@@ -7,7 +7,7 @@ namespace JS.ECS
     {
         public int Amount;
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

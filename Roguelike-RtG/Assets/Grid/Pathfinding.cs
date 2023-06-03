@@ -5,88 +5,52 @@ public class Pathfinding : MonoBehaviour
 {
     public static Pathfinding instance { get; private set; }
 
-    private const int MOVE_STRAIGHT_COST = 1;
-    //private const int MOVE_DIAGONAL_COST = 14;
+    private const int MOVE_STRAIGHT_COST = 10;
+    private const int MOVE_DIAGONAL_COST = 14;
 
-    private Grid<GridNode> grid;
     private List<GridNode> openList; //nodes to search
     private List<GridNode> closedList; //already searched
 
-    [SerializeField] private bool allowDiagonals = false;
+    //[SerializeField] private bool allowDiagonals = false;
 
     private void Awake()
     {
-        instance = this;
-        if (transform.position != Vector3.zero)
+        if (instance !=  null)
         {
-            Debug.LogWarning("ERROR: Pathfinder must be located at 0, 0, 0");
-            Debug.Break();
+            Destroy(this);
             return;
         }
+        instance = this;
     }
 
-    public void CreateGrid(int width, int height)
+    //This is new, nodes will now hold reference to their grids
+    public List<Vector2Int> FindVectorPath(GridNode start, GridNode end, bool ignoreEndNode = false)
     {
-        float halfWidth = width / 2f;
-        float halfHeight = height / 2f;
-        Vector3 origin = new Vector3(transform.position.x - halfWidth, transform.position.y - halfHeight);
-        
-        grid = new Grid<GridNode>(width, height, 1, origin, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                grid.GetGridObject(x, y).GetNeighbors();
-            }
-        }
-    }
-
-    public Pathfinding(int width, int height)
-    {
-        grid = new Grid<GridNode>(width, height, 1, Vector3.zero, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
-    }
-
-    //Use this method to quickly convert a list of pathNodes to a list of Vector3's
-    public List<Vector3> FindVectorPath(Vector3 startWorldPosition, Vector3 endWorldPosition, bool ignoreEndNode = false)
-    {
-        grid.GetXY(startWorldPosition, out int startX, out int startY);
-        grid.GetXY(endWorldPosition, out int endX, out int endY);
-
-        List<GridNode> path = FindNodePath(startX, startY, endX, endY, ignoreEndNode);
+        List<GridNode> path = FindNodePath(start, end, ignoreEndNode);
         if (path == null) return null;
-        else
+
+        List<Vector2Int> vectorPath = new List<Vector2Int>();
+        foreach (GridNode node in path)
         {
-            List<Vector3> vectorPath = new List<Vector3>();
-            foreach (GridNode node in path)
-            {
-                //vectorPath.Add(new Vector3(node.x, node.y) * grid.GetCellSize() + Vector3.one * grid.GetCellSize() * 0.5f);
-                vectorPath.Add(new Vector3(node.x, node.y));
-            }
-            return vectorPath;
+            vectorPath.Add(new Vector2Int(node.x, node.y));
         }
+        return vectorPath;
     }
 
-    //Same thing as below but this way I can be lazy and use a basic Vector3 insted of having to Mathf.RoundToInt more than once
-    public List<GridNode> FindNodePath(Vector3 startPos, Vector3 endPos, bool ignoreEndNode = false)
+    public List<GridNode> FindNodePath(GridNode start, GridNode end, bool ignoreEndNode = false)
     {
-        return FindNodePath(Mathf.RoundToInt(startPos.x), Mathf.RoundToInt(startPos.y), Mathf.RoundToInt(endPos.x), Mathf.RoundToInt(endPos.y), ignoreEndNode);
-    }
+        var grid = start.grid;
+        if (grid != end.grid)
+        {
 
-    //Returns a list of nodes that can be travelled to reach a target destination
-    public List<GridNode> FindNodePath(int startX, int startY, int endX, int endY, bool ignoreEndNode = false)
-    {
-        GridNode startNode = grid.GetGridObject(startX, startY);
-        //Debug.Log("Start: " + startNode.x + "," + startNode.y);
-        GridNode endNode = grid.GetGridObject(endX, endY);
-        //Debug.Log("End: " + endNode.x + "," + endNode.y);
-
-        openList = new List<GridNode> { startNode };
+            return null;
+        }
+        openList = new List<GridNode> { start };
         closedList = new List<GridNode>();
 
-        for (int x = 0; x < grid.GetWidth(); x++)
+        for (int x = 0; x < grid.Width; x++)
         {
-            for (int y = 0; y < grid.GetHeight(); y++)
+            for (int y = 0; y < grid.Height; y++)
             {
                 GridNode pathNode = grid.GetGridObject(x, y);
                 pathNode.gCost = int.MaxValue;
@@ -95,29 +59,30 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
-        startNode.gCost = 0;
-        startNode.hCost = CalculateDistanceCost(startNode, endNode);
-        startNode.CalculateFCost();
+        start.gCost = 0;
+        start.hCost = CalculateDistanceCost(start, end);
+        start.CalculateFCost();
 
         while (openList.Count > 0)
         {
             GridNode currentNode = GetLowestFCostNode(openList);
 
-            if (currentNode == endNode)
+            if (currentNode == end)
             {
                 //Reached final node
-                return CalculatePath(endNode);
+                return CalculatePath(end);
             }
 
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            foreach (GridNode neighbour in GetNeighbourList(currentNode))
+            //foreach (GridNode neighbour in GetNeighbourList(currentNode))
+            foreach (GridNode neighbour in currentNode.neighbors_all)
             {
                 if (closedList.Contains(neighbour)) continue;
 
                 //if the neighbor is the endNode and choosing to ignore whether it is walkable, add it to the closed list
-                if (neighbour == endNode && ignoreEndNode)
+                if (neighbour == end && ignoreEndNode)
                 {
                     //Do nothing here, bypass the next if statement
                     //Debug.Log("Ignoring End Node");
@@ -137,7 +102,7 @@ public class Pathfinding : MonoBehaviour
                     //If it's lower than the cost previously stored on the neightbor, update it
                     neighbour.cameFromNode = currentNode;
                     neighbour.gCost = tentativeGCost;
-                    neighbour.hCost = CalculateDistanceCost(neighbour, endNode);
+                    neighbour.hCost = CalculateDistanceCost(neighbour, end);
                     neighbour.CalculateFCost();
 
                     if (!openList.Contains(neighbour)) openList.Add(neighbour);
@@ -151,15 +116,15 @@ public class Pathfinding : MonoBehaviour
     }
 
     //Return a list of nodes which can be reached given the available number of moves
-    public List<Vector3> FindReachableNodes(Vector3 worldPosition, int moves)
+    public List<Vector3> FindReachableNodes(GridNode startNode, int moves)
     {
         List<GridNode> nodes = new List<GridNode>();
-        GridNode startNode = grid.GetGridObject(worldPosition);
+        var grid = startNode.grid;
 
         //Get all nodes in the grid
-        for (int x = 0; x < grid.GetWidth(); x++)
+        for (int x = 0; x < grid.Width; x++)
         {
-            for (int y = 0; y < grid.GetHeight(); y++)
+            for (int y = 0; y < grid.Height; y++)
             {
                 GridNode pathNode = grid.GetGridObject(x, y);
                 //The node can be walked through
@@ -180,7 +145,7 @@ public class Pathfinding : MonoBehaviour
 
         for (int i = nodes.Count - 1; i >= 0; i--)
         {
-            var temp = FindNodePath(startNode.x, startNode.y, nodes[i].x, nodes[i].y);
+            var temp = FindNodePath(startNode, nodes[i]);
 
             //There is no available path to that node
             if (temp == null) nodes.RemoveAt(i);
@@ -197,15 +162,15 @@ public class Pathfinding : MonoBehaviour
     }
 
     //Return a list of nodes which can be targeted given the range, used for attacks
-    public List<GridNode> FindTargetableNodes(Vector3 worldPosition, int range)
+    public List<GridNode> FindTargetableNodes(GridNode startNode, int range)
     {
         List<GridNode> nodes = new List<GridNode>();
-        GridNode startNode = grid.GetGridObject(worldPosition);
+        var grid = startNode.grid;
 
         //Get all nodes in the grid
-        for (int x = 0; x < grid.GetWidth(); x++)
+        for (int x = 0; x < grid.Width; x++)
         {
-            for (int y = 0; y < grid.GetHeight(); y++)
+            for (int y = 0; y < grid.Height; y++)
             {
                 GridNode pathNode = grid.GetGridObject(x, y);
                 //Add all walkable nodes which can be accessed via a straight line path
@@ -220,7 +185,7 @@ public class Pathfinding : MonoBehaviour
 
         for (int i = nodes.Count - 1; i >= 0; i--)
         {
-            var temp = FindNodePath(startNode.x, startNode.y, nodes[i].x, nodes[i].y);
+            var temp = FindNodePath(startNode, nodes[i]);
 
             //There is no available path to that node
             if (temp == null) nodes.RemoveAt(i);
@@ -234,55 +199,9 @@ public class Pathfinding : MonoBehaviour
     //Return a list of all neighbors, up/down/left/right
     private List<GridNode> GetNeighbourList(GridNode currentNode)
     {
-        if (allowDiagonals) return currentNode.neighbors_all;
-        return currentNode.neighbors_adj;
-        /*
-        List<GridNode> neighborList = new List<GridNode>();
-
-        //Up
-        if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x, currentNode.y + 1));
-        //Down
-        if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x, currentNode.y - 1));
-        //Left
-        if (currentNode.x - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y));
-        //Right
-        if (currentNode.x + 1 < grid.GetWidth()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y));
-
-        if (allowDiagonals)
-        {
-            if (currentNode.x - 1 >= 0)
-            {
-                //Left Down
-                if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y - 1));
-                //Left Up
-                if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x - 1, currentNode.y + 1));
-            }
-            if (currentNode.x + 1 < grid.GetWidth())
-            {
-                //Right Down
-                if (currentNode.y - 1 >= 0) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y - 1));
-                //Right Up
-                if (currentNode.y + 1 < grid.GetHeight()) neighborList.Add(GetNode(currentNode.x + 1, currentNode.y + 1));
-            }
-        }
-
-        return neighborList;
-        */
-    }
-
-    public GridNode GetNode(int x, int y)
-    {
-        return grid.GetGridObject(x, y);
-    }
-
-    public GridNode GetNode(Vector2Int pos)
-    {
-        return grid.GetGridObject(pos.x, pos.y);
-    }
-
-    public GridNode GetNode(Vector3 worldPosition)
-    {
-        return grid.GetGridObject(worldPosition);
+        return currentNode.neighbors_all;
+        //if (allowDiagonals) return currentNode.neighbors_all;
+        //return currentNode.neighbors_adj;
     }
 
     private List<GridNode> CalculatePath(GridNode endNode)
@@ -316,8 +235,9 @@ public class Pathfinding : MonoBehaviour
         int xDistance = Mathf.Abs(a.x - b.x);
         int yDistance = Mathf.Abs(a.y - b.y);
         int remaining = Mathf.Abs(xDistance - yDistance);
+        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
         //if (allowDiagonals) return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
-        return MOVE_STRAIGHT_COST * remaining;
+        //return MOVE_STRAIGHT_COST * remaining;
     }
 
     private GridNode GetLowestFCostNode(List<GridNode> pathNodeList)
@@ -331,62 +251,5 @@ public class Pathfinding : MonoBehaviour
         }
 
         return lowestFCostNode;
-    }
-
-    public Grid<GridNode> GetGrid()
-    {
-        return grid;
-    }
-
-    public int GetWidth()
-    {
-        return grid.GetWidth();
-    }
-
-    public int GetHeight()
-    {
-        return grid.GetHeight();
-    }
-
-    //Use this method when an object is occupying a node
-    public void BlockNode(Vector3 worldPosition, bool isWalkable)
-    {
-        BlockNode(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y), isWalkable);
-    }
-
-    private void BlockNode(int x, int y, bool isWalkable)
-    {
-        grid.GetGridObject(x, y).SetWalkable(isWalkable);
-    }
-
-    //Use this method when a character is occupying a node
-    public void OccupyNode(Vector3 worldPosition, bool isOccupied)
-    {
-        OccupyNode(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y), isOccupied);
-    }
-
-    private void OccupyNode(int x, int y, bool isOccupied)
-    {
-        grid.GetGridObject(x, y).SetOccupied(isOccupied);
-    }
-
-    public void SetNodePenalty(Vector3 worldPosition, int cost)
-    {
-        SetNodePenalty(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y), cost);
-    }
-
-    private void SetNodePenalty(int x, int y, int cost)
-    {
-        grid.GetGridObject(x, y).SetMoveCost(cost);
-    }
-
-    public int GetNodePenalty(Vector3 worldPosition)
-    {
-        return grid.GetGridObject(worldPosition).movementPenalty;
-    }
-
-    public void DisplayRange(int x, int y, int moves)
-    {
-        //IDK how but use pathfinding to see every walkable tile from position x,y
     }
 }

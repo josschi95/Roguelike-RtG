@@ -34,7 +34,7 @@ namespace JS.ECS
             LocalLocomotionSystem.Register(this);
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

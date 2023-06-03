@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f546c3bdeb4007a418793955a1147ef9, type: 3}
+  m_Name: Continue Game Command
+  m_EditorClassIdentifier: 
+  callbackEvents: []
+  developerNotes: 
+  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  loadPlayerSavedSceneCommand: {fileID: 0}
+  loadWorldGenScene: {fileID: 11400000, guid: 6148589601efcdf459b1ad917220d8a3, type: 2}
+  AutoGenSavedWorld: {fileID: 11400000, guid: 9b276acab35f0604f8ebe62c06596501, type: 2}

@@ -3005,8 +3005,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 00872b6f655e73f4dbbd79e6114f2d11, type: 2}
-        m_TargetAssemblyTypeName: JS.EventSystem.GameEvent, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: 6458e16b9b57c444a8e6a1ab82310cf3, type: 2}
+        m_TargetAssemblyTypeName: JS.CommandSystem.CommandBase, Assembly-CSharp
         m_MethodName: Invoke
         m_Mode: 1
         m_Arguments:

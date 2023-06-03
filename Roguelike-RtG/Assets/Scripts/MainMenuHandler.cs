@@ -15,7 +15,7 @@ public class MainMenuHandler : MonoBehaviour
     
     [Space]
 
-    [SerializeField] private LoadSavedWorldCommand loadWorldCommand;
+    [SerializeField] private GetWorldSaveCommand loadWorldCommand;
     [SerializeField] private GameEvent newWorldEvent;
 
     [Space]

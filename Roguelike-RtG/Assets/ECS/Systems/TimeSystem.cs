@@ -16,6 +16,8 @@ namespace JS.ECS
         public const int pointsToAct = 1000;
         private bool runTurnCounter = true;
         private TimedActor sentinel;
+
+        private NewRound newRoundEvent;
         private TurnStart turnStartEvent;
         private TurnEnd turnEndEvent;
 
@@ -29,6 +31,8 @@ namespace JS.ECS
                 return;
             }
             instance = this;
+
+            newRoundEvent = new NewRound();
             turnStartEvent = new TurnStart();
             turnEndEvent = new TurnEnd();
         }
@@ -52,6 +56,11 @@ namespace JS.ECS
 
         private void OnNewRound()
         {
+            for (int i = 0; i < components.Count; i++)
+            {
+                components[i].entity.FireEvent(newRoundEvent);
+            }
+
             //Debug.Log("OnNewRound");
             onNewRound?.Invoke();
             StartCoroutine(RoundDelay());

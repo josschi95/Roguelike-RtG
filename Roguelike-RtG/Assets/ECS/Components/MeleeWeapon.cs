@@ -15,7 +15,7 @@ namespace JS.ECS
             Proficiency = proficiency;
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is DeclareMeleeAttack declaration)
             {

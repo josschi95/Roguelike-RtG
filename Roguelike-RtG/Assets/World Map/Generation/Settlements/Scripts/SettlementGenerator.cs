@@ -139,7 +139,7 @@ namespace JS.WorldMap.Generation
             }
 
 
-            return tribalBids[worldGenerator.rng.Next(0, tribalBids.Count)];
+            return tribalBids[worldGenerator.PRNG.Next(0, tribalBids.Count)];
         }
 
         private void ExpandTerritory(Settlement settlement)
@@ -190,7 +190,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private Settlement PlaceSettlement(WorldTile node, SettlementType type, HumanoidTribe tribe)
         {
-            int population = worldGenerator.rng.Next(type.minPopulation, type.maxPopulation);
+            int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
             var newSettlement = new Settlement("[PLACEHOLDER]", settlements.Count, node, type, tribe, population);
 
             //availableNodes?.Remove(node);

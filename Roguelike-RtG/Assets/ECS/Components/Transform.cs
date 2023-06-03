@@ -4,13 +4,7 @@ namespace JS.ECS
 {
     public class Transform : ComponentBase
     {
-        public delegate void OnTransformChanged();
-        public OnTransformChanged onTransformChanged;
-
-        public OnTransformChanged onWorldTileChanged;
-        public OnTransformChanged onRegionTileChanged;
-        public OnTransformChanged onLocalTileChanged;
-
+        public GridNode currentNode;
         private Vector2Int _worldPosition;
         private Vector2Int _regionPosition;
         private Vector2Int _localPosition;
@@ -22,8 +16,7 @@ namespace JS.ECS
             set
             {
                 _worldPosition = value;
-                onTransformChanged?.Invoke();
-                onWorldTileChanged?.Invoke();
+                entity.FireEvent(new TransformChanged());
             }
         }
 
@@ -33,8 +26,7 @@ namespace JS.ECS
             set
             {
                 _regionPosition = value;
-                onTransformChanged?.Invoke();
-                onRegionTileChanged?.Invoke();
+                entity.FireEvent(new TransformChanged());
             }
         }
 
@@ -44,8 +36,7 @@ namespace JS.ECS
             set
             {
                 _localPosition = value;
-                onTransformChanged?.Invoke();
-                onLocalTileChanged?.Invoke();
+                entity.FireEvent(new TransformChanged());
             }
         }
 
@@ -55,17 +46,11 @@ namespace JS.ECS
             set
             {
                 _depth = Mathf.Clamp(value, -int.MaxValue, 1);
-                onTransformChanged?.Invoke();
+                entity.FireEvent(new TransformChanged());
             }
         }
 
-        public override void Disassemble()
-        {
-            base.Disassemble();
-            onTransformChanged = null;
-        }
-
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

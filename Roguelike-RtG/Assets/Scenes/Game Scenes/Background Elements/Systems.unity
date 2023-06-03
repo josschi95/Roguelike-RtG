@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 607149223}
   - component: {fileID: 607149221}
   - component: {fileID: 607149222}
+  - component: {fileID: 607149224}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 607149217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a994d09394f71f74486a897493f5fb7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7071f079e7fe14c4db00c87986cb0dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
@@ -228,8 +229,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  nodeReference: {fileID: 11400000, guid: f453057874345994d8ebdc0de784d375, type: 2}
+  playerGlobalPosition: {fileID: 11400000, guid: 59739e26cd8195b44892b2c61b990096, type: 2}
   worldToLocalEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
+--- !u!114 &607149224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607149217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963b32e6cd43cdd43b25b67026261fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1790594448
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +290,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 607149222}
+        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
+        m_MethodName: OnSwitchToWorldMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   developerNotes: Sets in-game time tick to world
 --- !u!114 &1790594450
 MonoBehaviour:
@@ -297,6 +322,18 @@ MonoBehaviour:
       - m_Target: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
         m_TargetAssemblyTypeName: TimeKeeper, Assembly-CSharp
         m_MethodName: OnLocalMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 607149222}
+        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
+        m_MethodName: OnSwitchToLocalMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

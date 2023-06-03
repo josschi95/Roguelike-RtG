@@ -19,7 +19,7 @@ namespace JS.ECS
             EquipmentSlots = new List<EquipmentSlot> ();
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
             for (int i = 0; i < BodyParts.Count; i++)

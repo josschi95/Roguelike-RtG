@@ -297,7 +297,7 @@ MonoBehaviour:
         m_MethodName: UnloadScene
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b139c4ebc3920784daa2dbcddb2d2d07, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: aadaeaf7673021c459950e22efa82c2b, type: 2}
           m_ObjectArgumentAssemblyTypeName: JS.SceneManagement.ScenePicker, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  developerNotes: Loads World Map after generating world
+  developerNotes: Loads World Map from Local
 --- !u!114 &345412771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  developerNotes: 
+  developerNotes: Loads Local Map from World
 --- !u!1 &601089860
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +925,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  developerNotes: Unload World Generation scene
+  developerNotes: Return to Main Menu from World Gen
 --- !u!114 &1312363007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1976489675}
         m_TargetAssemblyTypeName: JS.SceneManagement.BootStraps, Assembly-CSharp
-        m_MethodName: LoadSceneAdditiveWithoutSplashScreen
+        m_MethodName: LoadSceneAdditiveWithSplashScreen
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 73ba9af235d18da41aa44f448c44ec99, type: 2}

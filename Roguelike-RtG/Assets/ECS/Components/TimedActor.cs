@@ -18,7 +18,7 @@ namespace JS.ECS
             TimeSystem.Unregister(this);
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             if (newEvent is TurnStart) IsTurn = true;
             else if (newEvent is TurnEnd) IsTurn = false;

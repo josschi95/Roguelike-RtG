@@ -12,7 +12,7 @@ namespace JS.ECS
             Value = value;
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

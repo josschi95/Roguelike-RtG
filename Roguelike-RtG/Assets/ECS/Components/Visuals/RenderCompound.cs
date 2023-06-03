@@ -4,7 +4,6 @@ namespace JS.ECS
 {
     public class RenderCompound : RenderBase
     {
-        public CompoundRenderer renderer;
         public Sprite[] sprites;
 
         public RenderCompound(Transform transform, Sprite[] sprites)
@@ -18,15 +17,18 @@ namespace JS.ECS
                 this.sprites[i] = sprites[i];
             }
 
-            RenderSystem.NewCompound(this);
+            RenderSystem.NewRender(this);
+        }
+
+        public override void OnEvent(Event newEvent)
+        {
+            base.OnEvent(newEvent);
         }
 
         public override void Disassemble()
         {
             base.Disassemble();
-            transform = null;
             sprites = null;
-            RenderSystem.RemoveCompound(this);
         }
     }
 }

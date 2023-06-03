@@ -4,7 +4,6 @@ namespace JS.ECS
 {
     public class RenderSingle : RenderBase
     {
-        public SpriteRenderer renderer;
         public Sprite sprite;
 
         public RenderSingle(Transform transform, Sprite sprite)
@@ -12,15 +11,13 @@ namespace JS.ECS
             entity = transform.entity;
             this.transform = transform;
             this.sprite = sprite;
-            RenderSystem.NewSingle(this);
+            RenderSystem.NewRender(this);
         }
 
         public override void Disassemble()
         {
             base.Disassemble();
-            transform = null;
             sprite = null;
-            RenderSystem.RemoveSinge(this);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace JS.ECS
         //public int/enum Rationality
         //public int/enum DecisionMaking
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

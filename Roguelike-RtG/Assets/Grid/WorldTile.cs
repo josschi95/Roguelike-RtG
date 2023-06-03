@@ -41,7 +41,6 @@ namespace JS.WorldMap
 
         public Compass windDirection;// { get; private set; }
         public float airPressure; // { get; private set; }
-        public bool isCoast { get; set; }
 
         public List<WorldTile> neighbors_all { get; private set; }
         public List<WorldTile> neighbors_adj { get; private set; }
@@ -84,7 +83,7 @@ namespace JS.WorldMap
 
         public void SetNeighbors()
         {
-            if (y + 1 < grid.GetHeight())
+            if (y + 1 < grid.Height)
             {
                 neighbors_adj.Add(grid.GetGridObject(x, y + 1)); //N
                 neighbors_all.Add(grid.GetGridObject(x, y + 1));
@@ -95,13 +94,13 @@ namespace JS.WorldMap
                 neighbors_all.Add(grid.GetGridObject(x, y - 1));
             }
 
-            if (x + 1 < grid.GetWidth())
+            if (x + 1 < grid.Width)
             {
                 neighbors_adj.Add(grid.GetGridObject(x + 1, y)); //E
                 neighbors_all.Add(grid.GetGridObject(x + 1, y));
 
                 if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x + 1, y - 1)); //SW
-                if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x + 1, y + 1)); //NW
+                if (y + 1 < grid.Height) neighbors_all.Add(grid.GetGridObject(x + 1, y + 1)); //NW
             }
             if (x - 1 >= 0)
             {
@@ -109,7 +108,7 @@ namespace JS.WorldMap
                 neighbors_all.Add(grid.GetGridObject(x - 1, y));
 
                 if (y - 1 >= 0) neighbors_all.Add(grid.GetGridObject(x - 1, y - 1)); //SW
-                if (y + 1 < grid.GetHeight()) neighbors_all.Add(grid.GetGridObject(x - 1, y + 1)); //NW
+                if (y + 1 < grid.Height) neighbors_all.Add(grid.GetGridObject(x - 1, y + 1)); //NW
             }
         }
 

@@ -15,10 +15,7 @@ namespace JS.WorldMap.Generation
     public class TerrainGenerator : MonoBehaviour 
     {
         public int mapSize { get; private set; }
-
-        private int seed;
         private WorldSize worldSize;
-        private float seaLevel = 0.4f;
 
         [SerializeField] private WorldGenerator worldGenerator;
         [SerializeField] private RiverGenerator riverGenerator;
@@ -45,25 +42,14 @@ namespace JS.WorldMap.Generation
         private List<WorldTile> water;
         private List<WorldTile> land;
 
-        public void SetInitialValues(WorldSize size, int seed)
+        public void SetInitialValues(WorldSize size)
         {
-            this.seed = seed;
             worldSize = size;
-
-            terrainData.ClearData();
-            seaLevel = worldGenParams.SeaLevel;
             water = new List<WorldTile>();
             land = new List<WorldTile>();
 
             mapSize = worldGenParams.MapSize(worldSize);
-            var origin = Vector2Int.zero;
-            //var origin = new Vector2Int(Mathf.FloorToInt(-mapSize / 2f), Mathf.FloorToInt(-mapSize / 2f));
             terrainData.MapSize = mapSize;
-            
-            //terrainData.OriginX = origin.x;
-            //terrainData.OriginY = origin.y;
-
-            worldMap.CreateGrid(mapSize, mapSize);
         }
 
         #region - Altitude -
@@ -87,18 +73,18 @@ namespace JS.WorldMap.Generation
                 //nodeY = worldGenerator.rng.Next(border, mapSize - border);
                 if (points < count / 2) //First half will favor the center of the map
                 {
-                    nodeX = worldGenerator.rng.Next(border * 2, mapSize - border * 2);
-                    nodeY = worldGenerator.rng.Next(border * 2, mapSize - border * 2);
+                    nodeX = worldGenerator.PRNG.Next(border * 2, mapSize - border * 2);
+                    nodeY = worldGenerator.PRNG.Next(border * 2, mapSize - border * 2);
                 }
                 else
                 {
-                    nodeX = worldGenerator.rng.Next(border, mapSize - border);
-                    nodeY = worldGenerator.rng.Next(border, mapSize - border);
+                    nodeX = worldGenerator.PRNG.Next(border, mapSize - border);
+                    nodeY = worldGenerator.PRNG.Next(border, mapSize - border);
                 }
 
                 WorldTile tectonicNode = worldMap.GetNode(nodeX, nodeY);
                 tectonicNode.isTectonicPoint = true;
-                float range = worldGenerator.rng.Next(worldGenParams.MinPlateSize(worldSize), worldGenParams.MaxPlateSize(worldSize));
+                float range = worldGenerator.PRNG.Next(worldGenParams.MinPlateSize(worldSize), worldGenParams.MaxPlateSize(worldSize));
 
                 //Grab all nodes within range
                 var nodesInRange = worldMap.GetNodesInRange_Circle(tectonicNode, (int)range);
@@ -129,7 +115,7 @@ namespace JS.WorldMap.Generation
         {
             float[,] heightMap = terrainData.HeightMap;
 
-            float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, worldMap.Seed, noiseScale, octaves, persistence, lacunarity, offset);
             for (int x = 0; x < perlinMap.GetLength(0); x++)
             {
                 for (int y = 0; y < perlinMap.GetLength(1); y++)
@@ -148,7 +134,7 @@ namespace JS.WorldMap.Generation
         public void ErodeLandMasses()
         {
             float[,] heightMap = terrainData.HeightMap;
-            heightMap = erosion.Erode(heightMap, worldGenParams.Raindrops(worldSize), seed);
+            heightMap = erosion.Erode(heightMap, worldGenParams.Raindrops(worldSize), worldMap.Seed);
             terrainData.HeightMap = heightMap;
         }
 
@@ -176,21 +162,6 @@ namespace JS.WorldMap.Generation
             }
             terrainData.HeightMap = heightMap;
         }
-
-        /// <summary>
-        /// Returns an Altitude Zone Scriptable Object based on given height value.
-        /// </summary>
-        /*private AltitudeZone GetAltitude(float height)
-        {
-            for (int i = 0; i < mapFeatures.AltitudeZones.Length; i++)
-            {
-                if (height <= mapFeatures.AltitudeZones[i].Height)
-                {
-                    return mapFeatures.AltitudeZones[i];
-                }
-            }
-            throw new UnityException("Node altitude is outside bounds of designated zones. " + height);
-        }*/
         #endregion
 
         #region - Terrain Features -
@@ -293,6 +264,8 @@ namespace JS.WorldMap.Generation
 
         public void IdentifyCoasts()
         {
+            bool[,] coasts = new bool[mapSize, mapSize];
+
             for (int x = 0; x < mapSize; x++)
             {
                 for (int y = 0; y < mapSize; y++)
@@ -303,11 +276,12 @@ namespace JS.WorldMap.Generation
                     {
                         if (!node.neighbors_all[i].IsLand && node.rivers.Count == 0)
                         {
-                            node.isCoast = true;
+                            coasts[x, y] = true;
                         }
                     }
                 }
             }
+            terrainData.Coasts = coasts;
         }
 
         /// <summary>
@@ -342,7 +316,7 @@ namespace JS.WorldMap.Generation
         public void GenerateHeatMap()
         {
             //Create Heat Map
-            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.HeightMap, seaLevel, worldGenerator.rng);
+            float[,] heatMap = TemperatureData.GenerateHeatMap(terrainData.HeightMap, worldGenParams.SeaLevel, worldGenerator.PRNG);
 
             //Pass heat values to nodes
             for (int x = 0; x < mapSize; x++)
@@ -391,7 +365,7 @@ namespace JS.WorldMap.Generation
             }
 
             //Create Initial Moisture Map - !!!FLAWED!!!
-            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, seaLevel, worldGenerator.rng);
+            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, worldGenParams.SeaLevel, worldGenerator.PRNG);
             //This is entirely onteologic at the moment
 
             //Apply effects of prevailing winds to generate rain shadows
@@ -572,14 +546,14 @@ namespace JS.WorldMap.Generation
         /// </summary>
         public void GenerateOreDeposits()
         {
-            float[,] coalMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] copperMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] ironMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] silverMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] goldMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] mithrilMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] adamantineMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
-            float[,] gemstoneMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.rng.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] coalMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] copperMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] ironMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] silverMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] goldMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] mithrilMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] adamantineMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
+            float[,] gemstoneMap = PerlinNoise.GenerateHeightMap(mapSize, worldGenerator.PRNG.Next(), noiseScale, octaves, persistence, lacunarity, offset);
 
             for (int x = 0; x < mapSize; x++)
             {

@@ -10,7 +10,7 @@ namespace JS.ECS
             entity.AddComponent(this);
         }
 
-        public override void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
             //
         }

@@ -74,4 +74,35 @@ public static class ArrayHelper
         }
         return squareArray;
     }
+
+    public static bool[] Convert2DBoolArrayTo1D(bool[,] squareArray)
+    {
+        int width = squareArray.GetLength(0);
+        int height = squareArray.GetLength(1);
+
+        var linearMap = new bool[width * height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                linearMap[x * width + y] = squareArray[x, y];
+            }
+        }
+        return linearMap;
+    }
+
+    public static bool[,] Convert1DBoolArrayTo2D(bool[] linearArray, int width, int height)
+    {
+        var squareArray = new bool[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                squareArray[x, y] = linearArray[x * width + y];
+            }
+        }
+        return squareArray;
+    }
 }

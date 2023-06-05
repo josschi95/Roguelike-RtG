@@ -13,6 +13,7 @@ public class GridNode
     public int fCost; //the current best guess as to the cost of the path
     public GridNode cameFromNode;
 
+    public bool isWater = false;
     public bool isOccupied { get; private set; } //true if there is another creature occupying the node
     public bool isWalkable { get; private set; } //if this node can be traversed at all
     public bool blocksGas { get; private set; }

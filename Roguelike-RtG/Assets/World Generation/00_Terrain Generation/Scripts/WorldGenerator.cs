@@ -11,14 +11,14 @@ namespace JS.WorldMap.Generation
     public class WorldGenerator : MonoBehaviour
     {
         public System.Random PRNG { get; private set; }
-        public int seed { get; private set; }
+        public int Seed { get; private set; }
 
         [SerializeField] private BoolVariable AutoGenSavedWorld;
         [SerializeField] private GameObject generationPanel;
         [Space]
             
         [SerializeField] private WorldSize worldSize;
-        [SerializeField] private WorldGenerationParameters mapFeatures;
+        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private PlayerData playerData;
@@ -27,6 +27,7 @@ namespace JS.WorldMap.Generation
         [Space]
 
         [SerializeField] private TerrainGenerator terrainGenerator;
+        [SerializeField] private RiverGenerator riverGenerator;
         [SerializeField] private SettlementGenerator settlementGenerator;
         [SerializeField] private RoadGenerator roadGenerator;
         //private FloraFaunaGenerator floraFaunaGenerator;
@@ -41,7 +42,7 @@ namespace JS.WorldMap.Generation
 
         [Header("Game Events")]
         [SerializeField] private GameEvent worldGenCompleteEvent;
-        [SerializeField] private GetWorldSaveCommand loadSavedWorldCommand;
+        [SerializeField] private GetWorldSaveCommand getWorldSaveCommand;
         [SerializeField] private SaveWorldDataCommand saveWorldDataCommand;
 
         private void Awake() => CheckForAutoGen();
@@ -51,7 +52,7 @@ namespace JS.WorldMap.Generation
             if (AutoGenSavedWorld.Value == true)
             {
                 //recreate world from save
-                var data = loadSavedWorldCommand.GetWorldSaveData();
+                var data = getWorldSaveCommand.GetWorldSaveData();
                 if (data != null) OnBeginWorldRecreation(data);
                 else generationPanel.SetActive(true);
             }
@@ -77,8 +78,8 @@ namespace JS.WorldMap.Generation
 
         public void SetSeed(int value)
         {
-            seed = value;
-            worldMap.Seed = seed;
+            Seed = value;
+            worldMap.Seed = Seed;
         }
         #endregion
 
@@ -97,12 +98,12 @@ namespace JS.WorldMap.Generation
 
         private void SetWorldValues()
         {
-            PRNG = new System.Random(seed);
+            PRNG = new System.Random(Seed);
 
             terrainGenerator.SetInitialValues(worldSize);
 
             var size = worldMap.TerrainData.MapSize;
-            worldMap.CreateGrid(size, size);
+            worldMap.CreateWorldGrid(size, size);
 
             settlementGenerator.SetInitialValues(worldSize);
 
@@ -181,7 +182,7 @@ namespace JS.WorldMap.Generation
             progressBar.fillAmount = 0.3f;
             yield return StartCoroutine(UpdateProgress("Generating Rivers"));
 
-            terrainGenerator.GenerateRivers();
+            riverGenerator.GenerateRivers(worldGenParams.LocalDimensions.x, worldGenParams.RiverCount(worldSize));
             progressBar.fillAmount = 0.5f;
             yield return StartCoroutine(UpdateProgress("Generating Heat Map"));
 
@@ -223,7 +224,7 @@ namespace JS.WorldMap.Generation
         {
             //Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = message;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForEndOfFrame();
             initialTime = Time.realtimeSinceStartup;
         }
 
@@ -238,11 +239,11 @@ namespace JS.WorldMap.Generation
             playerData.worldX = settlement.X;
             playerData.worldY = settlement.Y;
 
-            playerData.regionX = Mathf.FloorToInt(mapFeatures.RegionDimensions.x * 0.5f);
-            playerData.regionY = Mathf.FloorToInt(mapFeatures.RegionDimensions.y * 0.5f);
+            playerData.regionX = Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f);
+            playerData.regionY = Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f);
 
-            playerData.localX = Mathf.FloorToInt(mapFeatures.LocalDimensions.x * 0.5f);
-            playerData.localY = Mathf.FloorToInt(mapFeatures.LocalDimensions.y * 0.5f);
+            playerData.localX = Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f);
+            playerData.localY = Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f);
         }
 
         #region - World Recreation -
@@ -251,6 +252,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private void OnBeginWorldRecreation(WorldSaveData data)
         {
+            SetSeed(data.seed);
             SetWorldValues();
             StartCoroutine(RecreateWorld(data));
         }
@@ -258,9 +260,8 @@ namespace JS.WorldMap.Generation
         private IEnumerator RecreateWorld(WorldSaveData data)
         {
             HandleTerrainRecreation(data);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForEndOfFrame();
             RecreateSettlements(data);
-
             worldGenCompleteEvent?.Invoke();
         }
 
@@ -278,9 +279,9 @@ namespace JS.WorldMap.Generation
             terrainGenerator.IdentifyMountains();
             //worldMap.TerrainData.Mountains = data.Mountains;
             worldMap.TerrainData.Lakes = data.Lakes;
-            worldMap.TerrainData.Islands = data.Islands;
+            worldMap.TerrainData.LandMasses = data.Land;
 
-            terrainGenerator.GenerateRivers();
+            riverGenerator.GenerateRivers(worldGenParams.LocalDimensions.x, worldGenParams.RiverCount(worldSize));
             terrainGenerator.GenerateHeatMap();
             terrainGenerator.GeneratePrecipitationMap();
             terrainGenerator.GenerateBiomes();

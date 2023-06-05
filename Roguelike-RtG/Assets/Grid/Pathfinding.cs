@@ -1,3 +1,4 @@
+using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -252,4 +253,27 @@ public class Pathfinding : MonoBehaviour
 
         return lowestFCostNode;
     }
+
+
+
+    #region - Areas - 
+    public List<GridNode> GetNodesInRange_Circle(GridNode fromNode, int range)
+    {
+        var grid = fromNode.grid;
+        var nodes = new List<GridNode>();
+
+        for (int x = fromNode.x - range; x < fromNode.x + range + 1; x++)
+        {
+            for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
+            {
+                if (x < 0 || x > grid.Width - 1) continue;
+                if (y < 0 || y > grid.Height - 1) continue;
+
+                var toNode = grid.GetGridObject(x, y);
+                if (GridMath.GetStraightDist(fromNode.x, fromNode.y, toNode.x, toNode.y) <= range) nodes.Add(toNode);
+            }
+        }
+        return nodes;
+    }
+    #endregion
 }

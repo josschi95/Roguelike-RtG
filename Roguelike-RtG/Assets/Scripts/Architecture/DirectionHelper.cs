@@ -43,4 +43,18 @@ public static class DirectionHelper
         }
         throw new System.Exception("Compass Direction outside parameters");
     }
+
+    public static Compass ReflectDirection(Compass direction)
+    {
+        switch (direction)
+        {
+            case Compass.North: return Compass.South;
+            case Compass.South: return Compass.North;
+            case Compass.East: return Compass.West;
+            case Compass.West: return Compass.East;
+
+
+        }
+        throw new System.Exception("Compass Direction outside parameters");
+    }
 }

@@ -36,9 +36,18 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            if (newEvent is TransformChanged)
+            if (newEvent is TransformChanged) FollowTarget();
+        }
+
+        private void FollowTarget()
+        {
+            if (Transform.Depth == 1)
             {
                 Controller.SmoothToPosition(Transform.WorldPosition);
+            }
+            else
+            {
+                Controller.SmoothToPosition(Transform.LocalPosition);
             }
         }
     }

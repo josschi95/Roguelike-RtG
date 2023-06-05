@@ -1,5 +1,4 @@
-using JS.EventSystem;
-using JS.Primitives;
+using JS.ECS.Tags;
 using JS.WorldMap;
 using UnityEngine;
 
@@ -10,8 +9,11 @@ namespace JS.ECS
         private static WorldLocomotionSystem instance;
 
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private Vector3IntVariable playerGlobalPosition;
-        [SerializeField] private GameEvent worldToLocalEvent;
+        [SerializeField] private WorldGenerationParameters worldGenParams;
+
+        private Vector2Int regionCenter;
+        private Vector2Int localCenter;
+
         private void Awake()
         {
             if (instance != null)
@@ -20,8 +22,16 @@ namespace JS.ECS
                 return;
             }
             instance = this;
+
+            regionCenter = new Vector2Int(Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f),
+                Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f));
+            localCenter = new Vector2Int(Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f),
+                Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f));
         }
 
+        /// <summary>
+        /// Fast travel on the World Map from World Tile to World Tile. Returns additional costs given the Terrain.
+        /// </summary>
         public static bool TryMoveWorld(Physics obj, Compass direction, out int cost)
         {
             cost = 0;
@@ -30,22 +40,10 @@ namespace JS.ECS
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
+            obj.Transform.RegionPosition = instance.regionCenter;
+            obj.Transform.LocalPosition = instance.localCenter;
             obj.Transform.WorldPosition += DirectionHelper.GetVector(direction);
-            return true;
-        }
-
-        public static bool SwitchToLocalMap(Physics obj)
-        {
-            //What would prevent this? I can probably think of some that will stop swithcing to world from local, but...
-            obj.Transform.Depth = 0;
-
-            instance.playerGlobalPosition.Value.x = obj.Transform.WorldPosition.x;
-            instance.playerGlobalPosition.Value.y = obj.Transform.WorldPosition.y;
-            instance.playerGlobalPosition.Value.z = obj.Transform.Depth;
-
-            GridManager.OnEnterNewMap(obj.Transform.WorldPosition, Vector2Int.one, 0);
-
-            instance.worldToLocalEvent?.Invoke();
+            
             return true;
         }
 
@@ -55,6 +53,52 @@ namespace JS.ECS
             if (projectedPosition.y < 0) return false;
             if (projectedPosition.x > worldMap.Width - 1) return false;
             if (projectedPosition.y > worldMap.Height - 1) return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Switches to Local Map view from World Map.
+        /// </summary>
+        public static bool SwitchToLocalMap(Physics player)
+        {
+            //What would prevent this?
+            return instance.SwitchFromWorldToLocalMap(player);
+        }
+
+        private bool SwitchFromWorldToLocalMap(Physics player)
+        {
+            //Don't know how, but make sure no other entity can swap map focus
+            if (!player.entity.GetTag<PlayerTag>()) return false;
+
+            player.Transform.Depth = 0;
+
+            GridManager.OnEnterLocalMap(player.Transform.WorldPosition, Vector2Int.one, 0);
+            return true;
+        }
+
+        /// <summary>
+        /// Switch to World Map view from Local Map.
+        /// </summary>
+        public static bool SwitchToWorldMap(Physics player)
+        {
+            return instance.SwitchFromLocalToWorldMap(player);
+        }
+
+        private bool SwitchFromLocalToWorldMap(Physics player)
+        {
+            //Don't know how, but make sure no other entity can swap map focus
+            if (!player.entity.GetTag<PlayerTag>()) return false;
+
+            //Can only switch to World Map if on the surface
+            if (player.Transform.Depth < 0) return false;
+            
+            //Will also need to check if the player is in combat, possibly other factors
+            //Maybe terrain, etc.
+
+            player.Transform.Depth = 1;
+
+            GridManager.OnSwitchToWorldMap();
+
             return true;
         }
     }

@@ -262,11 +262,9 @@ namespace JS.ECS
             else if (Transform.Depth == 0)
             {
                 //Load World Map
+                WorldLocomotionSystem.SwitchToWorldMap(Physics);
             }
-            else
-            {
-                //Look for stairs up
-            }
+            else LocomotionSystem.TryMoveUp(Physics);
         }
 
         private void TryMoveDown()
@@ -276,10 +274,7 @@ namespace JS.ECS
                 //Load Local Map
                 WorldLocomotionSystem.SwitchToLocalMap(Physics);
             }
-            else
-            {
-                //Look for stairs down
-            }
+            else LocomotionSystem.TryMoveDown(Physics);
         }
 
         private void TryMove(Compass direction)
@@ -290,19 +285,16 @@ namespace JS.ECS
             {
                 if (WorldLocomotionSystem.TryMoveWorld(Physics, direction, out int cost1))
                 {
-                    int netCost = Mathf.RoundToInt(LocalLocomotionSystem.movementDividend / (MoveSpeed - cost1));
+                    int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost1));
                     TimeSystem.SpendActionPoints(Actor, netCost);
                     TimeSystem.EndTurn(Actor);
                 }
             }
-            else
+            else if (LocomotionSystem.TryMoveLocal(Physics, direction, out int cost)) //Local Movement
             {
-                if (LocalLocomotionSystem.TryMoveLocal(Physics, direction, out int cost))
-                {
-                    int netCost = Mathf.RoundToInt(LocalLocomotionSystem.movementDividend / (MoveSpeed - cost));
-                    TimeSystem.SpendActionPoints(Actor, netCost);
-                    TimeSystem.EndTurn(Actor);
-                }
+                int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
+                TimeSystem.SpendActionPoints(Actor, netCost);
+                TimeSystem.EndTurn(Actor);
             }
         }
 

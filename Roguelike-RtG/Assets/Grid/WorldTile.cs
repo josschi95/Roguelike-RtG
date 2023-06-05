@@ -56,7 +56,7 @@ namespace JS.WorldMap
             }
         }
 
-        public List<River> rivers;
+        public List<River> Rivers;
 
         public int BiomeID { get; private set; }
         public bool hasBiome { get; private set; } = false;
@@ -78,7 +78,7 @@ namespace JS.WorldMap
             neighbors_all = new List<WorldTile>();
             neighbors_adj = new List<WorldTile>();
 
-            rivers = new List<River>();
+            Rivers = new List<River>();
         }
 
         public void SetNeighbors()
@@ -201,10 +201,10 @@ namespace JS.WorldMap
         public void SetRiverPath(River river)
         {
             if (!IsLand) return;
-            if (rivers.Contains(river)) return;
+            if (Rivers.Contains(river)) return;
 
             //Debug.Log("Adding River " + river.ID + " to tile " + x + "," + y);
-            rivers.Add(river);
+            Rivers.Add(river);
         }
         #endregion
 

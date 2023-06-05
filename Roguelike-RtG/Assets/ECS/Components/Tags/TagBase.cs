@@ -11,23 +11,17 @@ namespace JS.ECS.Tags
     /// <summary>
     /// Tag to mark the player entity
     /// </summary>
-    public class PlayerTag : TagBase
-    {
-    }
+    public class PlayerTag : TagBase { }
 
     /// <summary>
     /// Tag to mark an object as being immune to damage.
     /// </summary>
-    public class NoDamage : TagBase
-    {
-    }
+    public class NoDamage : TagBase { }
 
     /// <summary>
     /// Tag to mark an object as being immune to effects.
     /// </summary>
-    public class NoEffect : TagBase
-    {
-    }
+    public class NoEffect : TagBase { }
 
     /// <summary>
     /// Tag to mark the Family of a creature: Humanoid, Demihuman, Monstrous.
@@ -59,11 +53,12 @@ namespace JS.ECS.Tags
         }
     }
 
-    public class Item : TagBase
-    {
-    }
+    public class Item : TagBase { }
 
-    public class NeverStack : TagBase
-    {
-    }
+    public class NeverStack : TagBase { }
+
+    /// <summary>
+    /// Tag to indicate that the entity blocks movement into its space.
+    /// </summary>
+    public class BlocksNode : TagBase { }
 }

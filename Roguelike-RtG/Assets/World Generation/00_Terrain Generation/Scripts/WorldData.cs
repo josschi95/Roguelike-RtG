@@ -29,31 +29,29 @@ namespace JS.WorldMap
 
         [field: SerializeField] public TerrainData TerrainData { get; private set; }
         [field: SerializeField] public SettlementData SettlementData { get; private set; }
-        private Grid<WorldTile> grid;
+        private Grid<WorldTile> worldMap;
 
-        public int Height => grid.Height;
-        public int Width => grid.Width;
+        public int Height => worldMap.Height;
+        public int Width => worldMap.Width;
 
-        public void CreateGrid(int width, int height)
+        public void CreateWorldGrid(int width, int height)
         {
-            grid = new Grid<WorldTile>(width, height, 1, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            worldMap = new Grid<WorldTile>(width, height, 1, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    grid.GetGridObject(x, y).SetNeighbors();
+                    worldMap.GetGridObject(x, y).SetNeighbors();
                 }
             }
         }
 
-        public WorldTile GetNode(int x, int y) => grid.GetGridObject(x, y);
+        public WorldTile GetNode(int x, int y) => worldMap.GetGridObject(x, y);
 
-        public WorldTile GetNode(Vector3 worldPosition) => grid.GetGridObject(worldPosition);
+        public WorldTile GetNode(Vector3 worldPosition) => worldMap.GetGridObject(worldPosition);
 
-        public Vector3 GetWorldPosition(WorldTile node) => grid.GetWorldPosition(node.x, node.y);
-
-        public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(x, y);
+        public Vector3 GetWorldPosition(int x, int y) => worldMap.GetWorldPosition(x, y);
 
         public int GetNodeDistance_Path(WorldTile fromNode, WorldTile toNode)
         {
@@ -70,10 +68,10 @@ namespace JS.WorldMap
             {
                 for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
                 {
-                    if (x < 0 || x > grid.Width - 1) continue;
-                    if (y < 0 || y > grid.Height - 1) continue;
+                    if (x < 0 || x > worldMap.Width - 1) continue;
+                    if (y < 0 || y > worldMap.Height - 1) continue;
 
-                    var toNode = grid.GetGridObject(x, y);
+                    var toNode = worldMap.GetGridObject(x, y);
                     if (GridMath.GetStraightDist(fromNode.x, fromNode.y, toNode.x, toNode.y) <= range) nodes.Add(toNode);
                 }
             }
@@ -88,10 +86,10 @@ namespace JS.WorldMap
             {
                 for (int y = fromNode.y - range; y < fromNode.y + range + 1; y++)
                 {
-                    if (x < 0 || x > grid.Width - 1) continue;
-                    if (y < 0 || y > grid.Height - 1) continue;
+                    if (x < 0 || x > worldMap.Width - 1) continue;
+                    if (y < 0 || y > worldMap.Height - 1) continue;
 
-                    var toNode = grid.GetGridObject(x, y);
+                    var toNode = worldMap.GetGridObject(x, y);
                     nodes.Add(toNode);
                 }
             }
@@ -112,19 +110,19 @@ namespace JS.WorldMap
         //Returns a list of nodes that can be travelled to reach a target destination
         public List<WorldTile> FindNodePath(int startX, int startY, int endX, int endY, bool allowDiagonals = false, Settlement settlement = null)
         {
-            WorldTile startNode = grid.GetGridObject(startX, startY);
+            WorldTile startNode = worldMap.GetGridObject(startX, startY);
             //Debug.Log("Start: " + startNode.x + "," + startNode.y);
-            WorldTile endNode = grid.GetGridObject(endX, endY);
+            WorldTile endNode = worldMap.GetGridObject(endX, endY);
             //Debug.Log("End: " + endNode.x + "," + endNode.y);
 
             openList = new List<WorldTile> { startNode };
             closedList = new List<WorldTile>();
 
-            for (int x = 0; x < grid.Width; x++)
+            for (int x = 0; x < worldMap.Width; x++)
             {
-                for (int y = 0; y < grid.Height; y++)
+                for (int y = 0; y < worldMap.Height; y++)
                 {
-                    WorldTile pathNode = grid.GetGridObject(x, y);
+                    WorldTile pathNode = worldMap.GetGridObject(x, y);
                     pathNode.gCost = int.MaxValue;
                     pathNode.CalculateFCost();
                     pathNode.cameFromTile = null;

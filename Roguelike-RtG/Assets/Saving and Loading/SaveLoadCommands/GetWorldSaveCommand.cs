@@ -14,13 +14,13 @@ namespace JS.CommandSystem
         [Space]
         [SerializeField] private WorldData _worldMapData;
         [SerializeField] private TimeKeeper timeData;
-        [SerializeField] private bool loadSave = true;
 
         protected override bool ExecuteCommand()
         {
             return CheckForExistingSave();
         }
 
+        //Called from WorldGenerator when continuing game
         public WorldSaveData GetWorldSaveData()
         {
             string[] saves = Directory.GetFiles(Application.persistentDataPath);
@@ -55,6 +55,13 @@ namespace JS.CommandSystem
             return data;
         }
 
+        private void SetTimeData(WorldSaveData data)
+        {
+            timeData.SetSavedTime(data.seconds, data.minutes, data.hours, data.days, data.months, data.years);
+        }
+
+        //Called through the Invoke menu from the Main Menu
+        //Used to determine if the "Continue" button can be clicked
         private bool CheckForExistingSave()
         {
             string[] saves = Directory.GetFiles(Application.persistentDataPath);
@@ -69,7 +76,8 @@ namespace JS.CommandSystem
             {
                 if (save.Contains("WorldData"))
                 {
-                    LoadSavedWorld(save);
+                    //LoadSavedWorld(save);
+                    _worldMapData.SaveExists = true;
                     return true;
                 }
             }
@@ -78,15 +86,14 @@ namespace JS.CommandSystem
             return false;
         }
 
+        /*****************************************************************
+         This is no longer being used with no need to save the information
+         ****************************************************************/
+
+        /*
+         This is no longer being used with no need to save the information
         private void LoadSavedWorld(string fileName)
         {
-            _worldMapData.SaveExists = true;
-            if (!loadSave)
-            {
-                _worldMapData.IsLoaded = false;
-                return; //Use this when changes have been made to the save file that will cause issues
-            }
-
             StreamReader reader = new StreamReader(fileName);
             string json = reader.ReadToEnd();
 
@@ -97,17 +104,12 @@ namespace JS.CommandSystem
             SetSettlementValues(data);
         }
 
-        private void SetTimeData(WorldSaveData data)
-        {
-            timeData.SetSavedTime(data.seconds, data.minutes, data.hours, data.days, data.months, data.years);
-        }
-
         private void SetTerrainValues(WorldSaveData data)
         {
             _worldMapData.SaveExists = true;
             _worldMapData.Seed = data.seed;
             var terrain = _worldMapData.TerrainData;
-
+            
             terrain.MapSize = data.mapWidth;
 
             terrain.SeedMap = ArrayHelper.Convert1DIntArrayTo2D(data.seedMap, data.mapWidth, data.mapHeight);
@@ -124,12 +126,12 @@ namespace JS.CommandSystem
             terrain.MithrilMap = ArrayHelper.Convert1DFloatArrayTo2D(data.MithrilMap, data.mapWidth, data.mapHeight);
             terrain.AdmanatineMap = ArrayHelper.Convert1DFloatArrayTo2D(data.AdmanatineMap, data.mapWidth, data.mapHeight);
             terrain.GemstoneMap = ArrayHelper.Convert1DFloatArrayTo2D(data.GemstoneMap, data.mapWidth, data.mapHeight);
-
-            terrain.Mountains = data.Mountains;
-            terrain.Lakes = data.Lakes;
-            terrain.Rivers = data.Rivers;
             terrain.BiomeGroups = data.BiomeGroups;
-            terrain.Islands = data.Islands;
+            terrain.Mountains = data.Mountains;
+            terrain.Rivers = data.Rivers;
+            
+            terrain.Lakes = data.Lakes;
+            terrain.LandMasses = data.Land;
 
             _worldMapData.CreateGrid(data.mapWidth, data.mapHeight);
         }
@@ -141,5 +143,6 @@ namespace JS.CommandSystem
             _worldMapData.TerrainData.Roads = data.Roads;
             _worldMapData.TerrainData.Bridges = data.Bridges;
         }
+        */
     }
 }

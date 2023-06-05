@@ -17,9 +17,11 @@ namespace JS.WorldMap
 	[System.Serializable]
 	public class RiverNode
 	{
-		public int x, y;
-		public Compass Flow;
-		public int Size;
+		public int x, y; //world location of node
+		public int Size; //radius of river from center line
+		public int Offset; //offset of river from local map center
+		public Compass PathDirection; //Directional bend of the river
+		public Compass Flow; //Direction the river is flowing in
 
 		public RiverNode(int x = 0, int y = 0)
 		{

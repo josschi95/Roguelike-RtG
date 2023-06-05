@@ -1,11 +1,12 @@
+using JS.ECS.Tags;
 using JS.WorldMap;
 using UnityEngine;
 
 namespace JS.ECS
 {
-    public class LocalLocomotionSystem : SystemBase<LocalLocomotion>
+    public class LocomotionSystem : SystemBase<LocalLocomotion>
     {
-        private static LocalLocomotionSystem instance;
+        private static LocomotionSystem instance;
 
         public const float movementDividend = 100000;
 
@@ -42,24 +43,59 @@ namespace JS.ECS
             cost = 0;
             if (!ProjectedPositionIsValid(obj.Transform, direction)) return false;
 
+            var entitiesAtPosition = TransformSystem.GetLocalEntitiesAt(tracer, tracer.LocalPosition);
+            if (entitiesAtPosition.Length > 0)
+            {
+                for (int i = 0; i < entitiesAtPosition.Length; i++)
+                {
+                    if (entitiesAtPosition[i].GetTag<BlocksNode>()) return false; //position is blocked by wall
+                }
+            }
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
             //Change the Transform of the object to match the tracer's valid position
             obj.Transform.LocalPosition = tracer.LocalPosition;
-            if (obj.Transform.RegionPosition != tracer.RegionPosition) obj.Transform.RegionPosition = tracer.RegionPosition;
-            if (obj.Transform.WorldPosition != tracer.WorldPosition) obj.Transform.WorldPosition = tracer.WorldPosition;
 
+            if (obj.Transform.RegionPosition != tracer.RegionPosition)
+            {
+                //Debug.Log("Region Position Changing");
+                obj.Transform.RegionPosition = tracer.RegionPosition;
+
+                if (obj.Transform.WorldPosition != tracer.WorldPosition)
+                    obj.Transform.WorldPosition = tracer.WorldPosition;
+
+                //Player crossed into a new map, change scenes
+                if (obj.entity.GetTag<PlayerTag>())
+                {
+                    //Debug.Log("Player Switching Map");
+                    GridManager.OnEnterLocalMap(obj.Transform.WorldPosition, obj.Transform.RegionPosition, obj.Transform.Depth);
+                }
+                //else Debug.Log("Player Tag not found");
+            }
             return true;
         }
 
         public static bool TryMoveUp(Physics obj)
         {
+            Debug.LogWarning("Not Yet Implemented.");
             if (obj.Transform.Depth > 0) return false;
+
+            //Check for presence of stairs/ladder
 
             obj.Transform.Depth++;
             
-            return true;
+            return false;
+        }
+
+        public static bool TryMoveDown(Physics obj)
+        {
+            Debug.LogWarning("Not Yet Implemented.");
+            //Check for presence of stairs/holes
+
+            obj.Transform.Depth--;
+
+            return false;
         }
 
         /// <summary>
@@ -71,31 +107,19 @@ namespace JS.ECS
             tracer.RegionPosition = transform.RegionPosition;
             tracer.WorldPosition = transform.WorldPosition;
 
-            if (WithinLocalMap(tracer, direction))
-            {
+            tracer.LocalPosition += DirectionHelper.GetVector(direction);
+            if (WithinLocalMap()) return true;
 
-                //Can move here, no change in local map
-                tracer.LocalPosition += DirectionHelper.GetVector(direction);
-                return true;
-            }
+            WrapLocal(tracer); //Wrap local position to reflect change in region map
 
             //Moved outside local map, Wrap position, move to next region
-            WrapLocal(tracer);
+            tracer.RegionPosition += DirectionHelper.GetVector(direction);
+            if (WithinRegionMap()) return true;
 
-            if (WithinRegionMap(tracer, direction))
-            {
-                //No change in region
-                tracer.RegionPosition += DirectionHelper.GetVector(direction);
-                return true;
-            }
+            WrapRegion(tracer); //Wrap region position to reflect chane in world map
 
-            WrapRegion(tracer);
-
-            if (WithinWorldMap(tracer, direction))
-            {
-                tracer.WorldPosition += DirectionHelper.GetVector(direction);
-                return true;
-            }
+            tracer.WorldPosition += DirectionHelper.GetVector(direction);
+            if (WithinWorldMap()) return true;
             return false;
         }
 
@@ -127,13 +151,43 @@ namespace JS.ECS
                 transform.RegionPosition = new Vector2Int(transform.RegionPosition.x, 0);
         }
 
+        private bool WithinLocalMap()
+        {
+            if (tracer.LocalPosition.x < 0) return false;
+            if (tracer.LocalPosition.y < 0) return false;
+            if (tracer.LocalPosition.x > worldMapParams.LocalDimensions.x - 1) return false;
+            if (tracer.LocalPosition.y > worldMapParams.LocalDimensions.y - 1) return false;
+            return true;
+        }
+
+        private bool WithinRegionMap()
+        {
+            if (tracer.RegionPosition.x < 0) return false;
+            if (tracer.RegionPosition.y < 0) return false;
+            if (tracer.RegionPosition.x > worldMapParams.RegionDimensions.x - 1) return false;
+            if (tracer.RegionPosition.y > worldMapParams.RegionDimensions.y - 1) return false;
+            return true;
+        }
+
+        private bool WithinWorldMap()
+        {
+            if (tracer.WorldPosition.x < 0) return false;
+            if (tracer.WorldPosition.y < 0) return false;
+            if (tracer.WorldPosition.x > worldMap.Width - 1) return false;
+            if (tracer.WorldPosition.y > worldMap.Height - 1) return false;
+            return true;
+        }
+
+        /*****************************
+         * Not Currently Being Used
+         ****************************/
         private bool WithinLocalMap(Transform transform, Compass direction)
         {
             var projectedPos = transform.LocalPosition + DirectionHelper.GetVector(direction);
             if (projectedPos.x < 0) return false;
             if (projectedPos.y < 0) return false;
             if (projectedPos.x > worldMapParams.LocalDimensions.x - 1) return false;
-            if (projectedPos.y >  worldMapParams.LocalDimensions.y - 1) return false;
+            if (projectedPos.y > worldMapParams.LocalDimensions.y - 1) return false;
             return true;
         }
 

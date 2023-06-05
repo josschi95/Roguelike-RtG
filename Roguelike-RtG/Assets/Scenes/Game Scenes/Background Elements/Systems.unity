@@ -215,7 +215,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
-  worldToLocalGenerationEvent: {fileID: 0}
+  activeMapWorldPosition: {fileID: 11400000, guid: 59739e26cd8195b44892b2c61b990096, type: 2}
+  activeMapRegionPosition: {fileID: 11400000, guid: b8077ef6d947c1f4b9bf3883406e4efe, type: 2}
+  worldToLocalMapEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
+  localToLocalMapEvent: {fileID: 11400000, guid: b828699f0289849448cea9920e86606b, type: 2}
+  localToWorldMapEvent: {fileID: 11400000, guid: 00872b6f655e73f4dbbd79e6114f2d11, type: 2}
 --- !u!114 &607149223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,8 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  playerGlobalPosition: {fileID: 11400000, guid: 59739e26cd8195b44892b2c61b990096, type: 2}
-  worldToLocalEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
+  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
 --- !u!114 &607149224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,18 +293,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 607149222}
-        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
-        m_MethodName: OnSwitchToWorldMap
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   developerNotes: Sets in-game time tick to world
 --- !u!114 &1790594450
 MonoBehaviour:
@@ -322,18 +313,6 @@ MonoBehaviour:
       - m_Target: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
         m_TargetAssemblyTypeName: TimeKeeper, Assembly-CSharp
         m_MethodName: OnLocalMap
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 607149222}
-        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
-        m_MethodName: OnSwitchToLocalMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

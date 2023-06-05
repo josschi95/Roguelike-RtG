@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using JS.EventSystem;
+using JS.WorldMap;
 
 namespace JS.SceneManagement
 {
@@ -19,7 +20,7 @@ namespace JS.SceneManagement
         [SerializeField] private GameEvent bootEvent;
         [SerializeField] private ScenePicker eventLogger;
         [SerializeField] private GameSettings gameSettings;
-
+        [SerializeField] private WorldData worldMap;
         [Space]
 
         [SerializeField] private GameObject loadingScreen;
@@ -44,6 +45,7 @@ namespace JS.SceneManagement
         {
             bootEvent?.Invoke();
             gameSettings.LoadSavedValues();
+            worldMap.IsLoaded = false;
             LoadSceneCollectionAdditive(bootScenes);
         }
 

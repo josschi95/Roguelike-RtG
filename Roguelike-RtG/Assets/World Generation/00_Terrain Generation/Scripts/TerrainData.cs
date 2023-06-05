@@ -144,11 +144,11 @@ namespace JS.WorldMap
             set => biomeGroups = value;
         }
 
-        private Island[] islands;
-        public Island[] Islands
+        private LandMass[] land;
+        public LandMass[] LandMasses
         {
-            get => islands;
-            set => islands = value;
+            get => land;
+            set => land = value;
         }
 
         private Road[] roads;

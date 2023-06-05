@@ -1,3 +1,5 @@
+using JS.WorldMap;
+
 namespace JS.ECS
 {
     /// <summary>
@@ -5,6 +7,7 @@ namespace JS.ECS
     /// </summary>
     public class Brain : ComponentBase
     {
+        public bool IsSleeping = true;
         public bool IsHostile = false; //Is the object hositle by default?
         public bool IsCalm = false; //Will the object become hostile if attacked?
         public bool IsMobile = true; //Can the object move?
@@ -28,7 +31,13 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            //
+            if (newEvent is TurnStart) OnTurnStart();
+        }
+
+        private void OnTurnStart()
+        {
+            if (IsSleeping) Actions.SkipAction(entity.GetComponent<TimedActor>());
+
         }
     }
 }

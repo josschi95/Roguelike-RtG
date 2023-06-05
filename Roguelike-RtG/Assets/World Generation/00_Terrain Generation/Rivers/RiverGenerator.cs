@@ -19,14 +19,16 @@ namespace JS.WorldMap.Generation
         private List<River> rivers;
         private List<RiverGroup> riverGroups;
 
+        private int localSize;
         private float headWaterHeight;
 
-        public List<River> GenerateRivers(int mapSize, int count)
+        public void GenerateRivers(int localSize, int riverCount)
         {
+            this.localSize = localSize;
             int attempts = 0;
             rivers = new List<River>();
 
-            while (rivers.Count < count && attempts < MaxRiverAttempts)
+            while (rivers.Count < riverCount && attempts < MaxRiverAttempts)
             {
                 attempts++;
                 bool findEmpty = attempts < MaxRiverAttempts / 2;
@@ -36,11 +38,11 @@ namespace JS.WorldMap.Generation
                 }
             }
 
-            BuildRiverGroups(mapSize);
+            BuildRiverGroups();
             DigRiverGroups();
             DigRemainingRivers();
 
-            return rivers;
+            terrainData.Rivers = rivers.ToArray();
         }
 
         private bool TryGenerateRiver(bool findEmptyMountain, out River river, out List<WorldTile> tiles)
@@ -115,7 +117,7 @@ namespace JS.WorldMap.Generation
         private void FindPathToWater(WorldTile node, Compass direction, River river, List<WorldTile> tiles)
         {
             //may need to do some additional checks...
-            if (node.rivers.Contains(river))
+            if (node.Rivers.Contains(river))
             {
                 Debug.Log("Node already contains river");
                 return;
@@ -145,7 +147,7 @@ namespace JS.WorldMap.Generation
 
             tiles.Add(node);
 
-            if (node.rivers.Count > 0) return;
+            if (node.Rivers.Count > 0) return;
 
             if (node.x == 0 || node.y == 0 || node.x == worldMap.Width - 1 || node.y == worldMap.Height - 1) return;
 
@@ -246,7 +248,7 @@ namespace JS.WorldMap.Generation
             }
 
             // if neighbor is existing river that is not this one, flow into it
-            if (node.rivers.Count == 0 && !node.IsLand) value = 0;
+            if (node.Rivers.Count == 0 && !node.IsLand) value = 0;
 
             return value;
         }
@@ -257,37 +259,26 @@ namespace JS.WorldMap.Generation
 
             for (int i = 0; i < node.neighbors_adj.Count; i++)
             {
-                if (node.neighbors_adj[i].rivers.Count > 0 && node.neighbors_adj[i].rivers.Contains(river)) count++;
+                if (node.neighbors_adj[i].Rivers.Count > 0 && node.neighbors_adj[i].Rivers.Contains(river)) count++;
             }
 
             return count;
         }
 
-        private River FindRiverAt(int x, int y)
-        {
-            foreach (var river in rivers)
-            {
-                for (int i = 0; i < river.Nodes.Length; i++)
-                {
-                    if (river.Nodes[i].x == x && river.Nodes[i].y == y) return river;
-                }
-            }
-            return null;
-        }
         #region - River Groups -
-        private void BuildRiverGroups(int mapSize)
+        private void BuildRiverGroups()
         {
             riverGroups = new List<RiverGroup>();
 
             //loop each tile, checking if it belongs to multiple rivers
-            for (int x = 0; x < mapSize; x++)
+            for (int x = 0; x < worldMap.Width; x++)
             {
-                for (int y = 0; y < mapSize; y++)
+                for (int y = 0; y < worldMap.Height; y++)
                 {
                     WorldTile node = worldMap.GetNode(x, y);
 
                     //node only has one or no river(s) running through it
-                    if (node.rivers.Count <= 1) continue;
+                    if (node.Rivers.Count <= 1) continue;
                     // multiple rivers == intersection
 
                     RiverGroup group = FindExistingRiverGroup(node);
@@ -295,10 +286,10 @@ namespace JS.WorldMap.Generation
                     // existing group found -- add to it
                     if (group != null)
                     {
-                        for (int n = 0; n < node.rivers.Count; n++)
+                        for (int n = 0; n < node.Rivers.Count; n++)
                         {
-                            if (!group.Rivers.Contains(node.rivers[n]))
-                                group.Rivers.Add(node.rivers[n]);
+                            if (!group.Rivers.Contains(node.Rivers[n]))
+                                group.Rivers.Add(node.Rivers[n]);
                         }
                     }
                     else   //No existing group found - create a new one
@@ -306,9 +297,9 @@ namespace JS.WorldMap.Generation
                         //Debug.Log("New River Group Found at " + node.x + "," + node.y);
 
                         group = new RiverGroup();
-                        for (int n = 0; n < node.rivers.Count; n++)
+                        for (int n = 0; n < node.Rivers.Count; n++)
                         {
-                            group.Rivers.Add(node.rivers[n]);
+                            group.Rivers.Add(node.Rivers[n]);
                         }
                         riverGroups.Add(group);
                     }
@@ -319,9 +310,9 @@ namespace JS.WorldMap.Generation
         private RiverGroup FindExistingRiverGroup(WorldTile node)
         {
             RiverGroup group = null;
-            for (int n = 0; n < node.rivers.Count; n++)
+            for (int n = 0; n < node.Rivers.Count; n++)
             {
-                River tileriver = node.rivers[n];
+                River tileriver = node.Rivers[n];
                 for (int i = 0; i < riverGroups.Count; i++)
                 {
                     for (int j = 0; j < riverGroups[i].Rivers.Count; j++)
@@ -346,18 +337,26 @@ namespace JS.WorldMap.Generation
         {
             river.ID = rivers.Count;
             river.Nodes = new RiverNode[tiles.Count];
+
             for (int i = 0; i < tiles.Count; i++)
             {
+                //Mark tile as having a river
+                tiles[i].SetRiverPath(river);
+
+                //Coordinates
                 river.Nodes[i] = new RiverNode(tiles[i].x, tiles[i].y);
 
+                //Size
                 if (i == 0) river.Nodes[i].Size = 1;
                 else if (worldGenerator.PRNG.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
                 else river.Nodes[i].Size = river.Nodes[i - 1].Size;
 
-                tiles[i].SetRiverPath(river);
+                //Offset - Set it anywhere between local map size with a border of 10 + river size
+                river.Nodes[i].Offset = worldGenerator.PRNG.Next(10 + river.Nodes[i].Size, localSize - 10 - river.Nodes[i].Size);
 
                 if (i == 0) //Direction is only dependent on following node
                 {
+                    river.Nodes[i].PathDirection = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
                     river.Nodes[i].Flow = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
                 }
                 else if (i == tiles.Count - 1) //Direction is only dependent on previous node
@@ -366,19 +365,23 @@ namespace JS.WorldMap.Generation
                     var water = FindWaterTile(tiles[i]);
                     if (water == null) //likely the edge of the map
                     {
-                        river.Nodes[i].Flow = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
+                        river.Nodes[i].PathDirection = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
                     }
                     else
                     {
                         var to = tiles[i].NeighborDirection_Adjacent(water);
-                        river.Nodes[i].Flow = DirectionHelper.CombineDirections(from, to);
+                        river.Nodes[i].PathDirection = DirectionHelper.CombineDirections(from, to);
                     }
+
+                    river.Nodes[i].Flow = DirectionHelper.ReflectDirection(tiles[i].NeighborDirection_Adjacent(tiles[i - 1]));
                 }
                 else
                 {
                     var from = tiles[i].NeighborDirection_Adjacent(tiles[i - 1]);
                     var to = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
-                    river.Nodes[i].Flow = DirectionHelper.CombineDirections(from, to);
+                    river.Nodes[i].PathDirection = DirectionHelper.CombineDirections(from, to);
+
+                    river.Nodes[i].Flow = tiles[i].NeighborDirection_Adjacent(tiles[i + 1]);
                 }
             }
             rivers.Add(river);

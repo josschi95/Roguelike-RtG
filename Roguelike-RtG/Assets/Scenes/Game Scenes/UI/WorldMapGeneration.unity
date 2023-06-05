@@ -1002,7 +1002,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenerator: {fileID: 1549498269}
-  riverGenerator: {fileID: 261351985}
   erosion: {fileID: 261351986}
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
@@ -2536,6 +2535,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724115214}
   m_CullTransparentMesh: 1
+--- !u!1 &795975078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 795975080}
+  - component: {fileID: 795975079}
+  m_Layer: 0
+  m_Name: Player Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &795975079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795975078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2207401455605184f9954b165cb17efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
+  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  inputActionAsset: {fileID: -944628639613478452, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
+  playerSprites:
+  - {fileID: -1308272046, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: 1834733294, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -1620378909, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -2122462016, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -568803594, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -2063878014, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -1895116410, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -1516802804, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: -565450470, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
+  - {fileID: 0}
+--- !u!4 &795975080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795975078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &809466312
 GameObject:
   m_ObjectHideFlags: 0
@@ -5473,18 +5530,19 @@ MonoBehaviour:
   AutoGenSavedWorld: {fileID: 11400000, guid: 9b276acab35f0604f8ebe62c06596501, type: 2}
   generationPanel: {fileID: 1187939944}
   worldSize: 0
-  mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
+  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
   playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
   timeKeeper: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
   terrainGenerator: {fileID: 261351981}
+  riverGenerator: {fileID: 261351985}
   settlementGenerator: {fileID: 907612579}
   roadGenerator: {fileID: 907612580}
   progressBar: {fileID: 2128025129}
   progressText: {fileID: 1686435238}
   worldGenCompleteEvent: {fileID: 11400000, guid: 0ed37ee11b761bd49906c6fe51071d56, type: 2}
-  loadSavedWorldCommand: {fileID: 11400000, guid: 86469ad3a99da894f8a09e3982ec54f1, type: 2}
+  getWorldSaveCommand: {fileID: 11400000, guid: 86469ad3a99da894f8a09e3982ec54f1, type: 2}
   saveWorldDataCommand: {fileID: 11400000, guid: eccd9433662ea9b4eb3a6baa25b1cdea, type: 2}
 --- !u!4 &1549498270
 Transform:

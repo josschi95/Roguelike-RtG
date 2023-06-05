@@ -382,7 +382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963b32e6cd43cdd43b25b67026261fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowDiagonals: 0
 --- !u!4 &144143803
 Transform:
   m_ObjectHideFlags: 0
@@ -566,65 +565,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &503478387
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 503478389}
-  - component: {fileID: 503478388}
-  m_Layer: 0
-  m_Name: Player Locator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &503478388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503478387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2207401455605184f9954b165cb17efe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
-  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  inputActionAsset: {fileID: -944628639613478452, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  playerSprites:
-  - {fileID: -1308272046, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: 1834733294, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1620378909, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -2122462016, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -568803594, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -2063878014, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1895116410, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1516802804, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -565450470, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: 0}
-  pixelCam: {fileID: 519420033}
---- !u!4 &503478389
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503478387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 8
+  m_AssetsPPU: 32
   m_RefResolutionX: 1920
   m_RefResolutionY: 1080
   m_UpscaleRT: 0
@@ -816,8 +756,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: 460, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &526793102
 MonoBehaviour:
@@ -1418,7 +1358,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 503478388}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerWorldMapLocator, Assembly-CSharp
         m_MethodName: PlacePlayer
         m_Mode: 1

@@ -8,7 +8,7 @@ namespace JS.WorldMap
         //However, the features (Mountains, Lakes, Rivers, Islands, etc.) take quite a bit more time and should definitely be saved
 
         public int seed; //this needs to be saved
-        public int[] seedMap; //No need to save
+        //public int[] seedMap; //No need to save
 
         //Time              // all of this info needs to be saved
         public int seconds; 
@@ -20,6 +20,7 @@ namespace JS.WorldMap
 
         //Terrain Data
         public int mapWidth, mapHeight; //this needs to be saved if I have variable map sizes
+        /*
         public float[] heightMap; //No need to save
         public float[] heatMap; //No need to save
         public float[] moistureMap; //No need to save
@@ -40,11 +41,11 @@ namespace JS.WorldMap
         //Features              //these should be saved
         public int[] biomeMap; //reference to the ID of each biome
         public BiomeGroup[] BiomeGroups;
-
         public MountainRange[] Mountains;
-        public Lake[] Lakes;
         public River[] Rivers;
-        public Island[] Islands;
+        */
+        public Lake[] Lakes;
+        public LandMass[] Land;
 
 
         //Settlement Data

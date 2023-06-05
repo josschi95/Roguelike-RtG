@@ -35,7 +35,7 @@ namespace JS.WorldMap
             GUILayout.Space(10);
 
             var resource = EditorGUILayout.EnumPopup("Highlight Resources", display.resourceToHighlight);
-            display.resourceToHighlight = (Resources)resource;
+            display.resourceToHighlight = (Ores)resource;
             if (GUILayout.Button("Find " + display.resourceToHighlight.ToString())) display.HighlightResources();
 
             GUILayout.Space(10);

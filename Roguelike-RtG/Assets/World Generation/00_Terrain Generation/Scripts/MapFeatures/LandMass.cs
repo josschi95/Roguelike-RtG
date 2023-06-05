@@ -1,18 +1,22 @@
-using System.Collections.Generic;
-
 namespace JS.WorldMap
 {
     [System.Serializable]
-    public class Island
+    public class LandMass
     {
         public int ID { get; private set; }
-        public List<WorldTile> Nodes { get; set; }
         public GridCoordinates[] GridNodes;
+        public LandSize Size;
 
-        public Island(int ID)
+        public LandMass(int ID)
         {
-            Nodes = new List<WorldTile>();
             this.ID = ID;
         }
     }
+}
+
+public enum LandSize
+{
+    Islet,
+    Island,
+    Continent,
 }

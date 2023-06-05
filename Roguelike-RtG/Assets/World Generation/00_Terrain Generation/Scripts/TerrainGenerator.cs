@@ -18,7 +18,6 @@ namespace JS.WorldMap.Generation
         private WorldSize worldSize;
 
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private RiverGenerator riverGenerator;
         [SerializeField] private Erosion erosion;
 
         [Space]
@@ -200,34 +199,32 @@ namespace JS.WorldMap.Generation
         /// </summary>
         public IEnumerator IdentifyLandMasses()
         {
-            var islands = new List<Island>();
-            while (land.Count > 0)
+            var land = new List<LandMass>();
+            while (this.land.Count > 0)
             {
-                var body = FloodFillRegion(land[0], true);
-                if (body.Count <= mapSize)
-                {
-                    Island newIsland = new Island(islands.Count);
-                    var coords = new GridCoordinates[body.Count];
-                    for (int i = 0; i < body.Count; i++)
-                    {
-                        coords[i] = new GridCoordinates(body[i].x, body[i].y);
-                        if (newIsland.Nodes.Contains(body[i]))
-                        {
-                            newIsland.Nodes.Add(body[i]);
-                        }
-                    }
-                    newIsland.GridNodes = coords;
-                    islands.Add(newIsland);
-                }
+                var body = FloodFillRegion(this.land[0], true);
+                LandMass newLand = new LandMass(land.Count);
 
+                if (body.Count < mapSize / 2) newLand.Size = LandSize.Islet;
+                else if (body.Count < mapSize) newLand.Size = LandSize.Island;
+                else newLand.Size = LandSize.Continent;
+
+                var coords = new GridCoordinates[body.Count];
                 for (int i = 0; i < body.Count; i++)
                 {
-                    land.Remove(body[i]);
+                    coords[i] = new GridCoordinates(body[i].x, body[i].y);
+                    this.land.Remove(body[i]);
                 }
+                newLand.GridNodes = coords;
+                /*for (int i = 0; i < body.Count; i++)
+                {
+                    land.Remove(body[i]);
+                }*/
 
+                land.Add(newLand);
                 yield return null;
             }
-            terrainData.Islands = islands.ToArray();
+            terrainData.LandMasses = land.ToArray();
         }
 
         /// <summary>
@@ -274,7 +271,7 @@ namespace JS.WorldMap.Generation
                     if (!node.IsLand) continue;
                     for (int i = 0; i < node.neighbors_all.Count; i++)
                     {
-                        if (!node.neighbors_all[i].IsLand && node.rivers.Count == 0)
+                        if (!node.neighbors_all[i].IsLand && node.Rivers.Count == 0)
                         {
                             coasts[x, y] = true;
                         }
@@ -303,12 +300,6 @@ namespace JS.WorldMap.Generation
             }
             var ranges = Topography.FindMountainRanges(worldMap, mapSize);
             terrainData.Mountains = ranges.ToArray();
-        }
-
-        public void GenerateRivers()
-        {
-            //Create rivers
-            terrainData.Rivers = riverGenerator.GenerateRivers(mapSize, worldGenParams.RiverCount(worldSize)).ToArray();
         }
         #endregion
 

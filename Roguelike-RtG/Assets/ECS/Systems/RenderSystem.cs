@@ -66,7 +66,6 @@ namespace JS.ECS
         {
             Register(render);
             UpdatePosition(render);
-
         }
 
         /// <summary>
@@ -88,14 +87,14 @@ namespace JS.ECS
 
             if (render is RenderSingle single)
             {
-                if (!activeSingleRenders.ContainsKey(single)) StartRendering(single);
+                if (!activeSingleRenders.ContainsKey(single) || activeSingleRenders[single] == null) StartRendering(single);
 
-                if (single.Transform.Depth == 1) activeCompoundRenders[single].transform.position = (Vector3Int)single.Transform.WorldPosition;
-                else activeCompoundRenders[single].transform.position = (Vector3Int)single.Transform.LocalPosition;
+                if (single.Transform.Depth == 1) activeSingleRenders[single].transform.position = (Vector3Int)single.Transform.WorldPosition;
+                else activeSingleRenders[single].transform.position = (Vector3Int)single.Transform.LocalPosition;
             }
             else if (render is RenderCompound compound)
             {
-                if (!activeCompoundRenders.ContainsKey(compound)) StartRendering(compound);
+                if (!activeCompoundRenders.ContainsKey(compound) || activeCompoundRenders[compound] == null) StartRendering(compound);
 
                 if (compound.Transform.Depth == 1) activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Transform.WorldPosition;
                 else activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Transform.LocalPosition;
@@ -147,17 +146,17 @@ namespace JS.ECS
                 var go = Instantiate(instance.single);
                 go.sprite = single.sprite;
                 go.transform.position = (Vector3Int)single.Transform.LocalPosition;
-                instance.activeSingleRenders.Add(single, go);
+                instance.activeSingleRenders[single] = go;
             }
             else if (render is RenderCompound compound)
             {
                 var go = Instantiate(instance.compound);
                 go.transform.position = (Vector3Int)compound.Transform.LocalPosition;
-                instance.activeCompoundRenders.Add(compound, go);
                 for (int i = 0; i < compound.sprites.Length; i++)
                 {
                     go.Renderers[i].sprite = compound.sprites[i];
                 }
+                instance.activeCompoundRenders[compound] = go;
             }
         }
         

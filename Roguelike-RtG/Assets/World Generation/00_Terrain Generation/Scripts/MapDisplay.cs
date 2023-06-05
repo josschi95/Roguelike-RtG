@@ -30,7 +30,7 @@ namespace JS.WorldMap
         [SerializeField] private RuleTile bridgeVertical, bridgeHorizontal;
 
         public Biome biomeToHighlight { get; set; }
-        public Resources resourceToHighlight { get; set; }
+        public Ores resourceToHighlight { get; set; }
 
         //Called on scene load from GameEventListener
         public void DisplayWorldMap()
@@ -79,9 +79,9 @@ namespace JS.WorldMap
                     if (existingTile != null)
                     {
                         //Debug.Log("At " + tilePos);
-                        tile = riverTiles.GetIntersectionTile(existingTile, river.Nodes[i].Flow);
+                        tile = riverTiles.GetIntersectionTile(existingTile, river.Nodes[i].PathDirection);
                     }
-                    else tile = riverTiles.GetRiverTile(river.Nodes[i].Flow);
+                    else tile = riverTiles.GetRiverTile(river.Nodes[i].PathDirection);
                     riverMap.SetTile(tilePos, tile);
                 }
             }
@@ -102,9 +102,9 @@ namespace JS.WorldMap
                     if (existingTile != null)
                     {
                         //Debug.Log("At " + tilePos);
-                        tile = roadTiles.GetIntersectionTile(existingTile, road.Nodes[i].Flow);
+                        tile = roadTiles.GetIntersectionTile(existingTile, road.Nodes[i].PathDirection);
                     }
-                    else tile = roadTiles.GetRiverTile(road.Nodes[i].Flow);
+                    else tile = roadTiles.GetRiverTile(road.Nodes[i].PathDirection);
                     roadMap.SetTile(tilePos, tile);
                 }
             }
@@ -247,11 +247,13 @@ namespace JS.WorldMap
         {
             infoMap.ClearAllTiles();
 
-            foreach (var island in worldMap.TerrainData.Islands)
+            foreach (var landMass in worldMap.TerrainData.LandMasses)
             {
-                for (int i = 0; i < island.Nodes.Count; i++)
+                if (landMass.Size == LandSize.Continent) continue;
+
+                for (int i = 0; i < landMass.GridNodes.Length; i++)
                 {
-                    var tilePos = new Vector3Int(island.Nodes[i].x, island.Nodes[i].y);
+                    var tilePos = new Vector3Int(landMass.GridNodes[i].x, landMass.GridNodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }
@@ -314,56 +316,56 @@ namespace JS.WorldMap
 
                     switch (resourceToHighlight)
                     {
-                        case Resources.Coal:
+                        case Ores.Coal:
                             if (worldMap.TerrainData.CoalMap[x,y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Copper:
+                        case Ores.Copper:
                             if (worldMap.TerrainData.CopperMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Iron:
+                        case Ores.Iron:
                             if (worldMap.TerrainData.IronMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Silver:
+                        case Ores.Silver:
                             if (worldMap.TerrainData.SilverMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Gold:
+                        case Ores.Gold:
                             if (worldMap.TerrainData.GoldMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Gemstones:
+                        case Ores.Gemstones:
                             if (worldMap.TerrainData.GemstoneMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Mithril:
+                        case Ores.Mithril:
                             if (worldMap.TerrainData.MithrilMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
                                 totalCount++;
                             }
                             break;
-                        case Resources.Adamantine:
+                        case Ores.Adamantine:
                             if (worldMap.TerrainData.AdmanatineMap[x, y] > 0)
                             {
                                 infoMap.SetTile(tilePos, highlightTile);
@@ -389,7 +391,7 @@ namespace JS.WorldMap
                 return;
             }
 
-            var pos = worldMap.GetWorldPosition(node);
+            var pos = worldMap.GetWorldPosition(node.x, node.y);
             Vector3Int newPos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
             infoMap.SetTile(newPos, highlightTile);
         }
@@ -409,7 +411,7 @@ namespace JS.WorldMap
     }
 }
 
-public enum Resources
+public enum Ores
 {
     Coal,
     Copper,

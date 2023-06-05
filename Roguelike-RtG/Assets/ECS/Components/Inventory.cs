@@ -41,7 +41,24 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            //
+            if (newEvent is TransformChanged) CheckItemsAtPosition();
+        }
+
+        private void CheckItemsAtPosition()
+        {
+            var t = entity.GetComponent<Transform>();
+            if (t.Depth == 1) return;
+
+            var objects = TransformSystem.GetLocalEntitiesAt(t, t.LocalPosition);
+
+            for (int i = 0; i < objects.Length; i++)
+            {
+                var phys = objects[i].GetComponent<Physics>();
+                if (phys != null && phys.IsTakeable)
+                {
+                    UnityEngine.Debug.Log("Found " + objects[i].Name);
+                }
+            }
         }
     }
 }

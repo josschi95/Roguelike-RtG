@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: World Data
   m_EditorClassIdentifier: 
   saveExists: 1
+  saveIsLoaded: 0
   <TerrainData>k__BackingField: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   <SettlementData>k__BackingField: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}

@@ -70,6 +70,6 @@ public class WorldGenerationSettings : MonoBehaviour
     //Updates current seed display
     private void OnSeedChanged()
     {
-        seedInputField.text = worldGenerator.seed.ToString();
+        seedInputField.text = worldGenerator.Seed.ToString();
     }
 }

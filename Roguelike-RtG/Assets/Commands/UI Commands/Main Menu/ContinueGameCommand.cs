@@ -28,13 +28,11 @@ namespace JS.CommandSystem
 
         private bool CheckForWorldLoaded()
         {
-            Debug.Log(worldData.SaveExists);
-
             if (!worldData.SaveExists) return false;
 
             if (worldData.IsLoaded)
             {
-                Debug.Log("IsLoaded");
+                //Debug.Log("IsLoaded");
                 //All save data is already loaded in, can go directly to next scene
                 AutoGenSavedWorld.Value = false;
                 loadPlayerSavedSceneCommand?.Invoke();
@@ -42,7 +40,7 @@ namespace JS.CommandSystem
             }
             else
             {
-                Debug.Log("IsNotLoaded");
+                //Debug.Log("IsNotLoaded");
                 //The save data has not been loaded in, need to first go to world gen to recreate it
                 AutoGenSavedWorld.Value = true;
                 loadWorldGenScene?.Invoke();

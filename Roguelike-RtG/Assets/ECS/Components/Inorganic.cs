@@ -5,6 +5,12 @@ namespace JS.ECS
     /// </summary>
     public class Inorganic : ComponentBase
     {
+        //Set Priority to higher value to ensure OnTakeDamage reduces organic-based damage
+        public Inorganic() 
+        {
+            Priority = 2;
+        }
+
         public override void OnEvent(Event newEvent)
         {
             switch (newEvent)

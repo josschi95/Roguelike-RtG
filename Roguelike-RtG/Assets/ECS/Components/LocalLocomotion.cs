@@ -31,7 +31,7 @@ namespace JS.ECS
 
         public LocalLocomotion()
         {
-            LocalLocomotionSystem.Register(this);
+            LocomotionSystem.Register(this);
         }
 
         public override void OnEvent(Event newEvent)

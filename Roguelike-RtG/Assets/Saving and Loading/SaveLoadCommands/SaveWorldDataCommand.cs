@@ -26,7 +26,7 @@ namespace JS.CommandSystem
         {
             var data = new WorldSaveData();
             data.seed = worldData.Seed;
-            data.seedMap = ArrayHelper.Convert2DIntArrayTo1D(worldData.TerrainData.SeedMap);
+            //data.seedMap = ArrayHelper.Convert2DIntArrayTo1D(worldData.TerrainData.SeedMap);
 
             //Time
             data.seconds = timeData.Seconds;
@@ -40,7 +40,7 @@ namespace JS.CommandSystem
             var terrain = worldData.TerrainData;
             data.mapWidth = terrain.MapSize;
             data.mapHeight = terrain.MapSize;
-            
+            /*
             data.heightMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeightMap);
             data.heatMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeatMap);
             data.moistureMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.MoistureMap);
@@ -57,9 +57,10 @@ namespace JS.CommandSystem
 
             data.BiomeGroups = terrain.BiomeGroups;
             data.Mountains = terrain.Mountains;
-            data.Lakes = terrain.Lakes;
             data.Rivers = terrain.Rivers;
-            data.Islands = terrain.Islands;
+            */
+            data.Lakes = terrain.Lakes;
+            data.Land = terrain.LandMasses;
 
             //Settlements
             var settlements = worldData.SettlementData;

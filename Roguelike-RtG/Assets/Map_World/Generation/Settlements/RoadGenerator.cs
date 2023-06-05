@@ -96,13 +96,13 @@ namespace JS.WorldMap.Generation
                     if (river != null)
                     {
                         cost = 10;
-                        var flow = river.Nodes[index].Flow;
+                        var flow = river.Nodes[index].PathDirection;
                         if (flow == Compass.NorthEast || flow == Compass.NorthWest || flow == Compass.SouthEast || flow == Compass.SouthWest)
                             cost = 500;
                     }
 
                     if (node.BiomeID == biomeHelper.Mountain.ID) cost = 100;
-                    if (node.rivers.Count > 1) cost = 500;
+                    if (node.Rivers.Count > 1) cost = 500;
                     if (!node.IsLand) cost = 500;
 
                     node.movementCost = cost;
@@ -120,22 +120,22 @@ namespace JS.WorldMap.Generation
                 var newNode = new RiverNode(list[i].x, list[i].y);
                 road.Nodes[i] = newNode;
 
-                if (i == 0) newNode.Flow = list[i].NeighborDirection_Adjacent(list[i + 1]);
-                else if (i == list.Count - 1) newNode.Flow = list[i].NeighborDirection_Adjacent(list[i - 1]);
+                if (i == 0) newNode.PathDirection = list[i].NeighborDirection_Adjacent(list[i + 1]);
+                else if (i == list.Count - 1) newNode.PathDirection = list[i].NeighborDirection_Adjacent(list[i - 1]);
                 else
                 {
                     var from = list[i].NeighborDirection_Adjacent(list[i - 1]);
                     var to = list[i].NeighborDirection_Adjacent(list[i + 1]);
-                    newNode.Flow = DirectionHelper.CombineDirections(from, to);
+                    newNode.PathDirection = DirectionHelper.CombineDirections(from, to);
                 }
 
-                if (list[i].rivers.Count > 0)
+                if (list[i].Rivers.Count > 0)
                 {
                     //Debug.LogWarning("Need to generate new bridge.");
                     var bridge = new Bridge();
                     bridge.x = list[i].x; 
                     bridge.y = list[i].y;
-                    if (newNode.Flow == Compass.North || newNode.Flow == Compass.South)
+                    if (newNode.PathDirection == Compass.North || newNode.PathDirection == Compass.South)
                         bridge.isVertical = true;
                     
                     bridges.Add(bridge);

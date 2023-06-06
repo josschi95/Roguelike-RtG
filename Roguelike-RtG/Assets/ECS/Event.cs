@@ -39,7 +39,11 @@ namespace JS.ECS
 
     public class DeclareMeleeAttack : Event
     {
-
+        public Physics target;
+        public DeclareMeleeAttack(Physics target)
+        {
+            this.target = target;
+        }
     }
 
     public class TargetedByMelee : Event

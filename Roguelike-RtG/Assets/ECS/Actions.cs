@@ -1,7 +1,42 @@
+using JS.CharacterSystem;
+using UnityEngine;
+
 namespace JS.ECS
 {
     public static class Actions
     {
+        public const int BaseActionCost = 1000;
+
+        /// <summary>
+        /// Do nothing. End turn.
+        /// </summary>
+        public static void SkipAction(TimedActor actor)
+        {
+            if (!actor.IsTurn) return;
+            //UnityEngine.Debug.Log("SkipAction " + actor.entity.Name);
+            TimeSystem.SpendActionPoints(actor);
+            TimeSystem.EndTurn(actor);
+        }
+
+        /// <summary>
+        /// Try to move one tile in given direction.
+        /// </summary>
+        public static void TryMoveLocal(Physics obj, Compass direction, bool isForced = false)
+        {
+            if (!LocomotionSystem.TryMoveLocal(obj, direction, out int cost)) return;
+            if (isForced) return; //Forced movement does not spend AP
+
+            var actor = obj.entity.GetComponent<TimedActor>();
+            if (actor == null) return;
+
+            int MoveSpeed = 100; //Default MoveSpeed
+            if (obj.entity.TryGetStat("MoveSpeed", out StatBase stat)) MoveSpeed = stat.Value;
+            int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
+
+            TimeSystem.SpendActionPoints(actor, netCost);
+            TimeSystem.EndTurn(actor);
+        }
+
         //is it in range?
         //does the attack hit? Accuracy vs. Dodge
         //(Done) Get the resulting damage from the attack
@@ -14,28 +49,18 @@ namespace JS.ECS
         //meaning that an event needs to be sent to both the creature and the weapon
         //but that may not always be the case because it might be an unarmed attack, or it might be a trap
         //
-        public static void TryAttack(TimedActor actor, Compass direction)
+
+        public static void TryMeleeAttack(Combat combatant, Vector2Int position)
         {
-            if (!actor.IsTurn) return;
-            //Debug.Log("TryAttack " + _actor.entity.Name);
-            //Is there an adjacent creature? What is the attacker's range? is there a target within range?
+            var actor = combatant.entity.GetComponent<TimedActor>();
+            if (actor != null && !actor.IsTurn) return; //not your turn. May change this for special cases
 
-            //If there is, make an attack
+            if (!CombatSystem.TryMeleeAttack(combatant, position)) return;
 
-
-            TimeSystem.SpendActionPoints(actor);
-            TimeSystem.EndTurn(actor);
-        }
-
-        public static void SkipAction(TimedActor actor)
-        {
-            if (!actor.IsTurn) return;
-            //UnityEngine.Debug.Log("SkipAction " + actor.entity.Name);
-            TimeSystem.SpendActionPoints(actor);
+            TimeSystem.SpendActionPoints(actor, BaseActionCost);
             TimeSystem.EndTurn(actor);
         }
     }
-
 }
 
 public enum MoveResult

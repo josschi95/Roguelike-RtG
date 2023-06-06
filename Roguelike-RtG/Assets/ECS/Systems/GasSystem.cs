@@ -31,14 +31,14 @@ namespace JS.ECS
 
         private void DisperseCloud(GasCloud cloud)
         {
-            if (!cloud.transform.currentNode.blocksGas)
+            /*if (!cloud.transform.currentNode.blocksGas)
             {
 
             }
             else
             {
 
-            }
+            }*/
         }
     }
 }

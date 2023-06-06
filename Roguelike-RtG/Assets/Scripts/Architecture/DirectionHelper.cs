@@ -57,4 +57,9 @@ public static class DirectionHelper
         }
         throw new System.Exception("Compass Direction outside parameters");
     }
+
+    public static Compass GetRandom()
+    {
+        return (Compass)Random.Range(0, System.Enum.GetNames(typeof(Compass)).Length);
+    }
 }

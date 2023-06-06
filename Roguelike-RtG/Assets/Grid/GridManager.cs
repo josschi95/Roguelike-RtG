@@ -11,18 +11,15 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private WorldGenerationParameters worldGenParams;
     [SerializeField] private Vector3IntVariable activeMapWorldPosition;
-    [SerializeField] private Vector3IntVariable activeMapRegionPosition;
 
     private bool worldMapActive;
     public static bool WorldMapActive => instance.worldMapActive;
 
     private GameGrid activeLocalGrid;
+    public static GameGrid ActiveGrid => instance.activeLocalGrid;
     private List<GameGrid> localGrids;
 
-    public static GameGrid ActiveGrid => instance.activeLocalGrid;
-
-    [Space]
-
+    [Header("Game Events")]
     [SerializeField] private GameEvent worldToLocalMapEvent;
     [SerializeField] private GameEvent localToLocalMapEvent;
     [SerializeField] private GameEvent localToWorldMapEvent;
@@ -39,25 +36,23 @@ public class GridManager : MonoBehaviour
         localGrids = new List<GameGrid>();
 
         worldMapActive = true;
-        activeMapWorldPosition.Value.z = 1;
-        activeMapRegionPosition.Value = Vector3Int.one;
     }
 
-    public static void OnSwitchToWorldMap()
+    /// <summary>
+    /// Player switched view to World Map.
+    /// </summary>
+    public static void OnSwitchToWorldView()
     {
-        instance.SwitchLocalToWorld();
+        instance.SwitchToWorldView();
     }
 
-    private void SwitchLocalToWorld()
+    private void SwitchToWorldView()
     {
         worldMapActive = true;
-        activeMapWorldPosition.Value.z = 1;
-        activeMapRegionPosition.Value = Vector3Int.one;
-
         localToWorldMapEvent?.Invoke(); //loads world map scene
     }
 
-    private void SwitchWorldToLocal()
+    private void SwitchToLocalView()
     {
         worldMapActive = false;
         worldToLocalMapEvent?.Invoke(); //loads local map scene
@@ -66,24 +61,21 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// Player moved to new local map.
     /// </summary>
-    public static void OnEnterLocalMap(Vector2Int world, Vector2Int region, int depth)
+    public static void OnEnterLocalMap(Vector3Int position)
     {
-        instance.EnterLocalMap(world, region, depth);
+        instance.EnterLocalMap(position);
     }
 
-    private void EnterLocalMap(Vector2Int world, Vector2Int region, int depth)
+    private void EnterLocalMap(Vector3Int position)
     {
         for (int i = 0; i < localGrids.Count; i++)
         {
-            if (localGrids[i].WorldCoordinates != world) continue;
-            if (localGrids[i].RegionCoordinates != region) continue;
-            if (localGrids[i].Grid.Depth != depth) continue;
-
+            if (localGrids[i].Position != position) continue;
             LoadMap(localGrids[i]);
             return;
         }
         //Player is entering a new map, create it
-        NewLocalMap(world, region, depth);
+        NewLocalMap(position);
     }
 
     /// <summary>
@@ -92,37 +84,40 @@ public class GridManager : MonoBehaviour
     private void LoadMap(GameGrid grid)
     {
         activeLocalGrid = grid;
-        activeMapWorldPosition.Value = (Vector3Int)grid.WorldCoordinates;
-        activeMapWorldPosition.Value.z = grid.Grid.Depth;
-        activeMapRegionPosition.Value = (Vector3Int)grid.RegionCoordinates;
-        Debug.Log("Loading Map. World: " +  activeLocalGrid.WorldCoordinates + ", Region: " + activeLocalGrid.RegionCoordinates);
-        if (worldMapActive) SwitchWorldToLocal();
-        else localToLocalMapEvent?.Invoke();
-        RenderSystem.OnNewSceneLoaded();
+        activeMapWorldPosition.Value = grid.Position;
+        Debug.Log("Loading Map. World: " + activeLocalGrid.Position);
+
+        if (worldMapActive) SwitchToLocalView();
+        else
+        {
+            localToLocalMapEvent?.Invoke();
+            RenderSystem.OnNewSceneLoaded();
+        }
     }
 
     /// <summary>
     /// The player has entered a new Local map, generate it
     /// </summary>
-    private void NewLocalMap(Vector2Int world, Vector2Int region, int depth)
+    private void NewLocalMap(Vector3Int position)
     {
-        var newGrid = new GameGrid(world, region);
-
         var width = worldGenParams.LocalDimensions.x;
         var height = worldGenParams.LocalDimensions.y;
-        newGrid.Grid = new Grid<GridNode>(width, height, depth, 1, Vector3.zero, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
-        for (int x = 0; x < newGrid.Grid.Width; x++)
-        {
-            for (int y = 0; y < newGrid.Grid.Height; y++)
-            {
-                newGrid.Grid.GetGridObject(x, y).GetNeighbors();
-            }
-        }
-
+        var newGrid = new GameGrid(position, width, height);
+        
         localGrids.Add(newGrid);
         SpawnMonsters(newGrid);
         //Reset current map, load in values of new map, change player position to appropriate position
         LoadMap(newGrid);
+    }
+
+    public static GameGrid GetGrid(Vector3Int position)
+    {
+        for (int i = 0; i < instance.localGrids.Count; i++)
+        {
+            if (instance.localGrids[i].Position == position) 
+                return instance.localGrids[i];
+        }
+        return null;
     }
 
     private void SpawnMonsters(GameGrid grid)
@@ -131,13 +126,13 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var enemy = Blueprints.GetCreature("Orc_0" + i);
-            var t = enemy.GetComponent<JS.ECS.Transform>();
+            var physics = enemy.GetComponent<JS.ECS.Physics>();
+            enemy.GetComponent<Brain>().IsSleeping = false;
+
             Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/Orc");
-            enemy.AddComponent(new RenderSingle(t, sprites[i]));
-            t.WorldPosition = grid.WorldCoordinates;
-            t.RegionPosition = grid.RegionCoordinates;
-            t.Depth = grid.Grid.Depth;
-            t.LocalPosition = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
+            physics.Position = grid.Position;
+            physics.LocalPosition = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
+            enemy.AddComponent(new RenderSingle(physics, sprites[i]));
         }
     }
 }
@@ -145,13 +140,20 @@ public class GridManager : MonoBehaviour
 public class GameGrid
 {
     public Grid<GridNode> Grid;
-    //So I could just hold these values within the grid itself...
-    public Vector2Int WorldCoordinates; //x,y for WorldPosition
-    public Vector2Int RegionCoordinates; //x,y within the region
+    public Vector3Int Position;
 
-    public GameGrid(Vector2Int world, Vector2Int region)
+    public GameGrid(Vector3Int position, int width, int height)
     {
-        WorldCoordinates = world;
-        RegionCoordinates = region;
+        Position = position;
+        
+        Grid = new Grid<GridNode>(width, height, 1, Vector3.zero, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
+        
+        for (int x = 0; x < Grid.Width; x++)
+        {
+            for (int y = 0; y < Grid.Height; y++)
+            {
+                Grid.GetGridObject(x, y).GetNeighbors();
+            }
+        }
     }
 }

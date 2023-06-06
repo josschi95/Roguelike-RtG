@@ -8,6 +8,19 @@ namespace JS.ECS
     /// </summary>
     public class Inventory : ComponentBase
     {
+        private Physics _physics;
+        public Physics Physics
+        {
+            get
+            {
+                if (_physics == null)
+                {
+                    _physics = new Physics();
+                }
+                return _physics;
+            }
+        }
+
         public List<Entity> Contents;
 
         public Inventory()
@@ -46,17 +59,15 @@ namespace JS.ECS
 
         private void CheckItemsAtPosition()
         {
-            var t = entity.GetComponent<Transform>();
-            if (t.Depth == 1) return;
+            if (GridManager.WorldMapActive) return;
 
-            var objects = TransformSystem.GetLocalEntitiesAt(t, t.LocalPosition);
+            var objects = TransformSystem.GetEntitiesAt(Physics.Position, Physics.LocalPosition);
 
             for (int i = 0; i < objects.Length; i++)
             {
-                var phys = objects[i].GetComponent<Physics>();
-                if (phys != null && phys.IsTakeable)
+                if (objects[i].IsTakeable)
                 {
-                    UnityEngine.Debug.Log("Found " + objects[i].Name);
+                    UnityEngine.Debug.Log("Found " + objects[i].entity.Name);
                 }
             }
         }

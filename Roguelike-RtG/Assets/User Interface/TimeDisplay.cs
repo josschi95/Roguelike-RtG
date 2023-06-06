@@ -6,6 +6,8 @@ public class TimeDisplay : MonoBehaviour
     [SerializeField] private TimeKeeper timeKeeper;
     [SerializeField] private TMP_Text timeText;
 
+    private void Start() => DisplayTime();
+
     //Called from GameEventListener on each GameTick
     public void UpdateDisplay() => DisplayTime();
 

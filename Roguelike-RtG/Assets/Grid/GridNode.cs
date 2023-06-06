@@ -1,3 +1,4 @@
+using JS.ECS;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class GridNode
 
     public List<GridNode> neighbors_all { get; private set; }
     public List<GridNode> neighbors_adj { get; private set; }
-
+    public List<Entity> Entities { get; private set; }
     public GridNode(Grid<GridNode> grid, int x, int y)
     {
         this.grid = grid;
@@ -34,6 +35,7 @@ public class GridNode
 
         neighbors_all = new List<GridNode>();
         neighbors_adj = new List<GridNode>();
+        Entities = new List<Entity>();
     }
 
     public void GetNeighbors()

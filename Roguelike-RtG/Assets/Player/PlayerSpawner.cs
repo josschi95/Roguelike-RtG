@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.U2D;
 using JS.ECS;
 using UnityEngine.InputSystem;
 using JS.ECS.Tags;
@@ -20,17 +19,19 @@ namespace JS.WorldMap
             var player = Blueprints.GetCreature("Player");
             player.AddTag(new PlayerTag());
 
-            var transform = player.GetComponent<ECS.Transform>();
-            player.GetComponent<Brain>().IsSleeping = false;
+            var physics = player.GetComponent<ECS.Physics>();
+            var brain = player.GetComponent<Brain>();
+            brain.IsSleeping = false;
+            brain.HasOverride = true;
 
-            transform.WorldPosition = new Vector2Int(playerData.worldX, playerData.worldY);
-            transform.RegionPosition = new Vector2Int(playerData.regionX, playerData.regionY);
-            transform.LocalPosition = new Vector2Int(playerData.localX, playerData.localY);
-            transform.Depth = playerData.depth;
+            physics.Position = playerData.Position;
+            physics.LocalPosition = playerData.LocalPosition;
+            player.AddComponent(new RenderCompound(physics, playerSprites, true, true));
 
             player.AddComponent(new WorldLocomotion());
             player.AddComponent(new InputHandler(inputActionAsset));
-            player.AddComponent(new RenderCompound(transform, playerSprites));
+
+            player.GetComponent<RenderCompound>().RenderOnWorldMap = true;
             player.AddComponent(new CameraFocus());
         }
     }

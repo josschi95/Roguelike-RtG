@@ -5,10 +5,7 @@ namespace JS.ECS
     /// </summary>
     public class Combat : ComponentBase
     {
-        public Combat(Entity entity)
-        {
-            entity.AddComponent(this);
-        }
+        public bool hasMultiStrike; //removes major penalty to making multiple attacks
 
         public override void OnEvent(Event newEvent)
         {

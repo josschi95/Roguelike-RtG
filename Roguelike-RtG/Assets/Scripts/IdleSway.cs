@@ -10,6 +10,12 @@ public class IdleSway : MonoBehaviour
     private Vector3 pointB = new Vector3(0.03f, 0, 0);
     private bool goLeft;
 
+    private void Start()
+    {
+        //Add some variance in sways
+        swayTime = Random.Range(0, duration);
+    }
+
     private void Update()
     {
         Move();

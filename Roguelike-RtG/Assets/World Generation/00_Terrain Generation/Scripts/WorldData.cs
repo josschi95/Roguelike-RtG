@@ -36,7 +36,7 @@ namespace JS.WorldMap
 
         public void CreateWorldGrid(int width, int height)
         {
-            worldMap = new Grid<WorldTile>(width, height, 1, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
+            worldMap = new Grid<WorldTile>(width, height, 1, Vector3.zero, (Grid<WorldTile> g, int x, int y) => new WorldTile(g, x, y));
 
             for (int x = 0; x < width; x++)
             {

@@ -7,7 +7,7 @@ namespace JS.WorldMap
     public class LocalMapGenerator : MonoBehaviour
     {
         [SerializeField] private Vector3IntVariable worldPos;
-        [SerializeField] private Vector3IntVariable regionPos;
+        private Vector2Int regionPos;
 
         [Space]
 
@@ -38,13 +38,14 @@ namespace JS.WorldMap
 
         private void GenerateLocalMap()
         {
-            var worldX = worldPos.Value.x;
-            var worldY = worldPos.Value.y;
-            var regionX = regionPos.Value.x;
-            var regionY = regionPos.Value.y;
+            var worldX = Mathf.FloorToInt(worldPos.Value.x / worldGenParams.LocalDimensions.x);
+            var worldY = Mathf.FloorToInt(worldPos.Value.y / worldGenParams.LocalDimensions.y);
+            regionPos.x = worldPos.Value.x % worldGenParams.LocalDimensions.x;
+            regionPos.y = worldPos.Value.y % worldGenParams.LocalDimensions.y;
             //var node = worldData.GetNode(worldX, worldY);
 
-            seed = worldData.TerrainData.SeedMap[worldX, worldY] + regionX + regionY;
+            //Seed is equal to the world tile + the regional x + y
+            seed = worldData.TerrainData.SeedMap[worldX, worldY] + regionPos.x + regionPos.y;
             //PRNG = new System.Random(seed);
 
             //var biome = biomeHelper.GetBiome(node.BiomeID);
@@ -102,73 +103,73 @@ namespace JS.WorldMap
             {
                 case Compass.North:
                     {
-                        if (river.Flow == Compass.North) regionIndex = regionPos.Value.y;
-                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.Value.y - 1;
+                        if (river.Flow == Compass.North) regionIndex = regionPos.y;
+                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.y - 1;
 
-                        return regionPos.Value.x == 1;
+                        return regionPos.x == 1;
                     }
                 case Compass.South:
                     {
-                        if (river.Flow == Compass.North) regionIndex = regionPos.Value.y;
-                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.Value.y - 1;
+                        if (river.Flow == Compass.North) regionIndex = regionPos.y;
+                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.y - 1;
 
-                        return regionPos.Value.x == 1;
+                        return regionPos.x == 1;
                     }
                 case Compass.East:
                     {
-                        if (river.Flow == Compass.East) regionIndex = regionPos.Value.x;
-                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.Value.x - 1;
+                        if (river.Flow == Compass.East) regionIndex = regionPos.x;
+                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.x - 1;
                         
-                        return regionPos.Value.y == 1;
+                        return regionPos.y == 1;
                     }
                 case Compass.West:
                     {
-                        if (river.Flow == Compass.East) regionIndex = regionPos.Value.x;
-                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.Value.x - 1;
+                        if (river.Flow == Compass.East) regionIndex = regionPos.x;
+                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.x - 1;
 
-                        return regionPos.Value.y == 1;
+                        return regionPos.y == 1;
                     }
                 case Compass.NorthEast:
                     {
-                        if (regionPos.Value.x == 2 && regionPos.Value.y == 2) return false;
-                        if (regionPos.Value.x == 0 || regionPos.Value.y == 0) return false;
+                        if (regionPos.x == 2 && regionPos.y == 2) return false;
+                        if (regionPos.x == 0 || regionPos.y == 0) return false;
 
-                        if (regionPos.Value.x == 1 && regionPos.Value.y == 1) regionIndex = 1;
-                        else if (river.Flow == Compass.North && regionPos.Value.y == 2) regionIndex = 2;
-                        else if (river.Flow == Compass.East && regionPos.Value.x == 2) regionIndex = 2;
+                        if (regionPos.x == 1 && regionPos.y == 1) regionIndex = 1;
+                        else if (river.Flow == Compass.North && regionPos.y == 2) regionIndex = 2;
+                        else if (river.Flow == Compass.East && regionPos.x == 2) regionIndex = 2;
 
                         return true;
                     }
                 case Compass.SouthEast:
                     {
-                        if (regionPos.Value.x == 2 && regionPos.Value.y == 0) return false;
-                        if (regionPos.Value.x == 0 || regionPos.Value.y == 2) return false;
+                        if (regionPos.x == 2 && regionPos.y == 0) return false;
+                        if (regionPos.x == 0 || regionPos.y == 2) return false;
 
-                        if (regionPos.Value.x == 1 && regionPos.Value.y == 1) regionIndex = 1;
-                        else if (river.Flow == Compass.South && regionPos.Value.y == 0) regionIndex = 2;
-                        else if (river.Flow == Compass.East && regionPos.Value.x == 2) regionIndex = 2;
+                        if (regionPos.x == 1 && regionPos.y == 1) regionIndex = 1;
+                        else if (river.Flow == Compass.South && regionPos.y == 0) regionIndex = 2;
+                        else if (river.Flow == Compass.East && regionPos.x == 2) regionIndex = 2;
 
                         return true;
                     }
                 case Compass.NorthWest:
                     {
-                        if (regionPos.Value.x == 0 && regionPos.Value.y == 2) return false;
-                        if (regionPos.Value.x == 2 || regionPos.Value.y == 0) return false;
+                        if (regionPos.x == 0 && regionPos.y == 2) return false;
+                        if (regionPos.x == 2 || regionPos.y == 0) return false;
 
-                        if (regionPos.Value.x == 1 && regionPos.Value.y == 1) regionIndex = 1;
-                        else if (river.Flow == Compass.North && regionPos.Value.y == 2) regionIndex = 2;
-                        else if (river.Flow == Compass.West && regionPos.Value.x == 0) regionIndex = 2;
+                        if (regionPos.x == 1 && regionPos.y == 1) regionIndex = 1;
+                        else if (river.Flow == Compass.North && regionPos.y == 2) regionIndex = 2;
+                        else if (river.Flow == Compass.West && regionPos.x == 0) regionIndex = 2;
 
                         return true;
                     }
                 case Compass.SouthWest:
                     {
-                        if (regionPos.Value.x == 0 && regionPos.Value.y == 0) return false;
-                        if (regionPos.Value.x == 2 || regionPos.Value.y == 2) return false;
+                        if (regionPos.x == 0 && regionPos.y == 0) return false;
+                        if (regionPos.x == 2 || regionPos.y == 2) return false;
 
-                        if (regionPos.Value.x == 1 && regionPos.Value.y == 1) regionIndex = 1;
-                        else if (river.Flow == Compass.South && regionPos.Value.y == 0) regionIndex = 2;
-                        else if (river.Flow == Compass.West && regionPos.Value.x == 0) regionIndex = 2;
+                        if (regionPos.x == 1 && regionPos.y == 1) regionIndex = 1;
+                        else if (river.Flow == Compass.South && regionPos.y == 0) regionIndex = 2;
+                        else if (river.Flow == Compass.West && regionPos.x == 0) regionIndex = 2;
 
                         return true;
                     }

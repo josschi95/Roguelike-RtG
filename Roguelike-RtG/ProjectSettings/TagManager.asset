@@ -44,11 +44,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Elevation
+  - name: Floor
     uniqueID: 3116835953
     locked: 0
-  - name: Actors
+  - name: Floor Decal
+    uniqueID: 3906880389
+    locked: 0
+  - name: Wall
+    uniqueID: 3635897447
+    locked: 0
+  - name: Wall Decal
+    uniqueID: 2251673883
+    locked: 0
+  - name: Object
+    uniqueID: 1109139947
+    locked: 0
+  - name: Creature
     uniqueID: 4202917117
+    locked: 0
+  - name: Creature Decal
+    uniqueID: 264973063
+    locked: 0
+  - name: Overlay
+    uniqueID: 4266446693
     locked: 0
   - name: UI
     uniqueID: 248588071

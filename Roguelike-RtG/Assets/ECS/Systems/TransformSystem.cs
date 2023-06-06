@@ -1,12 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace JS.ECS
 {
-    public class TransformSystem : SystemBase<Transform>
+    public class TransformSystem : MonoBehaviour
     {
         public static TransformSystem instance;
+
 
         private void Awake()
         {
@@ -18,18 +19,47 @@ namespace JS.ECS
             instance = this;
         }
 
-        /// <summary>
-        /// Returns an array of entities at the given local position.
-        /// </summary>
-        public static Entity[] GetLocalEntitiesAt(Transform t, Vector2Int localPosition)
+        public static Physics[] GetEntitiesAt(Vector3Int world,  Vector2Int local)
         {
-            var entities = new List<Entity>();
-            for (int i = 0; i < components.Count; i++)
+            var entities = new List<Physics>();
+            var grid = GridManager.GetGrid(world);
+            if (grid == null) return entities.ToArray();
+
+            var list = grid.Grid.GetGridObject(local.x, local.y).Entities;
+            for (int i = 0; i < list.Count; i++)
             {
-                if (components[i].WorldPosition != t.WorldPosition) continue;
-                if (components[i].RegionPosition != t.RegionPosition) continue;
-                if (components[i].LocalPosition == localPosition) entities.Add(components[i].entity);
+                var phys = list[i].GetComponent<Physics>();
+                if (phys == null || !phys.IsReal) continue;
+
+                if (phys.LocalPosition == local) entities.Add(phys);
             }
+
+            return entities.ToArray();
+        }
+
+        public static Physics[] GetLocalEntitiesInLine(Vector3Int world, Vector2Int localStart, Compass direction, int range)
+        {
+            var entities = new List<Physics>();
+            var grid = GridManager.GetGrid(world);
+            if (grid == null) return entities.ToArray();
+
+            var nodes = new GridNode[range];
+            for (int i = 0; i <  range; i++)
+            {
+                var pos = localStart + (DirectionHelper.GetVector(direction) * i);
+                nodes[i] = grid.Grid.GetGridObject(pos.x, pos.y);
+            }
+
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                for (int j = 0; j < nodes[i].Entities.Count; j++)
+                {
+                    var phys = nodes[i].Entities[j].GetComponent<Physics>();
+                    if (phys == null || !phys.IsReal) continue;
+                    entities.Add(phys);
+                }
+            }
+
             return entities.ToArray();
         }
     }

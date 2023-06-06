@@ -1,21 +1,15 @@
 using System;
 using JS.CharacterSystem;
 using JS.ECS.Tags;
+using Unity.VisualScripting;
 
 namespace JS.ECS
 {
     public static class Blueprints
     {
-        public static Entity GetObject(string name = "Entity")
-        {
-            var entity = new Entity(name);
-            entity.AddComponent(new Transform());
-            return entity;
-        }
-
         public static Entity GetPhysicalObject(string name = "PhysicalObject")
         {
-            var entity = GetObject(name);
+            var entity = new Entity(name);
             //Render
             entity.AddComponent(new Physics());
             entity.AddComponent(new MeleeWeapon());
@@ -37,7 +31,7 @@ namespace JS.ECS
             entity.AddComponent(new Inorganic());
 
             entity.AddTag(new Gender("Neutral"));
-
+            entity.AddTag(new Breakable());
             return entity;
         }
 
@@ -51,7 +45,7 @@ namespace JS.ECS
             entity.AddComponent(new TimedActor());
             entity.AddComponent(new Brain());
             entity.AddComponent(new Inventory());
-
+            entity.AddComponent(new Combat());
             entity.AddComponent(new DamageResistances(GetBaseResistances()));
             entity.AddStat(new StatBase("MoveSpeed", "MS", 100, 200, 1, 200));
 
@@ -68,8 +62,53 @@ namespace JS.ECS
         public static Entity GetItem(string name = "Item")
         {
             var entity = GetInorganicObject(name);
+            entity.AddComponent(new ObjectStack());
 
             entity.AddTag(new Item());
+
+            return entity;
+        }
+
+        public static Entity GetMeleeWeapon(string name = "MeleeWeapon")
+        {
+            var entity = GetItem(name);
+            var physics = entity.GetComponent<Physics>();
+            physics.Category = PhysicsCategory.MeleeWeapon;
+            physics.Weight = 5;
+
+
+            return entity;
+        }
+
+        public static Entity GetMissileWeapon(string name = "MissileWeapon")
+        {
+            var entity = GetItem(name);
+            var physics = entity.GetComponent<Physics>();
+            physics.Category = PhysicsCategory.MissileWeapon;
+            physics.Weight = 5;
+
+
+            return entity;
+        }
+
+        public static Entity GetNaturalWeapon(string name = "NaturalWeapon")
+        {
+            var entity = GetMeleeWeapon(name);
+
+            entity.AddComponent(new NoDamage());
+            //NoBreak
+            var physics = entity.GetComponent<Physics>();
+            physics.Weight = 0;
+            physics.IsSolid = false;
+            physics.IsTakeable = false;
+            physics.Category = PhysicsCategory.NaturalWeapon; 
+
+            var melee = entity.GetComponent<MeleeWeapon>();
+            melee.Proficiency = "BluntWeapons";
+            melee.Stat = "Strength";
+
+            entity.AddTag(new NeverStack());
+            entity.AddTag(new NaturalGear());
 
             return entity;
         }

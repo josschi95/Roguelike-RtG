@@ -14,11 +14,6 @@ namespace JS.ECS.Tags
     public class PlayerTag : TagBase { }
 
     /// <summary>
-    /// Tag to mark an object as being immune to damage.
-    /// </summary>
-    public class NoDamage : TagBase { }
-
-    /// <summary>
     /// Tag to mark an object as being immune to effects.
     /// </summary>
     public class NoEffect : TagBase { }
@@ -55,10 +50,23 @@ namespace JS.ECS.Tags
 
     public class Item : TagBase { }
 
+    /// <summary>
+    /// Tag to mark that an item is part of a creature's anatomy.
+    /// </summary>
+    public class NaturalGear : TagBase { }
+
+    /// <summary>
+    /// Tag to indicate that an item should never be stacked.
+    /// </summary>
     public class NeverStack : TagBase { }
 
     /// <summary>
     /// Tag to indicate that the entity blocks movement into its space.
     /// </summary>
     public class BlocksNode : TagBase { }
+
+    /// <summary>
+    /// Tag to indicate that an item can be broken.
+    /// </summary>
+    public class Breakable : TagBase { }
 }

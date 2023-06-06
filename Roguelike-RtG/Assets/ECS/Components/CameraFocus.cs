@@ -7,7 +7,20 @@ namespace JS.ECS
     /// </summary>
     public class CameraFocus : ComponentBase
     {
-        private Transform transform;
+        private Physics _physics;
+        public Physics Physics
+        {
+            get
+            {
+                if (_physics == null)
+                {
+                    _physics = entity.GetComponent<Physics>();
+                }
+                return _physics;
+            }
+        }
+
+        /*private Transform transform;
         public Transform Transform
         {
             get
@@ -18,7 +31,7 @@ namespace JS.ECS
                 }
                 return transform;
             }
-        }
+        }*/
 
         private CameraController controller;
         public CameraController Controller
@@ -41,14 +54,23 @@ namespace JS.ECS
 
         private void FollowTarget()
         {
-            if (Transform.Depth == 1)
+            if (GridManager.WorldMapActive)
+            {
+                Controller.SmoothToPosition((Vector2Int)Physics.WorldMapPosition);
+            }
+            else
+            {
+                Controller.SmoothToPosition(Physics.LocalPosition);
+            }
+
+            /*if (Transform.Depth == 1)
             {
                 Controller.SmoothToPosition(Transform.WorldPosition);
             }
             else
             {
                 Controller.SmoothToPosition(Transform.LocalPosition);
-            }
+            }*/
         }
     }
 }

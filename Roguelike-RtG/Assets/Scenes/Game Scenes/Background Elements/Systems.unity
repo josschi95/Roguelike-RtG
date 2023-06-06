@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 607149223}
   - component: {fileID: 607149221}
   - component: {fileID: 607149222}
+  - component: {fileID: 607149225}
   - component: {fileID: 607149224}
   m_Layer: 0
   m_Name: Systems
@@ -199,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de387b4c47f50a64782bafad44352bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  single: {fileID: 2689567875884823240, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
+  single: {fileID: 353668338845205199, guid: 14f29f9c5d5f66d4eb869e2f68711058, type: 3}
   compound: {fileID: 8335762976867246004, guid: 603ae19ce87e44242b7928501a8bfb47, type: 3}
   flashMaterial: {fileID: 2100000, guid: c52e1a718d18f3f4d8b3a7bcb15e7332, type: 2}
 --- !u!114 &607149222
@@ -216,7 +217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   activeMapWorldPosition: {fileID: 11400000, guid: 59739e26cd8195b44892b2c61b990096, type: 2}
-  activeMapRegionPosition: {fileID: 11400000, guid: b8077ef6d947c1f4b9bf3883406e4efe, type: 2}
   worldToLocalMapEvent: {fileID: 11400000, guid: 2b106b9834f0f774ca66e0107b22d7b0, type: 2}
   localToLocalMapEvent: {fileID: 11400000, guid: b828699f0289849448cea9920e86606b, type: 2}
   localToWorldMapEvent: {fileID: 11400000, guid: 00872b6f655e73f4dbbd79e6114f2d11, type: 2}
@@ -244,6 +244,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 963b32e6cd43cdd43b25b67026261fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &607149225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607149217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a055363046b7c449b48ae1724ed4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1790594448
@@ -293,6 +305,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 607149221}
+        m_TargetAssemblyTypeName: JS.ECS.RenderSystem, Assembly-CSharp
+        m_MethodName: OnNewSceneLoaded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   developerNotes: Sets in-game time tick to world
 --- !u!114 &1790594450
 MonoBehaviour:
@@ -313,6 +337,18 @@ MonoBehaviour:
       - m_Target: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
         m_TargetAssemblyTypeName: TimeKeeper, Assembly-CSharp
         m_MethodName: OnLocalMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 607149221}
+        m_TargetAssemblyTypeName: JS.ECS.RenderSystem, Assembly-CSharp
+        m_MethodName: OnNewSceneLoaded
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

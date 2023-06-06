@@ -9,14 +9,14 @@ namespace JS.ECS
         private static RenderSystem instance;
 
         //Later these should be changed to pools
-        [SerializeField] private SpriteRenderer single;
+        [SerializeField] private SingleRenderer single;
         [SerializeField] private CompoundRenderer compound;
 
         [Space]
 
         [SerializeField] private Material flashMaterial;
         
-        private Dictionary<RenderBase, SpriteRenderer> activeSingleRenders;
+        private Dictionary<RenderBase, SingleRenderer> activeSingleRenders;
         private Dictionary<RenderBase, CompoundRenderer> activeCompoundRenders;
 
         private void Awake()
@@ -27,7 +27,7 @@ namespace JS.ECS
                 return;
             }
             instance = this;
-            activeSingleRenders = new Dictionary<RenderBase, SpriteRenderer>();
+            activeSingleRenders = new Dictionary<RenderBase, SingleRenderer>();
             activeCompoundRenders = new Dictionary<RenderBase, CompoundRenderer>();
         }
 
@@ -45,18 +45,10 @@ namespace JS.ECS
         /// <summary>
         /// Returns true if the entity is on the currently active map.
         /// </summary>
-        private bool EntityOnCurrentMap(Transform transform)
+        private bool EntityOnCurrentMap(RenderBase render)
         {
-            if (GridManager.WorldMapActive)
-            {
-                if (transform.Depth == 1) return true;
-                return false;
-            }
-
-            if (transform.WorldPosition != GridManager.ActiveGrid.WorldCoordinates) return false;
-            else if (transform.RegionPosition != GridManager.ActiveGrid.RegionCoordinates) return false;
-            else if (transform.Depth != GridManager.ActiveGrid.Grid.Depth) return false;
-            else return true;
+            if (GridManager.WorldMapActive) return render.RenderOnWorldMap;
+            return render.Physics.Position == GridManager.ActiveGrid.Position;
         }
 
         /// <summary>
@@ -79,7 +71,7 @@ namespace JS.ECS
 
         private void UpdateRenderPosition(RenderBase render)
         {
-            if (!EntityOnCurrentMap(render.Transform))
+            if (!EntityOnCurrentMap(render))
             {
                 StopRendering(render);
                 return;
@@ -89,15 +81,15 @@ namespace JS.ECS
             {
                 if (!activeSingleRenders.ContainsKey(single) || activeSingleRenders[single] == null) StartRendering(single);
 
-                if (single.Transform.Depth == 1) activeSingleRenders[single].transform.position = (Vector3Int)single.Transform.WorldPosition;
-                else activeSingleRenders[single].transform.position = (Vector3Int)single.Transform.LocalPosition;
+                if (GridManager.WorldMapActive) activeSingleRenders[single].transform.position = single.Physics.WorldMapPosition;
+                else activeSingleRenders[single].transform.position = (Vector3Int)single.Physics.LocalPosition;
             }
             else if (render is RenderCompound compound)
             {
                 if (!activeCompoundRenders.ContainsKey(compound) || activeCompoundRenders[compound] == null) StartRendering(compound);
 
-                if (compound.Transform.Depth == 1) activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Transform.WorldPosition;
-                else activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Transform.LocalPosition;
+                if (GridManager.WorldMapActive) activeCompoundRenders[compound].transform.position = compound.Physics.WorldMapPosition;
+                else activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Physics.LocalPosition;
             }
         }
 
@@ -114,11 +106,11 @@ namespace JS.ECS
 
         private IEnumerator Flash(RenderSingle render)
         {
-            var mat = instance.activeSingleRenders[render].material;
-            instance.activeSingleRenders[render].material = flashMaterial;
+            var mat = instance.activeSingleRenders[render].Renderer.material;
+            instance.activeSingleRenders[render].Renderer.material = flashMaterial;
             yield return new WaitForSeconds(0.1f);
 
-            instance.activeSingleRenders[render].material = mat;
+            instance.activeSingleRenders[render].Renderer.material = mat;
         }
         private IEnumerator Flash(RenderCompound compound)
         {
@@ -144,14 +136,14 @@ namespace JS.ECS
             if (render is RenderSingle single)
             {
                 var go = Instantiate(instance.single);
-                go.sprite = single.sprite;
-                go.transform.position = (Vector3Int)single.Transform.LocalPosition;
+                go.Renderer.sprite = single.sprite;
+                go.transform.position = (Vector3Int)single.Physics.LocalPosition;
                 instance.activeSingleRenders[single] = go;
             }
             else if (render is RenderCompound compound)
             {
                 var go = Instantiate(instance.compound);
-                go.transform.position = (Vector3Int)compound.Transform.LocalPosition;
+                go.transform.position = (Vector3Int)compound.Physics.LocalPosition;
                 for (int i = 0; i < compound.sprites.Length; i++)
                 {
                     go.Renderers[i].sprite = compound.sprites[i];

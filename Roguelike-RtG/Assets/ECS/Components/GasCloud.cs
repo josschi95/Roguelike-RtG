@@ -2,6 +2,7 @@ namespace JS.ECS
 {
     public class GasCloud : ComponentBase
     {
+        /*
         public int gasID;
         public int volume;
         public Transform transform;
@@ -19,7 +20,7 @@ namespace JS.ECS
             base.Disassemble();
             GasSystem.Unregister(this);
         }
-
+        */
         public override void OnEvent(Event newEvent)
         {
             //

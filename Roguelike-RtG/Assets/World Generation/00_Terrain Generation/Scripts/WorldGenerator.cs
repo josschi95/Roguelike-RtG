@@ -236,14 +236,12 @@ namespace JS.WorldMap.Generation
             int index = PRNG.Next(0, settlementData.Settlements.Length);
             var settlement = settlementData.Settlements[index];
             
-            playerData.worldX = settlement.X;
-            playerData.worldY = settlement.Y;
+            playerData.Position.x = settlement.X * worldGenParams.RegionDimensions.x;
+            playerData.Position.y = settlement.Y * worldGenParams.RegionDimensions.y;
+            playerData.Position.z = 0;
 
-            playerData.regionX = Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f);
-            playerData.regionY = Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f);
-
-            playerData.localX = Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f);
-            playerData.localY = Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f);
+            playerData.LocalPosition.x = Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f);
+            playerData.LocalPosition.y = Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f);
         }
 
         #region - World Recreation -

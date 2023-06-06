@@ -35,14 +35,15 @@ namespace JS.ECS
         public static bool TryMoveWorld(Physics obj, Compass direction, out int cost)
         {
             cost = 0;
-            if (!instance.WithinWorldBounds(obj.Transform.WorldPosition + DirectionHelper.GetVector(direction))) return false;
+            if (!GridManager.WorldMapActive) return false; //Can only fast travel when viewing the world map
+            if (!instance.WithinWorldBounds((Vector2Int)obj.Position + DirectionHelper.GetVector(direction))) return false;
 
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
-            obj.Transform.RegionPosition = instance.regionCenter;
-            obj.Transform.LocalPosition = instance.localCenter;
-            obj.Transform.WorldPosition += DirectionHelper.GetVector(direction);
+            //So this moves them a full world tile but keeps their regional positioning the same
+            obj.Position += (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
+            obj.LocalPosition = instance.localCenter;
             
             return true;
         }
@@ -70,9 +71,7 @@ namespace JS.ECS
             //Don't know how, but make sure no other entity can swap map focus
             if (!player.entity.GetTag<PlayerTag>()) return false;
 
-            player.Transform.Depth = 0;
-
-            GridManager.OnEnterLocalMap(player.Transform.WorldPosition, Vector2Int.one, 0);
+            GridManager.OnEnterLocalMap(player.Position);
             return true;
         }
 
@@ -90,14 +89,12 @@ namespace JS.ECS
             if (!player.entity.GetTag<PlayerTag>()) return false;
 
             //Can only switch to World Map if on the surface
-            if (player.Transform.Depth < 0) return false;
+            if (player.Position.z < 0) return false;
             
             //Will also need to check if the player is in combat, possibly other factors
             //Maybe terrain, etc.
 
-            player.Transform.Depth = 1;
-
-            GridManager.OnSwitchToWorldMap();
+            GridManager.OnSwitchToWorldView();
 
             return true;
         }

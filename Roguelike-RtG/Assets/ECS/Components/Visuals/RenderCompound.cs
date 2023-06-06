@@ -6,10 +6,12 @@ namespace JS.ECS
     {
         public Sprite[] sprites;
 
-        public RenderCompound(Transform transform, Sprite[] sprites)
+        public RenderCompound(Physics physics, Sprite[] sprites, bool ifDark = false, bool onWorld = false)
         {
-            entity = transform.entity;
-            this.transform = transform;
+            entity = physics.entity;
+            _physics = physics;
+            RenderIfDark = ifDark;
+            RenderOnWorldMap = onWorld;
 
             this.sprites = new Sprite[10];
             for (int i = 0; i < sprites.Length; i++)

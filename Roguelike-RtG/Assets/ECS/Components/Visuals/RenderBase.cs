@@ -2,16 +2,19 @@ namespace JS.ECS
 {
     public class RenderBase : ComponentBase
     {
-        protected Transform transform;
-        public Transform Transform
+        public bool RenderIfDark = true; //Render if outside FoV
+        public bool RenderOnWorldMap = false; //Render if on world map?
+
+        protected Physics _physics;
+        public Physics Physics
         {
             get
             {
-                if (transform == null)
+                if (_physics == null)
                 {
-                    transform = entity.GetComponent<Transform>();
+                    _physics = new Physics();
                 }
-                return transform;
+                return _physics;
             }
         }
 
@@ -24,7 +27,7 @@ namespace JS.ECS
         {
             base.Disassemble();
             RenderSystem.RemoveRender(this);
-            transform = null;
+            _physics = null;
         }
     }
 }

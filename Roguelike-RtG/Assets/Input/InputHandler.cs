@@ -19,8 +19,25 @@ namespace JS.ECS
 
         public override void Disassemble()
         {
+            var brain = entity.GetComponent<Brain>();
+            if (brain != null ) brain.HasOverride = false;
+
             base.Disassemble();
             ClearActions();
+        }
+
+        #region - Components -
+        private Physics _physics;
+        public Physics Physics
+        {
+            get
+            {
+                if (_physics == null)
+                {
+                    _physics = entity.GetComponent<Physics>();
+                }
+                return _physics;
+            }
         }
 
         private TimedActor _actor;
@@ -36,31 +53,19 @@ namespace JS.ECS
             }
         }
 
-        private Physics _physics;
-        public Physics Physics
+        private Combat _combat;
+        public Combat Combat
         {
             get
             {
-                if (_physics == null)
+                if (_combat == null)
                 {
-                    _physics = entity.GetComponent<Physics>();
+                    _combat = entity.GetComponent<Combat>();
                 }
-                return _physics;
+                return _combat;
             }
         }
-
-        private Transform _transform;
-        public Transform Transform
-        {
-            get
-            {
-                if (_transform == null)
-                {
-                    _transform = entity.GetComponent<Transform>();
-                }
-                return _transform;
-            }
-        }
+        #endregion
 
         public int MoveSpeed
         {
@@ -258,8 +263,8 @@ namespace JS.ECS
 
         private void TryMoveUp()
         {
-            if (Transform.Depth == 1) return;
-            else if (Transform.Depth == 0)
+            if (GridManager.WorldMapActive) return;
+            else if (Physics.Position.z == 0) //if I do add upward verticality, will instead need to check if outside
             {
                 //Load World Map
                 WorldLocomotionSystem.SwitchToWorldMap(Physics);
@@ -269,7 +274,7 @@ namespace JS.ECS
 
         private void TryMoveDown()
         {
-            if (Transform.Depth == 1) //World Map Movement
+            if (GridManager.WorldMapActive) //World Map Movement
             {
                 //Load Local Map
                 WorldLocomotionSystem.SwitchToLocalMap(Physics);
@@ -281,7 +286,7 @@ namespace JS.ECS
         {
             //Debug.Log("TryMove " + _actor.entity.Name);
 
-            if (Transform.Depth == 1) //World Map Movement
+            if (GridManager.WorldMapActive) //World Map Movement
             {
                 if (WorldLocomotionSystem.TryMoveWorld(Physics, direction, out int cost1))
                 {
@@ -290,17 +295,18 @@ namespace JS.ECS
                     TimeSystem.EndTurn(Actor);
                 }
             }
-            else if (LocomotionSystem.TryMoveLocal(Physics, direction, out int cost)) //Local Movement
+            else Actions.TryMoveLocal(Physics, direction);
+            /*else if (LocomotionSystem.TryMoveLocal(Physics, direction, out int cost)) //Local Movement
             {
                 int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
                 TimeSystem.SpendActionPoints(Actor, netCost);
                 TimeSystem.EndTurn(Actor);
-            }
+            }*/
         }
 
         private void TryAttack(Compass direction)
         {
-            Actions.TryAttack(Actor, direction);
+            Actions.TryMeleeAttack(Combat, Physics.LocalPosition + DirectionHelper.GetVector(direction));
         }
     }
 }

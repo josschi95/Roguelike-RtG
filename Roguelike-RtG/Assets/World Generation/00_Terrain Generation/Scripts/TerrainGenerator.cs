@@ -173,25 +173,45 @@ namespace JS.WorldMap.Generation
             while(water.Count > 0)
             {
                 var body = FloodFillRegion(water[0], false);
-                Lake newLake = new Lake();
-                newLake.AddRange(body);
-                bool trueLake = newLake.IsLandLocked(mapSize);
+                bool trueLake = LakeIsLandlocked(body);
+
                 if (trueLake)
                 {
-                    newLake.ID = lakes.Count;
+                    Lake newLake = new Lake(lakes.Count);
+                    newLake.GridNodes = new GridCoordinates[body.Count];
                     lakes.Add(newLake);
+
+                    for (int i = 0; i < body.Count; i++)
+                    {
+                        newLake.GridNodes[i] = new GridCoordinates(body[i].x, body[i].y);
+                        body[i].SetBiome(biomeHelper.Lake);
+                    }
                 }
-                else newLake.DeconstructLake();
 
                 for (int i = 0; i < body.Count; i++)
                 {
                     water.Remove(body[i]);
-                    if (trueLake) body[i].SetBiome(biomeHelper.Lake);
                 }
 
                 yield return null;
             }
             terrainData.Lakes = lakes.ToArray();
+        }
+
+        private bool LakeIsLandlocked(List<WorldTile> tiles)
+        {
+            if (tiles.Count >= 1000)
+            {
+                //UnityEngine.Debug.Log("Lake size is greater than 1,000. " + Nodes.Count);
+                //return false;
+            }
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                if (tiles[i].x == 0 || tiles[i].x == mapSize - 1) return false;
+                if (tiles[i].y == 0 || tiles[i].y == mapSize - 1) return false;
+            }
+            return true;
         }
 
         /// <summary>

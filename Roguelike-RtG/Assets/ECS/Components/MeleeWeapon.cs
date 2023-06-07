@@ -2,10 +2,7 @@ namespace JS.ECS
 {
     public class MeleeWeapon : ComponentBase
     {
-        public string BaseDamage = "1d2";
-        public string Type = "Blunt";
-        public string Stat = "STR";
-        public string Proficiency = "BluntWeapons";
+        public MeleeWeapon() { }
 
         public MeleeWeapon(string baseDamage = "1d2", string type = "Blunt", string stat = "STR", string proficiency = "BluntWeapons")
         {
@@ -14,6 +11,11 @@ namespace JS.ECS
             Stat = stat;
             Proficiency = proficiency;
         }
+
+        public string BaseDamage = "1d2";
+        public string Type = "Blunt";
+        public string Stat = "STR";
+        public string Proficiency = "BluntWeapons";
 
         public override void OnEvent(Event newEvent)
         {

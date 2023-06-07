@@ -5,6 +5,8 @@ namespace JS.ECS
     /// </summary>
     public class NoDamage : ComponentBase
     {
+        public NoDamage() { }
+
         public override void OnEvent(Event newEvent)
         {
             if (newEvent is TakeDamage dmg)

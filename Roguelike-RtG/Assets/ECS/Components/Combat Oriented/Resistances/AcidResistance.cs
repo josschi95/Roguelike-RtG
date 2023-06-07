@@ -4,14 +4,15 @@ namespace JS.ECS
 {
     public class AcidResistance : ComponentBase
     {
-        public int Amount;
+        public AcidResistance() { }
 
-        public AcidResistance(Physics physics, int amount)
+        public AcidResistance(int amount)
         {
             Priority = 2;
             Amount = amount;
-            physics.entity.AddComponent(this);
         }
+
+        public int Amount;
 
         public override void OnEvent(Event newEvent)
         {

@@ -9,6 +9,7 @@ namespace JS.ECS
     public class Inventory : ComponentBase
     {
         private Physics _physics;
+
         public Physics Physics
         {
             get

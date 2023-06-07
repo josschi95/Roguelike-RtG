@@ -5,10 +5,9 @@ namespace JS.ECS
     /// </summary>
     public class Frost : ComponentBase
     {
-        public Frost(Physics physics)
+        public Frost()
         {
             Priority = 2;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

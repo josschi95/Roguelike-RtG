@@ -10,7 +10,9 @@ namespace JS.ECS
     /// </summary>
     public class Brain : ComponentBase
     {
-        public bool IsSleeping = true;
+        public Brain() { }
+
+        public bool IsSleeping = false; //Automatically skips the creature's turn if sleeping
         public bool IsHostile = false; //Is the object hositle by default?
         public bool IsCalm = false; //Will the object become hostile if attacked?
         public bool IsMobile = true; //Can the object move?

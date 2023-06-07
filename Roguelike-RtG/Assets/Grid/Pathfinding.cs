@@ -96,7 +96,7 @@ public class Pathfinding : MonoBehaviour
                 }
 
                 //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
-                int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour) + neighbour.movementPenalty;
+                int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour) + neighbour.movementCost;
 
                 if (tentativeGCost < neighbour.gCost)
                 {
@@ -226,7 +226,7 @@ public class Pathfinding : MonoBehaviour
         //Skip the first node in the list, this is where the character is
         for (int i = 1; i < nodes.Count; i++)
         {
-            cost += nodes[i].movementPenalty + 1;
+            cost += nodes[i].movementCost + 1;
         }
         return cost;
     }

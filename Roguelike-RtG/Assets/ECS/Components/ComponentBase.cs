@@ -8,6 +8,11 @@ namespace JS.ECS
         public Entity entity;
         public int Priority = 100;
 
+        public virtual void OnRegistered()
+        {
+            //Meant to be overwritten
+        }
+
         /*public virtual void Update()
         {
             //Meant to be overwritten

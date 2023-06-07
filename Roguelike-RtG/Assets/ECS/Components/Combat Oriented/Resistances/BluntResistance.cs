@@ -6,11 +6,10 @@ namespace JS.ECS
     {
         public int Amount;
 
-        public BluntResistance(Physics physics, int amount)
+        public BluntResistance(int amount)
         {
             Priority = 2;
             Amount = amount;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

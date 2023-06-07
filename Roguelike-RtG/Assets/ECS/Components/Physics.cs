@@ -8,6 +8,16 @@ namespace JS.ECS
     /// </summary>
     public class Physics : ComponentBase
     {
+        public Physics() { }
+
+        public Physics(bool takeable = true, bool solid = false, float weight = 1.0f, PhysicsCategory category = PhysicsCategory.Miscellaneous)
+        {
+            IsTakeable = takeable;
+            IsSolid = solid;
+            Weight = weight;
+            Category = category;
+        }
+
         public bool IsTakeable = true; //Can the object be picked up
         public bool IsSolid = false; //Does the object block gas from spreading and line of sight
         public bool IsCorporeal = true;
@@ -82,13 +92,7 @@ namespace JS.ECS
             entity.FireEvent(new TransformChanged());
         }
 
-        public Physics(bool takeable = true, bool solid = false, float weight = 1.0f, PhysicsCategory category = PhysicsCategory.Miscellaneous)
-        {
-            IsTakeable = takeable;
-            IsSolid = solid;
-            Weight = weight;
-            Category = category;
-        }
+
 
         public override void OnEvent(Event newEvent)
         {

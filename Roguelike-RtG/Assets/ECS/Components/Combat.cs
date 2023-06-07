@@ -5,7 +5,7 @@ namespace JS.ECS
     /// </summary>
     public class Combat : ComponentBase
     {
-        public bool hasMultiStrike; //removes major penalty to making multiple attacks
+        public bool hasMultiStrike = false; //removes major penalty to making multiple attacks
 
         public override void OnEvent(Event newEvent)
         {

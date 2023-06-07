@@ -2,13 +2,25 @@ namespace JS.ECS
 {
     public class TimedActor : ComponentBase
     {
-        public bool IsTurn { get; private set; }
-        public int ActionPoints;
-        public int Speed;
+        public bool IsTurn { get; private set; } = false;
+        public int ActionPoints = 0;
 
-        public TimedActor(int speed = 100)
+        public int Speed
         {
-            Speed = speed;
+            get
+            {
+                if (entity.TryGetStat("Speed", out var stat))
+                {
+                    return stat.Value;
+                }
+                return 100;
+            }
+        }
+
+        public TimedActor() { }
+
+        public override void OnRegistered()
+        {
             TimeSystem.Register(this);
         }
 

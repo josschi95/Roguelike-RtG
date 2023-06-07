@@ -9,7 +9,7 @@ namespace JS.ECS
     {
         public Guid ID { get; private set; }
         public string Name { get; private set; }
-        private List<ComponentBase> components;
+        public List<ComponentBase> components;
         private List<StatBase> _stats;
         private List<TagBase> _tags;
 
@@ -61,6 +61,18 @@ namespace JS.ECS
                 }
             }
             components.Add(component);
+            component.OnRegistered();
+        }
+
+        public bool HasComponent(ComponentBase component, out ComponentBase comp)
+        {
+            comp = null;
+            for (int i = 0; i < components.Count; i++)
+            {
+                if (component.GetType().Equals(components[i].GetType()))
+                    return true;
+            }
+            return false;
         }
 
         //Removes the referenced component and tells it to Unregister itself
@@ -110,20 +122,6 @@ namespace JS.ECS
         public void RemoveStat(StatBase stat)
         {
             _stats.Remove(stat);
-        }
-
-        public bool TryGetStat<T>(out StatBase stat) where T : StatBase
-        {
-            stat = null;
-            foreach(StatBase s in _stats)
-            {
-                if (s.GetType().Equals(typeof(T)))
-                {
-                    stat = (T)s;
-                    return true;
-                }
-            }
-            return false;
         }
 
         public bool TryGetStat(string name, out StatBase stat)

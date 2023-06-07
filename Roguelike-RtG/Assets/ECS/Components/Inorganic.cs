@@ -28,6 +28,8 @@ namespace JS.ECS
                 if (damage.Types[i] == (int)DamageTypes.Bleed) damage.Amounts[i] = 0;
                 if (damage.Types[i] == (int)DamageTypes.Poison) damage.Amounts[i] = 0;
                 if (damage.Types[i] == (int)DamageTypes.Psychic) damage.Amounts[i] = 0;
+                if (damage.Types[i] == (int)DamageTypes.Positive) damage.Amounts[i] = 0;
+                if (damage.Types[i] == (int)DamageTypes.Negative) damage.Amounts[i] = 0;
             }
         }
     }

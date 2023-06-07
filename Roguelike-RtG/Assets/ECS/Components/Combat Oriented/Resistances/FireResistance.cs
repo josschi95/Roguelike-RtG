@@ -6,11 +6,10 @@ namespace JS.ECS
     {
         public int Amount;
 
-        public FireResistance(Physics physics, int amount)
+        public FireResistance(int amount)
         {
             Priority = 2;
             Amount = amount;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

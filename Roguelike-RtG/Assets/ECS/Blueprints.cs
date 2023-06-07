@@ -1,12 +1,12 @@
 using System;
 using JS.CharacterSystem;
 using JS.ECS.Tags;
-using Unity.VisualScripting;
 
 namespace JS.ECS
 {
     public static class Blueprints
     {
+
         public static Entity GetPhysicalObject(string name = "PhysicalObject")
         {
             var entity = new Entity(name);

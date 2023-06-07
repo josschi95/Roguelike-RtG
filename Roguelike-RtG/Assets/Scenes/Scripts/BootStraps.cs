@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using JS.EventSystem;
 using JS.WorldMap;
+using JS.ECS;
 
 namespace JS.SceneManagement
 {
@@ -47,6 +48,7 @@ namespace JS.SceneManagement
             gameSettings.LoadSavedValues();
             worldMap.IsLoaded = false;
             LoadSceneCollectionAdditive(bootScenes);
+            EntityFactory.LoadBlueprints();
         }
 
         /// <summary>

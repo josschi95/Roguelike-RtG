@@ -18,7 +18,10 @@ namespace JS.ECS
             {
                 this.sprites[i] = sprites[i];
             }
+        }
 
+        public override void OnRegistered()
+        {
             RenderSystem.NewRender(this);
         }
 

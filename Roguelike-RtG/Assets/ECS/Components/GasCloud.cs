@@ -21,6 +21,12 @@ namespace JS.ECS
             GasSystem.Unregister(this);
         }
         */
+
+        public override void OnRegistered()
+        {
+            GasSystem.Register(this);
+        }
+
         public override void OnEvent(Event newEvent)
         {
             //

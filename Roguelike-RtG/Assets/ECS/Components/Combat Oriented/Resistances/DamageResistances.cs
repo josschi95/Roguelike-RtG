@@ -8,13 +8,15 @@ namespace JS.ECS
     /// </summary>
     public class DamageResistances : ComponentBase
     {
-        public StatBase[] Resistances { get; private set; }
+        public DamageResistances() { }
 
         public DamageResistances(StatBase[] resistances)
         {
             Priority = 2;
             Resistances = resistances;
         }
+
+        public StatBase[] Resistances { get; private set; }
 
         public override void OnEvent(Event newEvent)
         {

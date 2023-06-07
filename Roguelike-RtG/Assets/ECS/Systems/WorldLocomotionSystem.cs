@@ -43,7 +43,7 @@ namespace JS.ECS
 
             //So this moves them a full world tile but keeps their regional positioning the same
             obj.Position += (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
-            obj.LocalPosition = instance.localCenter;
+            //obj.LocalPosition = instance.localCenter;
             
             return true;
         }
@@ -72,6 +72,7 @@ namespace JS.ECS
             if (!player.entity.GetTag<PlayerTag>()) return false;
 
             GridManager.OnEnterLocalMap(player.Position);
+            player.LocalPosition = localCenter;
             return true;
         }
 

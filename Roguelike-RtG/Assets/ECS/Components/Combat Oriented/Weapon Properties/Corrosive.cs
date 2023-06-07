@@ -5,10 +5,9 @@ namespace JS.ECS
     /// </summary>
     public class Corrosive : ComponentBase
     {
-        public Corrosive(Physics physics)
+        public Corrosive()
         {
             Priority = 2;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

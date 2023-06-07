@@ -7,6 +7,8 @@ namespace JS.ECS
     /// </summary>
     public class CameraFocus : ComponentBase
     {
+        public CameraFocus() { }
+
         private Physics _physics;
         public Physics Physics
         {

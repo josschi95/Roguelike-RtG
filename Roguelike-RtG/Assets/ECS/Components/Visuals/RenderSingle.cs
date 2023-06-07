@@ -16,6 +16,11 @@ namespace JS.ECS
             RenderSystem.NewRender(this);
         }
 
+        public override void OnRegistered()
+        {
+            RenderSystem.NewRender(this);
+        }
+
         public override void Disassemble()
         {
             base.Disassemble();

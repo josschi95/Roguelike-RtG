@@ -14,11 +14,12 @@ public class GridNode
     public int fCost; //the current best guess as to the cost of the path
     public GridNode cameFromNode;
 
-    public bool isWater = false;
+    public bool isWater = false; //set to true when a water block is placed here
     public bool isOccupied { get; private set; } //true if there is another creature occupying the node
     public bool isWalkable { get; private set; } //if this node can be traversed at all
     public bool blocksGas { get; private set; }
-    public int movementPenalty { get; private set; } //additional cost to move into this tile
+    public int movementCost { get; private set; } //Increased cost to Move Action for moving into this node, affected by difficult terrain. 
+    public int pathfindingCost { get; private set; } //Additional cost to move into this node for pathfinding calculations, to avoid hazards
 
     public List<GridNode> neighbors_all { get; private set; }
     public List<GridNode> neighbors_adj { get; private set; }
@@ -31,7 +32,7 @@ public class GridNode
 
         isOccupied = false;
         isWalkable = true;
-        movementPenalty = 0;
+        movementCost = 0;
 
         neighbors_all = new List<GridNode>();
         neighbors_adj = new List<GridNode>();
@@ -83,7 +84,7 @@ public class GridNode
 
     public void SetMoveCost(int cost)
     {
-        movementPenalty = Mathf.Clamp(cost, 0, int.MaxValue);
+        movementCost = Mathf.Clamp(cost, 0, int.MaxValue);
         grid.TriggerGridObjectChanged(x, y);
     }
 

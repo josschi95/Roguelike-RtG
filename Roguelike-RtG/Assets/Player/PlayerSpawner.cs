@@ -8,7 +8,6 @@ namespace JS.WorldMap
     public class PlayerSpawner : MonoBehaviour
     {
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private WorldData worldMap;
         [SerializeField] private InputActionAsset inputActionAsset;
         [SerializeField] private Sprite[] playerSprites;
 
@@ -16,7 +15,8 @@ namespace JS.WorldMap
 
         private void SpawnPlayer()
         {
-            var player = Blueprints.GetCreature("Player");
+            //var player = Blueprints.GetCreature("Player");
+            var player = EntityFactory.GetEntity("BaseCreature");
             player.AddTag(new PlayerTag());
 
             var physics = player.GetComponent<ECS.Physics>();
@@ -29,7 +29,7 @@ namespace JS.WorldMap
             player.AddComponent(new RenderCompound(physics, playerSprites, true, true));
 
             player.AddComponent(new WorldLocomotion());
-            player.AddComponent(new InputHandler(inputActionAsset));
+            player.AddComponent(new InputHandler());
 
             player.GetComponent<RenderCompound>().RenderOnWorldMap = true;
             player.AddComponent(new CameraFocus());

@@ -3,13 +3,16 @@ using UnityEngine;
 
 namespace JS.CharacterSystem
 {
+    /// <summary>
+    /// Class used for HP/SP/MP, AV/DV, MoveSpeed, Speed, Attributes, Skills, and Proficiencies
+    /// </summary>
     public class StatBase
     {
         public string Name { get; protected set; }
         public string ShortName { get; protected set; }
-        public int MinValue { get; protected set; }
-        public int Potential { get; protected set; }
-        public int MaxValue { get; protected set; }
+        public int MinValue { get; protected set; } = 1;
+        public int Potential { get; protected set; } = 100;
+        public int MaxValue { get; protected set; } = 100;
         //
         public int BaseValue { get; protected set; } = 10;
         public int Value => GetModifiedValue();
@@ -19,6 +22,8 @@ namespace JS.CharacterSystem
         //
         protected List<int> modifiers;
 
+        public StatBase() { } 
+        
         public StatBase(string name, string shortName, int value = 10, int potential = 100, int min = 1, int max = 100)
         {
             Name = name;

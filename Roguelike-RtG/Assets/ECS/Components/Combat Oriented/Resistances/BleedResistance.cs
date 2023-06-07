@@ -4,14 +4,18 @@ namespace JS.ECS
 {
     public class BleedResistance : ComponentBase
     {
-        public int Amount;
+        public BleedResistance()
+        {
+            Priority = 2;
+        }
 
-        public BleedResistance(Physics physics, int amount)
+        public BleedResistance(int amount)
         {
             Priority = 2;
             Amount = amount;
-            physics.entity.AddComponent(this);
         }
+
+        public int Amount;
 
         public override void OnEvent(Event newEvent)
         {

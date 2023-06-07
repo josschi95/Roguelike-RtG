@@ -265,9 +265,9 @@ namespace JS.WorldMap
 
             foreach (var lake in worldMap.TerrainData.Lakes)
             {
-                for (int i = 0; i < lake.Nodes.Count; i++)
+                for (int i = 0; i < lake.GridNodes.Length; i++)
                 {
-                    var tilePos = new Vector3Int(lake.Nodes[i].x, lake.Nodes[i].y);
+                    var tilePos = new Vector3Int(lake.GridNodes[i].x, lake.GridNodes[i].y);
                     infoMap.SetTile(tilePos, highlightTile);
                 }
             }

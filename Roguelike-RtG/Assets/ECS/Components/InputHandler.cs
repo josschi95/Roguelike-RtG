@@ -6,9 +6,10 @@ namespace JS.ECS
 {
     public class InputHandler : ComponentBase
     {
-        public InputHandler(InputActionAsset asset)
+        public InputHandler()
         {
-            MapActions(asset);
+            var inputActions = Resources.Load("Input/PlayerInputActions") as InputActionAsset;
+            MapActions(inputActions);
             SetActions();
         }
 

@@ -5,10 +5,13 @@ namespace JS.ECS
 {
     public class Event
     {
-        //string ID;
+        //string ID; //string.Compare isn't that bad
         //Dictionary<string, Object> Parameters;
     }
 
+    public class TransformChanged : Event { }
+
+    #region - Turn/Round Events -
     /// <summary>
     /// Tells an entity that a new round has started.
     /// </summary>
@@ -29,14 +32,14 @@ namespace JS.ECS
     public class TurnEnd : Event
     {
     }
+    #endregion
 
     /// <summary>
     /// Tells an entity that their transform has changed.
     /// </summary>
-    public class TransformChanged : Event
-    {
-    }
 
+
+    #region - Combat Events -
     public class DeclareMeleeAttack : Event
     {
         public Physics target;
@@ -46,10 +49,7 @@ namespace JS.ECS
         }
     }
 
-    public class TargetedByMelee : Event
-    {
-
-    }
+    public class TargetedByMelee : Event { }
 
     public class MeleeAttackHit : Event
     {
@@ -91,4 +91,5 @@ namespace JS.ECS
             Types = type;
         }
     }
+    #endregion
 }

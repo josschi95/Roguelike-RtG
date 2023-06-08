@@ -9,6 +9,9 @@ namespace JS.ECS
         //Dictionary<string, Object> Parameters;
     }
 
+    /// <summary>
+    /// Tells an entity that their transform has changed.
+    /// </summary>
     public class TransformChanged : Event { }
 
     #region - Turn/Round Events -
@@ -34,16 +37,46 @@ namespace JS.ECS
     }
     #endregion
 
-    /// <summary>
-    /// Tells an entity that their transform has changed.
-    /// </summary>
 
 
     #region - Combat Events -
+    /// <summary>
+    /// Event to inform a target that they have been attacked by another entity
+    /// </summary>
+    public class AttackedBy : Event
+    {
+        public Entity entity;
+        public AttackedBy(Entity entity)
+        {
+            this.entity = entity;
+        }
+    }
+
+    /// <summary>
+    /// Event which starts the chain to make a melee attack against a target
+    /// </summary>
     public class DeclareMeleeAttack : Event
     {
         public Physics target;
         public DeclareMeleeAttack(Physics target)
+        {
+            this.target = target;
+        }
+    }
+
+    public class GetMeleeAttacks : Event
+    {
+        public List<Physics> attacks;
+        public GetMeleeAttacks()
+        {
+            attacks = new List<Physics>();
+        }
+    }
+
+    public class DeclareMissileAttack : Event
+    {
+        public Physics target;
+        public DeclareMissileAttack(Physics target)
         {
             this.target = target;
         }
@@ -71,24 +104,23 @@ namespace JS.ECS
 
     public class DealingMeleeDamage : Event
     {
-        public List<int> Amounts;
-        public List<int> Types;
+        public Dictionary<string, int> Damage;
 
-        public DealingMeleeDamage(int amount = 1, int type = 0)
+        public DealingMeleeDamage()
         {
-            Amounts = new List<int>() { amount };
-            Types = new List<int>() { type };
+            Damage = new Dictionary<string, int>();
         }
     }
 
     public class TakeDamage : Event
     {
+        public Dictionary<string, int> Damage;
         public List<int> Amounts;
         public List<int> Types;
-        public TakeDamage(List<int> amount, List<int> type)
+
+        public TakeDamage(Dictionary<string, int> dict)
         {
-            Amounts = amount;
-            Types = type;
+            Damage = dict;
         }
     }
     #endregion

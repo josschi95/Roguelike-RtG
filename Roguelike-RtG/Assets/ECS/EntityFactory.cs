@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using JS.CharacterSystem;
-using JS.ECS.Tags;
 using UnityEngine;
 
 namespace JS.ECS
 {
     public static class EntityFactory
     {
-        private static Dictionary<string, ObjectBlueprint> _blueprints;
+        private static Dictionary<string, ObjectBlueprint> _objectBlueprints;
 
-        public static void LoadBlueprints()
+        public static void LoadBlueprints(bool loadFromResources = true)
         {
-            _blueprints = new Dictionary<string, ObjectBlueprint>();
+            _objectBlueprints = new Dictionary<string, ObjectBlueprint>();
+
+            if (loadFromResources )
+            {
+                LoadFromResources();
+                return;
+            }
 
             string[] files = Directory.GetFiles(Application.persistentDataPath);
-
             foreach (string fileName in files)
             {
                 if (fileName.Contains("EntityBlueprints"))
@@ -30,29 +34,47 @@ namespace JS.ECS
             throw new Exception("Blueprints not found!");
         }
 
+        private static void LoadFromResources()
+        {
+            var textAsset = Resources.Load("Blueprints/EntityBlueprints") as TextAsset;
+
+            StringReader reader = new StringReader(textAsset.text);
+            string json = reader.ReadToEnd();
+
+            Blueprint blueprints = JsonUtility.FromJson<Blueprint>(json);
+
+            foreach (var blueprint in blueprints.Blueprints)
+            {
+                //Debug.Log(blueprint.Name);
+                _objectBlueprints[blueprint.Name] = blueprint;
+            }
+        }
+
         private static void ProcessBlueprints(string fileName)
         {
             StreamReader reader = new StreamReader(fileName);
+
             string json = reader.ReadToEnd();
             Blueprint blueprints = JsonUtility.FromJson<Blueprint>(json);
 
             foreach(var blueprint in blueprints.Blueprints)
             {
-                _blueprints[blueprint.Name] = blueprint;
-                //CreateEntity(blueprint);
+                Debug.Log(blueprint.Name);
+                _objectBlueprints[blueprint.Name] = blueprint;
             }
         }
 
         private static Entity CreateEntity(ObjectBlueprint blueprint)
         {
             Entity entity;
-            if (_blueprints.ContainsKey(blueprint.Inherits))
+            if (_objectBlueprints.ContainsKey(blueprint.Inherits))
             {
-                entity = CreateEntity(_blueprints[blueprint.Inherits]);
+                entity = CreateEntity(_objectBlueprints[blueprint.Inherits]);
             }
             else entity = new Entity(blueprint.Name);
-
             //Debug.Log(blueprint.Name);
+
+            #region - Components -
             foreach (ComponentBlueprint component in blueprint.Components)
             {
                 #region - Class -
@@ -115,7 +137,9 @@ namespace JS.ECS
                 }
                 if (!isOverride) entity.AddComponent((ComponentBase)NewComponent);
             }
+            #endregion
 
+            #region - Stats -
             if (blueprint.Stats != null)
             {
                 foreach (var stat in blueprint.Stats)
@@ -131,7 +155,9 @@ namespace JS.ECS
                     }
                 }
             }
+            #endregion
 
+            #region - Tags -
             if (blueprint.Tags != null)
             {
                 foreach (var tag in blueprint.Tags)
@@ -146,6 +172,7 @@ namespace JS.ECS
                     }
                 }
             }
+            #endregion
 
             return entity;
         }
@@ -161,16 +188,18 @@ namespace JS.ECS
         public static Entity GetEntity(string blueprint)
         {
             if (blueprint == null) return null;
-            if (!_blueprints.ContainsKey(blueprint)) return null;
-            return CreateEntity(_blueprints[blueprint]);
+            if (!_objectBlueprints.ContainsKey(blueprint)) return null;
+            return CreateEntity(_objectBlueprints[blueprint]);
         }
     }
 
+    [Serializable]
     public class Blueprint
     {
         public ObjectBlueprint[] Blueprints;
     }
 
+    [Serializable]
     public class ObjectBlueprint
     {
         public string Name;
@@ -180,6 +209,7 @@ namespace JS.ECS
         public TagBlueprint[] Tags;
     }
 
+    [Serializable]
     public class ComponentBlueprint
     {
         public string Name;
@@ -192,6 +222,7 @@ namespace JS.ECS
         }
     }
 
+    [Serializable]
     public class StatBlueprint
     {
         public string Name;
@@ -213,10 +244,49 @@ namespace JS.ECS
         }
     }
 
+    [Serializable]
     public class TagBlueprint
     {
         public string Name;
         public string Value;
     }
+
+    [Serializable]
+    public class Anatomies
+    {
+        public AnatomyBlueprint[] anatomies;
+    }
+
+    [Serializable]
+    public class AnatomyBlueprint
+    {
+        public string Name;
+        public BodyPartBlueprint[] BodyParts;
+    }
+
+    [Serializable]
+    public class BodyPartBlueprint
+    {
+        public string Type;
+        public string Inherits;
+        public string AttachedTo;
+        public string Laterality;
+    }
 }
 
+/*
+public enum Anatomy
+{
+    Humanoid,           //1 head, 2 arms and legs
+    TailedHumanoid,     //1 head, 2 arms and legs, 1 tail
+    Quadruped,          //1 head, 4 legs
+    Centauroid,         //1 head, 2 arms, 4 legs
+    Avian,              //1 head, 2 legs (wings are back slot)
+    Ooze,               //literally nothing
+    Insectoid,          //this can be so many things I have no idea yet
+    Arachnid,           //1 head, 8 legs
+    Gastropod,          //1 head, 1 tail
+    ArmedGastropod,     //1 head, 2 arms, 1 tail
+    Eyeball,            //1 head? is that even separate?
+    Dragon,             //1 head, 4 legs... wings go on back... so how is this different from Quadruped? I guess it would add by default?
+}*/

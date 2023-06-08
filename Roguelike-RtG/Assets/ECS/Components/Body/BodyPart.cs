@@ -1,45 +1,48 @@
 namespace JS.ECS
 {
-    public class BodyPart
+    public class BodyPart : ComponentBase
     {
-        public string Name;
-        public BodyPartTypes Type;
+        public BodyPart() { }
+
+        public string Name; //Name of the body part
+        public string LimbBlueprint; //Name of the blueprint for the dismembered body part
+
+        public bool Integral = false; //true for body
+        public bool IsVital = false; //true for heads, does dismembering this component cause death?
         public Laterality Laterality = Laterality.None;
-        public BodyPart AttachedTo;
-        public ArmorSlots[] ArmorSlots;
-        public bool Integral = false; //true for body, back
-        public bool IsAppendage = true; //not true for Thorax, Abdomen, Back
+
         public bool AverageArmor = false; //true for heads, arms, hands, feet
 
-        public BodyPart(string name, BodyPartTypes type, Laterality laterality, BodyPart attachedTo, ArmorSlots[] armorSlots,  bool integral = false, bool isAppendage = true, bool averageArmor = false)
+        public bool IsAppendage = true; //not true for Thorax, Abdomen, Back
+        public BodyPart AttachedTo;
+        
+        public Entity defaultBehavior; //fists/claws, beaks/jaws, etc.
+        public Entity weaponOverride; //wielded weapons
+
+        public BodyPart(string name, Laterality laterality, BodyPart attachedTo, bool integral = false, bool isAppendage = true, bool averageArmor = false)
         {
             Name = name;
-            Type = type;
             Laterality = laterality;
             AttachedTo = attachedTo;
-            ArmorSlots = armorSlots;
 
             Integral = integral;
             IsAppendage = isAppendage;
             AverageArmor = averageArmor;
         }
 
-        public void FireEvent(Event newEvent)
+        public override void OnEvent(Event newEvent)
         {
-            //
+            if(newEvent is DeclareMeleeAttack declaration)
+            {
+                if(weaponOverride != null)
+                {
+
+                }
+                else if (defaultBehavior != null)
+                {
+
+                }
+            }
         }
     }
 }
-
-/*
- * Head
- * Name = "Head"
- * Type = "Head"
- * Laterality = "None"
- * UsuallyOn = Neck;
- * Integral = false;
- * IsAppendage = true;
- * AverageArmor = true;
- * 
- * 
-*/

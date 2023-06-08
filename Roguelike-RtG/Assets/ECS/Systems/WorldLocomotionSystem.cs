@@ -41,10 +41,10 @@ namespace JS.ECS
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
-            //So this moves them a full world tile but keeps their regional positioning the same
+            //So this moves them a full world tile but keeps their regional position within a world tile the same
             obj.Position += (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
             //obj.LocalPosition = instance.localCenter;
-            
+
             return true;
         }
 

@@ -1,0 +1,16 @@
+{
+    "anatomies": [
+        {
+            "Name": "Humanoid",
+            "BodyParts": [
+                { "Type": "Body" },
+                { "Type": "Head", "AttachedTo": "Body" },
+                { "Type": "Arm", "Laterality": "Left" },
+                { "Type": "Hand", "Laterality": "Left", "AttachedTo": "Arm" },
+                { "Type": "Arm", "Laterality": "Right" },
+                { "Type": "Hand", "Laterality": "Right", "AttachedTo": "Arm" },
+                { "Type": "Feet", "AttachedTo": "Body"}
+            ]
+        }
+    ]
+}

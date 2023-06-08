@@ -9,36 +9,9 @@ namespace JS.ECS.Tags
     }
 
     /// <summary>
-    /// Tag to mark the player entity
-    /// </summary>
-    public class PlayerTag : TagBase { }
-
-    /// <summary>
     /// Tag to mark an object as being immune to effects.
     /// </summary>
     public class NoEffect : TagBase { }
-
-    /// <summary>
-    /// Tag to mark the Family of a creature: Humanoid, Demihuman, Monstrous.
-    /// </summary>
-    public class Family : TagBase
-    {
-        public Family(string family)
-        {
-            Value = family;
-        }
-    }
-
-    /// <summary>
-    /// Tag to mark the Base Race of a creature e.g. Human, Demon, Naga.
-    /// </summary>
-    public class Genus : TagBase
-    {
-        public Genus(string genus)
-        {
-            Value = genus;
-        }
-    }
 
     public class Gender : TagBase
     {
@@ -69,4 +42,49 @@ namespace JS.ECS.Tags
     /// Tag to indicate that an item can be broken.
     /// </summary>
     public class Breakable : TagBase { }
+
+    #region - Creature Tags -
+    /// <summary>
+    /// Tag to mark an object as a creature
+    /// </summary>
+    public class Creature : TagBase { }
+
+    /// <summary>
+    /// Tag to mark the player entity
+    /// </summary>
+    public class PlayerTag : TagBase { }
+
+    /// <summary>
+    /// Tag to mark the Family of a creature: Humanoid, Demihuman, Monstrous.
+    /// </summary>
+    public class Family : TagBase
+    {
+        public Family(string family)
+        {
+            Value = family;
+        }
+    }
+
+    /// <summary>
+    /// Tag to mark the Base Race of a creature e.g. Human, Demon, Naga.
+    /// </summary>
+    public class Genus : TagBase
+    {
+        public Genus(string genus)
+        {
+            Value = genus;
+        }
+    }
+
+    /// <summary>
+    /// Tag to indicate a creature's primary atttack method when unarmed
+    /// </summary>
+    public class PrimaryLimb : TagBase 
+    {
+        public PrimaryLimb(string limb)
+        {
+            Value = limb; //e.g. Hand, Feet, Body, Head
+        }
+    }
+    #endregion
 }

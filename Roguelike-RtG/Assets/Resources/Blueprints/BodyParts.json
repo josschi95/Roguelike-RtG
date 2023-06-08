@@ -1,0 +1,74 @@
+{
+    "BodyPartTypes": [
+        {
+            "Type": "Body",
+            "Parameters": [
+                "Integral=true",
+                "AverageArmor=false",
+                "IsAppendage=false",
+                "Equipment=Body,Shoulders,Belt"
+            ]
+        },
+        {
+            "Type": "Head",
+            "Parameters": [
+                "LimbBlueprint=SeveredHeadBlueprint",
+                "IsVital=true",
+                "AverageArmor=true",
+                "IsAppendage=true",
+                "AttachesTo=Body",
+                "Equipment=Head,Eyes,Neck"
+            ]
+        },
+        {
+            "Type": "Arm",
+            "Parameters": [
+                "LimbBlueprint=SeveredArmBlueprint",
+                "AverageArmor=true",
+                "IsAppendage=true",
+                "AttachesTo=Body",
+                "Equipment=Arm"
+            ]
+        },
+        {
+            "Type": "Hand",
+            "Parameters": [
+                "LimbBlueprint=SeveredHandBlueprint",
+                "AverageArmor=true",
+                "IsAppendage=true",
+                "AttachesTo=Arm",
+                "Equipment=Hand,Ring",
+                "Grasper=true",
+                "DefaultBehavior=DefaultFist"
+            ]
+        },
+        {
+            "Type": "Feet",
+            "Parameters": [
+                "LimbBlueprint=SeveredFeetBlueprint",
+                "AverageArmor=true",
+                "IsAppendage=true",
+                "AttachesTo=Body",
+                "Equipment=Feet"
+            ]
+        },
+        {
+            "Type": "Tail",
+            "Parameters": [
+                "LimbBlueprint=SeveredTailBlueprint",
+                "AverageArmor=true",
+                "IsAppendage=true",
+                "AttachesTo=Body"
+            ]
+        },
+        {
+            "Type": "Wings",
+            "Parameters": [
+                "LimbBlueprint=SeveredWingsBlueprint",
+                "AverageArmor=false",
+                "IsAppendage=true",
+                "AttachesTo=Body"
+            ]
+        }
+    ]
+}

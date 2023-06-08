@@ -85,55 +85,16 @@ namespace JS.ECS
         {
             CurrentNode.Entities.Remove(entity);
             var newNode = CurrentNode.grid.GetGridObject(newPosition.x, newPosition.y);
-
+            Debug.Log(_position);
             _currentNode.Entities.Add(entity);
             _localPosition = newPosition;
             _currentNode = newNode;
             entity.FireEvent(new TransformChanged());
         }
 
-
-
         public override void OnEvent(Event newEvent)
         {
-            switch (newEvent)
-            {
-                case MeleeAttackHit hit:
-                    OnMeleeAttackHit(hit.target);
-                    break;
-            }
-        }
 
-        private void OnMeleeAttackHit(Physics target)
-        {
-            var E1 = new DealingMeleeDamage();
-
-            entity.FireEvent(E1);
-
-            var E2 = new TakeDamage(E1.Amounts, E1.Types);
-
-            target.entity.FireEvent(E2);
-        }
-    }
-
-    public class WeaponBehaviour : ComponentBase
-    {
-        public int Amount;
-        public int Type;
-        
-        public WeaponBehaviour(Physics physics)
-        {
-            Priority = 1;
-            physics.entity.AddComponent(this);
-        }
-
-        public override void OnEvent(Event newEvent)
-        {
-            if (newEvent is DealingMeleeDamage damage)
-            {
-                damage.Amounts[0] = Amount;
-                damage.Types[0] = Type;
-            }
         }
     }
 }
@@ -166,10 +127,10 @@ public enum DamageTypes
     Poison,
     Acid,
 
-    Positive,
-    Negative,
-
     Sonic,
     Psychic,
     Mystic,
+
+    Positive,
+    Negative,
 }

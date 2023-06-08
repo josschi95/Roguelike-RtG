@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace JS.ECS
 {
@@ -23,6 +22,7 @@ namespace JS.ECS
         {
             var entities = new List<Physics>();
             var grid = GridManager.GetGrid(world);
+            if (grid == null) Debug.LogWarning("Grid at " + world +  " is null");
             if (grid == null) return entities.ToArray();
 
             var list = grid.Grid.GetGridObject(local.x, local.y).Entities;

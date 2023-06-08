@@ -125,7 +125,9 @@ public class GridManager : MonoBehaviour
         int count = Random.Range(2, 5);
         for (int i = 0; i < count; i++)
         {
-            var enemy = Blueprints.GetCreature("Orc_0" + i);
+            var enemy = EntityFactory.GetEntity("BaseCreature");
+            enemy.Name = "Orc_0" + i;
+
             var physics = enemy.GetComponent<JS.ECS.Physics>();
             enemy.GetComponent<Brain>().IsSleeping = false;
 

@@ -524,6 +524,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: pixelArtUI_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 250
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 4, z: 0, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe9e089e43188634bb97ab0441a41ac6
+      internalID: 375987595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixelArtUI_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 250
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 4, z: 0, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 611975b924ae5db48ba36483d1b1bd67
+      internalID: -1761764583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -579,6 +621,7 @@ TextureImporter:
       panel_01: -1618671269
       panel_02: 1507143042
       pixelArtUI_0: 375987595
+      pixelArtUI_1: -1761764583
       pixelArtUI_100: 296612513
       pixelArtUI_101: -295768847
       pixelArtUI_102: -295923073

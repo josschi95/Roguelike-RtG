@@ -8,7 +8,7 @@ namespace JS.ECS
     public class Entity
     {
         public Guid ID { get; private set; }
-        public string Name { get; private set; }
+        public string Name;
         public List<ComponentBase> components;
         private List<StatBase> _stats;
         private List<TagBase> _tags;

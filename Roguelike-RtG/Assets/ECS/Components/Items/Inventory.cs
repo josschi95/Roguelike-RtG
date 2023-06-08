@@ -1,5 +1,6 @@
 using JS.ECS.Tags;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace JS.ECS
 {
@@ -16,7 +17,7 @@ namespace JS.ECS
             {
                 if (_physics == null)
                 {
-                    _physics = new Physics();
+                    _physics = entity.GetComponent<Physics>();
                 }
                 return _physics;
             }
@@ -61,7 +62,7 @@ namespace JS.ECS
         private void CheckItemsAtPosition()
         {
             if (GridManager.WorldMapActive) return;
-
+            UnityEngine.Debug.Log("From: " + entity.Name + " : " + Physics.Position);
             var objects = TransformSystem.GetEntitiesAt(Physics.Position, Physics.LocalPosition);
 
             for (int i = 0; i < objects.Length; i++)

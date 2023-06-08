@@ -5,16 +5,16 @@ namespace JS.ECS
     /// </summary>
     public class NoDamage : ComponentBase
     {
-        public NoDamage() { }
+        public NoDamage() 
+        {
+            Priority = 0; //top priority
+        }
 
         public override void OnEvent(Event newEvent)
         {
             if (newEvent is TakeDamage dmg)
             {
-                for (int i = 0; i < dmg.Amounts.Count; i++)
-                {
-                    dmg.Amounts[i] = 0;
-                }
+                dmg.Damage.Clear();
             }
         }
     }

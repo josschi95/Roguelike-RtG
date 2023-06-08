@@ -12,7 +12,7 @@ namespace JS.ECS
             {
                 if (_physics == null)
                 {
-                    _physics = new Physics();
+                    _physics = entity.GetComponent<Physics>();
                 }
                 return _physics;
             }

@@ -20,7 +20,7 @@ public static class Dice
 
     public static int Roll(int value)
     {
-        return Random.Range(1, value);
+        return Random.Range(1, value + 1);
     }
 
     public static int Roll(string value)

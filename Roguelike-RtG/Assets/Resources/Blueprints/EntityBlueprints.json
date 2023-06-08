@@ -1,0 +1,181 @@
+{
+    "Blueprints": [
+        {
+            "Name": "PhysicalObject",
+            "Inherits": "",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "IsTakeable=true",
+                        "IsSolid=false",
+                        "IsCorporeal=true",
+                        "IsReal=true",
+                        "Weight=1.0",
+                        "Category=Miscellaneous"
+                    ]
+                },
+                {
+                    "Name": "MeleeWeapon",
+                    "Parameters": [
+                        "BaseDamage=1d2",
+                        "Type=Blunt",
+                        "Stat=STR",
+                        "Proficiency=BluntWeapons"
+                    ]
+                },
+                {
+                    "Name": "Commerce",
+                    "Parameters": [
+                        "Value=0.01"
+                    ]
+                },
+                {
+                    "Name": "Description",
+                    "Parameters": [
+                        "Value=An unremarkable object."
+                    ]
+                }
+            ],
+            "Stats": [
+                {
+                    "Name": "HitPoints",
+                    "ShortName": "HP",
+                    "Value": 10,
+                    "MinValue": 0,
+                    "Potential": 2147483647,
+                    "MaxValue": 2147483647
+                },
+                {
+                    "Name": "ArmorValue",
+                    "ShortName": "AV",
+                    "Value": 0,
+                    "MinValue": 0,
+                    "Potential": 100,
+                    "MaxValue": 100
+                },
+                {
+                    "Name": "DodgeValue",
+                    "ShortName": "DV",
+                    "Value": 0,
+                    "MinValue": 0,
+                    "Potential": 100,
+                    "MaxValue": 100
+                }
+            ]
+        },
+        {
+            "Name": "InorganicObject",
+            "Inherits": "PhysicalObject",
+            "Components": [
+                { "Name": "Inorganic" }
+            ],
+            "Tags": [
+                { "Name": "Breakable" }
+            ]
+        },
+        {
+            "Name": "BaseCreature",
+            "Inherits": "PhysicalObject",
+            "Components": [
+                { "Name": "TimedActor" },
+                { "Name": "Brain" },
+                { "Name": "Inventory" },
+                { "Name": "Combat" },
+                { "Name": "DamageResistances" }
+            ],
+            "Stats": [
+                {"Name": "Speed", "ShortName": "SPE", "Value": 10, "MinValue": 1, "Potential": 200, "MaxValue": 200 },
+                {"Name": "ActionPoints", "ShortName": "AP", "Value": 0, "MinValue": -100000, "Potential": 100000, "MaxValue": 100000 },
+                {"Name": "MoveSpeed", "ShortName": "MOV", "Value": 100, "MinValue": 1, "Potential": 200, "MaxValue": 200 },
+
+                {"Name": "Strength", "ShortName": "STR", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+                {"Name": "Agility", "ShortName": "AGI", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+                {"Name": "Vitality", "ShortName": "VIT", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+                {"Name": "Knowledge", "ShortName": "KNO", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+                {"Name": "Willpower", "ShortName": "WIL", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+                {"Name": "Charisma", "ShortName": "CHA", "Value": 10, "MinValue": 1, "Potential": 100, "MaxValue": 100 },
+
+                {"Name": "BluntResistance", "ShortName": "BluntResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "PierceResistance", "ShortName": "PierceResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "SlashResistance", "ShortName": "SlashResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "BleedResistance", "ShortName": "BleedResistance", "Value":10, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "FireResistance", "ShortName": "FireResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "FrostResistance", "ShortName": "FrostResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "LightningResistance", "ShortName": "LightningResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "PoisonResistance", "ShortName": "PoisonResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "AcidResistance", "ShortName": "AcidResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "SonicResistance", "ShortName": "SonicResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "PsychicResistance", "ShortName": "PsychicResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "MysticResistance", "ShortName": "MysticResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "PositiveResistance", "ShortName": "PositiveResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 },
+                {"Name": "NegativeResistance", "ShortName": "NegativeResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 }
+            ],
+            "Tags": [
+                {"Name": "Creature"}
+            ]
+        },
+        {
+            "Name": "Item",
+            "Inherits": "InorganicObject",
+            "Components": [
+                { "Name": "ObjectStack" }
+            ],
+            "Tags": [
+                { "Name": "Item" }
+            ]
+        },
+        {
+            "Name": "NaturalWeapon",
+            "Inherits": "Item",
+            "Components": [
+                { "Name": "NoDamage" },
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "Weight=0",
+                        "IsSolid=false",
+                        "IsTakeable=false",
+                        "Category=NaturalWeapon"
+                    ]
+                }
+            ],
+            "Tags": [
+                { "Name": "NeverStack" },
+                { "Name": "NaturalGear" }
+            ]
+        },
+        {
+            "Name": "MeleeWeapon",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "Weight=5",
+                        "Category=MeleeWeapon"
+                    ]
+                },
+                { "Name": "CraftingItem", "Parameters": ["Skill=Smithing"]}
+            ]
+        },
+        {
+            "Name": "MissileWeapon",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "Weight=5",
+                        "Category=MissileWeapon"
+                    ]
+                },
+                { "Name": "MissileWeapon" },
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
+            ]
+        }
+    ]
+}

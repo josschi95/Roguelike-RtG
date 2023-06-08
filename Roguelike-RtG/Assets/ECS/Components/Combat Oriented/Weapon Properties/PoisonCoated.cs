@@ -24,17 +24,12 @@ namespace JS.ECS
 
         private void AddDamage(DealingMeleeDamage damage)
         {
-            var result = Dice.Roll(Amount);
-            if (damage.Types.Contains((int)DamageTypes.Poison))
+            var roll = Dice.Roll(Amount);
+            if (damage.Damage.ContainsKey("Poison"))
             {
-                int index = damage.Amounts.IndexOf((int)DamageTypes.Poison);
-                damage.Amounts[index] += result;
+                damage.Damage["Poison"] += roll;
             }
-            else
-            {
-                damage.Amounts.Add(result);
-                damage.Types.Add((int)DamageTypes.Poison);
-            }
+            else damage.Damage.Add("Poison", roll);
         }
     }
 }

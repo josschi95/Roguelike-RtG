@@ -4,7 +4,7 @@ namespace JS.ECS
     {
         public Armor() { }
 
-        public Armor(int armorValue, int dodgeValue, ArmorSlots slot)
+        public Armor(int armorValue, int dodgeValue, EquipmentType slot)
         {
             ArmorValue = armorValue;
             DodgeValue = dodgeValue;
@@ -13,7 +13,7 @@ namespace JS.ECS
 
         public int ArmorValue;
         public int DodgeValue;
-        public ArmorSlots Slot;
+        public EquipmentType Slot;
 
         public override void OnEvent(Event newEvent)
         {

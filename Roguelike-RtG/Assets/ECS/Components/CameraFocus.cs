@@ -22,19 +22,6 @@ namespace JS.ECS
             }
         }
 
-        /*private Transform transform;
-        public Transform Transform
-        {
-            get
-            {
-                if (transform == null)
-                {
-                    transform = entity.GetComponent<Transform>();
-                }
-                return transform;
-            }
-        }*/
-
         private CameraController controller;
         public CameraController Controller
         {

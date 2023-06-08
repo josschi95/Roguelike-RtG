@@ -21,17 +21,12 @@ namespace JS.ECS
 
         private void AddDamage(DealingMeleeDamage damage)
         {
-            var result = Dice.Roll("1d6");
-            if (damage.Types.Contains((int)DamageTypes.Lightning))
+            var roll = Dice.Roll(6);
+            if (damage.Damage.ContainsKey("Lightning"))
             {
-                int index = damage.Amounts.IndexOf((int)DamageTypes.Lightning);
-                damage.Amounts[index] += result;
+                damage.Damage["Lightning"] += roll;
             }
-            else
-            {
-                damage.Amounts.Add(result);
-                damage.Types.Add((int)DamageTypes.Lightning);
-            }
+            else damage.Damage.Add("Lightning", roll);
         }
     }
 }

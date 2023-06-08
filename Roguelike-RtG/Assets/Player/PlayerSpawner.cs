@@ -18,6 +18,7 @@ namespace JS.WorldMap
             //var player = Blueprints.GetCreature("Player");
             var player = EntityFactory.GetEntity("BaseCreature");
             player.AddTag(new PlayerTag());
+            player.Name = "Player";
 
             var physics = player.GetComponent<ECS.Physics>();
             var brain = player.GetComponent<Brain>();

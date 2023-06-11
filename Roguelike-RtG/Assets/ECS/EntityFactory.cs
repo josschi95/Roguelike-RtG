@@ -88,7 +88,7 @@ namespace JS.ECS
                 bool isOverride = false;
                 if (entity.HasComponent((ComponentBase)NewComponent, out var existingComp))
                 {
-                    Debug.Log("Existing component of type " + NewComponent.ToString() + " found");
+                    //Debug.Log("Existing component of type " + NewComponent.ToString() + " found");
                     NewComponent = existingComp;
                     isOverride = true;
                 }
@@ -105,6 +105,7 @@ namespace JS.ECS
                 {
                     var values = parameter.Split('=');
                     FieldInfo info = newComponentType.GetField(values[0]);
+
                     if (info == null) throw new Exception("Unknown field " + 
                         values[0] + " in " + newComponentType + "!");
 
@@ -125,14 +126,14 @@ namespace JS.ECS
                     }
                     else if (info.FieldType == typeof(float))
                     {
-
                         //Debug.Log(info.Name + " set to float " + values[1]);
                         info.SetValue(NewComponent, float.Parse(values[1]));
                     }
                     else if (info.FieldType.IsEnum)
                     {
+                        //Debug.Log(info.Name + " set to enum " + values[1]);
                         var e = (Enum)info.GetValue(NewComponent);
-
+                        info.SetValue(NewComponent, Enum.Parse(e.GetType(), values[1]));
                     }
                 }
                 if (!isOverride) entity.AddComponent((ComponentBase)NewComponent);
@@ -214,7 +215,7 @@ namespace JS.ECS
     {
         public string Name;
         public string[] Parameters;
-
+        
         public ComponentBlueprint(string name, string[] parameters)
         {
             Name = name;
@@ -250,43 +251,4 @@ namespace JS.ECS
         public string Name;
         public string Value;
     }
-
-    [Serializable]
-    public class Anatomies
-    {
-        public AnatomyBlueprint[] anatomies;
-    }
-
-    [Serializable]
-    public class AnatomyBlueprint
-    {
-        public string Name;
-        public BodyPartBlueprint[] BodyParts;
-    }
-
-    [Serializable]
-    public class BodyPartBlueprint
-    {
-        public string Type;
-        public string Inherits;
-        public string AttachedTo;
-        public string Laterality;
-    }
 }
-
-/*
-public enum Anatomy
-{
-    Humanoid,           //1 head, 2 arms and legs
-    TailedHumanoid,     //1 head, 2 arms and legs, 1 tail
-    Quadruped,          //1 head, 4 legs
-    Centauroid,         //1 head, 2 arms, 4 legs
-    Avian,              //1 head, 2 legs (wings are back slot)
-    Ooze,               //literally nothing
-    Insectoid,          //this can be so many things I have no idea yet
-    Arachnid,           //1 head, 8 legs
-    Gastropod,          //1 head, 1 tail
-    ArmedGastropod,     //1 head, 2 arms, 1 tail
-    Eyeball,            //1 head? is that even separate?
-    Dragon,             //1 head, 4 legs... wings go on back... so how is this different from Quadruped? I guess it would add by default?
-}*/

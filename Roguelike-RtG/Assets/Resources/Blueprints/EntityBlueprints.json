@@ -78,7 +78,15 @@
             "Name": "BaseCreature",
             "Inherits": "PhysicalObject",
             "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [ "IsTakeable=false" ]
+                },
                 { "Name": "TimedActor" },
+                {
+                    "Name": "Body",
+                    "Parameters": [ "Anatomy=Humanoid" ]
+                },
                 { "Name": "Brain" },
                 { "Name": "Inventory" },
                 { "Name": "Combat" },

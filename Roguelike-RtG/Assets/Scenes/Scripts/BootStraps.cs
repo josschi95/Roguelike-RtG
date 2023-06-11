@@ -48,7 +48,9 @@ namespace JS.SceneManagement
             gameSettings.LoadSavedValues();
             worldMap.IsLoaded = false;
             LoadSceneCollectionAdditive(bootScenes);
+
             EntityFactory.LoadBlueprints();
+            BodyFactory.LoadBodies();
         }
 
         /// <summary>

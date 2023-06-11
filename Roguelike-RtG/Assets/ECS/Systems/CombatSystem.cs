@@ -42,6 +42,11 @@ namespace JS.ECS
             //Get a list of all valid Melee Attacks
             var E1 = new GetMeleeAttacks();
             combatant.entity.FireEvent(E1);
+            if (E1.attacks.Count == 0)
+            {
+                MessageSystem.NewMessage("Nothing to attack with!");
+                return false;
+            }
 
             for (int i = 0; i < E1.attacks.Count; i++)
             {

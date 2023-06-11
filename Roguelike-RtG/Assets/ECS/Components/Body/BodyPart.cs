@@ -1,3 +1,5 @@
+using JS.ECS;
+
 namespace JS.ECS
 {
     public class BodyPart : ComponentBase
@@ -18,6 +20,8 @@ namespace JS.ECS
         
         public Entity defaultBehavior; //fists/claws, beaks/jaws, etc.
         public Entity weaponOverride; //wielded weapons
+
+        public ArmorSlot[] Armor;
 
         public BodyPart(string name, Laterality laterality, BodyPart attachedTo, bool integral = false, bool isAppendage = true, bool averageArmor = false)
         {
@@ -44,5 +48,16 @@ namespace JS.ECS
                 }
             }
         }
+    }
+}
+
+public class ArmorSlot
+{
+    public BodySlot BodySlot;
+    public Entity Armor;
+
+    public ArmorSlot(BodySlot bodySlot)
+    {
+        BodySlot = bodySlot;
     }
 }

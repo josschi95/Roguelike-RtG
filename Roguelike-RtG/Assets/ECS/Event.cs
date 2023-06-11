@@ -10,7 +10,7 @@ namespace JS.ECS
     }
 
     /// <summary>
-    /// Tells an entity that their transform has changed.
+    /// Event to inform an entity that its Transform has changed.
     /// </summary>
     public class TransformChanged : Event { }
 
@@ -18,26 +18,18 @@ namespace JS.ECS
     /// <summary>
     /// Tells an entity that a new round has started.
     /// </summary>
-    public class NewRound: Event
-    {
-    }
+    public class NewRound: Event { }
 
     /// <summary>
     /// Tells an entity that their turn has started.
     /// </summary>
-    public class TurnStart : Event 
-    {
-    }
+    public class TurnStart : Event { }
 
     /// <summary>
     /// Tells an entity that their turn has ended.
     /// </summary>
-    public class TurnEnd : Event
-    {
-    }
+    public class TurnEnd : Event { }
     #endregion
-
-
 
     #region - Combat Events -
     /// <summary>

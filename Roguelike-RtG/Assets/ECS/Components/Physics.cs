@@ -1,3 +1,4 @@
+using JS.ECS.Tags;
 using System;
 using UnityEngine;
 
@@ -81,14 +82,19 @@ namespace JS.ECS
             }
         }
 
-        private void OnNodeChange(Vector2Int newPosition)
+        private void OnNodeChange(Vector2Int newPos)
         {
-            CurrentNode.Entities.Remove(entity);
-            var newNode = CurrentNode.grid.GetGridObject(newPosition.x, newPosition.y);
-            Debug.Log(_position);
-            _currentNode.Entities.Add(entity);
-            _localPosition = newPosition;
+            CurrentNode.Entities.Remove(entity); //remove from previous node
+            //if (!entity.GetTag<PlayerTag>()) Debug.Log("entity move to " + newPos);
+
+            _localPosition = newPos;
+            var newNode = CurrentNode.grid.GetGridObject(newPos.x, newPos.y);
+
             _currentNode = newNode;
+            _currentNode.Entities.Add(entity);
+
+            //if (!entity.GetTag<PlayerTag>()) Debug.Log("entity move to " + CurrentNode.x + "," + CurrentNode.y);
+
             entity.FireEvent(new TransformChanged());
         }
 

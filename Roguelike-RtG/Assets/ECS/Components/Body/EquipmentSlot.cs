@@ -4,7 +4,7 @@ namespace JS.ECS
     {
         public EquipmentSlot() { }
 
-        public EquipmentType Type;
+        public BodySlot Type;
         public Entity EquippedArmor;
 
 

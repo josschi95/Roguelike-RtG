@@ -22,15 +22,14 @@ namespace JS.ECS
         {
             var entities = new List<Physics>();
             var grid = GridManager.GetGrid(world);
-            if (grid == null) Debug.LogWarning("Grid at " + world +  " is null");
             if (grid == null) return entities.ToArray();
 
             var list = grid.Grid.GetGridObject(local.x, local.y).Entities;
+
             for (int i = 0; i < list.Count; i++)
             {
                 var phys = list[i].GetComponent<Physics>();
                 if (phys == null || !phys.IsReal) continue;
-
                 if (phys.LocalPosition == local) entities.Add(phys);
             }
 

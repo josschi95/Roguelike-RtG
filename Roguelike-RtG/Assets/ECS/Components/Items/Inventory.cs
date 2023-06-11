@@ -62,14 +62,14 @@ namespace JS.ECS
         private void CheckItemsAtPosition()
         {
             if (GridManager.WorldMapActive) return;
-            UnityEngine.Debug.Log("From: " + entity.Name + " : " + Physics.Position);
+            //UnityEngine.Debug.Log("From: " + entity.Name + " : " + Physics.Position);
             var objects = TransformSystem.GetEntitiesAt(Physics.Position, Physics.LocalPosition);
 
             for (int i = 0; i < objects.Length; i++)
             {
                 if (objects[i].IsTakeable)
                 {
-                    UnityEngine.Debug.Log("Found " + objects[i].entity.Name);
+                    UnityEngine.Debug.Log(entity.Name + " found " + objects[i].entity.Name);
                 }
             }
         }

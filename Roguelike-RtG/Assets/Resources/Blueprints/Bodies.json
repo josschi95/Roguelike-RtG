@@ -1,12 +1,12 @@
 {
-    "BodyPartTypes": [
+    "BodyParts": [
         {
             "Type": "Body",
             "Parameters": [
                 "Integral=true",
                 "AverageArmor=false",
                 "IsAppendage=false",
-                "Equipment=Body,Shoulders,Belt"
+                "Armor=Body,Shoulders,Belt"
             ]
         },
         {
@@ -17,7 +17,7 @@
                 "AverageArmor=true",
                 "IsAppendage=true",
                 "AttachesTo=Body",
-                "Equipment=Head,Eyes,Neck"
+                "Armor=Head,Eyes,Neck"
             ]
         },
         {
@@ -27,7 +27,7 @@
                 "AverageArmor=true",
                 "IsAppendage=true",
                 "AttachesTo=Body",
-                "Equipment=Arm"
+                "Armor=Arm"
             ]
         },
         {
@@ -37,7 +37,7 @@
                 "AverageArmor=true",
                 "IsAppendage=true",
                 "AttachesTo=Arm",
-                "Equipment=Hand,Ring",
+                "Armor=Hand,Ring",
                 "Grasper=true",
                 "DefaultBehavior=DefaultFist"
             ]
@@ -49,7 +49,7 @@
                 "AverageArmor=true",
                 "IsAppendage=true",
                 "AttachesTo=Body",
-                "Equipment=Feet"
+                "Armor=Feet"
             ]
         },
         {
@@ -68,6 +68,40 @@
                 "AverageArmor=false",
                 "IsAppendage=true",
                 "AttachesTo=Body"
+            ]
+        }
+    ],
+    "AllAnatomies": [
+        {
+            "Name": "Humanoid",
+            "BodyParts": [
+                { "Type": "Body" },
+                {
+                    "Type": "Head",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Left"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Left",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Right"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Right",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Feet",
+                    "AttachedTo": "Body"
+                }
             ]
         }
     ]

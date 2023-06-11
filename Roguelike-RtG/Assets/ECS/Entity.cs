@@ -70,7 +70,10 @@ namespace JS.ECS
             for (int i = 0; i < components.Count; i++)
             {
                 if (component.GetType().Equals(components[i].GetType()))
+                {
+                    comp = components[i];
                     return true;
+                }
             }
             return false;
         }

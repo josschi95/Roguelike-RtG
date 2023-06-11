@@ -17,4 +17,4 @@ MonoBehaviour:
   OnValueChangeCallbackEvent:
     m_PersistentCalls:
       m_Calls: []
-  _developerNotes: 
+  _developerNotes: Informs LocalMapGenerator of the currently active tile to load

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -100,17 +99,9 @@ namespace JS.ECS
                 newPart = CreateNewBodyPart(_bodyParts[blueprint.Inherits]);
             }
             else newPart = new BodyPart();
+            newPart.Name = blueprint.Type;
 
-            if (blueprint.Parameters == null) return newPart;
-
-            var dict = new Dictionary<string, string>();
-            foreach (var part in blueprint.Parameters)
-            {
-                var values = part.Split('=');
-                 dict[values[0]] = values[1];
-            }
-
-            
+            if (blueprint.Parameters == null) return newPart;           
 
             foreach(var parameter in blueprint.Parameters)
             {
@@ -125,6 +116,14 @@ namespace JS.ECS
                     {
                         newPart.Armor[i] = new ArmorSlot(Enum.Parse<BodySlot>(slots[i]));
                     }
+                    continue;
+                }
+                else if (values[0].Equals("DefaultBehavior"))
+                {
+                    var entity = EntityFactory.GetEntity(values[1]);
+                    if (entity == null) throw new Exception("DefaultBehavior entity not found!");
+                    
+                    newPart.DefaultBehavior = entity;
                     continue;
                 }
 
@@ -192,10 +191,6 @@ namespace JS.ECS
                         var e = (Enum)info.GetValue(newPart);
                         info.SetValue(newPart, Enum.Parse(e.GetType(), values[1]));
                     }
-                    else if (info.FieldType == typeof(Entity))
-                    {
-                        info.SetValue(newPart, EntityFactory.GetEntity(values[1]));
-                    }
                 }
             }
             return newPart;
@@ -224,6 +219,20 @@ namespace JS.ECS
             if (_bodyParts.ContainsKey(name))
                 return CreateNewBodyPart(_bodyParts[name]);
             return null;
+        }
+
+        public static List<BodyPart> GetNewBody(string anatomy)
+        {
+            var parts = new List<BodyPart>();
+
+            if (!_anatomies.ContainsKey(anatomy)) throw new Exception("Anatomy: " + anatomy + " not found!");
+
+            foreach(var part in _anatomies[anatomy])
+            {
+                parts.Add(CreateNewBodyPart(part));
+            }
+
+            return parts;
         }
     }
 }

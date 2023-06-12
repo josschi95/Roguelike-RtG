@@ -2,51 +2,49 @@ using JS.ECS;
 
 namespace JS.ECS
 {
-    public class BodyPart : ComponentBase
+    public class BodyPart// : ComponentBase
     {
         public BodyPart() { }
 
         public string Name; //Name of the body part
-        public string LimbBlueprint; //Name of the blueprint for the dismembered body part
-
+        public BodySlot Slot;
         public bool Integral = false; //true for body
         public bool IsVital = false; //true for heads, does dismembering this component cause death?
-        public Laterality Laterality = Laterality.None;
 
-        public bool AverageArmor = false; //true for heads, arms, hands, feet
-
+        public BodySlot UsuallyOn = BodySlot.Body;
         public bool IsAppendage = true; //not true for Thorax, Abdomen, Back
         public BodyPart AttachedTo;
+
+        public Laterality Laterality = Laterality.None;
+
+        public string LimbBlueprint; //Name of the blueprint for the dismembered body part
+
+        public bool AverageArmor = false; //true for heads, arms, hands, feet
         
-        public Entity defaultBehavior; //fists/claws, beaks/jaws, etc.
-        public Entity weaponOverride; //wielded weapons
+        public Entity DefaultBehavior; //fists/claws, beaks/jaws, etc.
+        public Entity WeaponOverride; //wielded weapons
+        public bool Grasper = false;
 
         public ArmorSlot[] Armor;
 
-        public BodyPart(string name, Laterality laterality, BodyPart attachedTo, bool integral = false, bool isAppendage = true, bool averageArmor = false)
+        public void OnEvent(Event newEvent)
         {
-            Name = name;
-            Laterality = laterality;
-            AttachedTo = attachedTo;
-
-            Integral = integral;
-            IsAppendage = isAppendage;
-            AverageArmor = averageArmor;
-        }
-
-        public override void OnEvent(Event newEvent)
-        {
-            if(newEvent is DeclareMeleeAttack declaration)
+            if (newEvent is GetMeleeAttacks getAttacks)
             {
-                if(weaponOverride != null)
+                if (WeaponOverride != null)
                 {
-
+                    getAttacks.attacks.Add(WeaponOverride.GetComponent<Physics>());
                 }
-                else if (defaultBehavior != null)
+                else if (DefaultBehavior != null)
                 {
-
+                    getAttacks.attacks.Add(DefaultBehavior.GetComponent<Physics>());
                 }
             }
+        }
+
+        public void OnDismembered()
+        {
+
         }
     }
 }
@@ -61,3 +59,14 @@ public class ArmorSlot
         BodySlot = bodySlot;
     }
 }
+
+/*public BodyPart(string name, Laterality laterality, BodyPart attachedTo, bool integral = false, bool isAppendage = true, bool averageArmor = false)
+{
+    Name = name;
+    Laterality = laterality;
+    AttachedTo = attachedTo;
+
+    Integral = integral;
+    IsAppendage = isAppendage;
+    AverageArmor = averageArmor;
+}*/

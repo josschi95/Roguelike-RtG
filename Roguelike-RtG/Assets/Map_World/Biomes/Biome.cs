@@ -7,6 +7,7 @@ namespace JS.WorldMap
     {
         [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
+        [field: SerializeField] public RuleTile WorldBase { get; private set; }
         [field: SerializeField] public RuleTile WorldTile { get; private set; }
         [field: SerializeField] public RuleTile LocalTile { get; private set; }
         [field: SerializeField] public bool isLand { get; private set; } = true;

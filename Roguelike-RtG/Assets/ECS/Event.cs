@@ -31,6 +31,17 @@ namespace JS.ECS
     public class TurnEnd : Event { }
     #endregion
 
+    public class GetStat : Event
+    {
+        public string Name;
+        public int Value;
+
+        public GetStat(string name)
+        {
+            Name = name;
+        }
+    }
+
     #region - Combat Events -
     /// <summary>
     /// Event to inform a target that they have been attacked by another entity
@@ -41,18 +52,6 @@ namespace JS.ECS
         public AttackedBy(Entity entity)
         {
             this.entity = entity;
-        }
-    }
-
-    /// <summary>
-    /// Event which starts the chain to make a melee attack against a target
-    /// </summary>
-    public class DeclareMeleeAttack : Event
-    {
-        public Physics target;
-        public DeclareMeleeAttack(Physics target)
-        {
-            this.target = target;
         }
     }
 
@@ -107,13 +106,13 @@ namespace JS.ECS
     public class TakeDamage : Event
     {
         public Dictionary<string, int> Damage;
-        public List<int> Amounts;
-        public List<int> Types;
 
         public TakeDamage(Dictionary<string, int> dict)
         {
             Damage = dict;
         }
     }
+
+    public class Death : Event { }
     #endregion
 }

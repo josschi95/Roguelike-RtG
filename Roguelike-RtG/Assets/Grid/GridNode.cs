@@ -15,9 +15,12 @@ public class GridNode
     public GridNode cameFromNode;
 
     public bool isWater = false; //set to true when a water block is placed here
+    public bool stairsUp = false;
+    public bool stairsDown = false;
     public bool isOccupied { get; private set; } //true if there is another creature occupying the node
     public bool isWalkable { get; private set; } //if this node can be traversed at all
     public bool blocksGas { get; private set; }
+
     public int movementCost { get; private set; } //Increased cost to Move Action for moving into this node, affected by difficult terrain. 
     public int pathfindingCost { get; private set; } //Additional cost to move into this node for pathfinding calculations, to avoid hazards
 

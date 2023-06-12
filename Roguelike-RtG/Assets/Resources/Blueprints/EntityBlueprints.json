@@ -90,7 +90,7 @@
                 { "Name": "Brain" },
                 { "Name": "Inventory" },
                 { "Name": "Combat" },
-                { "Name": "DamageResistances" }
+                { "Name": "RandomLoot" }
             ],
             "Stats": [
                 {"Name": "Speed", "ShortName": "SPE", "Value": 10, "MinValue": 1, "Potential": 200, "MaxValue": 200 },
@@ -144,6 +144,7 @@
                         "Weight=0",
                         "IsSolid=false",
                         "IsTakeable=false",
+                        "IsReal=false",
                         "Category=NaturalWeapon"
                     ]
                 }
@@ -182,6 +183,25 @@
                 {
                     "Name": "CraftingItem",
                     "Parameters": [ "Skill=Smithing" ]
+                }
+            ]
+        },
+        {
+            "Name": "DefaultFist",
+            "Inherits": "NaturalWeapon",
+            "Components": []
+        },
+        {
+            "Name": "GenericCorpse",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Food",
+                    "Parameters": [ "Satiation=100", "IsGross=true", "IllOnEat=true" ]
+                },
+                {
+                    "Name": "Description",
+                    "Parameters": [ "Value=A corpse." ]
                 }
             ]
         }

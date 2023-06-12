@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 13
   <BiomeName>k__BackingField: Tundra
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: 95c568d3284682f49a3785ee1369d6e5, type: 2}
   <WorldTile>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1

@@ -6,7 +6,7 @@
                 "Integral=true",
                 "AverageArmor=false",
                 "IsAppendage=false",
-                "Armor=Body,Shoulders,Belt"
+                "Armor=Body,Back,Belt"
             ]
         },
         {
@@ -16,7 +16,7 @@
                 "IsVital=true",
                 "AverageArmor=true",
                 "IsAppendage=true",
-                "AttachesTo=Body",
+                "UsuallyOn=Body",
                 "Armor=Head,Eyes,Neck"
             ]
         },
@@ -26,7 +26,7 @@
                 "LimbBlueprint=SeveredArmBlueprint",
                 "AverageArmor=true",
                 "IsAppendage=true",
-                "AttachesTo=Body",
+                "UsuallyOn=Body",
                 "Armor=Arm"
             ]
         },
@@ -36,10 +36,10 @@
                 "LimbBlueprint=SeveredHandBlueprint",
                 "AverageArmor=true",
                 "IsAppendage=true",
-                "AttachesTo=Arm",
+                "UsuallyOn=Arm",
                 "Armor=Hand,Ring",
-                "Grasper=true",
-                "DefaultBehavior=DefaultFist"
+                "DefaultBehavior=DefaultFist",
+                "Grasper=true"
             ]
         },
         {
@@ -48,7 +48,7 @@
                 "LimbBlueprint=SeveredFeetBlueprint",
                 "AverageArmor=true",
                 "IsAppendage=true",
-                "AttachesTo=Body",
+                "UsuallyOn=Body",
                 "Armor=Feet"
             ]
         },
@@ -58,7 +58,7 @@
                 "LimbBlueprint=SeveredTailBlueprint",
                 "AverageArmor=true",
                 "IsAppendage=true",
-                "AttachesTo=Body"
+                "UsuallyOn=Body"
             ]
         },
         {
@@ -67,7 +67,7 @@
                 "LimbBlueprint=SeveredWingsBlueprint",
                 "AverageArmor=false",
                 "IsAppendage=true",
-                "AttachesTo=Body"
+                "UsuallyOn=Body"
             ]
         }
     ],

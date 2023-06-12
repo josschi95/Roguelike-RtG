@@ -1,4 +1,3 @@
-using JS.ECS.Tags;
 using System.Collections.Generic;
 
 namespace JS.ECS
@@ -8,42 +7,38 @@ namespace JS.ECS
     /// </summary>
     public class Body : ComponentBase
     {
-        public Body()
-        {
-            BodyParts = new List<Entity> ();
-        }
+        public Body() { }
 
-        private string _anatomy;
-        public string Anatomy
-        {
-            get => _anatomy;
-            set => CreateAnatomy(value);
-        }
+        public string Anatomy = "Humanoid";
 
-        public List<Entity> BodyParts { get; set; }
+        public List<BodyPart> BodyParts { get; set; }
 
-        private void CreateAnatomy(string value)
+        public override void OnRegistered() => CreateAnatomy();
+
+        private void CreateAnatomy()
         {
-            UnityEngine.Debug.Log(value);
-            if (BodyParts != null)
+            //UnityEngine.Debug.Log(Anatomy);
+            BodyParts = new List<BodyPart>();
+
+            var parts = BodyFactory.GetNewBody(Anatomy);
+            BodyParts.AddRange(parts);
+
+            for (int i = 0; i < BodyParts.Count; i++)
             {
-                for (int i = 0; i < BodyParts.Count; i++)
-                {
-                    BodyParts[i].Destroy();
-                }
-                BodyParts.Clear(); 
-            }
+                //UnityEngine.Debug.Log(BodyParts[i].Name);
 
-            BodyParts = new List<Entity>();
-            _anatomy = value;
+                /*if (BodyParts[i].DefaultBehavior != null)
+                {
+                    UnityEngine.Debug.Log(BodyParts[i].Name + " wields " + BodyParts[i].DefaultBehavior.Name);
+                }*/
+            }
         }
 
         public override void OnEvent(Event newEvent)
         {
-            //
             for (int i = 0; i < BodyParts.Count; i++)
             {
-                BodyParts[i].FireEvent(newEvent);
+                BodyParts[i].OnEvent(newEvent);
             }
         }
     }
@@ -79,8 +74,8 @@ public enum BodySlot
     Neck,   //Amulets, Necklaces, Medallions
     Body,   //Armor, Robes, 
     Back,   //Capes, Cloaks, Mantles, ?Wings
-    Arms,   //Bracers, Bucklers, Manacles, Shackles, Bracelets (if wrists)
-    Hands,  //Gauntlets, Gloves
+    Arm,   //Bracers, Bucklers, Manacles, Shackles, Bracelets (if wrists)
+    Hand,  //Gauntlets, Gloves
     Ring,   //Rings
     Belt,   //Belts, Girdles, Bandoliers
     Feet,   //Boots, Sandles, Shoes

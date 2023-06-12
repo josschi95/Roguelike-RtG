@@ -53,7 +53,7 @@ namespace JS.WorldMap
                     var tilePos =new Vector3Int(x, y);
 
                     var biome = biomeHelper.GetBiome(worldMap.TerrainData.BiomeMap[x,y]);
-                    if (biome.isLand) landMap.SetTile(tilePos, biome.WorldTile);
+                    if (biome.isLand) landMap.SetTile(tilePos, biome.WorldBase);
                     else oceanMap.SetTile(tilePos, biome.WorldTile);
 
                     if (worldMap.TerrainData.Coasts[x, y])

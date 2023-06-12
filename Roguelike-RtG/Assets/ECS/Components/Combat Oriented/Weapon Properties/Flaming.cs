@@ -5,10 +5,9 @@ namespace JS.ECS
     /// </summary>
     public class Flaming : ComponentBase
     {
-        public Flaming(Physics physics)
+        public Flaming()
         {
             Priority = 2;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

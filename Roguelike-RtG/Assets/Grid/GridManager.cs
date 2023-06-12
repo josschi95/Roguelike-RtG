@@ -85,7 +85,7 @@ public class GridManager : MonoBehaviour
     {
         activeLocalGrid = grid;
         activeMapWorldPosition.Value = grid.Position;
-        Debug.Log("Loading Map. World: " + activeLocalGrid.Position);
+        //Debug.Log("Loading Map. World: " + activeLocalGrid.Position);
 
         if (worldMapActive) SwitchToLocalView();
         else

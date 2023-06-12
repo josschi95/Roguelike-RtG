@@ -72,6 +72,7 @@ namespace JS.ECS
                 entity = CreateEntity(_objectBlueprints[blueprint.Inherits]);
             }
             else entity = new Entity(blueprint.Name);
+            entity.Name = blueprint.Name;
             //Debug.Log(blueprint.Name);
 
             #region - Components -

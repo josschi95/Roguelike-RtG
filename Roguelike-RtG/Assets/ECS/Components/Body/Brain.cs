@@ -1,7 +1,6 @@
 using JS.CharacterSystem;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace JS.ECS
 {
@@ -12,6 +11,7 @@ namespace JS.ECS
     {
         public Brain() { }
 
+        public bool IsAlive = true;
         public bool IsSleeping = false; //Automatically skips the creature's turn if sleeping
         public bool IsHostile = false; //Is the object hositle by default?
         public bool IsCalm = false; //Will the object become hostile if attacked?
@@ -50,42 +50,39 @@ namespace JS.ECS
             }
         }
 
-        private int MoveSpeed
-        {
-            get
-            {
-                if (entity.TryGetStat("MoveSpeed", out StatBase stat))
-                {
-                    return stat.Value;
-                }
-                return 1;
-            }
-        }
-
         public override void OnEvent(Event newEvent)
         {
             if (newEvent is TurnStart) OnTurnStart();
+            else if (newEvent is Death) IsAlive = false;
         }
 
         private void OnTurnStart()
         {
             if (HasOverride) return;
-
-            if (IsSleeping) Actions.SkipAction(entity.GetComponent<TimedActor>());
+            if (!IsAlive || IsSleeping) Actions.SkipAction(Actor);
             else if (Wanders && IsMobile)
             {
-                if (UnityEngine.Random.value < 0.15) Actions.SkipAction(entity.GetComponent<TimedActor>());
-                else if (LocomotionSystem.TryMoveLocal(entity.GetComponent<Physics>(), DirectionHelper.GetRandom(), out int cost))
-                {
-                    int netCost = UnityEngine.Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
-                    TimeSystem.SpendActionPoints(Actor, netCost);
-                    TimeSystem.EndTurn(Actor);
-                }
-                else Actions.SkipAction(entity.GetComponent<TimedActor>());
+                if (UnityEngine.Random.value < 0.15) Actions.SkipAction(Actor);
+                else if (TryWander()) TimeSystem.EndTurn(Actor);
+                else Actions.SkipAction(Actor);
             }
-            else Actions.SkipAction(entity.GetComponent<TimedActor>());
+            else Actions.SkipAction(Actor);
 
 
+        }
+
+        private bool TryWander()
+        {
+            if (LocomotionSystem.TryMoveLocal(entity.GetComponent<Physics>(), DirectionHelper.GetRandom(), out int cost))
+            {
+                var E1 = new GetStat("MoveSpeed");
+                entity.FireEvent(E1);
+                if (E1.Value < 1) E1.Value = 1;
+                int netCost = UnityEngine.Mathf.RoundToInt(LocomotionSystem.movementDividend / (E1.Value - cost));
+                TimeSystem.SpendActionPoints(Actor, netCost);
+                return true;
+            }
+            return false;
         }
 
         private void TakeAction()

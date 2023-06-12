@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 4
   <BiomeName>k__BackingField: Mountain
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: 5577f051ee79aa84aa055d25da12e2b4, type: 2}
   <WorldTile>k__BackingField: {fileID: 11400000, guid: a91837a4cfba82b41ae9596125135c65, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1

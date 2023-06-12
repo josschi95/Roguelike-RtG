@@ -78,20 +78,25 @@ namespace JS.ECS
             Debug.LogWarning("Not Yet Implemented.");
             if (obj.Position.z >= 0) return false;
 
-            //Check for presence of stairs/ladder
-
-            obj.Position += Vector3Int.forward;
-            
-            return false;
+            if (obj.CurrentNode.stairsUp)
+            {
+                obj.Position += Vector3Int.forward;
+                return true;
+            }
+            MessageSystem.NewMessage("There are no stairs leading up");
+            return false;            
         }
 
         public static bool TryMoveDown(Physics obj)
         {
             Debug.LogWarning("Not Yet Implemented.");
-            //Check for presence of stairs/holes
 
-            obj.Position += Vector3Int.back;
-
+            if (obj.CurrentNode.stairsDown)
+            {
+                obj.Position += Vector3Int.back;
+                return true;
+            }
+            MessageSystem.NewMessage("There are no stairs leading down");
             return false;
         }
 

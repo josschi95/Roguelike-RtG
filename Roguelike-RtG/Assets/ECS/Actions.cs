@@ -29,9 +29,10 @@ namespace JS.ECS
             var actor = obj.entity.GetComponent<TimedActor>();
             if (actor == null) return;
 
-            int MoveSpeed = 100; //Default MoveSpeed
-            if (obj.entity.TryGetStat("MoveSpeed", out StatBase stat)) MoveSpeed = stat.Value;
-            int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
+            var E1 = new GetStat("MoveSpeed");
+            obj.entity.FireEvent(E1);
+            E1.Value = Mathf.Clamp(E1.Value, 1, 200);
+            int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (E1.Value - cost));
 
             TimeSystem.SpendActionPoints(actor, netCost);
             TimeSystem.EndTurn(actor);

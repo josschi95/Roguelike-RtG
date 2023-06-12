@@ -7,11 +7,10 @@ namespace JS.ECS
     public class PoisonCoated : ComponentBase
     {
         public string Amount;
-        public PoisonCoated(Physics physics, string amount = "1d6")
+        public PoisonCoated(string amount = "1d6")
         {
             Amount = amount;
             Priority = 2;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

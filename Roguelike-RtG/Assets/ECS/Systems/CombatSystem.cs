@@ -37,14 +37,15 @@ namespace JS.ECS
             }
 
             var target = instance.GetHighestPrecedenceTarget(validTargets);
-            Debug.Log("Trying to attack. " + target.entity.Name);
+            target.entity.FireEvent(new AttackedBy(combatant.entity));
+            //Debug.Log("Trying to attack. " + target.entity.Name);
 
             //Get a list of all valid Melee Attacks
             var E1 = new GetMeleeAttacks();
             combatant.entity.FireEvent(E1);
             if (E1.attacks.Count == 0)
             {
-                MessageSystem.NewMessage("Nothing to attack with!");
+                MessageSystem.NewMessage("Nothing to attack " + target.entity.Name + " with!");
                 return false;
             }
 
@@ -57,7 +58,6 @@ namespace JS.ECS
                 else MessageSystem.NewMessage(combatant.entity.Name + " missed " + target.entity.Name);
             }
 
-            target.entity.FireEvent(new AttackedBy(combatant.entity));
             return true;
         }
 

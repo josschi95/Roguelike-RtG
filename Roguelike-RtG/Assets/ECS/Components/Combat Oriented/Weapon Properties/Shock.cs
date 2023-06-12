@@ -5,10 +5,9 @@ namespace JS.ECS
     /// </summary>
     public class Shock : ComponentBase
     {
-        public Shock(Physics physics)
+        public Shock()
         {
             Priority = 2;
-            physics.entity.AddComponent(this);
         }
 
         public override void OnEvent(Event newEvent)

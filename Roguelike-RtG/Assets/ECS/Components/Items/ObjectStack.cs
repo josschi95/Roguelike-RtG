@@ -5,14 +5,10 @@ namespace JS.ECS
 {
     public class ObjectStack : ComponentBase
     {
+        public ObjectStack() { }
+
         public int MaxStack { get; private set; }
         public int Amount { get; private set; }
-
-        public ObjectStack(int maxStack = int.MaxValue, int amount = 1)
-        {
-            MaxStack = maxStack;
-            Amount = amount;
-        }
 
         public bool CanStackWith(Entity entity)
         {

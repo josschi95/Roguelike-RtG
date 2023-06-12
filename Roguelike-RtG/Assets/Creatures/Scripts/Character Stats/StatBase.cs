@@ -10,17 +10,15 @@ namespace JS.CharacterSystem
     {
         public string Name { get; protected set; }
         public string ShortName { get; protected set; }
+        //
+        public int CurrentValue;
+        public int Value { get; protected set; } = 10;
         public int MinValue { get; protected set; } = 1;
         public int Potential { get; protected set; } = 100;
         public int MaxValue { get; protected set; } = 100;
         //
-        public int BaseValue { get; protected set; } = 10;
-        public int Value => GetModifiedValue();
-        //
         public int XP { get; protected set; } = 0;
         public int XPToNextLevel { get; protected set; }
-        //
-        protected List<int> modifiers;
 
         public StatBase() { } 
         
@@ -29,43 +27,24 @@ namespace JS.CharacterSystem
             Name = name;
             ShortName = shortName;
 
-            BaseValue = value;
-            Potential = potential;
+            Value = value;
+            CurrentValue = value;
             
+            Potential = potential;
             MinValue = min;
             MaxValue = max;
 
-            modifiers = new List<int>();
             CalculateXPToNextLevel();
         }
 
         public void IncreaseBaseValue(int bonus)
         {
-            BaseValue += bonus;
-        }
-
-        private int GetModifiedValue()
-        {
-            int modifiedValue = BaseValue;
-            modifiers.ForEach(x => modifiedValue += x);
-            return modifiedValue;
-        }
-
-        public void AddModifier(int value)
-        {
-            if (value == 0) return;
-            modifiers.Add(value);
-        }
-
-        public void RemoveModifier(int value)
-        {
-            if (value == 0) return;
-            modifiers.Remove(value);
+            Value += bonus;
         }
 
         public void OnGainXP(int xp)
         {
-            if (BaseValue >= MaxValue) return;
+            if (Value >= MaxValue) return;
 
             XP += xp;
             if (XP >= XPToNextLevel) OnLevelUp();
@@ -73,15 +52,15 @@ namespace JS.CharacterSystem
 
         protected virtual void OnLevelUp()
         {
-            if (BaseValue >= MaxValue) return;
+            if (Value >= MaxValue) return;
 
-            if (BaseValue < Potential) BaseValue++;
+            if (Value < Potential) Value++;
             else OnIncreasePotential();
 
             XP -= XPToNextLevel;
             CalculateXPToNextLevel();
 
-            if (BaseValue >= MaxValue) XP = 0;
+            if (Value >= MaxValue) XP = 0;
             if (XP >= XPToNextLevel) OnLevelUp();
         }
 
@@ -94,7 +73,7 @@ namespace JS.CharacterSystem
 
         protected void CalculateXPToNextLevel()
         {
-            XPToNextLevel = Mathf.RoundToInt(2 * BaseValue + 1) * 3; //Use this for testing
+            XPToNextLevel = Mathf.RoundToInt(2 * Value + 1) * 3; //Use this for testing
             //XPToNextLevel = Mathf.RoundToInt(2 * BaseValue + 1) * 30; //Use this for actual play
         }
     }

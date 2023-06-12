@@ -17,7 +17,13 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            //
+            if (newEvent is GetStat stat) OnGetStat(stat);
+        }
+
+        private void OnGetStat(GetStat stat)
+        {
+            if (stat.Name.Equals("ArmorValue") || stat.Name.Equals("AV")) stat.Value += ArmorValue;
+            else if (stat.Name.Equals("DodgeValue") || stat.Name.Equals("DV")) stat.Value += DodgeValue;
         }
     }
 }

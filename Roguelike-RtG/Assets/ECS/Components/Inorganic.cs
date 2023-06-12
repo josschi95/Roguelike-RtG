@@ -1,7 +1,7 @@
 namespace JS.ECS
 {
     /// <summary>
-    /// Component to add to Inorganic objects, making them immune to Bleed, Poison, and Psychic damage
+    /// Component to add to Inorganic objects, making them immune to Bleed, Poison, Psychic and Positive/Negative damage
     /// </summary>
     public class Inorganic : ComponentBase
     {
@@ -23,13 +23,13 @@ namespace JS.ECS
 
         private void OnTakeDamage(TakeDamage damage)
         {
-            for (int i = 0; i < damage.Types.Count; i++)
+            foreach(var pair in damage.Damage)
             {
-                if (damage.Types[i] == (int)DamageTypes.Bleed) damage.Amounts[i] = 0;
-                if (damage.Types[i] == (int)DamageTypes.Poison) damage.Amounts[i] = 0;
-                if (damage.Types[i] == (int)DamageTypes.Psychic) damage.Amounts[i] = 0;
-                if (damage.Types[i] == (int)DamageTypes.Positive) damage.Amounts[i] = 0;
-                if (damage.Types[i] == (int)DamageTypes.Negative) damage.Amounts[i] = 0;
+                if (pair.Key == "Bleed") damage.Damage.Remove(pair.Key);
+                else if (pair.Key == "Poison") damage.Damage.Remove(pair.Key);
+                else if (pair.Key == "Psychic") damage.Damage.Remove(pair.Key);
+                else if (pair.Key == "Positive") damage.Damage.Remove(pair.Key);
+                else if (pair.Key == "Negative") damage.Damage.Remove(pair.Key);
             }
         }
     }

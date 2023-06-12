@@ -32,8 +32,18 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            if (newEvent is TurnStart) IsTurn = true;
-            else if (newEvent is TurnEnd) IsTurn = false;
+            switch (newEvent)
+            {
+                case TurnStart:
+                    IsTurn = true; 
+                    break;
+                case TurnEnd: 
+                    IsTurn = false; 
+                    break;
+                case Death: 
+                    TimeSystem.Unregister(this); 
+                    break;
+            }
         }
     }
 }

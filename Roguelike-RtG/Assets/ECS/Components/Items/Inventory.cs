@@ -1,6 +1,5 @@
 using JS.ECS.Tags;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace JS.ECS
 {
@@ -17,7 +16,7 @@ namespace JS.ECS
             {
                 if (_physics == null)
                 {
-                    _physics = entity.GetComponent<Physics>();
+                    _physics = EntityManager.GetComponent<Physics>(entity);
                 }
                 return _physics;
             }
@@ -34,9 +33,9 @@ namespace JS.ECS
         {
             if (!CanAddItem(newObject)) return false;
 
-            if (newObject.entity.TryGetComponent<ObjectStack>(out var stack))
+            if (EntityManager.TryGetComponent<ObjectStack>(newObject.entity, out var stack))
             {
-                //Can 
+                //Check if can stack... but this needs to go inside an InventorySystem
             }
             else
             {
@@ -49,7 +48,7 @@ namespace JS.ECS
         private bool CanAddItem(Physics newObject)
         {
             if (newObject.IsTakeable) return false;
-            if (!newObject.entity.GetTag<Item>()) return false;
+            if (!EntityManager.GetTag<Item>(newObject.entity)) return false;
 
             return true;
         }

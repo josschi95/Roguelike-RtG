@@ -1,6 +1,5 @@
 using UnityEngine;
 using JS.ECS;
-using UnityEngine.InputSystem;
 using JS.ECS.Tags;
 
 namespace JS.WorldMap
@@ -8,32 +7,30 @@ namespace JS.WorldMap
     public class PlayerSpawner : MonoBehaviour
     {
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private InputActionAsset inputActionAsset;
-        [SerializeField] private Sprite[] playerSprites;
 
         private void Awake() => SpawnPlayer();
 
         private void SpawnPlayer()
         {
-            //var player = Blueprints.GetCreature("Player");
             var player = EntityFactory.GetEntity("BaseCreature");
-            player.AddTag(new PlayerTag());
+            EntityManager.AddTag(player, new PlayerTag());
             player.Name = "Player";
 
-            var physics = player.GetComponent<ECS.Physics>();
-            var brain = player.GetComponent<Brain>();
+            var physics = EntityManager.GetComponent<ECS.Physics>(player);
+            physics.Position = playerData.Position;
+            physics.LocalPosition = playerData.LocalPosition;
+
+            var brain = EntityManager.GetComponent<Brain>(player);
             brain.IsSleeping = false;
             brain.HasOverride = true;
 
-            physics.Position = playerData.Position;
-            physics.LocalPosition = playerData.LocalPosition;
-            player.AddComponent(new RenderCompound(physics, playerSprites, true, true));
+            var render = EntityManager.GetComponent<Render>(player);
+            render.RenderIfDark = true;
+            render.RenderOnWorldMap = true;
 
-            player.AddComponent(new WorldLocomotion());
-            player.AddComponent(new InputHandler());
-
-            player.GetComponent<RenderCompound>().RenderOnWorldMap = true;
-            player.AddComponent(new CameraFocus());
+            EntityManager.AddComponent(player, new WorldLocomotion());
+            EntityManager.AddComponent(player, new InputHandler());
+            EntityManager.AddComponent(player, new CameraFocus());
         }
     }
 }

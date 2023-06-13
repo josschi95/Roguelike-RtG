@@ -19,7 +19,8 @@ public class InventoryDisplay : MonoBehaviour
 
     public void GetAllItems(Entity entity)
     {
-        foreach(var item in entity.GetComponent<Inventory>().Contents)
+
+        foreach(var item in EntityManager.GetComponent<Inventory>(entity).Contents)
         {
             
         }

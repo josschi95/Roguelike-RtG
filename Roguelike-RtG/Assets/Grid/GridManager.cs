@@ -125,16 +125,14 @@ public class GridManager : MonoBehaviour
         int count = Random.Range(2, 5);
         for (int i = 0; i < count; i++)
         {
-            var enemy = EntityFactory.GetEntity("BaseCreature");
+            var enemy = EntityFactory.GetEntity("Orc");
             enemy.Name = "Orc_0" + i;
 
-            var physics = enemy.GetComponent<JS.ECS.Physics>();
-            enemy.GetComponent<Brain>().IsSleeping = false;
+            EntityManager.GetComponent<Brain>(enemy).IsSleeping = false;
 
-            Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/Orc");
+            var physics = EntityManager.GetComponent<JS.ECS.Physics>(enemy);
             physics.Position = grid.Position;
             physics.LocalPosition = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
-            enemy.AddComponent(new RenderSingle(physics, sprites[i]));
         }
     }
 }

@@ -69,7 +69,7 @@ namespace JS.ECS
         private bool SwitchFromWorldToLocalMap(Physics player)
         {
             //Don't know how, but make sure no other entity can swap map focus
-            if (!player.entity.GetTag<PlayerTag>()) return false;
+            if (player.entity != EntityManager.Player) return false;
 
             GridManager.OnEnterLocalMap(player.Position);
             player.LocalPosition = localCenter;
@@ -87,7 +87,7 @@ namespace JS.ECS
         private bool SwitchFromLocalToWorldMap(Physics player)
         {
             //Don't know how, but make sure no other entity can swap map focus
-            if (!player.entity.GetTag<PlayerTag>()) return false;
+            if (player.entity != EntityManager.Player) return false;
 
             //Can only switch to World Map if on the surface
             if (player.Position.z < 0) return false;

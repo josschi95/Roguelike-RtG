@@ -28,9 +28,11 @@ namespace JS.ECS
 
             for (int i = 0; i < list.Count; i++)
             {
-                var phys = list[i].GetComponent<Physics>();
-                if (phys == null || !phys.IsReal) continue;
-                if (phys.LocalPosition == local) entities.Add(phys);
+                if (EntityManager.TryGetComponent<Physics>(list[i], out var phys))
+                {
+                    if (!phys.IsReal) continue;
+                    if (phys.LocalPosition == local) entities.Add(phys);
+                }
             }
 
             return entities.ToArray();
@@ -53,9 +55,10 @@ namespace JS.ECS
             {
                 for (int j = 0; j < nodes[i].Entities.Count; j++)
                 {
-                    var phys = nodes[i].Entities[j].GetComponent<Physics>();
-                    if (phys == null || !phys.IsReal) continue;
-                    entities.Add(phys);
+                    if (EntityManager.TryGetComponent<Physics>(nodes[i].Entities[j], out var phys))
+                    {
+                        if (phys.IsReal) entities.Add(phys);
+                    }
                 }
             }
 

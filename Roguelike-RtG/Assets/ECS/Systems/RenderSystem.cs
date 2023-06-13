@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace JS.ECS
 {
-    public class RenderSystem : SystemBase<RenderBase>
+    public class RenderSystem : SystemBase<Render>
     {
+        //So another option rather than having single and compound renderers is to just render each thing separateley
+        //this would of course also mean tracking them all separately, and I'm not sure how that would work for 
+        //the bob/idle sways, as well as the other anims when I add those in... I could still parent them... w/ reference to parent
+
         private static RenderSystem instance;
 
         //Later these should be changed to pools
@@ -16,8 +20,8 @@ namespace JS.ECS
 
         [SerializeField] private Material flashMaterial;
         
-        private Dictionary<RenderBase, SingleRenderer> activeSingleRenders;
-        private Dictionary<RenderBase, CompoundRenderer> activeCompoundRenders;
+        private Dictionary<Render, SingleRenderer> activeSingleRenders;
+        private Dictionary<Render, CompoundRenderer> activeCompoundRenders;
 
         private void Awake()
         {
@@ -27,8 +31,8 @@ namespace JS.ECS
                 return;
             }
             instance = this;
-            activeSingleRenders = new Dictionary<RenderBase, SingleRenderer>();
-            activeCompoundRenders = new Dictionary<RenderBase, CompoundRenderer>();
+            activeSingleRenders = new Dictionary<Render, SingleRenderer>();
+            activeCompoundRenders = new Dictionary<Render, CompoundRenderer>();
         }
 
         /// <summary>
@@ -45,7 +49,7 @@ namespace JS.ECS
         /// <summary>
         /// Returns true if the entity is on the currently active map.
         /// </summary>
-        private bool EntityOnCurrentMap(RenderBase render)
+        private bool EntityOnCurrentMap(Render render)
         {
             if (GridManager.WorldMapActive) return render.RenderOnWorldMap;
             return render.Physics.Position == GridManager.ActiveGrid.Position;
@@ -54,7 +58,7 @@ namespace JS.ECS
         /// <summary>
         /// Registers the render and begins rendering if on currently active map.
         /// </summary>
-        public static void NewRender(RenderBase render)
+        public static void NewRender(Render render)
         {
             Register(render);
             UpdatePosition(render);
@@ -64,12 +68,12 @@ namespace JS.ECS
         /// Updates the position of the object's render when its transform changes.
         /// </summary>
         /// <param name="render"></param>
-        public static void UpdatePosition(RenderBase render)
+        public static void UpdatePosition(Render render)
         {
             instance.UpdateRenderPosition(render);
         }
 
-        private void UpdateRenderPosition(RenderBase render)
+        private void UpdateRenderPosition(Render render)
         {
             if (!EntityOnCurrentMap(render))
             {
@@ -77,34 +81,68 @@ namespace JS.ECS
                 return;
             }
 
-            if (render is RenderSingle single)
+            if (render.IsComposite)
             {
-                if (!activeSingleRenders.ContainsKey(single) || activeSingleRenders[single] == null) StartRendering(single);
+                if (!activeCompoundRenders.ContainsKey(render) || activeCompoundRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeSingleRenders[single].transform.position = single.Physics.WorldMapPosition;
-                else activeSingleRenders[single].transform.position = (Vector3Int)single.Physics.LocalPosition;
+                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = render.Physics.WorldMapPosition;
+                else activeCompoundRenders[render].transform.position = (Vector3Int)render.Physics.LocalPosition;
             }
-            else if (render is RenderCompound compound)
+            else
             {
-                if (!activeCompoundRenders.ContainsKey(compound) || activeCompoundRenders[compound] == null) StartRendering(compound);
+                if (!activeSingleRenders.ContainsKey(render) || activeSingleRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeCompoundRenders[compound].transform.position = compound.Physics.WorldMapPosition;
-                else activeCompoundRenders[compound].transform.position = (Vector3Int)compound.Physics.LocalPosition;
+                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = render.Physics.WorldMapPosition;
+                else activeSingleRenders[render].transform.position = (Vector3Int)render.Physics.LocalPosition;
             }
         }
 
+        #region - Sprite Flash -
         /// <summary>
         /// Momentarily flashes the renderer white.
         /// </summary>
-        public static void FlashSprite(RenderBase render)
+        public static void FlashSprite(Render render)
         {
-            if (render is RenderSingle single)
+            instance.Flash(render);
+
+            /*if (render is RenderSingle single)
                 instance.StartCoroutine(instance.Flash(single));
             else if (render is RenderCompound compound)
-                instance.StartCoroutine(instance.Flash(compound));
+                instance.StartCoroutine(instance.Flash(compound));*/
         }
 
-        private IEnumerator Flash(RenderSingle render)
+        private void Flash(Render render)
+        {
+            if (render.IsComposite) StartCoroutine(FlashComposite(activeCompoundRenders[render]));
+            else StartCoroutine(FlashSingle(activeSingleRenders[render]));
+        }
+
+        private IEnumerator FlashSingle(SingleRenderer single)
+        {
+            var mat = single.Renderer.material;
+            single.Renderer.material = flashMaterial;
+            yield return new WaitForSeconds(0.1f);
+
+            single.Renderer.material = mat;
+        }
+
+        private IEnumerator FlashComposite(CompoundRenderer compound)
+        {
+            var mats = new Material[10];
+            for (int i = 0; i < mats.Length; i++)
+            {
+                mats[i] = compound.Renderers[i].material;
+                compound.Renderers[i].material = flashMaterial;
+            }
+            yield return new WaitForSeconds(0.1f);
+
+            for (int i = 0; i < mats.Length; i++)
+            {
+                compound.Renderers[i].material = mats[i];
+            }
+        }
+
+        /*private IEnumerator Flash(RenderSingle render)
         {
             var mat = instance.activeSingleRenders[render].Renderer.material;
             instance.activeSingleRenders[render].Renderer.material = flashMaterial;
@@ -126,65 +164,82 @@ namespace JS.ECS
             {
                 instance.activeCompoundRenders[compound].Renderers[i].material = mats[i];
             }
-        }
+        }*/
+        #endregion
 
         /// <summary>
         /// Begins rendering the object when it is within the current scene.
         /// </summary>
-        private void StartRendering(RenderBase render)
+        private void StartRendering(Render render)
         {
-            if (render is RenderSingle single)
-            {
-                var go = Instantiate(instance.single);
-                go.Renderer.sprite = single.sprite;
-                go.transform.position = (Vector3Int)single.Physics.LocalPosition;
-                instance.activeSingleRenders[single] = go;
-            }
-            else if (render is RenderCompound compound)
+            if (render.IsComposite)
             {
                 var go = Instantiate(instance.compound);
-                go.transform.position = (Vector3Int)compound.Physics.LocalPosition;
-                for (int i = 0; i < compound.sprites.Length; i++)
+                instance.activeCompoundRenders[render] = go;
+                go.transform.position = (Vector3Int)render.Physics.LocalPosition;
+
+                go.Base.sprite = GetSprite(render.Tile);
+
+                /*for (int i = 0; i < compound.sprites.Length; i++)
                 {
                     go.Renderers[i].sprite = compound.sprites[i];
-                }
-                instance.activeCompoundRenders[compound] = go;
+                }*/
+            }
+            else
+            {
+                var go = Instantiate(instance.single);
+                instance.activeSingleRenders[render] = go;
+                go.transform.position = (Vector3Int)render.Physics.LocalPosition;
+
+                go.Renderer.sprite = GetSprite(render.Tile);
             }
         }
         
         /// <summary>
         /// Stops rendering the object when it is no longer in the current scene.
         /// </summary>
-        private void StopRendering(RenderBase render)
+        private void StopRendering(Render render)
         {
-            if (render is RenderSingle single && activeSingleRenders.ContainsKey(single))
+            if (render.IsComposite && activeCompoundRenders.ContainsKey(render))
             {
-                if (activeSingleRenders[single] != null)
-                    Destroy(activeSingleRenders[single].gameObject);
+                if (activeCompoundRenders[render] != null)
+                    Destroy(activeCompoundRenders[render].gameObject);
 
-                activeSingleRenders.Remove(single);
+                activeCompoundRenders.Remove(render);
             }
-            else if (render is RenderCompound compound && activeCompoundRenders.ContainsKey(compound))
+            else if (activeSingleRenders.ContainsKey(render))
             {
-                if (activeCompoundRenders[compound] != null)
-                    Destroy(activeCompoundRenders[compound].gameObject);
+                if (activeSingleRenders[render] != null)
+                    Destroy(activeSingleRenders[render].gameObject);
 
-                activeCompoundRenders.Remove(compound);
+                activeSingleRenders.Remove(render);
             }
         }
 
         /// <summary>
         /// Removes component from list and stops rendering.
         /// </summary>
-        public static void RemoveRender(RenderBase render)
+        public static void RemoveRender(Render render)
         {
             instance.RemoveRenderComponent(render);
         }
 
-        private void RemoveRenderComponent(RenderBase render)
+        private void RemoveRenderComponent(Render render)
         {
             StopRendering(render);
             Unregister(render);
+        }
+
+        private Sprite GetSprite(string name)
+        {
+            var path = name.Split(",");
+            var sprites = Resources.LoadAll<Sprite>("Sprites/" + path[0]);
+            foreach (var sprite in sprites)
+            {
+                if (!sprite.name.Equals(path[1])) continue;
+                return sprite;
+            }
+            return null;
         }
     }
 }

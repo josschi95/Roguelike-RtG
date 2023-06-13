@@ -82,6 +82,10 @@
                     "Name": "Physics",
                     "Parameters": [ "IsTakeable=false" ]
                 },
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=Creatures/humanoid_base,humanoid_blank", "IsComposite=true" ]
+                },
                 { "Name": "TimedActor" },
                 {
                     "Name": "Body",
@@ -196,12 +200,26 @@
             "Inherits": "Item",
             "Components": [
                 {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=Creatures/humanoid_base,corpse" ]
+                },
+                {
                     "Name": "Food",
                     "Parameters": [ "Satiation=100", "IsGross=true", "IllOnEat=true" ]
                 },
                 {
                     "Name": "Description",
                     "Parameters": [ "Value=A corpse." ]
+                }
+            ]
+        },
+        {
+            "Name": "Orc",
+            "Inherits": "BaseCreature",
+            "Components": [
+                {
+                    "Name": "Render", 
+                    "Parameters": [ "Tile=Creatures/humanoid_base,orc_male"]
                 }
             ]
         }

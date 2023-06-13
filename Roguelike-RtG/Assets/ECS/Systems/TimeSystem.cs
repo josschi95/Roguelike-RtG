@@ -48,17 +48,15 @@ namespace JS.ECS
 
         private void CreateSentinelt()
         {
-            var entity = new Entity("Sentinel");
-            var actor = new TimedActor();
-            entity.AddComponent(actor);
-            sentinel = actor;
+            var entity = EntityManager.NewEntity("Sentinel");
+            sentinel = EntityManager.AddComponent(entity, new TimedActor()) as TimedActor;
         }
 
         private void OnNewRound()
         {
             for (int i = 0; i < components.Count; i++)
             {
-                components[i].entity.FireEvent(newRoundEvent);
+                EntityManager.FireEvent(components[i].entity, newRoundEvent);
             }
 
             //Debug.Log("OnNewRound");
@@ -141,7 +139,7 @@ namespace JS.ECS
         {
             //Debug.Log(actor.entity.Name);
             //Debug.Log(components.Count);
-            actor.entity.FireEvent(turnStartEvent);
+            EntityManager.FireEvent(actor.entity, turnStartEvent);
             if (actor == sentinel) OnNewRound();
         }
 
@@ -152,7 +150,7 @@ namespace JS.ECS
 
         private void EndActorTurn(TimedActor actor)
         {
-            actor.entity.FireEvent(turnEndEvent);
+            EntityManager.FireEvent(actor.entity, turnEndEvent);
             TurnTransition();
         }
 

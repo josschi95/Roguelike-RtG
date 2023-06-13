@@ -14,8 +14,8 @@ namespace JS.ECS
         {
             if (entity == null) return false; //nothing to compare to
             if (entity.Name != this.entity.Name) return false; //Differently named
-            if (entity.GetTag<NeverStack>() || this.entity.GetTag<NeverStack>()) return false; //cannot stack
-            if (entity.TryGetStat("HitPoints", out StatBase hp) && this.entity.TryGetStat("HitPoints", out StatBase myHP))
+            if (EntityManager.GetTag<NeverStack>(entity) || EntityManager.GetTag<NeverStack>(this.entity)) return false;
+            if (EntityManager.TryGetStat(entity, "HitPoints", out StatBase hp) && EntityManager.TryGetStat(this.entity, "HitPoints", out StatBase myHP))
             {
                 if (hp != myHP) return false;
                 return true;
@@ -28,7 +28,7 @@ namespace JS.ECS
             if (!CanStackWith(entity)) return false;
             if (Amount >= MaxStack) return false;
 
-            entity.Destroy();
+            EntityManager.Destroy(entity);
             Amount++;
 
             return true;

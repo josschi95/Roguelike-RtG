@@ -44,9 +44,23 @@ namespace JS.ECS
             {
                 if (_actor == null)
                 {
-                    _actor = entity.GetComponent<TimedActor>();
+                    _actor = EntityManager.GetComponent<TimedActor>(entity);
                 }
                 return _actor;
+            }
+        }
+
+        private Physics _physics;
+
+        public Physics Physics
+        {
+            get
+            {
+                if (_physics == null)
+                {
+                    _physics = EntityManager.GetComponent<Physics>(entity);
+                }
+                return _physics;
             }
         }
 
@@ -73,10 +87,11 @@ namespace JS.ECS
 
         private bool TryWander()
         {
-            if (LocomotionSystem.TryMoveLocal(entity.GetComponent<Physics>(), DirectionHelper.GetRandom(), out int cost))
+            if (LocomotionSystem.TryMoveLocal(Physics, DirectionHelper.GetRandom(), out int cost))
             {
                 var E1 = new GetStat("MoveSpeed");
-                entity.FireEvent(E1);
+                EntityManager.FireEvent(entity, E1);
+
                 if (E1.Value < 1) E1.Value = 1;
                 int netCost = UnityEngine.Mathf.RoundToInt(LocomotionSystem.movementDividend / (E1.Value - cost));
                 TimeSystem.SpendActionPoints(Actor, netCost);

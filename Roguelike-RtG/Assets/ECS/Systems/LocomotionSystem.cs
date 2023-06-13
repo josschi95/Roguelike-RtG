@@ -13,7 +13,8 @@ namespace JS.ECS
         [SerializeField] private WorldGenerationParameters worldMapParams;
         [SerializeField] private WorldData worldMap;
 
-        private Physics tracer;
+        private Vector3Int worldTracer = Vector3Int.zero;
+        private Vector2Int localTracer = Vector2Int.zero;
 
         private void Awake()
         {
@@ -23,16 +24,6 @@ namespace JS.ECS
                 return;
             }
             instance = this;
-            GetTracer();
-        }
-
-        private void GetTracer()
-        {
-            var entity = new Entity("Tracer");
-            entity.AddComponent(new Physics());
-            tracer = entity.GetComponent<Physics>();
-            tracer.IsTakeable = false;
-            tracer.IsSolid = false;
         }
 
         public static bool TryMoveLocal(Physics obj, Compass direction, out int cost)
@@ -46,24 +37,24 @@ namespace JS.ECS
             if (!ProjectedPositionIsValid(obj, direction)) return false;
 
             //Highly considering storing all entities within GridManager's GameGrid class, sort of like a Scene folder
-            var entitiesAtPosition = TransformSystem.GetEntitiesAt(tracer.Position, tracer.LocalPosition);
+            var entitiesAtPosition = TransformSystem.GetEntitiesAt(worldTracer, localTracer);
             for (int i = 0; i < entitiesAtPosition.Length; i++)
             {
-                if (entitiesAtPosition[i].entity.GetTag<BlocksNode>()) return false; //position is blocked by wall
+                if (EntityManager.GetTag<BlocksNode>(entitiesAtPosition[i].entity)) return false; //position is blocked by wall
             }
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
             //Change the Transform of the object to match the tracer's valid position
-            obj.LocalPosition = tracer.LocalPosition;
-
-            if (obj.Position != tracer.Position)
+            //obj.LocalPosition = tracer.LocalPosition;
+            obj.LocalPosition = localTracer;
+            if (obj.Position != worldTracer)
             {
                 //Debug.Log("Region Position Changing");
-                obj.Position = tracer.Position;
+                obj.Position = worldTracer;
 
                 //Player crossed into a new map, change scenes
-                if (obj.entity.GetTag<PlayerTag>())
+                if (obj.entity == EntityManager.Player)
                 {
                     //Debug.Log("Player Switching Map");
                     GridManager.OnEnterLocalMap(obj.Position);
@@ -105,48 +96,44 @@ namespace JS.ECS
         /// </summary>
         private bool ProjectedPositionIsValid(Physics physics, Compass direction)
         {
-            tracer.Position = physics.Position;
-            tracer.LocalPosition = physics.LocalPosition;
+            worldTracer = physics.Position;
+            localTracer = physics.LocalPosition;
 
-            tracer.LocalPosition += DirectionHelper.GetVector(direction);
+            localTracer += DirectionHelper.GetVector(direction);
             if (WithinLocalMap()) return true;
 
-            WrapLocal(tracer); //Wrap local position to reflect change in map
+            WrapLocal(); //Wrap local position to reflect change in map
 
-            tracer.Position += (Vector3Int)DirectionHelper.GetVector(direction);
+            worldTracer += (Vector3Int)DirectionHelper.GetVector(direction);
             if (WithinWorldMap()) return true;
             return false;
         }
 
         private bool WithinLocalMap()
         {
-            if (tracer.LocalPosition.x < 0) return false;
-            if (tracer.LocalPosition.y < 0) return false;
-            if (tracer.LocalPosition.x > worldMapParams.LocalDimensions.x - 1) return false;
-            if (tracer.LocalPosition.y > worldMapParams.LocalDimensions.y - 1) return false;
+            if (localTracer.x < 0) return false;
+            if (localTracer.y < 0) return false;
+            if (localTracer.x > worldMapParams.LocalDimensions.x - 1) return false;
+            if (localTracer.y > worldMapParams.LocalDimensions.y - 1) return false;
             return true;
         }
 
-        private void WrapLocal(Physics physics)
+        private void WrapLocal()
         {
             //Wrap X
-            if (physics.LocalPosition.x < 0)
-                physics.LocalPosition = new Vector2Int(worldMapParams.LocalDimensions.x - 1, physics.LocalPosition.y);
-            else if (physics.LocalPosition.x > worldMapParams.LocalDimensions.x - 1)
-                physics.LocalPosition = new Vector2Int(0, physics.LocalPosition.y);
+            if (localTracer.x < 0) localTracer.x = worldMapParams.LocalDimensions.x - 1;
+            else if (localTracer.x > worldMapParams.LocalDimensions.x - 1) localTracer.x = 0;
             //Wrap Y
-            if (physics.LocalPosition.y < 0)
-                physics.LocalPosition = new Vector2Int(physics.LocalPosition.x, worldMapParams.LocalDimensions.y - 1);
-            else if (physics.LocalPosition.y > worldMapParams.LocalDimensions.y - 1)
-                physics.LocalPosition = new Vector2Int(physics.LocalPosition.x, 0);
+            if (localTracer.y < 0) localTracer.y = worldMapParams.LocalDimensions.y - 1;
+            else if (localTracer.y > worldMapParams.LocalDimensions.y - 1) localTracer.y = 0;
         }
 
         private bool WithinWorldMap()
         {
-            if (tracer.Position.x < 0) return false;
-            if (tracer.Position.y < 0) return false;
-            if (tracer.Position.x > worldMap.Width - 1) return false;
-            if (tracer.Position.y > worldMap.Height - 1) return false;
+            if (worldTracer.x < 0) return false;
+            if (worldTracer.y < 0) return false;
+            if (worldTracer.x > worldMap.Width - 1) return false;
+            if (worldTracer.y > worldMap.Height - 1) return false;
             return true;
         }
     }

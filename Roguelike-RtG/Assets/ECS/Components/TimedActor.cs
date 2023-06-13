@@ -9,7 +9,7 @@ namespace JS.ECS
         {
             get
             {
-                if (entity.TryGetStat("Speed", out var stat))
+                if (EntityManager.TryGetStat(entity, "Speed", out var stat))
                 {
                     return stat.Value;
                 }

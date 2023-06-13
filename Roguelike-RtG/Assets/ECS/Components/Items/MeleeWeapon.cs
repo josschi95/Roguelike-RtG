@@ -26,8 +26,9 @@ namespace JS.ECS
             if (newEvent is DealingMeleeDamage dmg)
             {
                 var roll = Dice.Roll(BaseDamage);
-                if (entity.TryGetStat(Stat, out var stat)) roll += stat.Value;
-                if (entity.TryGetStat(Proficiency, out var proficiency)) roll += proficiency.Value;
+                if (EntityManager.TryGetStat(entity,Stat, out var stat)) roll += stat.Value;
+                if (EntityManager.TryGetStat(entity, Proficiency, out var proficiency)) roll += proficiency.Value;
+
                 if (dmg.Damage.ContainsKey(Type)) dmg.Damage[Type] += roll;
                 else dmg.Damage.Add(Type, roll);
             }

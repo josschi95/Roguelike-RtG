@@ -1,33 +1,36 @@
 using JS.ECS;
 using UnityEngine;
 
-public class CorpseManager : MonoBehaviour
+namespace JS.ECS
 {
-    public static CorpseManager instance;
-
-    private void Awake()
+    public class CorpseManager : MonoBehaviour
     {
-        if (instance != null)
+        public static CorpseManager instance;
+
+        private void Awake()
         {
-            Destroy(this);
-            return;
+            if (instance != null)
+            {
+                Destroy(this);
+                return;
+            }
+            instance = this;
         }
-        instance = this;
-    }
 
-    public static void OnCreatureDeath(Entity entity)
-    {
-        var corpse = entity.GetComponent<Corpse>();
-        if (corpse != null && Random.value * 100 >= corpse.CorpseChance)
+        public static void OnCreatureDeath(Entity entity)
         {
-            Debug.Log("Dropping corpse");
-            var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);
-            if (newCorpse == null) throw new System.Exception("Corpse Blueprint not found!");
+            var corpse = EntityManager.GetComponent<Corpse>(entity);
+            if (corpse != null && Random.value * 100 >= corpse.CorpseChance)
+            {
+                Debug.Log("Dropping corpse");
+                var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);
+                if (newCorpse == null) throw new System.Exception("Corpse Blueprint not found!");
 
-            var ePhys = entity.GetComponent<JS.ECS.Physics>();
-            var cPhys = newCorpse.GetComponent<JS.ECS.Physics>();
-            cPhys.Position = ePhys.Position;
-            cPhys.LocalPosition = ePhys.LocalPosition;
+                var ePhys = EntityManager.GetComponent<Physics>(entity);
+                var cPhys = EntityManager.GetComponent<Physics>(newCorpse);
+                cPhys.Position = ePhys.Position;
+                cPhys.LocalPosition = ePhys.LocalPosition;
+            }
         }
     }
 }

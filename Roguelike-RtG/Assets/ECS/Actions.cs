@@ -26,11 +26,10 @@ namespace JS.ECS
             if (!LocomotionSystem.TryMoveLocal(obj, direction, out int cost)) return;
             if (isForced) return; //Forced movement does not spend AP
 
-            var actor = obj.entity.GetComponent<TimedActor>();
-            if (actor == null) return;
+            if (!EntityManager.TryGetComponent<TimedActor>(obj.entity, out var actor)) return;
 
             var E1 = new GetStat("MoveSpeed");
-            obj.entity.FireEvent(E1);
+            EntityManager.FireEvent(obj.entity, E1);
             E1.Value = Mathf.Clamp(E1.Value, 1, 200);
             int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (E1.Value - cost));
 
@@ -53,8 +52,8 @@ namespace JS.ECS
 
         public static void TryMeleeAttack(Combat combatant, Vector2Int position)
         {
-            var actor = combatant.entity.GetComponent<TimedActor>();
-            if (actor != null && !actor.IsTurn) return; //not your turn. May change this for special cases
+            if (!EntityManager.TryGetComponent<TimedActor>(combatant.entity, out var actor)) return;
+            if (!actor.IsTurn) return; //not your turn. May change this for special cases
 
             if (!CombatSystem.TryMeleeAttack(combatant, position)) return;
 

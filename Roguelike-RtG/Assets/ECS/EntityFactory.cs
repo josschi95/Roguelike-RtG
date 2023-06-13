@@ -71,7 +71,7 @@ namespace JS.ECS
             {
                 entity = CreateEntity(_objectBlueprints[blueprint.Inherits]);
             }
-            else entity = new Entity(blueprint.Name);
+            else entity = EntityManager.NewEntity(blueprint.Name);
             entity.Name = blueprint.Name;
             //Debug.Log(blueprint.Name);
 
@@ -87,7 +87,7 @@ namespace JS.ECS
                 object NewComponent = Activator.CreateInstance(newComponentType);
 
                 bool isOverride = false;
-                if (entity.HasComponent((ComponentBase)NewComponent, out var existingComp))
+                if (EntityManager.TryFindComponent(entity, (ComponentBase)NewComponent, out var existingComp))
                 {
                     //Debug.Log("Existing component of type " + NewComponent.ToString() + " found");
                     NewComponent = existingComp;
@@ -98,7 +98,7 @@ namespace JS.ECS
                 //Continue early if parameters are empty, use base values
                 if (component.Parameters == null)
                 {
-                    if (!isOverride) entity.AddComponent((ComponentBase)NewComponent);
+                    if (!isOverride) EntityManager.AddComponent(entity, (ComponentBase)NewComponent);
                     continue;
                 }
 
@@ -137,7 +137,7 @@ namespace JS.ECS
                         info.SetValue(NewComponent, Enum.Parse(e.GetType(), values[1]));
                     }
                 }
-                if (!isOverride) entity.AddComponent((ComponentBase)NewComponent);
+                if (!isOverride) EntityManager.AddComponent(entity, (ComponentBase)NewComponent);
             }
             #endregion
 
@@ -146,14 +146,14 @@ namespace JS.ECS
             {
                 foreach (var stat in blueprint.Stats)
                 {
-                    if (entity.TryGetStat(stat.Name, out var existingStat))
+                    if (EntityManager.TryGetStat(entity, stat.Name, out var existingStat))
                     {
 
                     }
                     else
                     {
                         var newStat = new StatBase(stat.Name, stat.ShortName, stat.Value, stat.Potential, stat.MinValue, stat.MaxValue);
-                        entity.AddStat(newStat);
+                        EntityManager.AddStat(entity, newStat);
                     }
                 }
             }

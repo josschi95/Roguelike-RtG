@@ -28,21 +28,21 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive) return false;
 
-            var validTargets = TransformSystem.GetEntitiesAt(combatant.entity.GetComponent<Physics>().Position, attackPos);
+            var validTargets = TransformSystem.GetEntitiesAt(combatant.Physics.Position, attackPos);
             if (validTargets == null || validTargets.Length == 0)
             {
                 MessageSystem.NewMessage("Nothing to attack");
-                Debug.Log(combatant.entity.GetComponent<Physics>().LocalPosition + ", " +  attackPos);
+                Debug.Log(combatant.Physics.LocalPosition + ", " +  attackPos);
                 return false; //There is nothing to attack here
             }
 
             var target = instance.GetHighestPrecedenceTarget(validTargets);
-            target.entity.FireEvent(new AttackedBy(combatant.entity));
+            EntityManager.FireEvent(target.entity, new AttackedBy(combatant.entity));
             //Debug.Log("Trying to attack. " + target.entity.Name);
 
             //Get a list of all valid Melee Attacks
             var E1 = new GetMeleeAttacks();
-            combatant.entity.FireEvent(E1);
+            EntityManager.FireEvent(combatant.entity, E1);
             if (E1.attacks.Count == 0)
             {
                 MessageSystem.NewMessage("Nothing to attack " + target.entity.Name + " with!");
@@ -64,7 +64,7 @@ namespace JS.ECS
         private HitResult GetMeleeAttackResult(Combat combatant, Entity weapon, Entity target, int previousAttacks)
         {
             int roll = Dice.Roll(20); //Roll a d20 to determine initial accuracy
-            var meleeWeapon = weapon.GetComponent<MeleeWeapon>();
+            var meleeWeapon = EntityManager.GetComponent<MeleeWeapon>(weapon);
 
             //!!!Ensure checking for critical hit happens before the roll is modified!!!
             bool criticalHit = roll >= GetCritRange(combatant, meleeWeapon);
@@ -76,11 +76,11 @@ namespace JS.ECS
             if (meleeWeapon != null)
             {
                 roll += meleeWeapon.Accuracy; //Add weapon's Accuracy, and attacker's weapon Proficiency
-                if (combatant.entity.TryGetStat(meleeWeapon.Proficiency, out StatBase prof)) roll += prof.Value;
+                if (EntityManager.TryGetStat(combatant.entity, meleeWeapon.Proficiency, out StatBase prof)) roll += prof.Value;
             }
 
             int DV = 0; //Get target's Dodge Value
-            if (target.TryGetStat("DV", out StatBase stat)) DV = stat.Value;
+            if (EntityManager.TryGetStat(target, "DV", out StatBase stat)) DV = stat.Value;
 
             if (criticalHit)
             {
@@ -95,11 +95,10 @@ namespace JS.ECS
         {
             //Get Damage from the object
             var E1 = new DealingMeleeDamage();
-            meleeWeapon.FireEvent(E1);
+            EntityManager.FireEvent(meleeWeapon, E1);
 
             //Pass damage to target
-            var E2 = new TakeDamage(E1.Damage);
-            target.FireEvent(E2);
+            EntityManager.FireEvent(target, new TakeDamage(E1.Damage));
 
             string log = attacker.Name + " hit " + target.Name + " for ";
             foreach(var pair in E1.Damage)
@@ -113,7 +112,7 @@ namespace JS.ECS
 
         private void OnMeleeCrit(Entity meleeWeapon, Entity target)
         {
-
+            Debug.LogWarning("Crit! Not yet implemented.");
         }
 
         /// <summary>
@@ -141,12 +140,12 @@ namespace JS.ECS
             //target combatants first
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].entity.GetComponent<Combat>() != null) return targets[i];
+                if (EntityManager.GetComponent<Combat>(targets[i].entity) != null) return targets[i];
             }
             //target sentient targets next
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].entity.GetComponent<Brain>() != null) return targets[i];
+                if (EntityManager.GetComponent<Brain>(targets[i].entity) != null) return targets[i];
             }
             return targets[0];
         }

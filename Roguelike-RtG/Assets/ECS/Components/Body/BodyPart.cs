@@ -33,11 +33,11 @@ namespace JS.ECS
             {
                 if (WeaponOverride != null)
                 {
-                    getAttacks.attacks.Add(WeaponOverride.GetComponent<Physics>());
+                    getAttacks.attacks.Add(EntityManager.GetComponent<Physics>(WeaponOverride));
                 }
                 else if (DefaultBehavior != null)
                 {
-                    getAttacks.attacks.Add(DefaultBehavior.GetComponent<Physics>());
+                    getAttacks.attacks.Add(EntityManager.GetComponent<Physics>(DefaultBehavior));
                 }
             }
         }

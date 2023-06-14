@@ -19,6 +19,7 @@
                 },
                 { "Name": "Brain" },
                 { "Name": "Stomach" },
+                { "Name": "Corpse" },
                 { "Name": "Inventory" },
                 { "Name": "Combat" },
                 { "Name": "RandomLoot" }
@@ -60,16 +61,6 @@
             ]
         },
         {
-            "Name": "Item",
-            "Inherits": "InorganicObject",
-            "Components": [
-                { "Name": "ObjectStack" }
-            ],
-            "Tags": [
-                { "Name": "Item" }
-            ]
-        },
-        {
             "Name": "NaturalWeapon",
             "Inherits": "Item",
             "Components": [
@@ -91,38 +82,6 @@
             ]
         },
         {
-            "Name": "MeleeWeapon",
-            "Inherits": "Item",
-            "Components": [
-                {
-                    "Name": "Physics",
-                    "Parameters": [
-                        "Weight=5",
-                        "Category=MeleeWeapon"
-                    ]
-                },
-                { "Name": "CraftingItem", "Parameters": ["Skill=Smithing"]}
-            ]
-        },
-        {
-            "Name": "MissileWeapon",
-            "Inherits": "Item",
-            "Components": [
-                {
-                    "Name": "Physics",
-                    "Parameters": [
-                        "Weight=5",
-                        "Category=MissileWeapon"
-                    ]
-                },
-                { "Name": "MissileWeapon" },
-                {
-                    "Name": "CraftingItem",
-                    "Parameters": [ "Skill=Smithing" ]
-                }
-            ]
-        },
-        {
             "Name": "DefaultFist",
             "Inherits": "NaturalWeapon",
             "Components": []
@@ -133,7 +92,7 @@
             "Components": [
                 {
                     "Name": "Render",
-                    "Parameters": [ "Tile=Creatures/humanoid_base,corpse" ]
+                    "Parameters": [ "Tile=Creatures/humanoid_base,corpse", "Layer=Object" ]
                 },
                 {
                     "Name": "Food",
@@ -151,7 +110,7 @@
             "Components": [
                 {
                     "Name": "Render", 
-                    "Parameters": [ "Tile=Creatures/humanoid_base,orc_male"]
+                    "Parameters": [ "Tile=Creatures/humanoid_base,orc_male", "Layer=Creature" ]
                 }
             ]
         }

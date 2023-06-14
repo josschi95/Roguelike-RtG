@@ -1,34 +1,40 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using JS.UI;
 
-public class TimeDisplay : MonoBehaviour
+namespace JS.UI
 {
-    [SerializeField] private TimeKeeper timeKeeper;
-    [SerializeField] private TMP_Text timeText;
-    [SerializeField] private MoonPhaseHelper moonPhaseHelper;
-
-    [SerializeField] private Image moonImage; 
-    private void Start() => DisplayTime();
-
-    //Called from GameEventListener on each GameTick
-    public void UpdateDisplay() => DisplayTime();
-
-    private void DisplayTime()
+    public class TimeDisplay : MonoBehaviour
     {
-        timeText.text = GetTimeOfDay() + ", " + timeKeeper.Days + timeKeeper.GetSuperScriptOrdinals(timeKeeper.Days) +
-            " day of " + timeKeeper.Month.ToString() + ", " + timeKeeper.Year + timeKeeper.GetSuperScriptOrdinals(timeKeeper.Year) +
-            " year";
+        [SerializeField] private TimeKeeper timeKeeper;
+        [SerializeField] private TMP_Text timeText;
+        [SerializeField] private MoonPhaseHelper moonPhaseHelper;
 
-        moonImage.sprite = moonPhaseHelper.GetMoonSprite();
-    }
+        [SerializeField] private Image moonImage;
+        private void Start() => DisplayTime();
 
-    private string GetTimeOfDay()
-    {
-        if (timeKeeper.Hours < 6) return "Night";
-        if (timeKeeper.Hours < 12) return "Morning";
-        if (timeKeeper.Hours < 18) return "Afternoon";
-        return "Evening";
+        //Called from GameEventListener on each GameTick
+        public void UpdateDisplay() => DisplayTime();
+
+        private void DisplayTime()
+        {
+            timeText.text = GetTimeOfDay() + ", " + timeKeeper.Days + timeKeeper.GetSuperScriptOrdinals(timeKeeper.Days) +
+                " day of " + timeKeeper.Month.ToString() + ", " + timeKeeper.Year + timeKeeper.GetSuperScriptOrdinals(timeKeeper.Year) +
+                " year";
+
+            if (moonPhaseHelper != null)
+            {
+                var s = moonPhaseHelper.GetMoonSprite();
+                moonImage.sprite = s;
+            }
+        }
+
+        private string GetTimeOfDay()
+        {
+            if (timeKeeper.Hours < 6) return "Night";
+            if (timeKeeper.Hours < 12) return "Morning";
+            if (timeKeeper.Hours < 18) return "Afternoon";
+            return "Evening";
+        }
     }
 }

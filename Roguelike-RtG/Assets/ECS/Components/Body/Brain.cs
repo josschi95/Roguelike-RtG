@@ -89,7 +89,7 @@ namespace JS.ECS
         {
             if (LocomotionSystem.TryMoveLocal(Physics, DirectionHelper.GetRandom(), out int cost))
             {
-                var E1 = new GetStat("MoveSpeed");
+                var E1 = new GetStat("WALK");
                 EntityManager.FireEvent(entity, E1);
 
                 if (E1.Value < 1) E1.Value = 1;

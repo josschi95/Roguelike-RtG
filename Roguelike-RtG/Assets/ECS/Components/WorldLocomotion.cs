@@ -8,7 +8,7 @@ namespace JS.ECS
         {
             get
             {
-                if (EntityManager.TryGetStat(entity, "MoveSpeed", out StatBase stat))
+                if (EntityManager.TryGetStat(entity, "WALK", out StatBase stat))
                 {
                     return stat.Value;
                 }

@@ -1,18 +1,8 @@
-using System.Linq;
-
 namespace JS.ECS
 {
     public class MeleeWeapon : ComponentBase
     {
         public MeleeWeapon() { }
-
-        public MeleeWeapon(string baseDamage = "1d2", string type = "Blunt", string stat = "STR", string proficiency = "BluntWeapons")
-        {
-            BaseDamage = baseDamage;
-            Type = type;
-            Stat = stat;
-            Proficiency = proficiency;
-        }
 
         public string BaseDamage = "1d2"; //How much damage this weapon deals on a hit
         public int Accuracy = 0; //Bonus to rolls made to hit a target
@@ -26,6 +16,8 @@ namespace JS.ECS
             if (newEvent is DealingMeleeDamage dmg)
             {
                 var roll = Dice.Roll(BaseDamage);
+                if (dmg.isCrit) roll += Dice.RollMax(BaseDamage);
+
                 if (EntityManager.TryGetStat(entity,Stat, out var stat)) roll += stat.Value;
                 if (EntityManager.TryGetStat(entity, Proficiency, out var proficiency)) roll += proficiency.Value;
 

@@ -44,30 +44,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Floor
+  - name: Floor Decal
     uniqueID: 3116835953
     locked: 0
-  - name: Floor Decal
+  - name: Wall
     uniqueID: 3906880389
     locked: 0
-  - name: Wall
+  - name: Wall Decal
     uniqueID: 3635897447
     locked: 0
-  - name: Wall Decal
+  - name: Object
     uniqueID: 2251673883
     locked: 0
-  - name: Object
+  - name: Creature
     uniqueID: 1109139947
     locked: 0
-  - name: Creature
+  - name: Creature Decal
     uniqueID: 4202917117
     locked: 0
-  - name: Creature Decal
+  - name: Overlay
     uniqueID: 264973063
     locked: 0
-  - name: Overlay
-    uniqueID: 4266446693
-    locked: 0
   - name: UI
-    uniqueID: 248588071
+    uniqueID: 4266446693
     locked: 0

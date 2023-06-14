@@ -13,6 +13,7 @@ public class MessageSystem : MonoBehaviour
             return;
         }
         instance = this;
+        log.ClearLog();
     }
 
     public static void NewMessage(string message)

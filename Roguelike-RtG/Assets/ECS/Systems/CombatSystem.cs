@@ -32,7 +32,7 @@ namespace JS.ECS
             if (validTargets == null || validTargets.Length == 0)
             {
                 MessageSystem.NewMessage("Nothing to attack");
-                Debug.Log(combatant.Physics.LocalPosition + ", " +  attackPos);
+                //Debug.Log(combatant.Physics.LocalPosition + ", " +  attackPos);
                 return false; //There is nothing to attack here
             }
 
@@ -51,9 +51,12 @@ namespace JS.ECS
 
             for (int i = 0; i < E1.attacks.Count; i++)
             {
+                //Exit early if the target has already been defeated
+                if (EntityManager.TryGetStat(target.entity, "HP", out var HP) && HP.CurrentValue <= 0) break;
+
                 var result = instance.GetMeleeAttackResult(combatant, E1.attacks[i].entity, target.entity, i);
 
-                if (result == HitResult.Critical) instance.OnMeleeCrit(E1.attacks[i].entity, target.entity);
+                if (result == HitResult.Critical) instance.OnMeleeHit(combatant.entity, E1.attacks[i].entity, target.entity, true);
                 else if (result == HitResult.Hit) instance.OnMeleeHit(combatant.entity, E1.attacks[i].entity, target.entity);
                 else MessageSystem.NewMessage(combatant.entity.Name + " missed " + target.entity.Name);
             }
@@ -73,7 +76,7 @@ namespace JS.ECS
             if (!combatant.hasMultiStrike) roll -= 3 * previousAttacks;
             else roll -= previousAttacks; // -1 if they have multi-strike
 
-            if (meleeWeapon != null)
+            if (meleeWeapon != null) //literally anything stemming from PhysicalObject has this component...
             {
                 roll += meleeWeapon.Accuracy; //Add weapon's Accuracy, and attacker's weapon Proficiency
                 if (EntityManager.TryGetStat(combatant.entity, meleeWeapon.Proficiency, out StatBase prof)) roll += prof.Value;
@@ -91,16 +94,17 @@ namespace JS.ECS
             return HitResult.Miss;
         }
 
-        private void OnMeleeHit(Entity attacker, Entity meleeWeapon, Entity target)
+        private void OnMeleeHit(Entity attacker, Entity meleeWeapon, Entity target, bool isCrit = false)
         {
             //Get Damage from the object
-            var E1 = new DealingMeleeDamage();
+            var E1 = new DealingMeleeDamage(isCrit);
             EntityManager.FireEvent(meleeWeapon, E1);
 
             //Pass damage to target
             EntityManager.FireEvent(target, new TakeDamage(E1.Damage));
-
-            string log = attacker.Name + " hit " + target.Name + " for ";
+            string log = "";
+            if (isCrit) log = "Critical Hit! ";
+            log += attacker.Name + " hit " + target.Name + " for ";
             foreach(var pair in E1.Damage)
             {
                 log += pair.Value + " " + pair.Key + " damage,";
@@ -108,11 +112,6 @@ namespace JS.ECS
             log.TrimEnd(',');
             log += " with " + meleeWeapon.Name + ".";
             MessageSystem.NewMessage(log);
-        }
-
-        private void OnMeleeCrit(Entity meleeWeapon, Entity target)
-        {
-            Debug.LogWarning("Crit! Not yet implemented.");
         }
 
         /// <summary>

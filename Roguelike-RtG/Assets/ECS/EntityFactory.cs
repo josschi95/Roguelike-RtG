@@ -9,6 +9,8 @@ namespace JS.ECS
 {
     public static class EntityFactory
     {
+        private static string[] paths = { "BaseObjects", "Items", "Creatures" };
+
         private static Dictionary<string, ObjectBlueprint> _objectBlueprints;
 
         public static void LoadBlueprints(bool loadFromResources = true)
@@ -17,26 +19,31 @@ namespace JS.ECS
 
             if (loadFromResources )
             {
-                LoadFromResources();
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    LoadFromResources(paths[i]);
+                }
                 return;
             }
 
             string[] files = Directory.GetFiles(Application.persistentDataPath);
-            foreach (string fileName in files)
+
+            for (int i = 0; i < paths.Length; i++)
             {
-                if (fileName.Contains("EntityBlueprints"))
+                foreach (string fileName in files)
                 {
-                    ProcessBlueprints(fileName);
-                    return;
+                    if (fileName.Contains(paths[i]))
+                    {
+                        ProcessBlueprints(fileName);
+                        break;
+                    }
                 }
             }
-
-            throw new Exception("Blueprints not found!");
         }
 
-        private static void LoadFromResources()
+        private static void LoadFromResources(string pathName)
         {
-            var textAsset = Resources.Load("Blueprints/EntityBlueprints") as TextAsset;
+            var textAsset = Resources.Load("Blueprints/" + pathName) as TextAsset;
 
             StringReader reader = new StringReader(textAsset.text);
             string json = reader.ReadToEnd();
@@ -59,7 +66,7 @@ namespace JS.ECS
 
             foreach(var blueprint in blueprints.Blueprints)
             {
-                Debug.Log(blueprint.Name);
+                //Debug.Log(blueprint.Name);
                 _objectBlueprints[blueprint.Name] = blueprint;
             }
         }

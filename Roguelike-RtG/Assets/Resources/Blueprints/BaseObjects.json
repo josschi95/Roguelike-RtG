@@ -1,0 +1,106 @@
+{
+    "Blueprints": [
+        {
+            "Name": "Object",
+            "Inherits": "",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "IsTakeable=false",
+                        "IsSolid=false",
+                        "IsCorporeal=true",
+                        "IsReal=true",
+                        "Weight=0",
+                        "Category=Miscellaneous"
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "PhysicalObject",
+            "Inherits": "Object",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "IsTakeable=true",
+                        "IsSolid=false",
+                        "IsCorporeal=true",
+                        "IsReal=true",
+                        "Weight=1.0",
+                        "Category=Miscellaneous"
+                    ]
+                },
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=objects,generic", "Layer=Object"]
+                },
+                {
+                    "Name": "MeleeWeapon",
+                    "Parameters": [
+                        "BaseDamage=1d2",
+                        "Type=Blunt",
+                        "Stat=STR",
+                        "Proficiency=BluntWeapons"
+                    ]
+                },
+                {
+                    "Name": "Commerce",
+                    "Parameters": [
+                        "Value=0.01"
+                    ]
+                },
+                {
+                    "Name": "Description",
+                    "Parameters": [
+                        "Value=An unremarkable object."
+                    ]
+                }
+            ],
+            "Stats": [
+                {
+                    "Name": "HitPoints",
+                    "ShortName": "HP",
+                    "Value": 10,
+                    "MinValue": 0,
+                    "Potential": 2147483647,
+                    "MaxValue": 2147483647
+                },
+                {
+                    "Name": "ArmorValue",
+                    "ShortName": "AV",
+                    "Value": 0,
+                    "MinValue": 0,
+                    "Potential": 100,
+                    "MaxValue": 100
+                },
+                {
+                    "Name": "DodgeValue",
+                    "ShortName": "DV",
+                    "Value": 0,
+                    "MinValue": 0,
+                    "Potential": 100,
+                    "MaxValue": 100
+                }
+            ]
+        },
+        {
+            "Name": "InorganicObject",
+            "Inherits": "PhysicalObject",
+            "Components": [
+                { "Name": "Inorganic" }
+            ],
+            "Tags": [
+                { "Name": "Breakable" }
+            ]
+        },
+        {
+            "Name": "Liquid",
+            "Inherits": "Object",
+            "Components": [
+
+            ]
+        }
+    ]
+}

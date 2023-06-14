@@ -28,7 +28,7 @@ namespace JS.ECS
 
             if (!EntityManager.TryGetComponent<TimedActor>(obj.entity, out var actor)) return;
 
-            var E1 = new GetStat("MoveSpeed");
+            var E1 = new GetStat("WALK");
             EntityManager.FireEvent(obj.entity, E1);
             E1.Value = Mathf.Clamp(E1.Value, 1, 200);
             int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (E1.Value - cost));

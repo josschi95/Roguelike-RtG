@@ -2,6 +2,8 @@ namespace JS.ECS
 {
     public class Render : ComponentBase
     {
+        public string Layer = "Default";
+        public int Order = 0;
         public bool RenderIfDark = true; //Render if outside FoV
         public bool RenderOnWorldMap = false; //Render if on world map?
 

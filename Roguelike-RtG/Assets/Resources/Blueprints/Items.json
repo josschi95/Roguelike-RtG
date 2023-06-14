@@ -1,0 +1,115 @@
+{
+    "Blueprints": [
+        {
+            "Name": "Item",
+            "Inherits": "InorganicObject",
+            "Components": [
+                { "Name": "ObjectStack" }
+            ],
+            "Tags": [
+                { "Name": "Item" }
+            ]
+        },
+        {
+            "Name": "MeleeWeapon",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "Weight=5",
+                        "Category=MeleeWeapon"
+                    ]
+                },
+                { "Name": "CraftingItem", "Parameters": ["Skill=Smithing"]}
+            ]
+        },
+        {
+            "Name": "MissileWeapon",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [
+                        "Weight=5",
+                        "Category=MissileWeapon"
+                    ]
+                },
+                { "Name": "MissileWeapon" },
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
+            ]
+        },
+        {
+            "Name": "Projectile",
+            "Inherits": "MeleeWeapon",
+            "Components": [
+                {
+                    "Name": "Physics",
+                    "Parameters": [ "Weight=0", "Category=Projectile" ]
+                },
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
+            ]
+        },
+        {
+            "Name": "Armor",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "AV=1", "DV=0", "Slot=Body" ]
+                },
+                {
+                    "Name": "Physics",
+                    "Parameters": [ "Weight=30", "Category=Armor" ]
+                },
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
+            ],
+            "Stats": [
+                {
+                    "Name": "HitPoints",
+                    "Value": 50
+                }
+            ]
+        },
+        {
+            "Name": "Shield",
+            "Inherits": "Item",
+            "Components": [
+                {
+                    "Name": "Shield",
+                    "Parameters": [ "AV=1", "DV=0" ]
+                },
+                {
+                    "Name": "Physics",
+                    "Parameters": [ "Weight=10", "Category=Shield" ]
+                },
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
+            ]
+        },
+        {
+            "Name": "BaseShield",
+            "Inherits": "Shield",
+            "Components": [
+
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ShieldRunes,CommonRunes"
+                }
+            ]
+        }
+    ]
+}

@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Center",
+                    "name": "Wait",
                     "type": "Button",
                     "id": "c2970315-bc75-4a8a-b050-2d97c0b6a5a4",
                     "expectedControlType": "Button",
@@ -141,9 +141,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Cell",
+                    "type": "Button",
+                    "id": "d497aae5-75e0-4c7b-af87-460ed58c36b8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Control",
                     "type": "Button",
                     "id": "f1d43096-96d3-41cc-b5b7-39ba31fb68c1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tab",
+                    "type": "Button",
+                    "id": "64349435-a1a1-4306-a6a6-3eedff041344",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -268,7 +286,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Center",
+                    "action": "Wait",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -324,6 +342,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Control",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb2b5be3-866f-454b-9d61-67d4aca0d62c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14333df1-4578-4ada-9fa2-dfec18611041",
+                    "path": "<Keyboard>/numpadMultiply",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

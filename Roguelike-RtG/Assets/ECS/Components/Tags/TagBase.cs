@@ -23,6 +23,8 @@ namespace JS.ECS.Tags
 
     public class Item : TagBase { }
 
+    public class Runes : TagBase { }
+
     /// <summary>
     /// Tag to mark that an item is part of a creature's anatomy.
     /// </summary>

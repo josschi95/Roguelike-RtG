@@ -4,16 +4,9 @@ namespace JS.ECS
     {
         public Armor() { }
 
-        public Armor(int armorValue, int dodgeValue, BodySlot slot)
-        {
-            ArmorValue = armorValue;
-            DodgeValue = dodgeValue;
-            Slot = slot;
-        }
-
-        public int ArmorValue;
-        public int DodgeValue;
-        public BodySlot Slot;
+        public int AV = 1;
+        public int DV = 0;
+        public BodySlot Slot = BodySlot.Body;
 
         public override void OnEvent(Event newEvent)
         {
@@ -22,8 +15,8 @@ namespace JS.ECS
 
         private void OnGetStat(GetStat stat)
         {
-            if (stat.Name.Equals("ArmorValue") || stat.Name.Equals("AV")) stat.Value += ArmorValue;
-            else if (stat.Name.Equals("DodgeValue") || stat.Name.Equals("DV")) stat.Value += DodgeValue;
+            if (stat.Name.Equals("ArmorValue") || stat.Name.Equals("AV")) stat.Value += AV;
+            else if (stat.Name.Equals("DodgeValue") || stat.Name.Equals("DV")) stat.Value += DV;
         }
     }
 }

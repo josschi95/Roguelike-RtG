@@ -20,7 +20,7 @@ namespace JS.ECS
         public static void OnCreatureDeath(Entity entity)
         {
             var corpse = EntityManager.GetComponent<Corpse>(entity);
-            if (corpse != null && Random.value * 100 >= corpse.CorpseChance)
+            if (corpse != null && Random.value * 100 < corpse.CorpseChance)
             {
                 Debug.Log("Dropping corpse");
                 var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);

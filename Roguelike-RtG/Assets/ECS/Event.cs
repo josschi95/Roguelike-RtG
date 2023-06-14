@@ -96,10 +96,12 @@ namespace JS.ECS
     public class DealingMeleeDamage : Event
     {
         public Dictionary<string, int> Damage;
+        public bool isCrit;
 
-        public DealingMeleeDamage()
+        public DealingMeleeDamage(bool isCrit = false)
         {
             Damage = new Dictionary<string, int>();
+            this.isCrit = isCrit;
         }
     }
 

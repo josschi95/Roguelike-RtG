@@ -14,8 +14,8 @@ namespace JS.ECS
         public bool IsCorporeal = true;
         public bool IsReal = true; //False for some magical effects, visual effects, etc.
         public float Weight = 1.0f; //The weight of the object
-
-        public PhysicsCategory Category = PhysicsCategory.Miscellaneous; //The type of object
+        public string Category = "Miscellaneous";
+        //public PhysicsCategory Category = PhysicsCategory.Miscellaneous; //The type of object
 
         #region - Position -
         private GridNode _currentNode;
@@ -142,7 +142,7 @@ namespace JS.ECS
     }
 }
 
-public enum PhysicsCategory
+/*public enum PhysicsCategory
 {
     Miscellaneous,
     Creature,
@@ -150,11 +150,13 @@ public enum PhysicsCategory
     Wall,
     MeleeWeapon,
     MissileWeapon,
+    Projectile,
     Armor,
+    Shield,
     NaturalWeapon,
     NaturalMissileWeapon,
     NaturalArmor,
-}
+}*/
 
 public enum DamageTypes
 {

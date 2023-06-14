@@ -71,7 +71,7 @@ namespace JS.ECS
         {
             get
             {
-                if (EntityManager.TryGetStat(entity, "MoveSpeed", out StatBase stat))
+                if (EntityManager.TryGetStat(entity, "WALK", out StatBase stat))
                 {
                     return stat.Value;
                 }
@@ -88,11 +88,13 @@ namespace JS.ECS
         private InputAction _southEast;
         private InputAction _southWest;
 
-        private InputAction _center;
 
         private InputAction _up;
         private InputAction _down;
+        private InputAction _cell;
+
         private InputAction _control;
+        private InputAction _wait;
 
         private void MapActions(InputActionAsset actionAsset)
         {
@@ -108,10 +110,12 @@ namespace JS.ECS
             _southEast = input.FindAction("SouthEast");
             _southWest = input.FindAction("SouthWest");
 
-            _center = input.FindAction("Center");
             _up = input.FindAction("Up");
             _down = input.FindAction("Down");
+            _cell = input.FindAction("Cell");
+
             _control = input.FindAction("Control");
+            _wait = input.FindAction("Wait");
         }
 
         private void SetActions()
@@ -126,9 +130,10 @@ namespace JS.ECS
             _southEast.performed += i => SouthEast();
             _southWest.performed += i => SouthWest();
 
-            _center.performed += i => Center();
             _up.performed += i => Up();
             _down.performed += i => Down();
+
+            _wait.performed += i => Wait();
         }
 
         private void ClearActions()
@@ -143,7 +148,7 @@ namespace JS.ECS
             _southEast.performed -= i => SouthEast();
             _southWest.performed -= i => SouthWest();
 
-            _center.performed -= i => Center();
+            _wait.performed -= i => Wait();
             _up.performed -= i => Up();
             _down.performed -= i => Down();
         }
@@ -161,7 +166,7 @@ namespace JS.ECS
             else if (_southEast.IsPressed()) SouthEast();
             else if (_southWest.IsPressed()) SouthWest();
 
-            else if (_center.IsPressed()) Center();
+            else if (_wait.IsPressed()) Wait();
         }
 
         private bool CanAct()
@@ -228,17 +233,6 @@ namespace JS.ECS
             else TryMove(Compass.SouthWest);
         }
 
-        private void Center()
-        {
-            if (!CanAct()) return;
-            if (_control.IsPressed())
-            {
-                //Try to attack a creature occupying the same space, don't attack self
-                //Examples might be swarms, oozes, etc. or attacking at the player's feet/the ground
-            }
-            else Actions.SkipAction(Actor);
-        }
-
         private void Up()
         {
             if (!CanAct()) return;
@@ -259,6 +253,16 @@ namespace JS.ECS
             else TryMoveDown();
         }
 
+        private void Wait()
+        {
+            if (!CanAct()) return;
+            if (_control.IsPressed())
+            {
+                //Try to attack a creature occupying the same space, don't attack self
+                //Examples might be swarms, oozes, etc. or attacking at the player's feet/the ground
+            }
+            else Actions.SkipAction(Actor);
+        }
         #endregion
 
         private void TryMoveUp()

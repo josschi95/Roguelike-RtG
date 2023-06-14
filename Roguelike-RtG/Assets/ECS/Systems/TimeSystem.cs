@@ -66,8 +66,8 @@ namespace JS.ECS
 
         private IEnumerator RoundDelay()
         {
-            //yield return new WaitForSeconds(0.1f);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.05f);
             Actions.SkipAction(sentinel);
         }
 
@@ -137,7 +137,7 @@ namespace JS.ECS
 
         private void StartTurn(TimedActor actor)
         {
-            //Debug.Log(actor.entity.Name);
+            //Debug.Log("Start Turn: " + actor.entity.Name);
             //Debug.Log(components.Count);
             EntityManager.FireEvent(actor.entity, turnStartEvent);
             if (actor == sentinel) OnNewRound();
@@ -162,6 +162,7 @@ namespace JS.ECS
 
         private void RegainActionPoints(TimedActor actor)
         {
+            //Debug.Log(actor.entity.Name + " regaining AP: " + actor.Speed);
             actor.ActionPoints += actor.Speed;
         }
     }

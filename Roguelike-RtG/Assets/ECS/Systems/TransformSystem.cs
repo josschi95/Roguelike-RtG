@@ -118,7 +118,7 @@ namespace JS.ECS
             return entities.ToArray();
         }
 
-        public static Physics[] GetTakeablesAt(Vector3Int world, Vector2Int local)
+        public static List<Physics> GetTakeablesAt(Vector3Int world, Vector2Int local)
         {
             var entities = new List<Physics>();
             var phys = GetEntitiesAt(world, local);
@@ -127,7 +127,7 @@ namespace JS.ECS
                 if (phys[i].IsTakeable) entities.Add(phys[i]);
             }
 
-            return entities.ToArray();
+            return entities;
         }
     }
 }

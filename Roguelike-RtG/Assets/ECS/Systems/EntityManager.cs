@@ -105,7 +105,7 @@ namespace JS.ECS
         {
             if (component.entity != entity) throw new UnityException("Component does not belong to entity!");
             if (!entities.ContainsKey(entity)) return;
-
+            Debug.Log("Removing " + component.GetType().Name);
             entities[entity].components.Remove(component);
             component.entity = null;
             component.Disassemble();
@@ -304,6 +304,7 @@ namespace JS.ECS
             {
                 for (int i = 0; i < entities[entity].components.Count; i++)
                 {
+                    Debug.Log("Firing " + newEvent.GetType().Name + " to " + entities[entity].components[i].GetType().Name);    
                     entities[entity].components[i].OnEvent(newEvent);
                 }
             }
@@ -318,8 +319,8 @@ namespace JS.ECS
 
         private void DestroyEntity(Entity entity)
         {
+            Debug.Log("Destroying " + entity.Name);
             var pair = entities[entity];
-            entities.Remove(entity);
 
             for (int i = pair.components.Count - 1; i >= 0; i--)
             {
@@ -341,6 +342,9 @@ namespace JS.ECS
             }
             pair.tags.Clear();
             pair.tags = null;
+
+            //This needs to be last so that all other methods can reference it in the dictionary
+            entities.Remove(entity);
         }
         #endregion
     }

@@ -31,12 +31,12 @@ namespace JS.ECS
         public override void OnEvent(Event newEvent)
         {
             if (newEvent is TransformChanged) RenderSystem.UpdatePosition(this);
+            if (newEvent is AddedToInventory) RenderSystem.RemoveRender(this);
             if (newEvent is Death) RenderSystem.RemoveRender(this);
         }
 
         public override void Disassemble()
         {
-            base.Disassemble();
             RenderSystem.RemoveRender(this);
             transform = null;
         }

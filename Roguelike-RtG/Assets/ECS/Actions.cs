@@ -75,7 +75,7 @@ namespace JS.ECS
             if (!EntityManager.TryGetComponent<TimedActor>(entity, out var actor)) return;
             if (!actor.IsTurn) return; //not your turn. May change this for special cases
 
-            inventory.AddObject(itemToTake);
+            if (!InventorySystem.TryAddItem(inventory, itemToTake.entity)) return;
 
             TimeSystem.SpendActionPoints(actor, BaseActionCost);
             TimeSystem.EndTurn(actor);

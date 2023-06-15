@@ -7,7 +7,7 @@ namespace JS.ECS
     /// </summary>
     public class Physics : ComponentBase
     {
-        public Physics() { }
+        public Physics() { Priority = int.MaxValue; }
 
         public bool IsTakeable = true; //Can the object be picked up
         public bool IsSolid = false; //Does the object block gas from spreading and line of sight
@@ -44,6 +44,7 @@ namespace JS.ECS
         private void OnTakeDamage(TakeDamage damage)
         {
             EntityManager.TryGetStat(entity, "HP", out var stat);
+            if (stat.Value <= 0) return; //already dead
 
             foreach (var key in damage.Damage.Keys)
             {
@@ -54,15 +55,16 @@ namespace JS.ECS
 
                 int net = Mathf.RoundToInt(damage.Damage[key] * Resistance.GetModifier(E1.Value));
                 stat.CurrentValue -= net;
-
-                if (stat.CurrentValue <= 0) EntityManager.FireEvent(entity, new Death());
             }
+
+            if (stat.CurrentValue <= 0) EntityManager.FireEvent(entity, new Death());
         }
 
         private void OnDeath()
         {
             MessageSystem.NewMessage(entity.Name + " has been killed");
             CorpseManager.OnCreatureDeath(entity);
+            EntityManager.Destroy(entity);
         }
     }
 }

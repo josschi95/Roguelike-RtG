@@ -105,4 +105,14 @@ namespace JS.ECS
 
     public class Death : Event { }
     #endregion
+
+    /// <summary>
+    /// Event to inform an object that it has been added to an inventory. Removes Transform.
+    /// </summary>
+    public class AddedToInventory : Event { }
+
+    /// <summary>
+    /// Event to inform an object that it has been dropped. Adds Transform.
+    /// </summary>
+    public class RemovedFromInventory : Event { }
 }

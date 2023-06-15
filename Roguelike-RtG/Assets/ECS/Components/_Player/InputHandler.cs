@@ -92,6 +92,7 @@ namespace JS.ECS
             }
         }
 
+        #region - Input Actions -
         private InputAction _north;
         private InputAction _east;
         private InputAction _south;
@@ -101,13 +102,14 @@ namespace JS.ECS
         private InputAction _southEast;
         private InputAction _southWest;
 
-
         private InputAction _up;
         private InputAction _down;
         private InputAction _cell;
 
         private InputAction _control;
         private InputAction _wait;
+
+        private InputAction _get;
 
         private void MapActions(InputActionAsset actionAsset)
         {
@@ -129,6 +131,7 @@ namespace JS.ECS
 
             _control = input.FindAction("Control");
             _wait = input.FindAction("Wait");
+            _get = input.FindAction("Get");
         }
 
         private void SetActions()
@@ -147,6 +150,7 @@ namespace JS.ECS
             _down.performed += i => Down();
             _cell.performed += i => Cell();
             _wait.performed += i => Wait();
+            _get.performed += i => Get();
         }
 
         private void ClearActions()
@@ -165,7 +169,9 @@ namespace JS.ECS
             _down.performed -= i => Down();
             _cell.performed -= i => Cell();
             _wait.performed -= i => Wait();
+            _get.performed -= i => Get();
         }
+        #endregion
 
         //Check if a button is pressed at the start of the player's turn
         private void CheckForButtonDown()
@@ -283,6 +289,22 @@ namespace JS.ECS
         {
             if (!CanAct()) return;
             Actions.SkipAction(Actor);
+        }
+
+        private void Get()
+        {
+            if (!CanAct()) return;
+            if (GridManager.WorldMapActive) return;
+
+            var items = TransformSystem.GetTakeablesAt(Transform.Position, Transform.LocalPosition);
+            items.Remove(Physics);
+
+            if (items.Count == 0) MessageSystem.NewMessage("There is nothing to take.");
+            else if (items.Count == 1) Actions.TryTakeItem(entity, items[0]);
+            else
+            {
+                Debug.Log("Multiple items here. Not yet implemented");
+            }
         }
         #endregion
 

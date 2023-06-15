@@ -8,23 +8,18 @@ namespace JS.ECS
         public bool hasMultiStrike = false; //removes major penalty to making multiple attacks
         public int CritRangeBonus = 0;
 
-        private Physics _physics;
+        private Transform _transform;
 
-        public Physics Physics
+        public Transform Transform
         {
             get
             {
-                if (_physics == null)
+                if (_transform == null)
                 {
-                    _physics = EntityManager.GetComponent<Physics>(entity);
+                    _transform = EntityManager.GetComponent<Transform>(entity);
                 }
-                return _physics;
+                return _transform;
             }
-        }
-
-        public override void OnEvent(Event newEvent)
-        {
-            
         }
     }
 }

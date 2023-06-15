@@ -1,4 +1,3 @@
-using JS.ECS;
 using UnityEngine;
 
 namespace JS.ECS
@@ -26,10 +25,9 @@ namespace JS.ECS
                 var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);
                 if (newCorpse == null) throw new System.Exception("Corpse Blueprint not found!");
 
-                var ePhys = EntityManager.GetComponent<Physics>(entity);
-                var cPhys = EntityManager.GetComponent<Physics>(newCorpse);
-                cPhys.Position = ePhys.Position;
-                cPhys.LocalPosition = ePhys.LocalPosition;
+                var ePhys = EntityManager.GetComponent<Transform>(entity);
+                var cPhys = EntityManager.GetComponent<Transform>(newCorpse);
+                TransformSystem.SetPosition(cPhys, ePhys.Position, ePhys.LocalPosition);
             }
         }
     }

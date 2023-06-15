@@ -50,17 +50,17 @@ namespace JS.ECS
             }
         }
 
-        private Physics _physics;
+        private Transform transform;
 
-        public Physics Physics
+        public Transform Transform
         {
             get
             {
-                if (_physics == null)
+                if (transform == null)
                 {
-                    _physics = EntityManager.GetComponent<Physics>(entity);
+                    transform = EntityManager.GetComponent<Transform>(entity);
                 }
-                return _physics;
+                return transform;
             }
         }
 
@@ -87,7 +87,7 @@ namespace JS.ECS
 
         private bool TryWander()
         {
-            if (LocomotionSystem.TryMoveLocal(Physics, DirectionHelper.GetRandom(), out int cost))
+            if (LocomotionSystem.TryMoveLocal(Transform, DirectionHelper.GetRandom(), out int cost))
             {
                 var E1 = new GetStat("WALK");
                 EntityManager.FireEvent(entity, E1);

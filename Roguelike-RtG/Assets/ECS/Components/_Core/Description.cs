@@ -4,12 +4,7 @@ namespace JS.ECS
     {
         public Description() { }
 
-        public Description(string value = "An unremarkable object.")
-        {
-            Value = value;
-        }
-
-        public string Value;
+        public string Value = "An unremarkable object.";
         
         public override void OnEvent(Event newEvent)
         {

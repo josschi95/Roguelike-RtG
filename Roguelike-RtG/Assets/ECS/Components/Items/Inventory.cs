@@ -8,17 +8,16 @@ namespace JS.ECS
     /// </summary>
     public class Inventory : ComponentBase
     {
-        private Physics _physics;
-
-        public Physics Physics
+        private Transform _transform;
+        public Transform Transform
         {
             get
             {
-                if (_physics == null)
+                if (_transform == null)
                 {
-                    _physics = EntityManager.GetComponent<Physics>(entity);
+                    _transform = EntityManager.GetComponent<Transform>(entity);
                 }
-                return _physics;
+                return _transform;
             }
         }
 
@@ -62,15 +61,7 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive) return;
             //UnityEngine.Debug.Log("From: " + entity.Name + " : " + Physics.Position);
-            var objects = TransformSystem.GetEntitiesAt(Physics.Position, Physics.LocalPosition);
-
-            for (int i = 0; i < objects.Length; i++)
-            {
-                if (objects[i].IsTakeable)
-                {
-                    UnityEngine.Debug.Log(entity.Name + " found " + objects[i].entity.Name);
-                }
-            }
+            var objects = TransformSystem.GetTakeablesAt(Transform.Position, Transform.LocalPosition);
         }
     }
 }

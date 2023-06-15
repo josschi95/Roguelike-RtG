@@ -23,6 +23,16 @@ namespace JS.ECS.Tags
 
     public class Item : TagBase { }
 
+    /// <summary>
+    /// Tag to indicate the material from which an Inorganic object is made.
+    /// </summary>
+    public class MaterialTag : TagBase { }
+
+    /// <summary>
+    /// Tag to indicate the quality of a crafted item.
+    /// </summary>
+    public class Quality : TagBase { }
+
     public class Runes : TagBase { }
 
     /// <summary>

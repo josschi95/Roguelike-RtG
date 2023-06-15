@@ -21,7 +21,10 @@ namespace JS.ECS
         
         //Each Component will take in the Event ID and decide if/how to handle it
         //Should this be changed to a bool? return true if it was modified?
-        public abstract void OnEvent(Event newEvent);
+        public virtual void OnEvent(Event newEvent)
+        {
+            //Meant to be overwritten
+        }
 
 
         public virtual void Disassemble()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using JS.ECS;
 
 namespace JS.ECS
 {
@@ -57,10 +56,10 @@ namespace JS.ECS
 
     public class GetMeleeAttacks : Event
     {
-        public List<Physics> attacks;
+        public List<MeleeWeapon> weapons;
         public GetMeleeAttacks()
         {
-            attacks = new List<Physics>();
+            weapons = new List<MeleeWeapon>();
         }
     }
 
@@ -68,17 +67,6 @@ namespace JS.ECS
     {
         public Physics target;
         public DeclareMissileAttack(Physics target)
-        {
-            this.target = target;
-        }
-    }
-
-    public class TargetedByMelee : Event { }
-
-    public class MeleeAttackHit : Event
-    {
-        public Physics target;
-        public MeleeAttackHit(Physics target)
         {
             this.target = target;
         }

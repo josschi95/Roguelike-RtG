@@ -33,11 +33,11 @@ namespace JS.ECS
             {
                 if (WeaponOverride != null)
                 {
-                    getAttacks.attacks.Add(EntityManager.GetComponent<Physics>(WeaponOverride));
+                    getAttacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(WeaponOverride));
                 }
                 else if (DefaultBehavior != null)
                 {
-                    getAttacks.attacks.Add(EntityManager.GetComponent<Physics>(DefaultBehavior));
+                    getAttacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(DefaultBehavior));
                 }
             }
         }

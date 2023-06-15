@@ -1,4 +1,3 @@
-using JS.ECS.Tags;
 using JS.WorldMap;
 using UnityEngine;
 
@@ -32,17 +31,18 @@ namespace JS.ECS
         /// <summary>
         /// Fast travel on the World Map from World Tile to World Tile. Returns additional costs given the Terrain.
         /// </summary>
-        public static bool TryMoveWorld(Physics obj, Compass direction, out int cost)
+        public static bool TryMoveWorld(Transform t, Compass direction, out int cost)
         {
             cost = 0;
             if (!GridManager.WorldMapActive) return false; //Can only fast travel when viewing the world map
-            if (!instance.WithinWorldBounds((Vector2Int)obj.Position + DirectionHelper.GetVector(direction))) return false;
+            if (!instance.WithinWorldBounds((Vector2Int)t.Position + DirectionHelper.GetVector(direction))) return false;
 
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
             //So this moves them a full world tile but keeps their regional position within a world tile the same
-            obj.Position += (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
+            var newPos = t.Position + (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
+            TransformSystem.SetPosition(t, newPos);
             //obj.LocalPosition = instance.localCenter;
 
             return true;
@@ -60,13 +60,13 @@ namespace JS.ECS
         /// <summary>
         /// Switches to Local Map view from World Map.
         /// </summary>
-        public static bool SwitchToLocalMap(Physics player)
+        public static bool SwitchToLocalMap(Transform player)
         {
             //What would prevent this?
             return instance.SwitchFromWorldToLocalMap(player);
         }
 
-        private bool SwitchFromWorldToLocalMap(Physics player)
+        private bool SwitchFromWorldToLocalMap(Transform player)
         {
             //Don't know how, but make sure no other entity can swap map focus
             if (player.entity != EntityManager.Player) return false;
@@ -79,12 +79,12 @@ namespace JS.ECS
         /// <summary>
         /// Switch to World Map view from Local Map.
         /// </summary>
-        public static bool SwitchToWorldMap(Physics player)
+        public static bool SwitchToWorldMap(Transform player)
         {
             return instance.SwitchFromLocalToWorldMap(player);
         }
 
-        private bool SwitchFromLocalToWorldMap(Physics player)
+        private bool SwitchFromLocalToWorldMap(Transform player)
         {
             //Don't know how, but make sure no other entity can swap map focus
             if (player.entity != EntityManager.Player) return false;

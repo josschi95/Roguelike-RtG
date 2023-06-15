@@ -122,6 +122,10 @@ public class GridManager : MonoBehaviour
 
     private void SpawnMonsters(GameGrid grid)
     {
+        var sword = EntityFactory.GetEntity("IronSword");
+        var t = EntityManager.GetComponent<JS.ECS.Transform>(sword);
+        TransformSystem.SetPosition(t, grid.Position, new Vector2Int(50, 50));
+
         int count = Random.Range(2, 5);
         for (int i = 0; i < count; i++)
         {
@@ -130,9 +134,9 @@ public class GridManager : MonoBehaviour
 
             EntityManager.GetComponent<Brain>(enemy).IsSleeping = false;
 
-            var physics = EntityManager.GetComponent<JS.ECS.Physics>(enemy);
-            physics.Position = grid.Position;
-            physics.LocalPosition = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
+            var transform = EntityManager.GetComponent<JS.ECS.Transform>(enemy);
+            var local = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
+            TransformSystem.SetPosition(transform, grid.Position, local);
         }
     }
 }

@@ -27,6 +27,19 @@ namespace JS.ECS
         }
 
         #region - Components -
+        private Transform _transform;
+        public Transform Transform
+        {
+            get
+            {
+                if (_transform == null)
+                {
+                    _transform = EntityManager.GetComponent<Transform>(entity);
+                }
+                return _transform;
+            }
+        }
+
         private Physics _physics;
         public Physics Physics
         {
@@ -132,7 +145,7 @@ namespace JS.ECS
 
             _up.performed += i => Up();
             _down.performed += i => Down();
-
+            _cell.performed += i => Cell();
             _wait.performed += i => Wait();
         }
 
@@ -148,9 +161,10 @@ namespace JS.ECS
             _southEast.performed -= i => SouthEast();
             _southWest.performed -= i => SouthWest();
 
-            _wait.performed -= i => Wait();
             _up.performed -= i => Up();
             _down.performed -= i => Down();
+            _cell.performed -= i => Cell();
+            _wait.performed -= i => Wait();
         }
 
         //Check if a button is pressed at the start of the player's turn
@@ -166,6 +180,7 @@ namespace JS.ECS
             else if (_southEast.IsPressed()) SouthEast();
             else if (_southWest.IsPressed()) SouthWest();
 
+            else if (_cell.IsPressed()) Cell();
             else if (_wait.IsPressed()) Wait();
         }
 
@@ -179,42 +194,42 @@ namespace JS.ECS
         private void North()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.North);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.up);
             else TryMove(Compass.North);
         }
 
         private void South()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.South);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.down);
             else TryMove(Compass.South);
         }
 
         private void East()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.East);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.right);
             else TryMove(Compass.East);
         }
 
         private void West()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.West);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.left);
             else TryMove(Compass.West);
         }
 
         private void NorthEast()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.NorthEast);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.one);
             else TryMove(Compass.NorthEast);
         }
 
         private void NorthWest()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.NorthWest);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.up + Vector2Int.left);
             else TryMove(Compass.NorthWest);
 
         }
@@ -222,14 +237,14 @@ namespace JS.ECS
         private void SouthEast()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.SouthEast);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.down + Vector2Int.right);
             else TryMove(Compass.SouthEast);
         }
 
         private void SouthWest()
         {
             if (!CanAct()) return;
-            if (_control.IsPressed()) TryAttack(Compass.SouthWest);
+            if (_control.IsPressed()) TryMeleeAttack(Vector2Int.down + Vector2Int.left);
             else TryMove(Compass.SouthWest);
         }
 
@@ -253,27 +268,34 @@ namespace JS.ECS
             else TryMoveDown();
         }
 
-        private void Wait()
+        private void Cell()
         {
             if (!CanAct()) return;
             if (_control.IsPressed())
             {
                 //Try to attack a creature occupying the same space, don't attack self
                 //Examples might be swarms, oozes, etc. or attacking at the player's feet/the ground
+                TryMeleeAttack(Vector2Int.zero);
             }
-            else Actions.SkipAction(Actor);
+        }
+
+        private void Wait()
+        {
+            if (!CanAct()) return;
+            Actions.SkipAction(Actor);
         }
         #endregion
 
+        #region - Movement -
         private void TryMoveUp()
         {
             if (GridManager.WorldMapActive) return;
-            else if (Physics.Position.z == 0) //if I do add upward verticality, will instead need to check if outside
+            else if (Transform.Position.z == 0) //if I do add upward verticality, will instead need to check if outside
             {
                 //Load World Map
-                WorldLocomotionSystem.SwitchToWorldMap(Physics);
+                WorldLocomotionSystem.SwitchToWorldMap(Transform);
             }
-            else LocomotionSystem.TryMoveUp(Physics);
+            else LocomotionSystem.TryMoveUp(Transform);
         }
 
         private void TryMoveDown()
@@ -281,36 +303,23 @@ namespace JS.ECS
             if (GridManager.WorldMapActive) //World Map Movement
             {
                 //Load Local Map
-                WorldLocomotionSystem.SwitchToLocalMap(Physics);
+                WorldLocomotionSystem.SwitchToLocalMap(Transform);
             }
-            else LocomotionSystem.TryMoveDown(Physics);
+            else LocomotionSystem.TryMoveDown(Transform);
         }
 
         private void TryMove(Compass direction)
         {
             //Debug.Log("TryMove " + _actor.entity.Name);
 
-            if (GridManager.WorldMapActive) //World Map Movement
-            {
-                if (WorldLocomotionSystem.TryMoveWorld(Physics, direction, out int cost1))
-                {
-                    int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost1));
-                    TimeSystem.SpendActionPoints(Actor, netCost);
-                    TimeSystem.EndTurn(Actor);
-                }
-            }
-            else Actions.TryMoveLocal(Physics, direction);
-            /*else if (LocomotionSystem.TryMoveLocal(Physics, direction, out int cost)) //Local Movement
-            {
-                int netCost = Mathf.RoundToInt(LocomotionSystem.movementDividend / (MoveSpeed - cost));
-                TimeSystem.SpendActionPoints(Actor, netCost);
-                TimeSystem.EndTurn(Actor);
-            }*/
+            if (GridManager.WorldMapActive) Actions.TryMoveWorld(Transform, direction);//World Map Movement
+            else Actions.TryMoveLocal(Transform, direction);
         }
+        #endregion
 
-        private void TryAttack(Compass direction)
+        private void TryMeleeAttack(Vector2Int direction)
         {
-            Actions.TryMeleeAttack(Combat, Physics.LocalPosition + DirectionHelper.GetVector(direction));
+            Actions.TryMeleeAttack(Combat, Transform.LocalPosition + direction);
         }
     }
 }

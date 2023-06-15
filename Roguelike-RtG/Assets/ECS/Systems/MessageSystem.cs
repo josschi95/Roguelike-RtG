@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MessageSystem : MonoBehaviour
@@ -24,5 +25,16 @@ public class MessageSystem : MonoBehaviour
     private void BroadcastNewMessage(string message)
     {
         log.Log += "\n" + message;
+    }
+
+    public static void NewHitMessage(string attacker, string target, Dictionary<string, int> Damage)
+    {
+        string log = attacker + " hit " + target + " for ";
+        foreach(var pair in Damage)
+        {
+            log += pair.Value + " " + pair.Key + " damage,";
+        }
+        log.TrimEnd();
+        NewMessage(log);
     }
 }

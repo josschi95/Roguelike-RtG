@@ -268,6 +268,28 @@ namespace JS.ECS
 
             return false;
         }
+
+        public static bool TryGetTag<T>(Entity entity, out string value) where T : TagBase
+        {
+            return instance.TryGetEntityTag<T>(entity, out value);
+        }
+
+        private bool TryGetEntityTag<T>(Entity entity, out string value) where T : TagBase
+        {
+            value = null;
+            if (!entities.ContainsKey(entity)) return false;
+
+            foreach (TagBase tag in entities[entity].tags)
+            {
+                if (tag.GetType().Equals(typeof(T)))
+                {
+                    value = tag.Value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
         #endregion
 
         #region - Events -

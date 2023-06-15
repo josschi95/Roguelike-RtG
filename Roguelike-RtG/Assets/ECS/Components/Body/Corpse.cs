@@ -9,10 +9,5 @@ namespace JS.ECS
 
         public int CorpseChance = 100;
         public string CorpseBlueprint = "GenericCorpse";
-
-        public override void OnEvent(Event newEvent)
-        {
-            //
-        }
     }
 }

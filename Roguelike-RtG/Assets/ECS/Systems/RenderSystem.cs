@@ -63,7 +63,7 @@ namespace JS.ECS
         private bool EntityOnCurrentMap(Render render)
         {
             if (GridManager.WorldMapActive) return render.RenderOnWorldMap;
-            return render.Physics.Position == GridManager.ActiveGrid.Position;
+            return render.Transform.Position == GridManager.ActiveGrid.Position;
         }
 
         /// <summary>
@@ -97,15 +97,15 @@ namespace JS.ECS
             {
                 if (!activeCompoundRenders.ContainsKey(render) || activeCompoundRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = render.Physics.WorldMapPosition;
-                else activeCompoundRenders[render].transform.position = (Vector3Int)render.Physics.LocalPosition;
+                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = (Vector3Int)TransformSystem.GetWorldMapPos(render.Transform);
+                else activeCompoundRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
             }
             else
             {
                 if (!activeSingleRenders.ContainsKey(render) || activeSingleRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = render.Physics.WorldMapPosition;
-                else activeSingleRenders[render].transform.position = (Vector3Int)render.Physics.LocalPosition;
+                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = (Vector3Int)TransformSystem.GetWorldMapPos(render.Transform);
+                else activeSingleRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
             }
         }
 
@@ -118,7 +118,7 @@ namespace JS.ECS
             {
                 var go = Instantiate(instance.compound);
                 instance.activeCompoundRenders[render] = go;
-                go.transform.position = (Vector3Int)render.Physics.LocalPosition;
+                go.transform.position = (Vector3Int)render.Transform.LocalPosition;
 
                 go.Base.sprite = GetSprite(render.Tile);
 
@@ -131,7 +131,7 @@ namespace JS.ECS
             {
                 var go = Instantiate(instance.single);
                 instance.activeSingleRenders[render] = go;
-                go.transform.position = (Vector3Int)render.Physics.LocalPosition;
+                go.transform.position = (Vector3Int)render.Transform.LocalPosition;
 
                 go.Renderer.sprite = GetSprite(render.Tile);
                 go.Renderer.sortingLayerName = render.Layer;

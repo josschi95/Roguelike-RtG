@@ -16,9 +16,8 @@ namespace JS.WorldMap
             EntityManager.AddTag(player, new PlayerTag());
             player.Name = "Player";
 
-            var physics = EntityManager.GetComponent<ECS.Physics>(player);
-            physics.Position = playerData.Position;
-            physics.LocalPosition = playerData.LocalPosition;
+            var physics = EntityManager.GetComponent<ECS.Transform>(player);
+            TransformSystem.SetPosition(physics, playerData.Position, playerData.LocalPosition);
 
             var brain = EntityManager.GetComponent<Brain>(player);
             brain.IsSleeping = false;

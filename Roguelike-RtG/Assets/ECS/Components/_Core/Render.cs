@@ -10,17 +10,22 @@ namespace JS.ECS
         public string Tile;
         public bool IsComposite = false;
 
-        protected Physics _physics;
-        public Physics Physics
+        protected Transform transform;
+        public Transform Transform
         {
             get
             {
-                if (_physics == null)
+                if (transform == null)
                 {
-                    _physics = EntityManager.GetComponent<Physics>(entity);
+                    transform = EntityManager.GetComponent<Transform>(entity);
                 }
-                return _physics;
+                return transform;
             }
+        }
+
+        public override void OnRegistered()
+        {
+            RenderSystem.NewRender(this);
         }
 
         public override void OnEvent(Event newEvent)
@@ -33,7 +38,7 @@ namespace JS.ECS
         {
             base.Disassemble();
             RenderSystem.RemoveRender(this);
-            _physics = null;
+            transform = null;
         }
     }
 }

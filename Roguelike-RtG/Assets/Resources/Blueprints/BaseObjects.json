@@ -4,6 +4,7 @@
             "Name": "Object",
             "Inherits": "",
             "Components": [
+                { "Name": "Transform" },
                 {
                     "Name": "Physics",
                     "Parameters": [

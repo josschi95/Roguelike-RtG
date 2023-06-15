@@ -10,20 +10,5 @@ namespace JS.ECS
         public string Type = "Blunt"; //The damage type this weapon deals
         public string Stat = "STR"; //what Attribute is used for the weapon's damage bonus - STR means hitting harder, AGI means hitting more precisely
         public string Proficiency = "BluntWeapons"; //What proficiency stat is used, gives bonus to accuracy and damage
-
-        public override void OnEvent(Event newEvent)
-        {
-            if (newEvent is DealingMeleeDamage dmg)
-            {
-                var roll = Dice.Roll(BaseDamage);
-                if (dmg.isCrit) roll += Dice.RollMax(BaseDamage);
-
-                if (EntityManager.TryGetStat(entity,Stat, out var stat)) roll += stat.Value;
-                if (EntityManager.TryGetStat(entity, Proficiency, out var proficiency)) roll += proficiency.Value;
-
-                if (dmg.Damage.ContainsKey(Type)) dmg.Damage[Type] += roll;
-                else dmg.Damage.Add(Type, roll);
-            }
-        }
     }
 }

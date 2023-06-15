@@ -49,8 +49,14 @@ namespace JS.SceneManagement
             worldMap.IsLoaded = false;
             LoadSceneCollectionAdditive(bootScenes);
 
+            LoadAllFiles();
+        }
+
+        private void LoadAllFiles()
+        {
             EntityFactory.LoadBlueprints();
             BodyFactory.LoadBodies();
+            ECS.Materials.MaterialManager.LoadMaterials();
         }
 
         /// <summary>

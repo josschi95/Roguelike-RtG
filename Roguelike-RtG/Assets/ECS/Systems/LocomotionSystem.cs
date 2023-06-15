@@ -26,19 +26,19 @@ namespace JS.ECS
             instance = this;
         }
 
-        public static bool TryMoveLocal(Physics obj, Compass direction, out int cost)
+        public static bool TryMoveLocal(Transform obj, Compass direction, out int cost)
         {
             return instance.TryMove(obj, direction, out cost);
         }
 
-        private bool TryMove(Physics obj, Compass direction, out int cost)
+        private bool TryMove(Transform obj, Compass direction, out int cost)
         {
             cost = 0;
             if (!ProjectedPositionIsValid(obj, direction)) return false;
 
             //Highly considering storing all entities within GridManager's GameGrid class, sort of like a Scene folder
             var entitiesAtPosition = TransformSystem.GetEntitiesAt(worldTracer, localTracer);
-            for (int i = 0; i < entitiesAtPosition.Length; i++)
+            for (int i = 0; i < entitiesAtPosition.Count; i++)
             {
                 if (EntityManager.GetTag<BlocksNode>(entitiesAtPosition[i].entity)) return false; //position is blocked by wall
             }
@@ -47,11 +47,11 @@ namespace JS.ECS
 
             //Change the Transform of the object to match the tracer's valid position
             //obj.LocalPosition = tracer.LocalPosition;
-            obj.LocalPosition = localTracer;
+            TransformSystem.SetLocal(obj, localTracer);
             if (obj.Position != worldTracer)
             {
                 //Debug.Log("Region Position Changing");
-                obj.Position = worldTracer;
+                TransformSystem.SetPosition(obj, worldTracer);
 
                 //Player crossed into a new map, change scenes
                 if (obj.entity == EntityManager.Player)
@@ -64,7 +64,7 @@ namespace JS.ECS
             return true;
         }
 
-        public static bool TryMoveUp(Physics obj)
+        public static bool TryMoveUp(Transform obj)
         {
             Debug.LogWarning("Not Yet Implemented.");
             if (obj.Position.z >= 0) return false;
@@ -78,7 +78,7 @@ namespace JS.ECS
             return false;            
         }
 
-        public static bool TryMoveDown(Physics obj)
+        public static bool TryMoveDown(Transform obj)
         {
             Debug.LogWarning("Not Yet Implemented.");
 
@@ -94,7 +94,7 @@ namespace JS.ECS
         /// <summary>
         /// Places a tracer at the projected position and returns true if it is valid.
         /// </summary>
-        private bool ProjectedPositionIsValid(Physics physics, Compass direction)
+        private bool ProjectedPositionIsValid(Transform physics, Compass direction)
         {
             worldTracer = physics.Position;
             localTracer = physics.LocalPosition;

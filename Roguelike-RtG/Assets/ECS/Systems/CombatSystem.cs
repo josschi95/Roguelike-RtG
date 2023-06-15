@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using JS.CharacterSystem;
+using JS.ECS.Materials;
 using UnityEngine;
 
 namespace JS.ECS
@@ -28,8 +30,10 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive) return false;
 
-            var validTargets = TransformSystem.GetEntitiesAt(combatant.Physics.Position, attackPos);
-            if (validTargets == null || validTargets.Length == 0)
+            var validTargets = TransformSystem.GetEntitiesAt(combatant.Transform.Position, attackPos);
+            validTargets.Remove(EntityManager.GetComponent<Physics>(combatant.entity));
+
+            if (validTargets == null || validTargets.Count == 0)
             {
                 MessageSystem.NewMessage("Nothing to attack");
                 //Debug.Log(combatant.Physics.LocalPosition + ", " +  attackPos);
@@ -43,44 +47,40 @@ namespace JS.ECS
             //Get a list of all valid Melee Attacks
             var E1 = new GetMeleeAttacks();
             EntityManager.FireEvent(combatant.entity, E1);
-            if (E1.attacks.Count == 0)
+            if (E1.weapons.Count == 0)
             {
                 MessageSystem.NewMessage("Nothing to attack " + target.entity.Name + " with!");
                 return false;
             }
 
-            for (int i = 0; i < E1.attacks.Count; i++)
+            for (int i = 0; i < E1.weapons.Count; i++)
             {
                 //Exit early if the target has already been defeated
                 if (EntityManager.TryGetStat(target.entity, "HP", out var HP) && HP.CurrentValue <= 0) break;
 
-                var result = instance.GetMeleeAttackResult(combatant, E1.attacks[i].entity, target.entity, i);
+                var result = instance.GetMeleeAttackResult(combatant, E1.weapons[i], target.entity, i);
 
-                if (result == HitResult.Critical) instance.OnMeleeHit(combatant.entity, E1.attacks[i].entity, target.entity, true);
-                else if (result == HitResult.Hit) instance.OnMeleeHit(combatant.entity, E1.attacks[i].entity, target.entity);
+                if (result == HitResult.Critical) instance.OnMeleeHit(combatant.entity, E1.weapons[i], target.entity, true);
+                else if (result == HitResult.Hit) instance.OnMeleeHit(combatant.entity, E1.weapons[i], target.entity);
                 else MessageSystem.NewMessage(combatant.entity.Name + " missed " + target.entity.Name);
             }
 
             return true;
         }
 
-        private HitResult GetMeleeAttackResult(Combat combatant, Entity weapon, Entity target, int previousAttacks)
+        private HitResult GetMeleeAttackResult(Combat combatant, MeleeWeapon weapon, Entity target, int previousAttacks)
         {
             int roll = Dice.Roll(20); //Roll a d20 to determine initial accuracy
-            var meleeWeapon = EntityManager.GetComponent<MeleeWeapon>(weapon);
 
             //!!!Ensure checking for critical hit happens before the roll is modified!!!
-            bool criticalHit = roll >= GetCritRange(combatant, meleeWeapon);
+            bool criticalHit = roll >= GetCritRange(combatant, weapon);
 
             //Apply a -3 penalty for each consecutive melee attack made
             if (!combatant.hasMultiStrike) roll -= 3 * previousAttacks;
             else roll -= previousAttacks; // -1 if they have multi-strike
 
-            if (meleeWeapon != null) //literally anything stemming from PhysicalObject has this component...
-            {
-                roll += meleeWeapon.Accuracy; //Add weapon's Accuracy, and attacker's weapon Proficiency
-                if (EntityManager.TryGetStat(combatant.entity, meleeWeapon.Proficiency, out StatBase prof)) roll += prof.Value;
-            }
+            roll += weapon.Accuracy; //Add weapon's Accuracy, and attacker's weapon Proficiency
+            if (EntityManager.TryGetStat(combatant.entity, weapon.Proficiency, out StatBase prof)) roll += prof.Value;
 
             int DV = 0; //Get target's Dodge Value
             if (EntityManager.TryGetStat(target, "DV", out StatBase stat)) DV = stat.Value;
@@ -94,24 +94,29 @@ namespace JS.ECS
             return HitResult.Miss;
         }
 
-        private void OnMeleeHit(Entity attacker, Entity meleeWeapon, Entity target, bool isCrit = false)
+        private void OnMeleeHit(Entity attacker, MeleeWeapon weapon, Entity target, bool isCrit = false)
         {
-            //Get Damage from the object
+            //Base Damage
+            var roll = Dice.Roll(weapon.BaseDamage);
+            if (isCrit) roll += Dice.RollMax(weapon.BaseDamage);
+
+            //Material Bonus
+            if (EntityManager.TryGetTag<Tags.MaterialTag>(weapon.entity, out var material)) 
+                roll += MaterialManager.GetMaterial(material).Damage;
+
+            //Attribute and Proficiency bonus
+            if (EntityManager.TryGetStat(attacker, weapon.Stat, out var stat)) roll += stat.Value;
+            if (EntityManager.TryGetStat(attacker, weapon.Proficiency, out var prof)) roll += prof.Value;
+
+            //Get Damage from any other components on the weapon
             var E1 = new DealingMeleeDamage(isCrit);
-            EntityManager.FireEvent(meleeWeapon, E1);
+            E1.Damage.Add(weapon.Type, roll);
+            EntityManager.FireEvent(attacker, E1);
 
             //Pass damage to target
             EntityManager.FireEvent(target, new TakeDamage(E1.Damage));
-            string log = "";
-            if (isCrit) log = "Critical Hit! ";
-            log += attacker.Name + " hit " + target.Name + " for ";
-            foreach(var pair in E1.Damage)
-            {
-                log += pair.Value + " " + pair.Key + " damage,";
-            }
-            log.TrimEnd(',');
-            log += " with " + meleeWeapon.Name + ".";
-            MessageSystem.NewMessage(log);
+
+            MessageSystem.NewHitMessage(attacker.Name, target.Name, E1.Damage);
         }
 
         /// <summary>
@@ -134,19 +139,21 @@ namespace JS.ECS
         /// <summary>
         /// Returns highest value target from array based on combatant status and sentience
         /// </summary>
-        private Physics GetHighestPrecedenceTarget(Physics[] targets)
+        private Physics GetHighestPrecedenceTarget(List<Physics> targets)
         {
             //target combatants first
-            for (int i = 0; i < targets.Length; i++)
+            for (int i = 0; i < targets.Count; i++)
             {
                 if (EntityManager.GetComponent<Combat>(targets[i].entity) != null) return targets[i];
             }
             //target sentient targets next
-            for (int i = 0; i < targets.Length; i++)
+            for (int i = 0; i < targets.Count; i++)
             {
                 if (EntityManager.GetComponent<Brain>(targets[i].entity) != null) return targets[i];
             }
             return targets[0];
         }
+
+
     }
 }

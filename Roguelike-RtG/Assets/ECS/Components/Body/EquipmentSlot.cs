@@ -6,16 +6,5 @@ namespace JS.ECS
 
         public BodySlot Type;
         public Entity EquippedArmor;
-
-
-        public override void OnEvent(Event newEvent)
-        {
-            
-        }
-
-        public override void Disassemble()
-        {
-            base.Disassemble();
-        }
     }
 }

@@ -1,0 +1,260 @@
+{
+    "Materials": [
+        {
+            "Name": "Example",
+            "Properties": [
+                "HP=0",
+                "Hardness=0",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Paper",
+            "Properties": [
+                "HP=2",
+                "Hardness=0",
+                "WeightModifier=0.1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Blunt",
+                "Resistances=",
+                "Weaknesses=Slash,Fire",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Glass",
+            "Properties": [
+                "HP=1",
+                "Hardness=1",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Acid",
+                "Resistances=Fire",
+                "Weaknesses=Blunt,Sonic",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Wood",
+            "Properties": [
+                "HP=10",
+                "Hardness=5",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Sonic",
+                "Resistances=Frost",
+                "Weaknesses=Slash,Fire",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Fiber",
+            "Properties": [
+                "HP=5",
+                "Hardness=0",
+                "WeightModifier=0.5",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Blunt,Frost,Sonic",
+                "Resistances=",
+                "Weaknesses=Fire",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Hide",
+            "Properties": [
+                "HP=3",
+                "Hardness=1",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Blunt,Frost,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Leather",
+            "Properties": [
+                "HP=4",
+                "Hardness=2",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Blunt,Frost,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Chitin",
+            "Properties": [
+                "HP=12",
+                "Hardness=4",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Frost,Sonic",
+                "Resistances=",
+                "Weaknesses=Blunt",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Bone",
+            "Properties": [
+                "HP=14",
+                "Hardness=5",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Frost,Sonic",
+                "Resistances=",
+                "Weaknesses=Blunt",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Stone",
+            "Properties": [
+                "HP=15",
+                "Hardness=8",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Acid",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Crystal",
+            "Properties": [
+                "HP=15",
+                "Hardness=9",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Acid,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Iron",
+            "Properties": [
+                "HP=30",
+                "Hardness=10",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Steel",
+            "Properties": [
+                "HP=35",
+                "Hardness=11",
+                "WeightModifier=1",
+                "CostModifier=1",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Silver",
+            "Properties": [
+                "HP=30",
+                "Hardness=9",
+                "WeightModifier=1",
+                "CostModifier=8",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects=Silver"
+            ]
+        },
+        {
+            "Name": "Mithral",
+            "Properties": [
+                "HP=40",
+                "Hardness=15",
+                "WeightModifier=0.1",
+                "CostModifier=10",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        },
+        {
+            "Name": "Adamantine",
+            "Properties": [
+                "HP=50",
+                "Hardness=20",
+                "WeightModifier=1",
+                "CostModifier=10",
+                "AV=0",
+                "DV=0",
+                "Damage=0",
+                "Immunities=Pierce,Slash,Fire,Frost,Shock,Sonic",
+                "Resistances=",
+                "Weaknesses=",
+                "Effects="
+            ]
+        }
+    ]
+}

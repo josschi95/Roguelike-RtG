@@ -21,7 +21,10 @@
                         "Category=MeleeWeapon"
                     ]
                 },
-                { "Name": "CraftingItem", "Parameters": ["Skill=Smithing"]}
+                {
+                    "Name": "CraftingItem",
+                    "Parameters": [ "Skill=Smithing" ]
+                }
             ]
         },
         {
@@ -98,17 +101,156 @@
                 }
             ]
         },
+
+
+
+
+
+        {
+            "Name": "BaseMissileWeapon",
+            "Inherits": "MissileWeapon",
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "MissileWeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseBow",
+            "Inherits": "BaseMissileWeapon",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,bow" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "BowRunes,MissileWeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseCrossBow",
+            "Inherits": "BaseMissileWeapon",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,crossbow" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "CrossBowRunes,MissileWeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseSling",
+            "Inherits": "BaseMissileWeapon",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,sling" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "SlingRunes,MissileWeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseBlowgun",
+            "Inherits": "BaseMissileWeapon",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,blowgun" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "BlowgunRunes,MissileWeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseThrownWeapon",
+            "Inherits": "MeleeWeapon",
+            "Components": [
+                { "Name": "ThrownWeapon" }
+            ]
+        },
+        {
+            "Name": "BaseArmor",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,armor" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
         {
             "Name": "BaseShield",
             "Inherits": "Shield",
             "Components": [
-
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,shield" ]
+                }
             ],
             "Tags": [
                 {
                     "Name": "Runes",
                     "Value": "ShieldRunes,CommonRunes"
                 }
+            ]
+        },
+
+
+
+
+
+        {
+            "Name": "BaseSword",
+            "Inherits": "MeleeWeapon",
+            "Components": [
+                {
+                    "Name": "MeleeWeapon",
+                    "Parameters": [ "Type=Slashing", "Proficiency=Swords" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "SwordRunes,BladeRunes,WeaponRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "IronSword",
+            "Inherits": "BaseSword",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,sword"]
+                }
+            ],
+            "Tags": [
+                { "Name": "MaterialTag", "Value": "Iron" }
             ]
         }
     ]

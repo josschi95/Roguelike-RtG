@@ -112,9 +112,7 @@ namespace JS.ECS
                 foreach (var parameter in component.Parameters)
                 {
                     var values = parameter.Split('=');
-                    FieldInfo info = newComponentType.GetField(values[0]);
-
-                    if (info == null) throw new Exception("Unknown field " + 
+                    FieldInfo info = newComponentType.GetField(values[0]) ?? throw new Exception("Unknown field " + 
                         values[0] + " in " + newComponentType + "!");
 
                     if (info.FieldType == typeof(string))

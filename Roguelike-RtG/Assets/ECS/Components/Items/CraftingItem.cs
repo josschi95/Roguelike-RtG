@@ -1,8 +1,8 @@
 namespace JS.ECS
 {
-    public class CraftItem : ComponentBase
+    public class CraftingItem : ComponentBase
     {
-        public CraftItem() { }
+        public CraftingItem() { }
 
         public CraftingSkill Skill;
         public int Difficulty = 10;

@@ -9,16 +9,16 @@ namespace JS.ECS
     {
         public CameraFocus() { }
 
-        private Physics _physics;
-        public Physics Physics
+        private Transform _transform;
+        public Transform Transform
         {
             get
             {
-                if (_physics == null)
+                if (_transform == null)
                 {
-                    _physics = EntityManager.GetComponent<Physics>(entity);
+                    _transform = EntityManager.GetComponent<Transform>(entity);
                 }
-                return _physics;
+                return _transform;
             }
         }
 
@@ -45,11 +45,11 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive)
             {
-                Controller.SmoothToPosition((Vector2Int)Physics.WorldMapPosition);
+                Controller.SmoothToPosition(TransformSystem.GetWorldMapPos(Transform));
             }
             else
             {
-                Controller.SmoothToPosition(Physics.LocalPosition);
+                Controller.SmoothToPosition(Transform.LocalPosition);
             }
 
             /*if (Transform.Depth == 1)

@@ -1,22 +1,34 @@
+using UnityEngine;
+using UnityEngine.UI;
 using JS.ECS;
 using TMPro;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class UIPlayerMenu : MonoBehaviour
+public class UICharacterMenu : MonoBehaviour
 {
-    [SerializeField] private InputActionProperty tab;
-    [SerializeField] private GameObject menuPanel;
-    private bool menuOpen = false;
-
-    [Space]
-
+    [Header("Name/Race/Level")]
     [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text HP, SP, MP, AV, DV;
-    [SerializeField] private TMP_Text STR, AGI, VIT, KNO, WIL, CHA;
-    [SerializeField] private TMP_Text SPD, AP, WALK, SWIM, FLY;
+    [SerializeField] private TMP_Text raceText;
+    [SerializeField] private TMP_Text levelText;
 
+    [Header("Name/Race/Level")]
+    [SerializeField] private TMP_Text HP;
+    [SerializeField] private TMP_Text SP;
+    [SerializeField] private TMP_Text MP;
+    [SerializeField] private Image HPBar, SPBar, MPBar;
+    [SerializeField] private GameObject ManaDisplay;
+
+    [Header("Attributes")]
+    [SerializeField] private TMP_Text STR;
+    [SerializeField] private TMP_Text AGI, VIT, KNO, WIL, CHA;
+
+
+    [Header("Miscellaneous")]
+    [SerializeField] private TMP_Text SPD;
+    [SerializeField] private TMP_Text AV, DV;
     [SerializeField] private TMP_Text Hunger, Thirst;
+    [SerializeField] private TMP_Text Deity, Piety;
+    [SerializeField] private TMP_Text WALK, SWIM, FLY;
+    [SerializeField] private GameObject stomachParent;
 
     private Entity playerEntity;
     private Entity Player
@@ -33,31 +45,7 @@ public class UIPlayerMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        tab.action.performed += ToggleMenu;   
-    }
-
-    private void OnDisable()
-    {
-        tab.action.performed -= ToggleMenu;
-    }
-
-    private void ToggleMenu(InputAction.CallbackContext obj)
-    {
-        if (menuOpen) CloseMenu();
-        else OpenMenu();
-    }
-
-    private void OpenMenu()
-    {
-        menuOpen = true;
         UpdateValues();
-        menuPanel.SetActive(true);
-    }
-
-    private void CloseMenu()
-    {
-        menuOpen = false;
-        menuPanel.SetActive(false);
     }
 
     private void UpdateValues()
@@ -66,7 +54,7 @@ public class UIPlayerMenu : MonoBehaviour
 
         EntityManager.TryGetStat(Player, "HP", out var hp);
         EntityManager.TryGetStat(Player, "SP", out var sp);
-        EntityManager.TryGetStat(Player, "MP", out var mp);
+        ManaDisplay.SetActive(EntityManager.TryGetStat(Player, "MP", out var mp));
         EntityManager.TryGetStat(Player, "AV", out var av);
         EntityManager.TryGetStat(Player, "DV", out var dv);
 
@@ -78,39 +66,36 @@ public class UIPlayerMenu : MonoBehaviour
         EntityManager.TryGetStat(Player, "CHA", out var cha);
 
         EntityManager.TryGetStat(Player, "SPD", out var spd);
-        EntityManager.TryGetStat(Player, "AP", out var ap);
         EntityManager.TryGetStat(Player, "WALK", out var walk);
         EntityManager.TryGetStat(Player, "SWIM", out var swim);
         EntityManager.TryGetStat(Player, "FLY", out var fly);
 
-        HP.text = "HP: " + hp.Value.ToString();
-        SP.text = "SP: " + sp.Value.ToString();
-        MP.text = "MP: " + mp.Value.ToString();
+        HP.text = "HP: " + hp.CurrentValue.ToString() + "/" + hp.Value.ToString();
+        SP.text = "SP: " + sp.CurrentValue.ToString() + "/" + sp.Value.ToString();
+        //Characters without the aptitude to cast magic simply don't have mana
+        if (mp != null) MP.text = "MP: " + mp.CurrentValue.ToString() + "/" + mp.Value.ToString();
+        
+        STR.text = str.Value.ToString();
+        AGI.text = agi.Value.ToString();
+        VIT.text = vit.Value.ToString();
+        KNO.text = kno.Value.ToString();
+        WIL.text = wil.Value.ToString();
+        CHA.text = cha.Value.ToString();
+
         AV.text = "AV: " + av.Value.ToString();
         DV.text = "DV: " + dv.Value.ToString();
 
-        STR.text = "STR: " + str.Value.ToString();
-        AGI.text = "AGI: " + agi.Value.ToString();
-        VIT.text = "VIT: " + vit.Value.ToString();
-        KNO.text = "KNO: " + kno.Value.ToString();
-        WIL.text = "WIL: " + wil.Value.ToString();
-        CHA.text = "CHA: " + cha.Value.ToString();
-
         SPD.text = "SPD: " + spd.Value.ToString();
-        AP.text = "AP: " + ap.Value.ToString();
         WALK.text = "WALK: " + walk.Value.ToString();
         SWIM.text = "SWIM: " + swim.Value.ToString();
         FLY.text = "FLY: " + fly.Value.ToString();
 
         if (EntityManager.TryGetComponent<Stomach>(Player, out var stomach))
         {
+            stomachParent.SetActive(true);
             Hunger.text = stomach.Hunger.ToString();
             Thirst.text = stomach.Thirst.ToString();
         }
-        else
-        {
-            Hunger.text = "";
-            Thirst.text = "";
-        }
+        else stomachParent.SetActive(false);
     }
 }

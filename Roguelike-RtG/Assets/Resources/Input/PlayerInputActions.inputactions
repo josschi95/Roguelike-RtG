@@ -78,15 +78,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Wait",
-                    "type": "Button",
-                    "id": "c2970315-bc75-4a8a-b050-2d97c0b6a5a4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "East",
                     "type": "Button",
                     "id": "a94f1c0c-9c2d-46de-bdc0-dbf6009e9444",
@@ -159,7 +150,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Tab",
+                    "name": "Menu",
                     "type": "Button",
                     "id": "64349435-a1a1-4306-a6a6-3eedff041344",
                     "expectedControlType": "Button",
@@ -290,17 +281,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e35625ee-e132-49b5-bba6-cb443c341ba3",
-                    "path": "<Keyboard>/numpad5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Wait",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "319d8686-bb27-4e0e-b506-b6198a96f6c1",
                     "path": "<Keyboard>/numpad6",
                     "interactions": "",
@@ -361,14 +341,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Tab",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "14333df1-4578-4ada-9fa2-dfec18611041",
-                    "path": "<Keyboard>/numpadMultiply",
+                    "path": "<Keyboard>/numpad5",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

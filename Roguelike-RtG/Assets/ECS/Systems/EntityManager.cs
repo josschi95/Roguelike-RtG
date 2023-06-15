@@ -304,7 +304,7 @@ namespace JS.ECS
             {
                 for (int i = 0; i < entities[entity].components.Count; i++)
                 {
-                    Debug.Log("Firing " + newEvent.GetType().Name + " to " + entities[entity].components[i].GetType().Name);    
+                    //Debug.Log("Firing " + newEvent.GetType().Name + " to " + entities[entity].components[i].GetType().Name);    
                     entities[entity].components[i].OnEvent(newEvent);
                 }
             }

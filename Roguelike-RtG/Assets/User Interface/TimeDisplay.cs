@@ -22,11 +22,9 @@ namespace JS.UI
                 " day of " + timeKeeper.Month.ToString() + ", " + timeKeeper.Year + timeKeeper.GetSuperScriptOrdinals(timeKeeper.Year) +
                 " year";
 
-            if (moonPhaseHelper != null)
-            {
-                var s = moonPhaseHelper.GetMoonSprite();
-                moonImage.sprite = s;
-            }
+            var moon = moonPhaseHelper.GetMoonSprite();
+            moonImage.gameObject.SetActive(moon != null);
+            moonImage.sprite = moon;
         }
 
         private string GetTimeOfDay()

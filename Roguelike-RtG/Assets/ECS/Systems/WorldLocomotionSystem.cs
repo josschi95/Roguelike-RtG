@@ -60,37 +60,37 @@ namespace JS.ECS
         /// <summary>
         /// Switches to Local Map view from World Map.
         /// </summary>
-        public static bool SwitchToLocalMap(Transform player)
+        public static bool SwitchToLocalMap(Transform transform)
         {
             //What would prevent this?
-            return instance.SwitchFromWorldToLocalMap(player);
+            return instance.SwitchFromWorldToLocalMap(transform);
         }
 
-        private bool SwitchFromWorldToLocalMap(Transform player)
+        private bool SwitchFromWorldToLocalMap(Transform transform)
         {
             //Don't know how, but make sure no other entity can swap map focus
-            if (player.entity != EntityManager.Player) return false;
+            if (!EntityManager.TryGetComponent<InputHandler>(transform.entity, out _)) return false;
 
-            GridManager.OnEnterLocalMap(player.Position);
-            player.LocalPosition = localCenter;
+            GridManager.OnEnterLocalMap(transform.Position);
+            transform.LocalPosition = localCenter;
             return true;
         }
 
         /// <summary>
         /// Switch to World Map view from Local Map.
         /// </summary>
-        public static bool SwitchToWorldMap(Transform player)
+        public static bool SwitchToWorldMap(Transform transform)
         {
-            return instance.SwitchFromLocalToWorldMap(player);
+            return instance.SwitchFromLocalToWorldMap(transform);
         }
 
-        private bool SwitchFromLocalToWorldMap(Transform player)
+        private bool SwitchFromLocalToWorldMap(Transform transform)
         {
             //Don't know how, but make sure no other entity can swap map focus
-            if (player.entity != EntityManager.Player) return false;
+            if (!EntityManager.TryGetComponent<InputHandler>(transform.entity, out _)) return false;
 
             //Can only switch to World Map if on the surface
-            if (player.Position.z < 0) return false;
+            if (transform.Position.z < 0) return false;
             
             //Will also need to check if the player is in combat, possibly other factors
             //Maybe terrain, etc.

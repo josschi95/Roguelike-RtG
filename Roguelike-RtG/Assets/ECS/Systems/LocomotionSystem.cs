@@ -54,12 +54,11 @@ namespace JS.ECS
                 TransformSystem.SetPosition(obj, worldTracer);
 
                 //Player crossed into a new map, change scenes
-                if (obj.entity == EntityManager.Player)
+                if (EntityManager.TryGetComponent<CameraFocus>(obj.entity, out var cam))
                 {
                     //Debug.Log("Player Switching Map");
                     GridManager.OnEnterLocalMap(obj.Position);
                 }
-                //else Debug.Log("Player Tag not found");
             }
             return true;
         }

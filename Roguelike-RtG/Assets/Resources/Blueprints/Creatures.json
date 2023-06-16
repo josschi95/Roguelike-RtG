@@ -91,6 +91,10 @@
             "Inherits": "Item",
             "Components": [
                 {
+                    "Name": "Physics",
+                    "Parameters": [ "Category=Corpse" ]
+                },
+                {
                     "Name": "Render",
                     "Parameters": [ "Tile=Creatures/humanoid_base,corpse", "Layer=Object" ]
                 },

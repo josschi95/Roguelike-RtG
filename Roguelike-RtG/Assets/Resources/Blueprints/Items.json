@@ -18,7 +18,7 @@
                     "Name": "Physics",
                     "Parameters": [
                         "Weight=5",
-                        "Category=MeleeWeapon"
+                        "Category=Melee Weapon"
                     ]
                 },
                 {
@@ -35,7 +35,7 @@
                     "Name": "Physics",
                     "Parameters": [
                         "Weight=5",
-                        "Category=MissileWeapon"
+                        "Category=Missile Weapon"
                     ]
                 },
                 { "Name": "MissileWeapon" },

@@ -105,7 +105,7 @@ namespace JS.ECS
         {
             if (component.entity != entity) throw new UnityException("Component does not belong to entity!");
             if (!entities.ContainsKey(entity)) return;
-            Debug.Log("Removing " + component.GetType().Name);
+            //Debug.Log("Removing " + component.GetType().Name);
             entities[entity].components.Remove(component);
             component.entity = null;
             component.Disassemble();

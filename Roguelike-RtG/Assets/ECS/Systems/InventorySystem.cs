@@ -43,7 +43,7 @@ namespace JS.ECS
 
             OnItemAddedToInventory(newItem);
 
-            Debug.Log("Adding " + newItem.Name + " to inventory of " + inventory.entity.Name);
+            //Debug.Log("Adding " + newItem.Name + " to inventory of " + inventory.entity.Name);
         }
 
         private bool CanStackItem(Inventory inventory, Entity newItem)

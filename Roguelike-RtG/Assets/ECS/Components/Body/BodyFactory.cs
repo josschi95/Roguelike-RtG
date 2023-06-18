@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
+using System.IO;
 using UnityEngine;
+using JS.ECS.Tags;
 
 //*****************************************************************************//
 //Note that I only really need to check the fields I plan on using in BodyPart //
@@ -13,13 +14,13 @@ namespace JS.ECS
     public static class BodyFactory
     {
         private static Dictionary<string, BodyPartBlueprint> _bodyParts;
-        private static Dictionary<string, BodyPartBlueprint[]> _anatomies;
+        private static Dictionary<string, BodyPartLayout[]> _anatomies;
 
         #region - Load Bodies -
         public static void LoadBodies(bool loadFromResources = true)
         {
             _bodyParts = new Dictionary<string, BodyPartBlueprint>();
-            _anatomies = new Dictionary<string, BodyPartBlueprint[]>();
+            _anatomies = new Dictionary<string, BodyPartLayout[]>();
 
             if (loadFromResources) LoadFromResources();
             else LoadFromStreamingAssets();
@@ -39,13 +40,16 @@ namespace JS.ECS
                 _bodyParts[part.Type] = part;
             }
 
-            foreach (var anatomy in bodies.AllAnatomies)
+            foreach (var anatomy in bodies.Anatomies)
             {
-                var partArray = new BodyPartBlueprint[anatomy.BodyParts.Length];
+                var partArray = new BodyPartLayout[anatomy.BodyParts.Length];
 
                 for (int i = 0; i < partArray.Length; i++)
                 {
-                    partArray[i] = _bodyParts[anatomy.BodyParts[i].Type];
+                    partArray[i] = new BodyPartLayout();
+                    partArray[i].Type = anatomy.BodyParts[i].Type;
+                    partArray[i].Laterality = anatomy.BodyParts[i].Laterality;
+                    partArray[i].AttachedTo = anatomy.BodyParts[i].AttachedTo;
                 }
 
                 _anatomies[anatomy.Name] = partArray;
@@ -77,13 +81,16 @@ namespace JS.ECS
                 _bodyParts[part.Type] = part;
             }
 
-            foreach (var anatomy in bodies.AllAnatomies)
+            foreach (var anatomy in bodies.Anatomies)
             {
-                var partArray = new BodyPartBlueprint[anatomy.BodyParts.Length];
+                var partArray = new BodyPartLayout[anatomy.BodyParts.Length];
 
                 for (int i = 0; i < partArray.Length; i++)
                 {
-                    partArray[i] = _bodyParts[anatomy.BodyParts[i].Type];
+                    partArray[i] = new BodyPartLayout();
+                    partArray[i].Type = anatomy.BodyParts[i].Type;
+                    partArray[i].Laterality =  anatomy.BodyParts[i].Laterality;
+                    partArray[i].AttachedTo = anatomy.BodyParts[i].AttachedTo;
                 }
 
                 _anatomies[anatomy.Name] = partArray;
@@ -91,22 +98,33 @@ namespace JS.ECS
         }
         #endregion
 
+        #region - Body Construction
+        public static BodyPart GetNewBodyPart(string name)
+        {
+            if (_bodyParts.ContainsKey(name))
+                return CreateNewBodyPart(_bodyParts[name]);
+            return null;
+        }
+
         private static BodyPart CreateNewBodyPart(BodyPartBlueprint blueprint)
         {
             BodyPart newPart;
             if (blueprint.Inherits != null && _bodyParts.ContainsKey(blueprint.Inherits))
             {
                 newPart = CreateNewBodyPart(_bodyParts[blueprint.Inherits]);
+                newPart.Type = (BodyPartType)Enum.Parse(typeof(BodyPartType), blueprint.Inherits);
             }
-            else newPart = new BodyPart();
+            else
+            {
+                newPart = new BodyPart();
+                newPart.Type = (BodyPartType)Enum.Parse(typeof(BodyPartType), blueprint.Type);
+            }
             newPart.Name = blueprint.Type;
 
-            if (blueprint.Parameters == null) return newPart;           
-
+            if (blueprint.Parameters == null) return newPart;
             foreach(var parameter in blueprint.Parameters)
             {
                 var values = parameter.Split('=');
-
 
                 if (values[0].Equals("Armor"))
                 {
@@ -114,111 +132,50 @@ namespace JS.ECS
                     newPart.Armor = new ArmorSlot[slots.Length];
                     for (int i = 0; i < slots.Length; i++)
                     {
-                        newPart.Armor[i] = new ArmorSlot(Enum.Parse<BodySlot>(slots[i]));
+                        newPart.Armor[i] = new ArmorSlot(Enum.Parse<EquipmentSlot>(slots[i]));
                     }
                     continue;
                 }
                 else if (values[0].Equals("DefaultBehavior"))
                 {
-                    var entity = EntityFactory.GetEntity(values[1]);
-                    if (entity == null) throw new Exception("DefaultBehavior entity not found!");
+                    var entity = EntityFactory.GetEntity(values[1]) 
+                        ?? throw new Exception("DefaultBehavior entity not found!");
                     
                     newPart.DefaultBehavior = entity;
                     continue;
                 }
 
-                FieldInfo info = newPart.GetType().GetField(values[0]);
+                FieldInfo info = newPart.GetType().GetField(values[0]) 
+                    ?? throw new Exception("Unknown field " + values[0] + " in BodyPart!");
 
-                if (info == null) throw new Exception("Unknown field " + values[0] + " in BodyPart!");
-
-                if (info.FieldType.IsArray)
+                if (info.FieldType == typeof(string))
                 {
-                    var elements = values[1].Split(",");
-                    //info.SetValue(newPart, elements);
-
-                    if (info.FieldType == typeof(string))
-                    {
-                        //Debug.Log(info.Name + " set to string " + values[1]);
-                        info.SetValue(newPart, elements);
-                    }
-                    else if (info.FieldType == typeof(bool))
-                    {
-                        //Debug.Log(info.Name + " set to bool " + values[1]);
-                        info.SetValue(newPart, StringsToBools(elements));
-                    }
-                    else if (info.FieldType == typeof(int))
-                    {
-                        //Debug.Log(info.Name + " set to int" + values[1]);
-                        info.SetValue(newPart, int.Parse(values[1]));
-                    }
-                    else if (info.FieldType == typeof(float))
-                    {
-                        //Debug.Log(info.Name + " set to float " + values[1]);
-                        info.SetValue(newPart, float.Parse(values[1]));
-                    }
-                    else if (info.FieldType.IsEnum)
-                    {
-                        //Debug.Log(info.Name + " set to enum " + values[1]);
-                        var e = (Enum)info.GetValue(newPart);
-                        info.SetValue(newPart, Enum.Parse(e.GetType(), values[1]));
-                    }
+                    //Debug.Log(info.Name + " set to string " + values[1]);
+                    info.SetValue(newPart, values[1]);
                 }
-                else
+                else if (info.FieldType == typeof(bool))
                 {
-                    if (info.FieldType == typeof(string))
-                    {
-                        //Debug.Log(info.Name + " set to string " + values[1]);
-                        info.SetValue(newPart, values[1]);
-                    }
-                    else if (info.FieldType == typeof(bool))
-                    {
-                        //Debug.Log(info.Name + " set to bool " + values[1]);
-                        info.SetValue(newPart, StringToBool(values[1]));
-                    }
-                    else if (info.FieldType == typeof(int))
-                    {
-                        //Debug.Log(info.Name + " set to int" + values[1]);
-                        info.SetValue(newPart, int.Parse(values[1]));
-                    }
-                    else if (info.FieldType == typeof(float))
-                    {
-                        //Debug.Log(info.Name + " set to float " + values[1]);
-                        info.SetValue(newPart, float.Parse(values[1]));
-                    }
-                    else if (info.FieldType.IsEnum)
-                    {
-                        //Debug.Log(info.Name + " set to enum " + values[1]);
-                        var e = (Enum)info.GetValue(newPart);
-                        info.SetValue(newPart, Enum.Parse(e.GetType(), values[1]));
-                    }
+                    //Debug.Log(info.Name + " set to bool " + values[1]);
+                    info.SetValue(newPart, StringToBool(values[1]));
+                }
+                else if (info.FieldType == typeof(int))
+                {
+                    //Debug.Log(info.Name + " set to int" + values[1]);
+                    info.SetValue(newPart, int.Parse(values[1]));
+                }
+                else if (info.FieldType == typeof(float))
+                {
+                    //Debug.Log(info.Name + " set to float " + values[1]);
+                    info.SetValue(newPart, float.Parse(values[1]));
+                }
+                else if (info.FieldType.IsEnum)
+                {
+                    //Debug.Log(info.Name + " set to enum " + values[1]);
+                    var e = (Enum)info.GetValue(newPart);
+                    info.SetValue(newPart, Enum.Parse(e.GetType(), values[1]));
                 }
             }
             return newPart;
-        }
-
-        private static bool StringToBool(string value)
-        {
-            if (value == null) return false;
-            if (value.Equals("true")) return true;
-            else if (value.Equals("True")) return true;
-            return false;
-        }
-
-        private static bool[] StringsToBools(string[] values)
-        {
-            var myBools = new bool[values.Length];
-            for (int i = 0; i < values.Length; i++)
-            {
-                myBools[i] = StringToBool(values[i]);
-            }
-            return myBools;
-        }
-
-        public static BodyPart GetNewBodyPart(string name)
-        {
-            if (_bodyParts.ContainsKey(name))
-                return CreateNewBodyPart(_bodyParts[name]);
-            return null;
         }
 
         public static List<BodyPart> GetNewBody(string anatomy)
@@ -229,19 +186,73 @@ namespace JS.ECS
 
             foreach(var part in _anatomies[anatomy])
             {
-                parts.Add(CreateNewBodyPart(part));
+                var newPart = CreateNewBodyPart(_bodyParts[part.Type]);
+                if (part.Laterality != null) newPart.Laterality = (Laterality)Enum.Parse(typeof(Laterality), part.Laterality);
+                parts.Add(newPart);
+
+                if (part.AttachedTo == null) continue;
+
+                for (int i = 0; i < parts.Count; i++)
+                {
+                    if (parts[i].Type.ToString() != part.AttachedTo) continue;
+
+                    if (parts[i].Laterality == Laterality.None)
+                    {
+                        newPart.AttachedTo = parts[i];
+                        break;
+                    }
+                    else if (newPart.Laterality == parts[i].Laterality)
+                    {
+                        newPart.AttachedTo = parts[i];
+                        break;
+                    }
+                }
             }
 
             return parts;
         }
+
+        /// <summary>
+        /// Builds the body for a creature based on its assigned anatomy.
+        /// </summary>
+        /// <param name="body"></param>
+        public static void CreateAnatomy(Body body)
+        {
+            body.BodyParts = new List<BodyPart>();
+            var parts = GetNewBody(body.Anatomy);
+            body.BodyParts.AddRange(parts);
+
+            //Set primary limb
+            EntityManager.TryGetTag<PrimaryLimb>(body.entity, out var limb);
+            for (int i = 0; i < parts.Count; i++)
+            {
+                if (parts[i].Type.ToString() == limb.Value)
+                {
+                    body.PrimaryLimb = parts[i];
+                    break;
+                }
+            }
+        }
+        #endregion
+
+        private static bool StringToBool(string value)
+        {
+            if (value == null) return false;
+            if (value.Equals("true")) return true;
+            else if (value.Equals("True")) return true;
+            return false;
+        }
     }
 }
 
+/// <summary>
+/// A class needed to serialize from JSON
+/// </summary>
 [Serializable]
 public class Bodies
 {
     public BodyPartBlueprint[] BodyParts;
-    public AnatomyBlueprint[] AllAnatomies;
+    public AnatomyBlueprint[] Anatomies;
 }
 
 /// <summary>
@@ -251,7 +262,18 @@ public class Bodies
 public class AnatomyBlueprint
 {
     public string Name;
-    public BodyPartBlueprint[] BodyParts;
+    public BodyPartLayout[] BodyParts;
+}
+
+/// <summary>
+/// A class that defines how each body part is connected within an anatomy.
+/// </summary>
+[Serializable]
+public class BodyPartLayout
+{
+    public string Type; //the name of the body part blueprint
+    public string Laterality; //laterality
+    public string AttachedTo; //what it is attached to
 }
 
 [Serializable]

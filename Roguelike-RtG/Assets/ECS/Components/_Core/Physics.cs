@@ -57,7 +57,11 @@ namespace JS.ECS
                 stat.CurrentValue -= net;
             }
 
-            if (stat.CurrentValue <= 0) EntityManager.FireEvent(entity, new Death());
+            if (stat.CurrentValue <= 0)
+            {
+                //Debug.LogWarning("Firing Death Event");
+                EntityManager.FireEvent(entity, new Death());
+            }
         }
 
         private void OnDeath()

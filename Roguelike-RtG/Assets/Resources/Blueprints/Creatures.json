@@ -22,6 +22,7 @@
                 { "Name": "Corpse" },
                 { "Name": "Inventory" },
                 { "Name": "Combat" },
+                { "Name": "Capabilities" },
                 { "Name": "RandomLoot" }
             ],
             "Stats": [
@@ -57,7 +58,9 @@
                 {"Name": "NegativeResistance", "ShortName": "NegativeResistance", "Value": 0, "MinValue": -200, "Potential": 200, "MaxValue": 200 }
             ],
             "Tags": [
-                {"Name": "Creature"}
+                { "Name": "Creature" },
+                { "Name": "Breakable", "Value": "removeTag" },
+                { "Name": "PrimaryLimb", "Value": "Hand" }
             ]
         },
         {

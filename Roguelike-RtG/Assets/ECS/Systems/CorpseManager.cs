@@ -19,16 +19,18 @@ namespace JS.ECS
         public static void OnCreatureDeath(Entity entity)
         {
             var corpse = EntityManager.GetComponent<Corpse>(entity);
-            if (corpse != null && Random.value * 100 < corpse.CorpseChance)
-            {
-                Debug.Log("Dropping corpse");
-                var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);
-                if (newCorpse == null) throw new System.Exception("Corpse Blueprint not found!");
+            if (corpse == null || Random.value * 100 > corpse.CorpseChance) return;
 
-                var ePhys = EntityManager.GetComponent<Transform>(entity);
-                var cPhys = EntityManager.GetComponent<Transform>(newCorpse);
-                TransformSystem.SetPosition(cPhys, ePhys.Position, ePhys.LocalPosition);
-            }
+            var newCorpse = EntityFactory.GetEntity(corpse.CorpseBlueprint);
+            if (newCorpse == null) throw new System.Exception("Corpse Blueprint not found!");
+
+            var entityPos = EntityManager.GetComponent<Transform>(entity);
+            var corpsePos = EntityManager.GetComponent<Transform>(newCorpse);
+            TransformSystem.SetPosition(corpsePos, entityPos.Position, entityPos.LocalPosition);
+
+            //EntityManager.TryGetComponent<Inventory>(entity, out  var inventory);
+
+            //Also need to drop all items in inventory and any equipped items
         }
     }
 }

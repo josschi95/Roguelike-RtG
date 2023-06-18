@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JS.CharacterSystem;
 using JS.ECS.Tags;
+using System.Collections;
 
 namespace JS.ECS
 {
@@ -269,21 +270,42 @@ namespace JS.ECS
             return false;
         }
 
-        public static bool TryGetTag<T>(Entity entity, out string value) where T : TagBase
+        public static bool TryGetTag<T>(Entity entity, out TagBase tag) where T : TagBase
         {
-            return instance.TryGetEntityTag<T>(entity, out value);
+            return instance.TryGetEntityTag<T>(entity, out tag);
         }
 
-        private bool TryGetEntityTag<T>(Entity entity, out string value) where T : TagBase
+        private bool TryGetEntityTag<T>(Entity entity, out TagBase tag) where T : TagBase
         {
-            value = null;
+            tag = null;
             if (!entities.ContainsKey(entity)) return false;
 
-            foreach (TagBase tag in entities[entity].tags)
+            foreach (TagBase tagBase in entities[entity].tags)
             {
-                if (tag.GetType().Equals(typeof(T)))
+                if (tagBase.GetType().Equals(typeof(T)))
                 {
-                    value = tag.Value;
+                    tag = tagBase;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool TryGetTagByName(Entity entity, string name, out TagBase tag)
+        {
+            return instance.TryGetEntityTagByName(entity, name, out tag);
+        }
+
+        private bool TryGetEntityTagByName(Entity entity, string name, out TagBase tag)
+        {
+            tag = null;
+            if (!entities.ContainsKey(entity)) return false;
+            foreach (TagBase tagBase in entities[entity].tags)
+            {
+                if (tagBase.GetType().Name.Equals(name))
+                {
+                    tag = tagBase;
                     return true;
                 }
             }
@@ -302,10 +324,9 @@ namespace JS.ECS
         {
             if (instance.entities.ContainsKey(entity))
             {
-                for (int i = 0; i < entities[entity].components.Count; i++)
+                foreach(var component in entities[entity].components)
                 {
-                    //Debug.Log("Firing " + newEvent.GetType().Name + " to " + entities[entity].components[i].GetType().Name);    
-                    entities[entity].components[i].OnEvent(newEvent);
+                    component.OnEvent(newEvent);
                 }
             }
         }
@@ -314,12 +335,19 @@ namespace JS.ECS
         #region - Entity Removal -
         public static void Destroy(Entity entity)
         {
-            instance.DestroyEntity(entity);
+            instance.StartCoroutine(instance.DestroyWithDelay(entity));
+        }
+
+        //Introduce short delay to avoid issues with modifying collection when FiringEvent
+        private IEnumerator DestroyWithDelay(Entity entity)
+        {
+            yield return new WaitForEndOfFrame();
+            DestroyEntity(entity);
         }
 
         private void DestroyEntity(Entity entity)
         {
-            Debug.Log("Destroying " + entity.Name);
+            //Debug.Log("Destroying " + entity.Name);
             var pair = entities[entity];
 
             for (int i = pair.components.Count - 1; i >= 0; i--)

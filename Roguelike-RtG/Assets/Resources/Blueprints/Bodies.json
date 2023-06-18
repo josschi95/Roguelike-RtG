@@ -3,17 +3,16 @@
         {
             "Type": "Body",
             "Parameters": [
-                "Integral=true",
-                "AverageArmor=false",
                 "IsAppendage=false",
+                "AverageArmor=false",
                 "Armor=Body,Back,Belt"
             ]
         },
         {
             "Type": "Head",
             "Parameters": [
-                "LimbBlueprint=SeveredHeadBlueprint",
                 "IsVital=true",
+                "LimbBlueprint=SeveredHeadBlueprint",
                 "AverageArmor=true",
                 "IsAppendage=true",
                 "UsuallyOn=Body",
@@ -71,7 +70,7 @@
             ]
         }
     ],
-    "AllAnatomies": [
+    "Anatomies": [
         {
             "Name": "Humanoid",
             "BodyParts": [
@@ -82,20 +81,22 @@
                 },
                 {
                     "Type": "Arm",
-                    "Laterality": "Left"
-                },
-                {
-                    "Type": "Hand",
-                    "Laterality": "Left",
-                    "AttachedTo": "Arm"
-                },
-                {
-                    "Type": "Arm",
-                    "Laterality": "Right"
+                    "Laterality": "Right",
+                    "AttachedTo": "Body"
                 },
                 {
                     "Type": "Hand",
                     "Laterality": "Right",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Left",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Left",
                     "AttachedTo": "Arm"
                 },
                 {

@@ -1,19 +1,17 @@
-using JS.ECS;
+using UnityEngine;
 
 namespace JS.ECS
 {
     public class BodyPart// : ComponentBase
     {
-        public BodyPart() { }
-
         public string Name; //Name of the body part
-        public BodySlot Slot;
-        public bool Integral = false; //true for body
+        public BodyPartType Type;
+
+        public bool IsAppendage = true; //not true for Body, determines if it can be dismembered
         public bool IsVital = false; //true for heads, does dismembering this component cause death?
 
-        public BodySlot UsuallyOn = BodySlot.Body;
-        public bool IsAppendage = true; //not true for Thorax, Abdomen, Back
-        public BodyPart AttachedTo;
+        public BodyPartType UsuallyOn = BodyPartType.Body;
+        public BodyPart AttachedTo; //if the AttachedTo BodyPart is dismembered, this body part and its children are lost as well
 
         public Laterality Laterality = Laterality.None;
 
@@ -23,50 +21,30 @@ namespace JS.ECS
         
         public Entity DefaultBehavior; //fists/claws, beaks/jaws, etc.
         public Entity WeaponOverride; //wielded weapons
-        public bool Grasper = false;
+        public bool Grasper = false; //Can the body part hold items/weapons
 
         public ArmorSlot[] Armor;
 
         public void OnEvent(Event newEvent)
         {
-            if (newEvent is GetMeleeAttacks getAttacks)
+            if (newEvent is GetMeleeAttacks getAttacks) OnGetMeleeAttacks(getAttacks);
+        }
+
+        private void OnGetMeleeAttacks(GetMeleeAttacks attacks)
+        {
+            if (WeaponOverride != null)
             {
-                if (WeaponOverride != null)
-                {
-                    getAttacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(WeaponOverride));
-                }
-                else if (DefaultBehavior != null)
-                {
-                    getAttacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(DefaultBehavior));
-                }
+                attacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(WeaponOverride));
+            }
+            else if (DefaultBehavior != null)
+            {
+                attacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(DefaultBehavior));
             }
         }
-
-        public void OnDismembered()
-        {
-
-        }
     }
 }
-
-public class ArmorSlot
-{
-    public BodySlot BodySlot;
-    public Entity Armor;
-
-    public ArmorSlot(BodySlot bodySlot)
-    {
-        BodySlot = bodySlot;
-    }
-}
-
-/*public BodyPart(string name, Laterality laterality, BodyPart attachedTo, bool integral = false, bool isAppendage = true, bool averageArmor = false)
-{
-    Name = name;
-    Laterality = laterality;
-    AttachedTo = attachedTo;
-
-    Integral = integral;
-    IsAppendage = isAppendage;
-    AverageArmor = averageArmor;
-}*/
+//So I'm going to need to make some changes here
+//Primary Limb should have a 100% chance to attack, whereas each subsequent attack should have a lower chance
+//Or.... should only the primary limb make an attack if it doesn't have a weapon?
+//That works for two handed but not for things like tails, tentacles, etc. 
+//So yeah I think the ChanceToAttack is of course the better method

@@ -80,6 +80,56 @@ public class StomachSystem : MonoBehaviour
 
         return ThirstState.Neutral;
     }
+
+    /// <summary>
+    /// Consumes food item and applies its affects to the consumer. 
+    /// </summary>
+    /// <returns>Returns true if the item was destroyed</returns>
+    public static bool OnItemConsumed(Food food, Entity consumer)
+    {
+        if (consumer == null) return false;
+        var stomach = instance.FindOwner(consumer);
+        if (stomach == null) return false;
+
+        stomach.Satiation += food.Satiation;
+        stomach.Hydration += food.Hydration;
+
+        if (food.IsGross)
+        {
+            //IDK
+        }
+        if (food.IllOnEat)
+        {
+            //illness? disease? poison?
+        }
+        //I could also just have a category for EffectsOnEat which could include any number of bonuses or banes
+
+
+        MessageSystem.NewMessage(food.Message);
+
+        if (EntityManager.TryGetComponent<ObjectStack>(food.entity, out var stack))
+        {
+            stack.Count -= 1;
+            if (stack.Count <= 0)
+            {
+                EntityManager.Destroy(food.entity);
+                return true;
+            }
+            else return false;
+        }
+        EntityManager.Destroy(food.entity);
+        return true;
+    }
+
+    private Stomach FindOwner(Entity entity)
+    {
+        if (entity == null) return null;
+        foreach (var stomach in instance.stomachs)
+        {
+            if (stomach.entity == entity) return stomach;
+        }
+        return null;
+    }
 }
 
 public enum HungerState

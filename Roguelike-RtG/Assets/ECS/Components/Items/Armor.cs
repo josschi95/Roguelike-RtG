@@ -6,7 +6,7 @@ namespace JS.ECS
 
         public int AV = 1;
         public int DV = 0;
-        public BodySlot Slot = BodySlot.Body;
+        public global::EquipmentSlot Slot;
 
         public override void OnEvent(Event newEvent)
         {

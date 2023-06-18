@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using JS.CharacterSystem;
+using JS.ECS.Tags;
 using UnityEngine;
 
 namespace JS.ECS
@@ -13,6 +14,14 @@ namespace JS.ECS
 
         private static Dictionary<string, ObjectBlueprint> _objectBlueprints;
 
+        public static Entity GetEntity(string blueprint)
+        {
+            if (blueprint == null) return null;
+            if (!_objectBlueprints.ContainsKey(blueprint)) return null;
+            return CreateEntity(_objectBlueprints[blueprint]);
+        }
+
+        #region - Loading Blueprints -
         public static void LoadBlueprints(bool loadFromResources = true)
         {
             _objectBlueprints = new Dictionary<string, ObjectBlueprint>();
@@ -70,7 +79,9 @@ namespace JS.ECS
                 _objectBlueprints[blueprint.Name] = blueprint;
             }
         }
+        #endregion
 
+        #region - Entity Construction -
         private static Entity CreateEntity(ObjectBlueprint blueprint)
         {
             Entity entity;
@@ -82,14 +93,80 @@ namespace JS.ECS
             entity.Name = blueprint.Name;
             //Debug.Log(blueprint.Name);
 
-            #region - Components -
-            foreach (ComponentBlueprint component in blueprint.Components)
+            //Tags go first because they have the fewest dependencies
+            if (blueprint.Tags != null) AddTags(entity, blueprint.Tags);
+
+            AddComponents(entity, blueprint.Components);
+
+            #region - Stats -
+            if (blueprint.Stats != null)
+            {
+                foreach (var stat in blueprint.Stats)
+                {
+                    if (EntityManager.TryGetStat(entity, stat.Name, out var existingStat))
+                    {
+
+                    }
+                    else
+                    {
+                        var newStat = new StatBase(stat.Name, stat.ShortName, stat.Value, stat.Potential, stat.MinValue, stat.MaxValue);
+                        EntityManager.AddStat(entity, newStat);
+                    }
+                }
+            }
+            #endregion
+
+            return entity;
+        }
+
+        /// <summary>
+        /// Adds all tags listed in the blueprints to the entity.
+        /// </summary>
+        private static void AddTags(Entity entity, TagBlueprint[] tags)
+        {
+            foreach (var tag in tags)
+            {
+                //Check if the entity already has a tag of this type
+                EntityManager.TryGetTagByName(entity, tag.Name, out var oldTag);
+
+                //Remove the tag if marked to do so
+                if (tag.Value != null && tag.Value == "removeTag")
+                {
+                    //Debug.Log("Removing Tag: " + tag.Name);
+                    if (oldTag != null) EntityManager.RemoveTag(entity, oldTag);
+                    continue;
+                }
+                //Else override the existing value
+                else if (oldTag != null && tag.Value != null)
+                {
+                    //Debug.Log("Modifying tag: " + tag.Name);
+                    oldTag.Value = tag.Value;
+                    continue;
+                }
+                //Otherwise create a new tag and add it
+                Type newTagType = Type.GetType("JS.ECS.Tags." + tag.Name) ?? throw new Exception("Unknown tag " + tag.Name + "!");
+                object newTag = Activator.CreateInstance(newTagType);
+                if (tag.Value != null)
+                {
+                    var value = newTagType.GetField("Value");
+                    value.SetValue(newTag, tag.Value);
+                }
+                //Debug.Log("Adding new tag: " + tag.Name);
+                EntityManager.AddTag(entity, (TagBase)newTag);
+            }
+        }
+
+        /// <summary>
+        /// Adds all components listed in the blueprints to the entity.
+        /// </summary>
+        private static void AddComponents(Entity entity, ComponentBlueprint[] components)
+        {
+            foreach (var component in components)
             {
                 #region - Class -
                 string ClassName = "JS.ECS." + component.Name;
-                Type newComponentType = Type.GetType(ClassName);
-
-                if (newComponentType == null) throw new Exception("Unknown part " + ClassName + "!");
+                Type newComponentType = Type.GetType(ClassName) ?? 
+                    throw new Exception("Unknown part " + ClassName + "!");
 
                 object NewComponent = Activator.CreateInstance(newComponentType);
 
@@ -101,7 +178,7 @@ namespace JS.ECS
                     isOverride = true;
                 }
                 #endregion
-                
+
                 //Continue early if parameters are empty, use base values
                 if (component.Parameters == null)
                 {
@@ -112,7 +189,7 @@ namespace JS.ECS
                 foreach (var parameter in component.Parameters)
                 {
                     var values = parameter.Split('=');
-                    FieldInfo info = newComponentType.GetField(values[0]) ?? throw new Exception("Unknown field " + 
+                    FieldInfo info = newComponentType.GetField(values[0]) ?? throw new Exception("Unknown field " +
                         values[0] + " in " + newComponentType + "!");
 
                     if (info.FieldType == typeof(string))
@@ -144,45 +221,8 @@ namespace JS.ECS
                 }
                 if (!isOverride) EntityManager.AddComponent(entity, (ComponentBase)NewComponent);
             }
-            #endregion
-
-            #region - Stats -
-            if (blueprint.Stats != null)
-            {
-                foreach (var stat in blueprint.Stats)
-                {
-                    if (EntityManager.TryGetStat(entity, stat.Name, out var existingStat))
-                    {
-
-                    }
-                    else
-                    {
-                        var newStat = new StatBase(stat.Name, stat.ShortName, stat.Value, stat.Potential, stat.MinValue, stat.MaxValue);
-                        EntityManager.AddStat(entity, newStat);
-                    }
-                }
-            }
-            #endregion
-
-            #region - Tags -
-            if (blueprint.Tags != null)
-            {
-                foreach (var tag in blueprint.Tags)
-                {
-                    if (tag.Value != null && tag.Value == "removeTag")
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            #endregion
-
-            return entity;
         }
+        #endregion
 
         private static bool StringToBool(string value)
         {
@@ -190,13 +230,6 @@ namespace JS.ECS
             if (value.Equals("true")) return true;
             else if (value.Equals("True")) return true;
             return false;
-        }
-
-        public static Entity GetEntity(string blueprint)
-        {
-            if (blueprint == null) return null;
-            if (!_objectBlueprints.ContainsKey(blueprint)) return null;
-            return CreateEntity(_objectBlueprints[blueprint]);
         }
     }
 

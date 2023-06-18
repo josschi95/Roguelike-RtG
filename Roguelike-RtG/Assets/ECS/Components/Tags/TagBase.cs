@@ -5,7 +5,7 @@ namespace JS.ECS.Tags
     /// </summary>
     public abstract class TagBase
     {
-        public string Value { get; protected set; }
+        public string Value;
     }
 
     /// <summary>
@@ -33,6 +33,19 @@ namespace JS.ECS.Tags
     /// </summary>
     public class Quality : TagBase { }
 
+    /// <summary>
+    /// Tag to mark an inventory item as a Favorite.
+    /// </summary>
+    public class Favorite: TagBase { }
+
+    /// <summary>
+    /// Tag to mark an inventory item as Junk.
+    /// </summary>
+    public class Junk : TagBase { }
+
+    /// <summary>
+    /// Tag to indicate what runes can be added to an item.
+    /// </summary>
     public class Runes : TagBase { }
 
     /// <summary>
@@ -91,12 +104,6 @@ namespace JS.ECS.Tags
     /// <summary>
     /// Tag to indicate a creature's primary atttack method when unarmed
     /// </summary>
-    public class PrimaryLimb : TagBase 
-    {
-        public PrimaryLimb(string limb)
-        {
-            Value = limb; //e.g. Hand, Feet, Body, Head
-        }
-    }
+    public class PrimaryLimb : TagBase { }
     #endregion
 }

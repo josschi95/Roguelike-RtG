@@ -47,11 +47,7 @@ namespace JS.ECS
             //Get a list of all valid Melee Attacks
             var E1 = new GetMeleeAttacks();
             EntityManager.FireEvent(combatant.entity, E1);
-            if (E1.weapons.Count == 0)
-            {
-                MessageSystem.NewMessage("Nothing to attack " + target.entity.Name + " with!");
-                return false;
-            }
+            if (E1.weapons.Count == 0) return false;
 
             for (int i = 0; i < E1.weapons.Count; i++)
             {
@@ -102,7 +98,7 @@ namespace JS.ECS
 
             //Material Bonus
             if (EntityManager.TryGetTag<Tags.MaterialTag>(weapon.entity, out var material)) 
-                roll += MaterialManager.GetMaterial(material).Damage;
+                roll += MaterialManager.GetMaterial(material.Value).Damage;
 
             //Attribute and Proficiency bonus
             if (EntityManager.TryGetStat(attacker, weapon.Stat, out var stat)) roll += stat.Value;

@@ -104,6 +104,82 @@
                     "AttachedTo": "Body"
                 }
             ]
+        },
+        {
+            "Name": "TailedHumanoid",
+            "BodyParts": [
+                { "Type": "Body" },
+                {
+                    "Type": "Head",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Right",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Right",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Left",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Left",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Feet",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Tail",
+                    "AttachedTo": "Body"
+                }
+            ]
+        },
+        {
+            "Name": "WingedHumanoid",
+            "BodyParts": [
+                { "Type": "Body" },
+                {
+                    "Type": "Head",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Right",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Right",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Arm",
+                    "Laterality": "Left",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Hand",
+                    "Laterality": "Left",
+                    "AttachedTo": "Arm"
+                },
+                {
+                    "Type": "Feet",
+                    "AttachedTo": "Body"
+                },
+                {
+                    "Type": "Wings",
+                    "AttachedTo": "Body"
+                }
+            ]
         }
     ]
 }

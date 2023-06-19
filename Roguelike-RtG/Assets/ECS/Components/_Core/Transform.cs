@@ -26,6 +26,7 @@ namespace JS.ECS
         public override void Disassemble()
         {
             TransformSystem.Unregister(this);
+            if (CurrentNode != null) CurrentNode.Entities.Remove(entity);
             base.Disassemble();
         }
     }

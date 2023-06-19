@@ -243,6 +243,17 @@ namespace JS.ECS
             else
             {
                 Debug.Log("Multiple items here. Not yet implemented");
+                for (int i = 0; i < items.Count; i++)
+                {
+                    Debug.Log(items[i].entity.Name);
+                    for (int j = 0; j < items.Count; j++)
+                    {
+                        if (items[i].entity == items[j].entity)
+                        {
+                            Debug.LogWarning("Its the same item");
+                        }
+                    }
+                }
             }
         }
 

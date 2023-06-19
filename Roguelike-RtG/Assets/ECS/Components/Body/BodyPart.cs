@@ -23,7 +23,7 @@ namespace JS.ECS
         public Entity WeaponOverride; //wielded weapons
         public bool Grasper = false; //Can the body part hold items/weapons
 
-        public ArmorSlot[] Armor;
+        public ArmorSlot[] Armor { get; set; }
 
         public void OnEvent(Event newEvent)
         {

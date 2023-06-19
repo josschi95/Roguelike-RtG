@@ -4,6 +4,7 @@ using System.Reflection;
 using System.IO;
 using UnityEngine;
 using JS.ECS.Tags;
+using System.Data.Common;
 
 //*****************************************************************************//
 //Note that I only really need to check the fields I plan on using in BodyPart //
@@ -132,7 +133,7 @@ namespace JS.ECS
                     newPart.Armor = new ArmorSlot[slots.Length];
                     for (int i = 0; i < slots.Length; i++)
                     {
-                        newPart.Armor[i] = new ArmorSlot(Enum.Parse<EquipmentSlot>(slots[i]));
+                        newPart.Armor[i] = new ArmorSlot(Enum.Parse<EquipmentSlot>(slots[i]), newPart);
                     }
                     continue;
                 }
@@ -192,6 +193,7 @@ namespace JS.ECS
 
                 if (part.AttachedTo == null) continue;
 
+                //Attach the parts to its parent
                 for (int i = 0; i < parts.Count; i++)
                 {
                     if (parts[i].Type.ToString() != part.AttachedTo) continue;
@@ -219,6 +221,7 @@ namespace JS.ECS
         public static void CreateAnatomy(Body body)
         {
             body.BodyParts = new List<BodyPart>();
+
             var parts = GetNewBody(body.Anatomy);
             body.BodyParts.AddRange(parts);
 
@@ -232,6 +235,18 @@ namespace JS.ECS
                     break;
                 }
             }
+
+            body.ArmorSlots = new List<ArmorSlot>();
+            foreach (var part in parts)
+            {
+                body.ArmorSlots.AddRange(part.Armor);
+            }
+            /*for (int i = 0; i < body.ArmorSlots.Count; i++)
+            {
+                Debug.Log(body.ArmorSlots[i].BodySlot.ToString() + " attached to " + body.ArmorSlots[i].Attachedto.Name);
+            }*/
+
+            BodySystem.Register(body);
         }
         #endregion
 

@@ -44,17 +44,19 @@ namespace JS.ECS
             EntityManager.FireEvent(t.entity, transformChanged);
         }
 
-        public static void SetLocal(Transform t, Vector2Int pos)
+        public static void SetLocal(Transform transform, Vector2Int pos)
         {
-            if (t.CurrentNode == null) GetCurrentNode(t);
-            if (t.CurrentNode == null) return;
+            if (transform.CurrentNode == null) GetCurrentNode(transform);
+            if (transform.CurrentNode == null) return;
 
-            t.CurrentNode.Entities.Remove(t.entity);
-            t.LocalPosition = pos;
-            GetCurrentNode(t);
-            t.CurrentNode.Entities.Add(t.entity);
+            transform.CurrentNode.Entities.Remove(transform.entity);
+            transform.LocalPosition = pos;
+            GetCurrentNode(transform);
 
-            EntityManager.FireEvent(t.entity, transformChanged);
+            if (!transform.CurrentNode.Entities.Contains(transform.entity))
+                transform.CurrentNode.Entities.Add(transform.entity);
+
+            EntityManager.FireEvent(transform.entity, transformChanged);
         }
 
         private static void GetCurrentNode(Transform t)

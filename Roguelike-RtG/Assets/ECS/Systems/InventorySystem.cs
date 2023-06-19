@@ -108,6 +108,39 @@ namespace JS.ECS
 
             EntityManager.FireEvent(entity, new AddedToInventory());
         }
+
+        public static void DropItem(Inventory inventory, Entity item, int numToDrop = 1)
+        {
+            if (inventory == null || item == null) return;
+            if (!inventory.Contents.Contains(item)) throw new System.Exception("Item does not belong to inventory!");
+
+            EntityManager.TryGetComponent<ObjectStack>(item, out var stack);
+            //Debug.Log("Dropping " + item.Name);
+
+            //Only dropping a few items from the stack, create a new entity and adjust stack counts
+            if (stack != null && stack.Count > numToDrop)
+            {
+                //splitting stacks, need to create a new entity and drop that, then decrease 
+                stack.Count -= numToDrop;
+                //Debug.Log("Dropping part of stack: " + numToDrop + " " + item.Name);
+                var droppedItem = EntityFactory.GetEntity(item.Name);
+                EntityManager.GetComponent<ObjectStack>(droppedItem).Count += numToDrop - 1;
+
+                EntityManager.TryGetComponent<Transform>(inventory.entity, out var ownerPos);
+                EntityManager.TryGetComponent<Transform>(droppedItem, out var itemPos);
+                TransformSystem.SetPosition(itemPos, ownerPos.Position, ownerPos.LocalPosition);
+            }
+            else
+            {
+                inventory.Contents.Remove(item);
+                //Debug.Log("Dropping all of " + numToDrop + " " + item.Name);
+                EntityManager.TryGetComponent<Transform>(inventory.entity, out var ownerPos);
+                var transform = EntityManager.AddComponent(item, new Transform()) as Transform;
+                TransformSystem.SetPosition(transform, ownerPos.Position, ownerPos.LocalPosition);
+                EntityManager.FireEvent(item, new RemovedFromInventory());
+            }
+
+        }
     }
 }
 

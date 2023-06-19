@@ -11,9 +11,12 @@ namespace JS.ECS
         public Body() { }
 
         public string Anatomy = "Humanoid";
-        
-        public List<BodyPart> BodyParts { get; set; }
+
+        public List<BodyPart> BodyParts;
+        public List<ArmorSlot> ArmorSlots;
+
         public BodyPart PrimaryLimb;
+
         public override void OnRegistered() => BodyFactory.CreateAnatomy(this);
 
         public override void OnEvent(Event newEvent)
@@ -66,10 +69,12 @@ public enum EquipmentSlot
 public class ArmorSlot
 {
     public EquipmentSlot BodySlot;
+    public BodyPart Attachedto;
     public Entity Armor;
 
-    public ArmorSlot(EquipmentSlot bodySlot)
+    public ArmorSlot(EquipmentSlot bodySlot, BodyPart attachedto)
     {
         BodySlot = bodySlot;
+        Attachedto = attachedto;
     }
 }

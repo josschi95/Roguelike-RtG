@@ -25,7 +25,7 @@ public class UIInventoryMenu : MonoBehaviour
     [SerializeField] private Button showAll, hideAll;
 
     [Space]
-    [SerializeField] private GameObject contextMenu;
+    [SerializeField] private UIInventoryContextMenu contextMenu;
 
     private void OnEnable()
     {
@@ -64,6 +64,12 @@ public class UIInventoryMenu : MonoBehaviour
         hideAll.onClick.RemoveAllListeners();
     }
 
+    public void RefreshDisplay()
+    {
+        ClearTable();
+        PopulateTable();
+    }
+
     private void PopulateTable()
     {
         EntityManager.TryGetComponent<Inventory>(EntityManager.Player, out var inventory);
@@ -76,8 +82,7 @@ public class UIInventoryMenu : MonoBehaviour
             newElement.Text.text = item.Name;
             newElement.Button.onClick.AddListener(delegate
             {
-                Debug.Log("selecting " +  item.Name);
-                contextMenu.SetActive(true);
+                contextMenu.OnItemSelected(item);
             });
         }
 
@@ -134,23 +139,6 @@ public class UIInventoryMenu : MonoBehaviour
                 return categories[i].isShown;
         }
         return categories[categories.Length - 1].isShown;
-
-        /*return phys.Category switch
-        {
-            "Projectile" => showAmmo,
-            "Armor" => showArmor,
-            "Book" => showBooks,
-            "Corpse" => showCorpse,
-            "Food" => showFood,
-            "Melee Weapon" => showMelee,
-            "Missile Weapon" => showMissile,
-            "Potion" => showPotion,
-            "Scroll" => showScrolls,
-            "Shield" => showShield,
-            "Tool" => showTool,
-            "Valuable" => showValuables,
-            _ => showMisc,
-        };*/
     }
 
     private void ShowAll()
@@ -164,19 +152,6 @@ public class UIInventoryMenu : MonoBehaviour
                 FoldCategory(categories[i].button.transform.parent, true);
             }
         }
-
-        /*if (!showAmmo) ToggleAmmo();
-        if (!showArmor) ToggleArmor();
-        if (!showBooks) ToggleBooks();
-        if (!showCorpse) ToggleCorpse();
-        if (!showFood) ToggleFood();
-        if (!showMelee) ToggleMelee();
-        if (!showMissile) ToggleMissile();
-        if (!showPotion) TogglePotion();
-        if (!showScrolls) ToggleScrolls();
-        if (!showShield) ToggleShield();
-        if (!showTool) ToggleTool();
-        if (!showValuables) ToggleValuables();*/
     }
 
     private void CollapseAll()

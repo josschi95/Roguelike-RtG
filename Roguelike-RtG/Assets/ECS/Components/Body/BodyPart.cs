@@ -19,9 +19,9 @@ namespace JS.ECS
 
         public bool AverageArmor = false; //true for heads, arms, hands, feet
         
-        public Entity DefaultBehavior; //fists/claws, beaks/jaws, etc.
-        public Entity WeaponOverride; //wielded weapons
-        public bool Grasper = false; //Can the body part hold items/weapons
+        public Entity DefaultBehavior { get; private set; } //fists/claws, beaks/jaws, etc.
+        public Entity HeldItem; //wielded weapons, other junk
+        public bool IsGrasper = false; //Can the body part hold items/weapons
 
         public ArmorSlot[] Armor { get; set; }
 
@@ -32,14 +32,19 @@ namespace JS.ECS
 
         private void OnGetMeleeAttacks(GetMeleeAttacks attacks)
         {
-            if (WeaponOverride != null)
+            if (HeldItem != null)
             {
-                attacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(WeaponOverride));
+                attacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(HeldItem));
             }
             else if (DefaultBehavior != null)
             {
                 attacks.weapons.Add(EntityManager.GetComponent<MeleeWeapon>(DefaultBehavior));
             }
+        }
+
+        public void SetDefaultBehavior(Entity entity)
+        {
+            DefaultBehavior = entity;
         }
     }
 }

@@ -38,6 +38,8 @@ namespace JS.WorldMap.Generation
         [SerializeField] private float lacunarity = 2f;
         [SerializeField] private Vector2 offset;
 
+        public bool useFalloff;
+
         private List<WorldTile> water;
         private List<WorldTile> land;
 
@@ -115,12 +117,16 @@ namespace JS.WorldMap.Generation
             float[,] heightMap = terrainData.HeightMap;
 
             float[,] perlinMap = PerlinNoise.GenerateHeightMap(mapSize, worldMap.Seed, noiseScale, octaves, persistence, lacunarity, offset);
-            for (int x = 0; x < perlinMap.GetLength(0); x++)
+            float[,] falloffMap = FalloffGenerator.GenerateFalloffMap(mapSize);
+            for (int x = 0; x < heightMap.GetLength(0); x++)
             {
-                for (int y = 0; y < perlinMap.GetLength(1); y++)
+                for (int y = 0; y < heightMap.GetLength(1); y++)
                 {
                     perlinMap[x, y] -= 0.25f;
-                    heightMap[x, y] = Mathf.Clamp(heightMap[x, y] + perlinMap[x, y], 0, 1);
+                    heightMap[x, y] += perlinMap[x, y];
+                    if (useFalloff) heightMap[x, y] -= falloffMap[x, y];
+
+                    heightMap[x, y] = Mathf.Clamp(heightMap[x, y], 0, 1);
                 }
             }
 

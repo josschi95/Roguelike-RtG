@@ -1012,6 +1012,7 @@ MonoBehaviour:
   persistence: 0.5
   lacunarity: 2
   offset: {x: 0, y: 0}
+  useFalloff: 1
 --- !u!4 &261351982
 Transform:
   m_ObjectHideFlags: 0
@@ -2565,19 +2566,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
-  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  inputActionAsset: {fileID: -944628639613478452, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  playerSprites:
-  - {fileID: -1308272046, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: 1834733294, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1620378909, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -2122462016, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -568803594, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -2063878014, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1895116410, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -1516802804, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: -565450470, guid: f47e6f8035dbdf14c9ef0c4fddb6181b, type: 3}
-  - {fileID: 0}
 --- !u!4 &795975080
 Transform:
   m_ObjectHideFlags: 0

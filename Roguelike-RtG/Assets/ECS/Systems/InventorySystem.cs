@@ -81,7 +81,7 @@ namespace JS.ECS
         {
             //Increase inventory weight by the added count
             inventory.TotalWeight += newStack.Count * EntityManager.GetComponent<Physics>(newStack.entity).Weight;
-            Debug.Log("Adding " + newStack.entity.Name + " to inventory of " + inventory.entity.Name);
+            //Debug.Log("Adding " + newStack.entity.Name + " to inventory of " + inventory.entity.Name);
 
             //Can merge the two stacks completely
             if (oldStack.Count + newStack.Count <= oldStack.MaxStack)
@@ -139,7 +139,6 @@ namespace JS.ECS
                 TransformSystem.SetPosition(transform, ownerPos.Position, ownerPos.LocalPosition);
                 EntityManager.FireEvent(item, new RemovedFromInventory());
             }
-
         }
     }
 }

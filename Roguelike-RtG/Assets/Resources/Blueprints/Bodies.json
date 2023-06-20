@@ -38,7 +38,7 @@
                 "UsuallyOn=Arm",
                 "Armor=Hand,Ring",
                 "DefaultBehavior=DefaultFist",
-                "Grasper=true"
+                "IsGrasper=true"
             ]
         },
         {

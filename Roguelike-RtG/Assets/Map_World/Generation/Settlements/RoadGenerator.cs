@@ -30,6 +30,11 @@ namespace JS.WorldMap.Generation
                 newRoad.pointA = settlement.ID;
 
                 var end = FindNearest(settlement);
+                if (end == null)
+                {
+                    Debug.LogWarning("Couldn't find end");
+                    continue;
+                }
                 newRoad.pointB = end.ID;
 
                 var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);

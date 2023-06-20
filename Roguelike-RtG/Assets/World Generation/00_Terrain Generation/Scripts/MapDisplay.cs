@@ -381,6 +381,7 @@ namespace JS.WorldMap
 
         public void HighlightNode(WorldTile node)
         {
+            if (node == null) return;
             infoMap.ClearAllTiles();
             //var worldMap = WorldMap.instance;
 

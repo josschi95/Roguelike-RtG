@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UIInventoryContextMenu : MonoBehaviour
 {
     [SerializeField] private UIInventoryMenu inventoryMenu;
+    [SerializeField] private UIEquipmentMenu equipmentMenu;
 
     [Space]
 
@@ -44,6 +45,13 @@ public class UIInventoryContextMenu : MonoBehaviour
         itemText.text = item.Name; //set the text to the item's display name
         //Later also add in basic stats, so AV/DV for armor, dmg/type for weapons, hydrate/satiate for food, etc.
         EntityManager.TryGetComponent<ObjectStack>(item, out var stack);
+
+        #region - Equipment -
+        equipButton.onClick.AddListener(delegate
+        {
+            TryEquip(item);
+        });
+        #endregion
 
         #region - Food -
         EntityManager.TryGetComponent<Food>(item, out var food);
@@ -112,6 +120,35 @@ public class UIInventoryContextMenu : MonoBehaviour
         closeButton.onClick.AddListener(delegate { gameObject.SetActive(false); });
     }
 
+    private void TryEquip(Entity item)
+    {
+        if (EntityManager.TryGetComponent<Armor>(item, out var armor))
+        {
+            if (BodySystem.TryEquipArmor(EntityManager.GetComponent<Body>(EntityManager.Player), armor))
+            {
+                inventoryMenu.RefreshDisplay();
+                equipmentMenu.RefreshDisplay();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Cannot equip " + armor.entity.Name);
+            }
+        }
+        else
+        {
+            if(BodySystem.TryEquipItem(EntityManager.GetComponent<Body>(EntityManager.Player), item))
+            {
+                inventoryMenu.RefreshDisplay();
+                equipmentMenu.RefreshDisplay();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Cannot equip " + item.Name);
+            }
+        }
+    }
     private void ToggleFavorite(Entity item)
     {
         EntityManager.TryGetTag<Favorite>(item, out var favorite);

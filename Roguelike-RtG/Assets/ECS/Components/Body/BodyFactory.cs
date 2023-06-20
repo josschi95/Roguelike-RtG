@@ -142,7 +142,7 @@ namespace JS.ECS
                     var entity = EntityFactory.GetEntity(values[1]) 
                         ?? throw new Exception("DefaultBehavior entity not found!");
                     
-                    newPart.DefaultBehavior = entity;
+                    newPart.SetDefaultBehavior(entity);
                     continue;
                 }
 
@@ -236,6 +236,7 @@ namespace JS.ECS
                 }
             }
 
+            //Armor
             body.ArmorSlots = new List<ArmorSlot>();
             foreach (var part in parts)
             {

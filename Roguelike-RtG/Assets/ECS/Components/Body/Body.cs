@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using JS.ECS;
 
 namespace JS.ECS
 {
@@ -15,9 +14,13 @@ namespace JS.ECS
         public List<BodyPart> BodyParts;
         public List<ArmorSlot> ArmorSlots;
 
+        public Entity MissileWeapon;
+        public Entity Projectiles;
+
         public BodyPart PrimaryLimb;
 
         public override void OnRegistered() => BodyFactory.CreateAnatomy(this);
+        public override void Disassemble() => BodySystem.Unregister(this);
 
         public override void OnEvent(Event newEvent)
         {
@@ -25,56 +28,12 @@ namespace JS.ECS
             {
                 BodyParts[i].OnEvent(newEvent);
             }
+            for (int i = 0; i < ArmorSlots.Count; i++)
+            {
+                ArmorSlots[i].OnEvent(newEvent);
+            }
+            if (MissileWeapon != null) EntityManager.FireEvent(MissileWeapon, newEvent);
+            if (Projectiles != null) EntityManager.FireEvent(Projectiles, newEvent);
         }
-    }
-}
-
-public enum Laterality
-{
-    None, 
-    Left,
-    Right,
-}
-
-public enum BodyPartType
-{
-    Head,
-    Body,
-    Arm,
-    Hand,
-    //Leg,
-    Feet,
-
-    Tail,
-    Wings,
-}
-
-public enum EquipmentSlot
-{
-    Head,   //Helms, Hoods, Hats, Caps, Crowns, Masks
-    Eyes,   //Glasses, Blindfolds, Goggles, 
-    Neck,   //Amulets, Necklaces, Medallions
-    Body,   //Armor, Robes, 
-    Back,   //Capes, Cloaks, Mantles, ?Wings
-    Arm,    //Bracers, Bucklers, Manacles, Shackles, Bracelets (if wrists)
-    Hand,   //Gauntlets, Gloves
-    Ring,   //Rings
-    Belt,   //Belts, Girdles, Bandoliers
-    Feet,   //Boots, Sandles, Shoes
-
-    Tail,   //No equipment
-    Wings,  //No equipment
-}
-
-public class ArmorSlot
-{
-    public EquipmentSlot BodySlot;
-    public BodyPart Attachedto;
-    public Entity Armor;
-
-    public ArmorSlot(EquipmentSlot bodySlot, BodyPart attachedto)
-    {
-        BodySlot = bodySlot;
-        Attachedto = attachedto;
     }
 }

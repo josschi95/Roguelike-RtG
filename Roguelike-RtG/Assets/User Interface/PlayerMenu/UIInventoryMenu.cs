@@ -1,9 +1,7 @@
-using JS.ECS;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using JS.ECS;
 
 public class UIInventoryMenu : MonoBehaviour
 {
@@ -39,6 +37,16 @@ public class UIInventoryMenu : MonoBehaviour
         ClearTable();
     }
 
+    public void RefreshDisplay()
+    {
+        ClearButtons();
+        ClearTable();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
+        SetButtons();
+        PopulateTable();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
+    }
+
     private void SetButtons()
     {
         for (int i = 0; i < categories.Length; i++)
@@ -62,12 +70,6 @@ public class UIInventoryMenu : MonoBehaviour
         }
         showAll.onClick.RemoveAllListeners();
         hideAll.onClick.RemoveAllListeners();
-    }
-
-    public void RefreshDisplay()
-    {
-        ClearTable();
-        PopulateTable();
     }
 
     private void PopulateTable()

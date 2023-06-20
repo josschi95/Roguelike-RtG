@@ -8022,7 +8022,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Items_377
+      name: mirror
       rect:
         serializedVersion: 2
         x: 1824
@@ -20503,7 +20503,6 @@ TextureImporter:
       UI_Items_374: -685154997
       UI_Items_375: 1532795368
       UI_Items_376: -867420828
-      UI_Items_377: 975560296
       UI_Items_378: -324428121
       UI_Items_379: 936147070
       UI_Items_38: 805151754
@@ -21164,6 +21163,7 @@ TextureImporter:
       helm_08: 364807669
       helm_09: 1744938496
       helm_10: 567212526
+      mirror: 975560296
       ring_01: -1175022927
       ring_02: -673138034
       ring_03: -561198359

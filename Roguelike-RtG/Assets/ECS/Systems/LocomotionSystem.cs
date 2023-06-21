@@ -41,6 +41,11 @@ namespace JS.ECS
             for (int i = 0; i < entitiesAtPosition.Count; i++)
             {
                 if (EntityManager.GetTag<BlocksNode>(entitiesAtPosition[i].entity)) return false; //position is blocked by wall
+                else if (EntityManager.TryGetComponent<Brain>(entitiesAtPosition[i].entity, out _))
+                {
+                    MessageSystem.NewMessage("The " + entitiesAtPosition[i].entity.Name + " blocks your path.");
+                    return false; //there is a creature there
+                }
             }
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.

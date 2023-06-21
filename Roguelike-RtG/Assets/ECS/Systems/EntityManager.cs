@@ -108,8 +108,9 @@ namespace JS.ECS
             if (!entities.ContainsKey(entity)) return;
             //Debug.Log("Removing " + component.GetType().Name);
             entities[entity].components.Remove(component);
-            component.entity = null;
             component.Disassemble();
+            //Don't set entity to null until last to make sure it can be referenced in Disassemble if needed
+            component.entity = null; 
         }
 
         /// <summary>

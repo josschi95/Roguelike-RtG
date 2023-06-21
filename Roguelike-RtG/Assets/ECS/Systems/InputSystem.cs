@@ -251,6 +251,11 @@ namespace JS.ECS
                         if (items[i].entity == items[j].entity)
                         {
                             Debug.LogWarning("Its the same item");
+                            //EntityManager.TryGetComponent<Transform>(items[i].entity, out var ti);
+                            //EntityManager.TryGetComponent<Transform>(items[j].entity, out var tj);
+
+                            //if (ti != null) Debug.Log("ti: " + ti.LocalPosition);
+                            //if (tj != null) Debug.Log("tj: " + tj.LocalPosition);
                         }
                     }
                 }

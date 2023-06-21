@@ -39,10 +39,7 @@ public class UIInventoryMenu : MonoBehaviour
 
     public void RefreshDisplay()
     {
-        ClearButtons();
         ClearTable();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
-        SetButtons();
         PopulateTable();
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
     }
@@ -82,6 +79,9 @@ public class UIInventoryMenu : MonoBehaviour
             newElement.gameObject.SetActive(ShowElement(item));
 
             newElement.Text.text = item.Name;
+            if (EntityManager.TryGetComponent<ObjectStack>(item, out var stack) && stack.Count != 1) newElement.Text.text += " (" + stack.Count + ")";
+            //if (EntityManager.TryGetComponent<ObjectStack>(item, out var stack) && stack.Count > 1) newElement.Text.text += " (" + stack.Count + ")";
+
             newElement.Button.onClick.AddListener(delegate
             {
                 contextMenu.OnItemSelected(item);
@@ -94,6 +94,14 @@ public class UIInventoryMenu : MonoBehaviour
             //Enable/disable category if it is empty or has children
             if (parent.childCount - 1 <= 0) parent.gameObject.SetActive(false);
             else parent.gameObject.SetActive(true);
+            if (parent.childCount > 1)
+            {
+                Debug.Log(category.name + " children: " + parent.childCount);
+                for (int i = 0; i < parent.childCount; i++)
+                {
+                    Debug.Log(parent.GetChild(i).gameObject.name);
+                }
+            }
 
             //change the collapse indicator based on if it is shown or not
             if (category.isShown) category.header.text = "[-] ";
@@ -112,7 +120,10 @@ public class UIInventoryMenu : MonoBehaviour
             var parent = categories[i].button.transform.parent;
             for (int j = parent.transform.childCount - 1; j >= 1; j--)
             {
-                Destroy(parent.transform.GetChild(j).gameObject);
+                //Destruction is deferred to end of the frame, need to remove from parent first 
+                var obj = parent.transform.GetChild(j);
+                obj.SetParent(null);
+                Destroy(obj.gameObject);
             }
         }
     }

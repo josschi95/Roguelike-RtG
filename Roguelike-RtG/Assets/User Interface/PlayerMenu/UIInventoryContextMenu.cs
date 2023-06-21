@@ -137,7 +137,7 @@ public class UIInventoryContextMenu : MonoBehaviour
         }
         else
         {
-            if(BodySystem.TryEquipItem(EntityManager.GetComponent<Body>(EntityManager.Player), item))
+            if (BodySystem.TryAutoEquipItem(EntityManager.GetComponent<Body>(EntityManager.Player), item))
             {
                 inventoryMenu.RefreshDisplay();
                 equipmentMenu.RefreshDisplay();

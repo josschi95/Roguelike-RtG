@@ -1,5 +1,8 @@
 using JS.ECS;
 using System.Collections.Generic;
+using System.Reflection;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 //Is it worth considering merging the CorpseManager into this system?
@@ -43,7 +46,123 @@ namespace JS.ECS
             //Clear all lists
         }
 
-        #region - Equipment -
+        #region - Hands -
+        /// <summary>
+        /// Automatically equip item in the first available slot.
+        /// </summary>
+        public static bool TryAutoEquipItem(Body body, Entity item)
+        {
+            return instance.TryAutoEquipNewItem(body, item);
+        }
+
+        private bool TryAutoEquipNewItem(Body body, Entity item)
+        {
+            for (int i = 0; i < body.BodyParts.Count; i++)
+            {
+                if (!body.BodyParts[i].IsGrasper) continue; //Needs to be a body part that can hold items (hands)
+                if (body.BodyParts[i].HeldItem != null) continue; //grasper needs to be empty
+
+                EntityManager.GetComponent<Inventory>(body.entity).Contents.Remove(item);
+                body.BodyParts[i].HeldItem = item;
+                Debug.Log("Equipping " + item.Name + " in " + body.BodyParts[i].Name);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Equip item in the given slot.
+        /// </summary>
+        public static bool TryEquipItem(Entity parent, BodyPart part, Entity item)
+        {
+            return instance.TryEquipNewItem(parent, part, item);
+        }
+
+        private bool TryEquipNewItem(Entity parent, BodyPart part, Entity item)
+        {
+            if (!part.IsGrasper) return false;
+            if (part.HeldItem != null) return false;
+
+            part.HeldItem = item;
+            EntityManager.GetComponent<Inventory>(parent).Contents.Remove(item);
+            Debug.Log("Equipping " + item.Name + " in " + part.Name);
+            return true;
+        }
+
+        public static void UnequipItem(Entity parent, BodyPart part)
+        {
+            instance.UnequipNewItem(parent, part);
+        }
+
+        private void UnequipNewItem(Entity parent, BodyPart part)
+        {
+            if (part == null || part.HeldItem == null) return;
+
+            var item = part.HeldItem;
+            part.HeldItem = null;
+            EntityManager.GetComponent<Inventory>(parent).Contents.Add(item);
+            Debug.Log("Unequipping " + item.Name + " from " + part.Laterality + " " + part.Name);
+        }
+        #endregion
+
+        #region - Missile & Projectiles -
+        public static bool TryEquipMissile(Body body,  Entity missile)
+        {
+            return instance.TryEquipNewMissile(body, missile);
+        }
+
+        public static bool TryEquipProjectile(Body body, Entity projectile)
+        {
+            return instance.TryEquipNewProjectile(body, projectile);
+        }
+
+        private bool TryEquipNewMissile(Body body, Entity missile)
+        {
+            if (body.MissileWeapon != null) return false;
+            if (!EntityManager.TryGetComponent<MissileWeapon>(missile, out _)) return false;
+
+            body.MissileWeapon = missile;
+            EntityManager.GetComponent<Inventory>(body.entity).Contents.Remove(missile);
+            Debug.Log("Equipping " + missile.Name + " in MissileWeapon slot");
+            return true;
+        }
+
+        private bool TryEquipNewProjectile(Body body, Entity projectile)
+        {
+            if (body.Projectiles != null) return false;
+            //Probably will end up having some Ammo tag or component, check for that
+
+            body.Projectiles = projectile;
+            EntityManager.GetComponent<Inventory>(body.entity).Contents.Remove(projectile);
+            Debug.Log("Equipping " + projectile.Name + " in Projectiles slot");
+            return true;
+        }
+
+        public static void UnequipRanged(Body body, Entity item)
+        {
+            instance.UnequipOldRanged(body, item);
+        }
+
+        private void UnequipOldRanged(Body body, Entity item)
+        {
+            if (body == null  || item == null) return;
+
+            if (item == body.MissileWeapon)
+            {
+                body.MissileWeapon = null;
+                EntityManager.GetComponent<Inventory>(body.entity).Contents.Add(item);
+                Debug.Log("Unequipping " + item.Name + " from Missile slot");
+            }
+            else if (item == body.Projectiles)
+            {
+                body.Projectiles = null;
+                EntityManager.GetComponent<Inventory>(body.entity).Contents.Add(item);
+                Debug.Log("Unequipping " + item.Name + " from Projectile slot");
+            }
+        }
+        #endregion
+
+        #region - Armor -
         public static bool TryEquipArmor(Body body, Armor armor)
         {
             return instance.TryEquipNewArmor(body, armor);
@@ -64,34 +183,22 @@ namespace JS.ECS
             return false;
         }
 
-        public static bool TryEquipItem(Body body, Entity item)
+        public static void UnequipArmor(Body body, ArmorSlot slot)
         {
-            return instance.TryEquipNewItem(body, item);
+            instance.UnequipOldArmor(body, slot);
         }
 
-        private bool TryEquipNewItem(Body body, Entity item)
+        private void UnequipOldArmor(Body body, ArmorSlot oldSlot)
         {
-            for (int i = 0; i < body.BodyParts.Count; i++)
-            {
-                if (!body.BodyParts[i].IsGrasper) continue; //Needs to be a body part that can hold items (hands)
-                if (body.BodyParts[i].HeldItem != null) continue; //grasper needs to be empty
+            if (body == null ||  oldSlot == null || oldSlot.Armor == null) return;
 
-                EntityManager.GetComponent<Inventory>(body.entity).Contents.Remove(item);
-                body.BodyParts[i].HeldItem = item;
-                Debug.Log("Equipping " + item.Name + " in " + body.BodyParts[i].Name);
-                return true;
-            }
-            return false;
+            var armor = oldSlot.Armor;
+            oldSlot.Armor = null;
+            EntityManager.GetComponent<Inventory>(body.entity).Contents.Add(armor);
+            Debug.Log("Unequipping " + armor.Name + " in " + oldSlot.Slot.ToString() + " slot");
         }
-
-        public static void UnequipArmor(ArmorSlot slot)
-        {
-            if (slot.Armor == null) return;
-
-
-        }
-
         #endregion
+
         private void OnDismemberment(Body body)
         {
             var part = FindDismemberableBodyPart(body);

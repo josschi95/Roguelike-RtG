@@ -37,7 +37,7 @@ namespace JS.ECS
         private void AddToInventory(Inventory inventory, Entity newItem)
         {
             //So here I need to check if I can stack it with an existing item, which is going to be a challenge
-            if (CanStackItem(inventory, newItem)) return;
+            if (AbleToStackItem(inventory, newItem)) return;
 
             inventory.Contents.Add(newItem);
 
@@ -46,7 +46,7 @@ namespace JS.ECS
             //Debug.Log("Adding " + newItem.Name + " to inventory of " + inventory.entity.Name);
         }
 
-        private bool CanStackItem(Inventory inventory, Entity newItem)
+        private bool AbleToStackItem(Inventory inventory, Entity newItem)
         {
             if (!EntityManager.TryGetComponent<ObjectStack>(newItem, out var newStack)) return false;
 
@@ -63,6 +63,9 @@ namespace JS.ECS
             return false;
         }
 
+        /// <summary>
+        /// Returns true if two items are able to be merged into a single stack.
+        /// </summary>
         private bool ItemsCanStack(ObjectStack oldStack, ObjectStack newStack)
         {
             if(!oldStack.entity.Name.Equals(newStack.entity.Name)) return false; //Differently named

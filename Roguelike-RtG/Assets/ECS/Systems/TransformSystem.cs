@@ -29,6 +29,7 @@ namespace JS.ECS
 
         public static void Unregister(Transform t)
         {
+            t.CurrentNode?.Entities.Remove(t.entity);
             instance.transforms.Remove(t);
         }
 
@@ -79,9 +80,7 @@ namespace JS.ECS
             var grid = GridManager.GetGrid(world);
             if (grid == null) return entities;
 
-            var list = grid.Grid.GetGridObject(local.x, local.y).Entities;
-
-            foreach (var entity in list )
+            foreach (var entity in grid.Grid.GetGridObject(local.x, local.y).Entities)
             {
                 if (EntityManager.TryGetComponent<Physics>(entity, out var phys))
                 {

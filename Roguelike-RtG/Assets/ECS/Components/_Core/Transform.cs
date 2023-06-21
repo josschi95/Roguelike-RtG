@@ -18,16 +18,7 @@ namespace JS.ECS
         public Vector2Int LocalPosition;
         #endregion
 
-        public override void OnRegistered()
-        {
-            TransformSystem.Register(this);
-        }
-
-        public override void Disassemble()
-        {
-            TransformSystem.Unregister(this);
-            if (CurrentNode != null) CurrentNode.Entities.Remove(entity);
-            base.Disassemble();
-        }
+        public override void OnRegistered() => TransformSystem.Register(this);
+        public override void Disassemble() => TransformSystem.Unregister(this);
     }
 }

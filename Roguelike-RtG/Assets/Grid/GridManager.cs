@@ -126,7 +126,7 @@ public class GridManager : MonoBehaviour
         var t = EntityManager.GetComponent<JS.ECS.Transform>(sword);
         TransformSystem.SetPosition(t, grid.Position, new Vector2Int(50, 50));
 
-        int count = Random.Range(2, 5);
+        int count = Random.Range(3, 5);
         for (int i = 0; i < count; i++)
         {
             var enemy = EntityFactory.GetEntity("Orc");
@@ -135,7 +135,7 @@ public class GridManager : MonoBehaviour
             EntityManager.GetComponent<Brain>(enemy).IsSleeping = false;
 
             var transform = EntityManager.GetComponent<JS.ECS.Transform>(enemy);
-            var local = new Vector2Int(Random.Range(35, 65), Random.Range(35, 65));
+            var local = new Vector2Int(Random.Range(45, 55), Random.Range(45, 55));
             TransformSystem.SetPosition(transform, grid.Position, local);
         }
     }

@@ -9,18 +9,19 @@ namespace JS.ECS
     /// </summary>
     public class Brain : ComponentBase
     {
-        public Brain() { }
+        public bool HasOverride = false; //is there some other component controlling behavior?
+        public bool IsHibernating = false; //Automatically skips the creature's turn if hibernating
+
+        public Aggression Aggression; //Determines creature's likeliness to attack another
 
         public bool IsAlive = true;
-        public bool IsSleeping = false; //Automatically skips the creature's turn if sleeping
-        public bool IsHostile = false; //Is the object hositle by default?
-        public bool IsCalm = false; //Will the object become hostile if attacked?
+
+
         public bool IsMobile = true; //Can the object move?
         public bool Wanders = true; //Does the object wander when not engaged?
         public Habitat Habitat = Habitat.Terrestrial; //Can the object go on land/water? 
         public string Faction; //What faction does the object belong to?
         public int FactionDisposition; //What is the faction's dispositio towards this object
-        public bool HasOverride = false; //is there some other component controlling behavior?
 
         //Other CoQ properties
         //public int MaxWanderDist = 5;
@@ -28,7 +29,6 @@ namespace JS.ECS
         //public bool LivesOnWalls = false;
         //public int MinKillRadius;
         //public int MaxKillRadius;
-        //public bool Hibernating = true;?
         //public bool PointBlankRange = false;
 
         //Other possible properties
@@ -73,7 +73,7 @@ namespace JS.ECS
         private void OnTurnStart()
         {
             if (HasOverride) return;
-            if (!IsAlive || IsSleeping) Actions.SkipAction(Actor);
+            if (!IsAlive || IsHibernating) Actions.SkipAction(Actor);
             else if (Wanders && IsMobile)
             {
                 if (UnityEngine.Random.value < 0.15) Actions.SkipAction(Actor);
@@ -148,5 +148,11 @@ public enum Habitat
     Terrestrial,
     Aquatic,
     Amphibious,
+}
 
+public enum Aggression
+{
+    Peaceful,
+    Neutral,
+    Aggressive,
 }

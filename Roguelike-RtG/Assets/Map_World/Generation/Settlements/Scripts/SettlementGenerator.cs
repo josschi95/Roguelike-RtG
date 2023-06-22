@@ -30,7 +30,9 @@ namespace JS.WorldMap.Generation
         [SerializeField] private int poissonRadius = 15;
         [SerializeField] private int landCheckRadius = 5;
 
-
+        /// <summary>
+        /// Sets the initial values for Settlement Generation.
+        /// </summary>
         public void SetInitialValues(WorldSize size)
         {
             worldSize = size;
@@ -72,8 +74,7 @@ namespace JS.WorldMap.Generation
             int tribeIndex = 0;
             for (int i = 0; i < points.Count; i++)
             {
-                var pos = new Vector3Int((int)points[i].x, (int)points[i].y);
-                var node = worldMap.GetNode(pos.x, pos.y);
+                var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
 
                 //Try to correct to a land-node
                 if (!node.IsLand) node = TryFindLand(node);
@@ -85,7 +86,18 @@ namespace JS.WorldMap.Generation
                 if (tribeIndex >= tribes.Length) tribeIndex = 0;
             }
 
-            //CenterSettlements();
+            //Adjust settlements to more defensible locations - near rivers, near mountains but not in, etc.
+
+            //All settlements start out as hamlets, then calculate the resource wealth of the surrounding area
+            //Using that, as well as a tribe's ExpansionRating, claim territory for each settlement and grow in size
+            //Settlement location also needs to be tracked on the Regional scale, 
+                //Hamlets and Villages can occupy a single Region Map, Towns should take 4? and cities 9
+            //Place satellite locations in regino tiles surrounding each settlement,
+                //Farms
+                //Mines - require presence of an Ore
+                //Quarries
+                //Hatcheries - requires presence of lake/river
+                //Ports/Docks - these can serve as travel points for crossing bodies of water
 
             //CleanUpMinorSettlements();
 
@@ -100,14 +112,26 @@ namespace JS.WorldMap.Generation
             worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
         }
 
+        /// <summary>
+        /// Returns the nearest WorldTile that is land, within the landCheckRadius
+        /// </summary>
         private WorldTile TryFindLand(WorldTile tile)
         {
+            WorldTile landNode = null;
+            float dist = int.MaxValue;
+
             var nodes = worldMap.GetNodesInRange_Square(tile, landCheckRadius);
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (nodes[i].IsLand) return nodes[i];
+                if (!nodes[i].IsLand) continue;
+                var newDist = GridMath.GetStraightDist(tile.x, tile.y, nodes[i].x, nodes[i].y);
+                if (newDist < dist)
+                {
+                    dist = newDist;
+                    landNode = nodes[i];
+                }
             }
-            return null;
+            return landNode;
         }
 
 
@@ -211,68 +235,6 @@ namespace JS.WorldMap.Generation
 
             if (!tribeTerritories[GetTribe(settlement.TribeID)].Contains(territory))
                 tribeTerritories[GetTribe(settlement.TribeID)].Add(territory);
-        }
-
-        /// <summary>
-        /// Recenters settlements closer to the center of their territory
-        /// </summary>
-        private void CenterSettlements()
-        {
-            foreach(var settlement in settlements)
-            {
-                float avgX = 0, avgY = 0;
-                for (int i = 0; i < settlement.Territory.Count; i++)
-                {
-                    avgX += settlement.Territory[i].x;
-                    avgY += settlement.Territory[i].y;
-                }
-                int x = Mathf.RoundToInt(avgX / settlement.Territory.Count);
-                int y = Mathf.RoundToInt(avgY / settlement.Territory.Count);
-
-                var newNode = worldMap.GetNode(x, y);
-                if (settlement.OwnsTerritory(x, y)) settlement.Relocate(newNode);
-                else
-                {
-                    float dist = int.MaxValue;
-                    WorldTile nodeToMove = null;
-                    for (int i = 0; i < settlement.Territory.Count; i++)
-                    {
-                        var newDist = GridMath.GetStraightDist(settlement.Territory[i].x, settlement.Territory[i].y, newNode.x, newNode.y);
-                        if (newDist < dist)
-                        {
-                            nodeToMove = worldMap.GetNode(settlement.Territory[i].x, settlement.Territory[i].y);
-                            dist = newDist;
-                        }
-                    }
-                    settlement.Relocate(nodeToMove);
-                }
-            }
-        }
-
-        private void CleanUpMinorSettlements()
-        {
-            for (int i = settlements.Count - 1; i >= 0; i--)
-            {
-                var settlement = settlements[i];
-
-                //Need to own at least 5 nodes to exist
-                if (settlement.Territory.Count > 4) continue;
-
-                //Find the nearest settlement
-                var settlementToMerge = FindNearestSettlement(settlement);
-
-                //Transfers all territory to the chosen settlement and removes it from the tribe
-                for (int j = 0; j < settlement.Territory.Count; j++)
-                {
-                    var node = worldMap.GetNode(settlement.Territory[j].x, settlement.Territory[j].y);
-                    tribeTerritories[GetTribe(settlement.TribeID)].Remove(node);
-                    AssignTerritory(settlementToMerge, node);
-                }
-
-                //Clears all data in the settlement
-                settlement.DeconstructSettlement();
-                settlements.RemoveAt(i);
-            }
         }
 
         private Settlement FindNearestSettlement(Settlement fromSettlement)

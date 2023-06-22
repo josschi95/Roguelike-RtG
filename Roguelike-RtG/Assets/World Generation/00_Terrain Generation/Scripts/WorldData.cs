@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace JS.WorldMap
 {
@@ -97,8 +98,9 @@ namespace JS.WorldMap
         }
 
         #region - Pathfinding -
-        private List<WorldTile> openList; //nodes to search
-        private List<WorldTile> closedList; //already searched
+        private Heap<WorldTile> openList; //nodes to search
+        //private List<WorldTile> openList; //nodes to search
+        private HashSet<WorldTile> closedSet; //already searched
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14;
 
@@ -110,13 +112,16 @@ namespace JS.WorldMap
         //Returns a list of nodes that can be travelled to reach a target destination
         public List<WorldTile> FindNodePath(int startX, int startY, int endX, int endY, bool allowDiagonals = false, Settlement settlement = null)
         {
-            WorldTile startNode = worldMap.GetGridObject(startX, startY);
-            //Debug.Log("Start: " + startNode.x + "," + startNode.y);
-            WorldTile endNode = worldMap.GetGridObject(endX, endY);
-            //Debug.Log("End: " + endNode.x + "," + endNode.y);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            openList = new List<WorldTile> { startNode };
-            closedList = new List<WorldTile>();
+            WorldTile startNode = worldMap.GetGridObject(startX, startY);
+            WorldTile endNode = worldMap.GetGridObject(endX, endY);
+
+            openList = new Heap<WorldTile>(worldMap.MaxHeapSize);
+            //openList = new List<WorldTile> { startNode };
+            closedSet = new HashSet<WorldTile>();
+            openList.Add(startNode);
 
             for (int x = 0; x < worldMap.Width; x++)
             {
@@ -124,36 +129,34 @@ namespace JS.WorldMap
                 {
                     WorldTile pathNode = worldMap.GetGridObject(x, y);
                     pathNode.gCost = int.MaxValue;
-                    pathNode.CalculateFCost();
                     pathNode.cameFromTile = null;
                 }
             }
 
             startNode.gCost = 0;
-            startNode.hCost = CalculateDistanceCost(startNode, endNode);
-            startNode.CalculateFCost();
+            startNode.hCost = GetDistance(startNode, endNode);
 
             while (openList.Count > 0)
             {
-                WorldTile currentNode = GetLowestFCostNode(openList);
+                WorldTile currentNode = openList.RemoveFirst();
+                closedSet.Add(currentNode);
 
+                //Reached final node
                 if (currentNode == endNode)
                 {
-                    //Reached final node
+                    sw.Stop();
+                    UnityEngine.Debug.Log("Path found: " + sw.ElapsedMilliseconds + "ms");
                     return CalculatePath(endNode);
                 }
 
-                openList.Remove(currentNode);
-                closedList.Add(currentNode);
-
                 foreach (WorldTile neighbour in GetNeighbourList(currentNode, allowDiagonals))
                 {
-                    if (closedList.Contains(neighbour)) continue;
+                    if (closedSet.Contains(neighbour)) continue;
 
                     if (!neighbour.IsLand)// || neighbour.isOccupied)
                     {
                         //Debug.Log(startX + "," + startY +  ": Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
-                        closedList.Add(neighbour);
+                        closedSet.Add(neighbour);
                         continue;
                     }
 
@@ -163,21 +166,20 @@ namespace JS.WorldMap
                         var claimant = SettlementData.FindClaimedTerritory(neighbour.x, neighbour.y);
                         if (claimant != null && claimant != settlement)
                         {
-                            closedList.Add(neighbour);
+                            closedSet.Add(neighbour);
                             continue;
                         }
                     }
 
                     //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
-                    int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour) + neighbour.movementCost;
+                    int tentativeGCost = currentNode.gCost + GetDistance(currentNode, neighbour) + neighbour.movementCost;
 
                     if (tentativeGCost < neighbour.gCost)
                     {
                         //If it's lower than the cost previously stored on the neightbor, update it
                         neighbour.cameFromTile = currentNode;
                         neighbour.gCost = tentativeGCost;
-                        neighbour.hCost = CalculateDistanceCost(neighbour, endNode);
-                        neighbour.CalculateFCost();
+                        neighbour.hCost = GetDistance(neighbour, endNode);
 
                         if (!openList.Contains(neighbour)) openList.Add(neighbour);
                     }
@@ -195,25 +197,12 @@ namespace JS.WorldMap
             return currentNode.neighbors_adj;
         }
 
-        private int CalculateDistanceCost(WorldTile a, WorldTile b)
+        private int GetDistance(WorldTile a, WorldTile b)
         {
             int xDistance = Mathf.Abs(a.x - b.x);
             int yDistance = Mathf.Abs(a.y - b.y);
             int remaining = Mathf.Abs(xDistance - yDistance);
             return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
-        }
-
-        private WorldTile GetLowestFCostNode(List<WorldTile> pathNodeList)
-        {
-            WorldTile lowestFCostNode = pathNodeList[0];
-
-            for (int i = 0; i < pathNodeList.Count; i++)
-            {
-                if (pathNodeList[i].fCost < lowestFCostNode.fCost)
-                    lowestFCostNode = pathNodeList[i];
-            }
-
-            return lowestFCostNode;
         }
 
         private List<WorldTile> CalculatePath(WorldTile endNode)

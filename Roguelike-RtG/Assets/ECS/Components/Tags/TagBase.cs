@@ -34,6 +34,10 @@ namespace JS.ECS.Tags
     public class Quality : TagBase { }
 
     /// <summary>
+    /// Tag to mark an object as a projectile
+    /// </summary>
+    public class Ammo : TagBase { }
+    /// <summary>
     /// Tag to mark an inventory item as a Favorite.
     /// </summary>
     public class Favorite: TagBase { }

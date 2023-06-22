@@ -20,7 +20,7 @@ namespace JS.WorldMap
             TransformSystem.SetPosition(physics, playerData.Position, playerData.LocalPosition);
 
             var brain = EntityManager.GetComponent<Brain>(player);
-            brain.IsSleeping = false;
+            brain.IsHibernating = false;
             brain.HasOverride = true;
 
             var render = EntityManager.GetComponent<Render>(player);

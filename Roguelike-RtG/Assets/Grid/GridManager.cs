@@ -132,7 +132,7 @@ public class GridManager : MonoBehaviour
             var enemy = EntityFactory.GetEntity("Orc");
             enemy.Name = "Orc_0" + i;
 
-            EntityManager.GetComponent<Brain>(enemy).IsSleeping = false;
+            EntityManager.GetComponent<Brain>(enemy).IsHibernating = false;
 
             var transform = EntityManager.GetComponent<JS.ECS.Transform>(enemy);
             var local = new Vector2Int(Random.Range(45, 55), Random.Range(45, 55));

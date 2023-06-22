@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: items_0
+      name: beard_long_black
       rect:
         serializedVersion: 2
         x: 192
@@ -126,7 +126,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_1
+      name: beard_long_green
       rect:
         serializedVersion: 2
         x: 224
@@ -147,7 +147,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_2
+      name: beard_long_red
       rect:
         serializedVersion: 2
         x: 256
@@ -168,7 +168,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_3
+      name: beard_long_white
       rect:
         serializedVersion: 2
         x: 288
@@ -189,7 +189,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_4
+      name: beard_long_blonde
       rect:
         serializedVersion: 2
         x: 320
@@ -210,7 +210,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_5
+      name: beard_short_brown
       rect:
         serializedVersion: 2
         x: 352
@@ -231,7 +231,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_6
+      name: beard_short_black
       rect:
         serializedVersion: 2
         x: 384
@@ -252,7 +252,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_7
+      name: beard_short_green
       rect:
         serializedVersion: 2
         x: 416
@@ -273,7 +273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_8
+      name: beard_short_red
       rect:
         serializedVersion: 2
         x: 448
@@ -294,7 +294,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_9
+      name: beard_short_white
       rect:
         serializedVersion: 2
         x: 480
@@ -315,7 +315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_10
+      name: beard_short_blonde
       rect:
         serializedVersion: 2
         x: 512
@@ -2520,7 +2520,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_115
+      name: armor
       rect:
         serializedVersion: 2
         x: 1824
@@ -2583,7 +2583,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_118
+      name: robes
       rect:
         serializedVersion: 2
         x: 1920
@@ -3906,7 +3906,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_181
+      name: boots
       rect:
         serializedVersion: 2
         x: 1888
@@ -4158,7 +4158,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_193
+      name: cloak_black
       rect:
         serializedVersion: 2
         x: 224
@@ -4179,7 +4179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_194
+      name: cloak_blueDark
       rect:
         serializedVersion: 2
         x: 256
@@ -4200,7 +4200,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_195
+      name: cloak_greenDark
       rect:
         serializedVersion: 2
         x: 288
@@ -4221,7 +4221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_196
+      name: cloak_blueLight
       rect:
         serializedVersion: 2
         x: 320
@@ -4242,7 +4242,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_197
+      name: cloak_multi
       rect:
         serializedVersion: 2
         x: 352
@@ -4263,7 +4263,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_198
+      name: cloak_gray
       rect:
         serializedVersion: 2
         x: 384
@@ -4284,7 +4284,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_199
+      name: cloak_greenLight
       rect:
         serializedVersion: 2
         x: 416
@@ -4305,7 +4305,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_200
+      name: cloak_purple
       rect:
         serializedVersion: 2
         x: 448
@@ -4326,7 +4326,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_201
+      name: cloak_tan
       rect:
         serializedVersion: 2
         x: 480
@@ -4347,7 +4347,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_202
+      name: cloak_red
       rect:
         serializedVersion: 2
         x: 512
@@ -4368,7 +4368,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_203
+      name: cloak_white
       rect:
         serializedVersion: 2
         x: 544
@@ -4389,7 +4389,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_204
+      name: cloak_yellow
       rect:
         serializedVersion: 2
         x: 576
@@ -4956,7 +4956,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_231
+      name: gloves
       rect:
         serializedVersion: 2
         x: 1600
@@ -15309,7 +15309,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_724
+      name: helm
       rect:
         serializedVersion: 2
         x: 992
@@ -17566,12 +17566,36 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      armor: 1908902993
+      beard_long_black: 487916406
+      beard_long_blonde: -1570673160
+      beard_long_green: 582913056
+      beard_long_red: -180815608
+      beard_long_white: 1722813877
+      beard_short_black: 2044640486
+      beard_short_blonde: 1464426846
+      beard_short_brown: -1121690558
+      beard_short_green: 356458019
+      beard_short_red: -283058143
+      beard_short_white: -631853810
       belt_01: -976871141
+      boots: 834773230
       bow_01: 1048812216
       bow_02: 1117413978
-      items_0: 487916406
-      items_1: 582913056
-      items_10: 1464426846
+      cloak_black: 1314010852
+      cloak_blueDark: -85547094
+      cloak_blueLight: -1650437288
+      cloak_gray: 20419149
+      cloak_greenDark: -931938477
+      cloak_greenLight: -745154475
+      cloak_multi: 1033567564
+      cloak_purple: 468557455
+      cloak_red: -1255045897
+      cloak_tan: -1952762065
+      cloak_white: -807237160
+      cloak_yellow: -953056285
+      gloves: 1956637568
+      helm: -359263311
       items_100: 1162179441
       items_101: 1020143640
       items_102: 4076345
@@ -17588,10 +17612,8 @@ TextureImporter:
       items_112: -1520934245
       items_113: 1978901356
       items_114: -1887277830
-      items_115: 1908902993
       items_116: -436939168
       items_117: -1354952529
-      items_118: 1958584168
       items_119: -918033919
       items_12: -483199391
       items_120: -149322926
@@ -17661,7 +17683,6 @@ TextureImporter:
       items_179: 531287131
       items_18: -1023068536
       items_180: -2034673164
-      items_181: 834773230
       items_182: -1043910474
       items_183: -191215387
       items_184: -205057788
@@ -17674,20 +17695,7 @@ TextureImporter:
       items_190: -1418457219
       items_191: 1461363923
       items_192: 1501249804
-      items_193: 1314010852
-      items_194: -85547094
-      items_195: -931938477
-      items_196: -1650437288
-      items_197: 1033567564
-      items_198: 20419149
-      items_199: -745154475
-      items_2: -180815608
       items_20: -1396152707
-      items_200: 468557455
-      items_201: -1952762065
-      items_202: -1255045897
-      items_203: -807237160
-      items_204: -953056285
       items_205: 110516754
       items_206: 2130819817
       items_207: 47278575
@@ -17717,7 +17725,6 @@ TextureImporter:
       items_229: 1057767189
       items_23: 910898271
       items_230: -1560766988
-      items_231: 1956637568
       items_232: -269632436
       items_233: 1705901970
       items_234: 594822085
@@ -17791,7 +17798,6 @@ TextureImporter:
       items_297: 672660547
       items_298: 485226974
       items_299: 1295937902
-      items_3: 1722813877
       items_30: 401658382
       items_300: 51210837
       items_301: -1585204480
@@ -17900,7 +17906,6 @@ TextureImporter:
       items_396: -403744736
       items_397: -148678160
       items_398: 1914353704
-      items_4: -1570673160
       items_40: 269900903
       items_401: -1916718224
       items_402: -2026788055
@@ -18010,7 +18015,6 @@ TextureImporter:
       items_497: 541116361
       items_498: 489599766
       items_499: -372856520
-      items_5: -1121690558
       items_50: -1185658247
       items_500: 379495399
       items_501: 577743832
@@ -18121,7 +18125,6 @@ TextureImporter:
       items_597: 1746975804
       items_598: 437965655
       items_599: 1333696771
-      items_6: 2044640486
       items_60: -2078419278
       items_600: 392638888
       items_601: 1357254771
@@ -18232,7 +18235,6 @@ TextureImporter:
       items_697: 388688787
       items_698: 2068163681
       items_699: -490415046
-      items_7: 356458019
       items_70: -964786990
       items_700: 994972611
       items_701: -832150211
@@ -18260,7 +18262,6 @@ TextureImporter:
       items_721: 83529814
       items_722: -1248691932
       items_723: 1596853008
-      items_724: -359263311
       items_725: -1816292155
       items_726: -1741783201
       items_727: -168039869
@@ -18342,7 +18343,6 @@ TextureImporter:
       items_797: 1105749009
       items_798: 633676307
       items_799: -794506821
-      items_8: -283058143
       items_80: 567779566
       items_800: -1081506754
       items_801: 1059630883
@@ -18384,7 +18384,6 @@ TextureImporter:
       items_87: 2135788410
       items_88: 1380883221
       items_89: -1921260038
-      items_9: -631853810
       items_90: 934366934
       items_91: -1446973811
       items_92: -529158612
@@ -18395,6 +18394,7 @@ TextureImporter:
       items_97: 370375329
       items_98: 538536594
       items_99: -1612766018
+      robes: 1958584168
       shield: 1411189724
       sword: -2108004057
   spritePackingTag: 

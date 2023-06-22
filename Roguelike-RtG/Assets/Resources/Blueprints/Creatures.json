@@ -17,7 +17,12 @@
                     "Name": "Body",
                     "Parameters": [ "Anatomy=Humanoid" ]
                 },
-                { "Name": "Brain" },
+                {
+                    "Name": "Brain",
+                    "Parameters": [
+                        "Aggression=Neutral"
+                    ]
+                },
                 { "Name": "Stomach" },
                 { "Name": "Corpse" },
                 { "Name": "Inventory" },

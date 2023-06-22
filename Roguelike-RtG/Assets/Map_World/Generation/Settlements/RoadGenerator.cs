@@ -1,6 +1,8 @@
 using JS.WorldMap;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace JS.WorldMap.Generation
 {
@@ -15,73 +17,13 @@ namespace JS.WorldMap.Generation
 
         public void GenerateRoads()
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             SetTravelCosts();
             FindPaths();
-        }
 
-        private void FindPaths()
-        {
-            roads = new List<Road>();
-            bridges = new List<Bridge>();
-
-            foreach (var settlement in worldMap.SettlementData.Settlements)
-            {
-                var newRoad = new Road();
-                newRoad.pointA = settlement.ID;
-
-                var end = FindNearest(settlement);
-                if (end == null)
-                {
-                    Debug.LogWarning("Couldn't find end");
-                    continue;
-                }
-                newRoad.pointB = end.ID;
-
-                var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);
-                if (path == null)
-                {
-                    //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                    Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
-                    continue;
-                }
-                BuildRoad(newRoad, path);
-                roads.Add(newRoad);
-                //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
-            }
-
-            worldMap.TerrainData.Roads = roads.ToArray();
-            worldMap.TerrainData.Bridges = bridges.ToArray();
-        }
-
-        private Settlement FindNearest(Settlement start)
-        {
-            float minDist = int.MaxValue;
-            Settlement closestSettlement = null;
-
-            foreach(var settlement in worldMap.SettlementData.Settlements)
-            {
-                if (settlement == start) continue;
-
-                bool duplicate = false;
-                for (int i = 0; i < roads.Count; i++)
-                {
-                    if ((roads[i].pointA == start.ID || roads[i].pointB == start.ID) && (roads[i].pointA == settlement.ID || roads[i].pointB == settlement.ID))
-                    {
-                        duplicate = true;
-                        break;
-                    }
-                }
-                if (duplicate) continue;
-
-                var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
-                if (dist < minDist)
-                {
-                    closestSettlement = settlement;
-                    minDist = dist;
-                }
-            }
-            return closestSettlement;
+            sw.Stop();
+            UnityEngine.Debug.Log("Total Road Time: " + sw.ElapsedMilliseconds + "ms");
         }
 
         private void SetTravelCosts()
@@ -114,6 +56,77 @@ namespace JS.WorldMap.Generation
                 }
             }
         }
+
+        private void FindPaths()
+        {
+            roads = new List<Road>();
+            bridges = new List<Bridge>();
+
+            foreach (var settlement in worldMap.SettlementData.Settlements)
+            {
+                var newRoad = new Road();
+                newRoad.pointA = settlement.ID;
+
+                var end = FindNearest(settlement);
+                if (end == null)
+                {
+                    UnityEngine.Debug.LogWarning("Couldn't find end");
+                    continue;
+                }
+                newRoad.pointB = end.ID;
+
+                var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);
+                if (path == null)
+                {
+                    //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                    UnityEngine.Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
+                    continue;
+                }
+                BuildRoad(newRoad, path);
+                roads.Add(newRoad);
+                //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                UnityEngine.Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
+            }
+
+            worldMap.TerrainData.Roads = roads.ToArray();
+            worldMap.TerrainData.Bridges = bridges.ToArray();
+        }
+
+        private Settlement FindNearest(Settlement start)
+        {
+            float minDist = int.MaxValue;
+            Settlement closestSettlement = null;
+
+            foreach(var settlement in worldMap.SettlementData.Settlements)
+            {
+                if (settlement == start) continue;
+                if (DuplicateRoad(start, settlement)) continue;
+
+                var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
+                if (dist < minDist)
+                {
+                    closestSettlement = settlement;
+                    minDist = dist;
+                }
+            }
+            return closestSettlement;
+        }
+
+        private bool DuplicateRoad(Settlement start, Settlement end)
+        {
+            for (int i = 0; i < roads.Count; i++)
+            {
+                if (roads[i].pointA == start.ID || roads[i].pointB == start.ID)
+                {
+                    if (roads[i].pointA == end.ID || roads[i].pointB == end.ID)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         private void BuildRoad(Road road, List<WorldTile> list)
         {

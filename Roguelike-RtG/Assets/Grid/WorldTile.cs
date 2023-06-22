@@ -5,7 +5,7 @@ using UnityEngine;
 namespace JS.WorldMap
 {
     //Do Not Serialize this class, results in a recursive serialization issue
-    public class WorldTile
+    public class WorldTile : IHeapItem<WorldTile>
     {
         private Grid<WorldTile> grid;
         public int x { get; private set; }
@@ -14,13 +14,32 @@ namespace JS.WorldMap
         //pathfinding
         public int gCost; //the movement cost to move from the start tile to this tile, following the existing path
         public int hCost; //the estimated movement cost to move from this tile to the end tile
-        public int fCost; //the current best guess as to the cost of the path
+        public int fCost  //the current best guess as to the cost of the path
+        {
+            get
+            {
+                return gCost + hCost;
+            }
+        }
+
+        private int heapIndex;
+        public int HeapIndex
+        {
+            get => heapIndex;
+            set
+            {
+                heapIndex = value;
+            }
+        }
+
         public int movementCost;
         public WorldTile cameFromTile;
 
-        public void CalculateFCost()
+        public int CompareTo(WorldTile other)
         {
-            fCost = gCost + hCost;
+            int compare = fCost.CompareTo(other.fCost);
+            if (compare == 0) compare = hCost.CompareTo(other.hCost);
+            return -compare; //want to return 1 if it's lower, so return negative value
         }
 
         #region - Altitude -

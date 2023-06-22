@@ -56,6 +56,10 @@
                 {
                     "Name": "CraftingItem",
                     "Parameters": [ "Skill=Smithing" ]
+                },
+                {
+                    "Name": "ObjectStack",
+                    "Parameters": [ "MaxStack=100" ]
                 }
             ]
         },
@@ -188,22 +192,6 @@
             ]
         },
         {
-            "Name": "BaseArmor",
-            "Inherits": "Armor",
-            "Components": [
-                {
-                    "Name": "Render",
-                    "Parameters": [ "Tile=items,armor" ]
-                }
-            ],
-            "Tags": [
-                {
-                    "Name": "Runes",
-                    "Value": "ArmorRunes,CommonRunes"
-                }
-            ]
-        },
-        {
             "Name": "BaseShield",
             "Inherits": "Shield",
             "Components": [
@@ -219,7 +207,22 @@
                 }
             ]
         },
-
+        {
+            "Name": "BaseArmor",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,armor" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
 
 
 
@@ -246,12 +249,35 @@
             "Components": [
                 {
                     "Name": "Render",
-                    "Parameters": [ "Tile=items,sword"]
+                    "Parameters": [ "Tile=items,sword" ]
                 }
             ],
             "Tags": [
-                { "Name": "MaterialTag", "Value": "Iron" }
+                {
+                    "Name": "MaterialTag",
+                    "Value": "Iron"
+                }
             ]
+        },
+        {
+            "Name": "WoodenShield",
+            "Inherits": "BaseShield",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,shield" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "MaterialTag",
+                    "Value": "Wood"
+                }
+            ]
+        },
+        {
+            "Name": "LeatherBoots",
+            "Inherits": "BaseArmor"
         }
     ]
 }

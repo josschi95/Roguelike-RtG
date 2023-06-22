@@ -225,7 +225,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private IEnumerator UpdateProgress(string message)
         {
-            Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
+            //Debug.Log(progressText.text + ": " + (Time.realtimeSinceStartup - initialTime));
             progressText.text = message;
             yield return new WaitForEndOfFrame();
             initialTime = Time.realtimeSinceStartup;

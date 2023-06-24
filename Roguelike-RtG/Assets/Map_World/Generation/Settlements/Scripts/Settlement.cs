@@ -117,7 +117,18 @@ namespace JS.WorldMap
 
 public class Facility
 {
+    public string Name;
     public int Workers;
     public string Input;
     public string Output;
+
+    public Facility() { }
+
+    public Facility(string name, int workers, string input, string output)
+    {
+        Name = name;
+        Workers = workers;
+        Input = input;
+        Output = output;
+    }
 }

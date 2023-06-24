@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace JS.WorldMap.Generation
@@ -7,6 +8,7 @@ namespace JS.WorldMap.Generation
     public class SettlementGenerator : MonoBehaviour
     {
         [SerializeField] private WorldGenerator worldGenerator;
+        [SerializeField] private MarkovChainNames markov;
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private BiomeHelper biomeHelper;
@@ -18,6 +20,10 @@ namespace JS.WorldMap.Generation
 
         [SerializeField] private HumanoidTribe[] tribes;
         [SerializeField] private SettlementType[] settlementTypes;
+        [SerializeField] private SettlementType city;
+        [SerializeField] private SettlementType town;
+        [SerializeField] private SettlementType village;
+        [SerializeField] private SettlementType hamlet;
         private int[] settlementCount;
 
         private List<WorldTile> availableNodes;
@@ -76,6 +82,7 @@ namespace JS.WorldMap.Generation
                 var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
 
                 if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea
+                if (node == null) continue;
                 if (node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) continue;
 
@@ -87,7 +94,7 @@ namespace JS.WorldMap.Generation
 
             //Adjust settlements to more defensible locations - near rivers, near mountains but not in, etc.
             DetermineDefensability();
-
+            GetResources();
             /*Determine maximum sustainable population
             On or adjacent to arable land? +1, add farm facility
             On or adjacent to water source? +1, add fishery facility, docks
@@ -170,6 +177,7 @@ namespace JS.WorldMap.Generation
 
         private SettlementType GetSettlementType()
         {
+            return settlementTypes[settlementTypes.Length - 1]; //hamlets
             for (int i = 0; i < settlementCount.Length; i++)
             {
                 if (settlementCount[i] > 0)
@@ -178,7 +186,6 @@ namespace JS.WorldMap.Generation
                     return settlementTypes[i];
                 }
             }
-            return settlementTypes[settlementTypes.Length - 1];
         }
 
         private HumanoidTribe GetTribeBids(Settlement settlement)
@@ -247,8 +254,10 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private Settlement PlaceSettlement(WorldTile node, SettlementType type, HumanoidTribe tribe)
         {
+            markov.townName = true;
+            var name = markov.GetName();
             int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
-            var newSettlement = new Settlement("[PLACEHOLDER]", settlements.Count, node, type, tribe, population);
+            var newSettlement = new Settlement(name, settlements.Count, node, type, tribe, population);
 
             //availableNodes?.Remove(node);
             biomes[biomeHelper.GetBiome(node.BiomeID)].Remove(node);
@@ -359,9 +368,6 @@ namespace JS.WorldMap.Generation
             return null;
         }
 
-        //Determine settlement growth based on resource availability
-        //Settlements cannot start mining until they are Villages at best
-
         private void DetermineDefensability()
         {
             foreach (var settlement in settlements)
@@ -383,10 +389,72 @@ namespace JS.WorldMap.Generation
             foreach(var settlement in settlements)
             {
                 var node = worldMap.GetNode(settlement.X, settlement.Y);
+                settlement.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food"));
 
-                //Will need to hold a database for the facilities, as well as a loading that in from JSOn
-                //
+                //Settlements adjacent to water sources get docks, also provides trade
+                if (worldMap.TerrainData.Coasts[node.x, node.y] || node.Rivers.Count > 0)
+                    settlement.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food"));
+
+
+                if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Coal Mine", 5, string.Empty, "Coal"));
+
+                if (worldMap.TerrainData.CopperMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Copper Mine", 5, string.Empty, "Copper Ore"));
+
+                if (worldMap.TerrainData.IronMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility++; //Iron weapons
+                    if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0) settlement.Defensibility++; //Steel weapons
+
+                    settlement.Facilities.Add(new Facility("Iron Mine", 5, string.Empty, "Iron Ore"));
+                }
+
+                if (worldMap.TerrainData.MithrilMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility += 4; //Mithril weapons
+                    settlement.Facilities.Add(new Facility("Mithril Mine", 5, string.Empty, "Mithril Ore"));
+                }
+
+                if (worldMap.TerrainData.AdmanatineMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility += 5; //Adamantine weapons
+                    settlement.Facilities.Add(new Facility("Adamantine Mine", 5, string.Empty, "Adamantine Ore"));
+                }
+
+
+                if (worldMap.TerrainData.SilverMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Silver Mine", 5, string.Empty, "Silver Ore"));
+
+                if (worldMap.TerrainData.GoldMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Gold Mine", 5, string.Empty, "Gold Ore"));
+
+                if (worldMap.TerrainData.GemstoneMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Gem Mine", 5, string.Empty, "Gemstones"));
+
+
+                var type = GetNewType(settlement);
+                int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
+                if (population < settlement.Population) population = settlement.Population;
+
+                /*Debug.Log(settlements[i].Name + " upgraded from hamlet, pop. " + settlements[i].Population +
+                    " to " + type.TypeName + ", pop. " + population);*/
+
+                settlement.AdjustSize(type, population);
             }
+        }
+
+        private SettlementType GetNewType(Settlement settlement)
+        {
+            if (settlement.Facilities.Count > 6) return city;
+            if (settlement.Facilities.Count > 4) return town;
+            if (settlement.Facilities.Count >= 3) return village;
+            return hamlet;
         }
     }
 }
+
+//So I think for the current process
+//all start as hamlets
+//give them starting defensibility and facilities based on resources, use this to determine secondary starting size
+//then generate roads, and for each road leading to a location (-1) add a "Trade" facility

@@ -1012,7 +1012,6 @@ MonoBehaviour:
   persistence: 0.5
   lacunarity: 2
   offset: {x: 0, y: 0}
-  useFalloff: 1
 --- !u!4 &261351982
 Transform:
   m_ObjectHideFlags: 0
@@ -2716,6 +2715,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809466312}
   m_CullTransparentMesh: 1
+--- !u!1 &833641284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833641286}
+  - component: {fileID: 833641285}
+  m_Layer: 0
+  m_Name: Markov
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &833641285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833641284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e218392228254349aaa6a6d129f70a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameLength: 5
+  namesToGenerate: 5
+  cleanText: 1
+  textFiles:
+  - {fileID: 4900000, guid: 6869690fa4f8bbe42802c64bc3165f2a, type: 3}
+  debugDictionary: 0
+  townName: 1
+--- !u!4 &833641286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833641284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838613685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2920,6 +2970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldGenerator: {fileID: 1549498269}
+  markov: {fileID: 833641285}
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
@@ -2936,6 +2987,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 45cc3dcd1a38d9b479ea2bcf2151fd1d, type: 2}
   - {fileID: 11400000, guid: 574ae0ee45743f142be67917e03e624c, type: 2}
   - {fileID: 11400000, guid: d4407ac68a31b8845b319b9a253f638c, type: 2}
+  city: {fileID: 11400000, guid: 3e9674a923d3c564ca0a7f862593afdf, type: 2}
+  town: {fileID: 11400000, guid: 45cc3dcd1a38d9b479ea2bcf2151fd1d, type: 2}
+  village: {fileID: 11400000, guid: 574ae0ee45743f142be67917e03e624c, type: 2}
+  hamlet: {fileID: 11400000, guid: d4407ac68a31b8845b319b9a253f638c, type: 2}
   usePoisson: 1
   poissonRadius: 15
   landCheckRadius: 5

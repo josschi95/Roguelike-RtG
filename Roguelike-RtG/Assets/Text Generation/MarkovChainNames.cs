@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
-using System.Linq;
 
 public class MarkovChainNames : MonoBehaviour
 {
@@ -17,49 +14,19 @@ public class MarkovChainNames : MonoBehaviour
     [SerializeField] private bool debugDictionary;
 
     private string[] charactersToRemove = { "[", "]", "{", "}", "(", ")", ".", ",", "!", "?", ";", ":", " ", "\n" };
-
+    private string[] townSuffixes = {"bury", "borough", "brough", "burgh", "by", "cester", "ford", "ham", "mouth", 
+        "stead", "port", "clare", "ley", "view", "folk", "dorf", "wych", "wick", "wich", "thorpe", "thorp", "ceter", 
+        "stadt", "caster", "dale", "field", "town", "ton", "ville" };
+    
     private List<char> uppers;
     private Dictionary<char, List<char>> markovModel;
+    public bool townName;
 
-    private string GetNewName()
+    public string GetName()
     {
-        var markovModel = MakeMarkovModel();
-
-        char currentState = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
-        char nextState;
-        string output = string.Empty;
-        output += currentState;
-
-        for (int i = 0; i < nameLength; i++)
-        {
-            if (!markovModel.ContainsKey(currentState)) break;
-
-            int index = Random.Range(0, markovModel[currentState].Count);
-            nextState = markovModel[currentState][index];
-            output += nextState;
-
-            currentState = nextState;
-        }
-
-        return output;
-    }
-
-    private char GetUpper()
-    {
-        char c = 'c';
-        while (!char.IsUpper(c))
-        {
-            c = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
-        }
-        return c;
-    }
-    public void GetName()
-    {
-        if (markovModel == null) Debug.LogError("Model has not been generated.");
+        if (markovModel == null) GenerateModels();
 
         char currentState = uppers[Random.Range(0, uppers.Count)];
-        //char currentState = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
-        //char currentState = GetUpper();
         char nextState;
         string output = string.Empty;
         output += currentState;
@@ -75,7 +42,20 @@ public class MarkovChainNames : MonoBehaviour
             currentState = nextState;
         }
 
-        Debug.Log(output);
+        if (townName)
+        {
+            char last = output[output.Length - 1];
+            foreach (var suffix in townSuffixes)
+            {
+                if (suffix[0] == last)
+                {
+                    output = output.Substring(0, output.Length - 1) + suffix;
+                    break;
+                }
+            }
+        }
+        //Debug.Log(output);
+        return output;
     }
 
     public void GetNames()
@@ -118,9 +98,11 @@ public class MarkovChainNames : MonoBehaviour
                 if (debugDictionary) Debug.Log(pair.Key + ": " + pair.Value[i]);
             }
         }
+
+        Debug.Log("Model Generated. " + markovModel.Keys.Count + " keys.");
     }
 
-    private Dictionary<char, List<char>> MakeMarkovModel()
+    private Dictionary<char, List<char>> GetMarkovModel()
     {
         string[] names = GetText();
         var markovModel = new Dictionary<char, List<char>>();

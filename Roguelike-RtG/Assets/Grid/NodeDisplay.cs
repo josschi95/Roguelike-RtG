@@ -55,13 +55,17 @@ namespace JS.WorldMap
             if (settlement == null) return;
             displayText.text += "\n \n";
 
-            displayText.text += "Defense:" + settlement.Defensibility;
-            //displayText.text += settlement.Name;
+            displayText.text += settlement.Name;
             displayText.text += "\nTribe: " + worldData.SettlementData.Tribes[settlement.TribeID].name + "\n";
             displayText.text += worldData.SettlementData.Types[settlement.TypeID].TypeName;
 
             displayText.text += "\nPopulation: " + settlement.Population.ToString();
             displayText.text += "\nTerritory Size: " + settlement.Territory.Count;
+            displayText.text += "\nDefense:" + settlement.Defensibility;
+            for (int i = 0; i < settlement.Facilities.Count; i++)
+            {
+                displayText.text += "\n" + settlement.Facilities[i].Name;
+            }
         }
 
         private void MountainDisplay(WorldTile node)

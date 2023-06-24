@@ -157,8 +157,9 @@ MonoBehaviour:
   namesToGenerate: 5
   cleanText: 1
   textFiles:
-  - {fileID: 4900000, guid: c1391f82ea547a04491a5f5373fa3f2d, type: 3}
+  - {fileID: 4900000, guid: 6869690fa4f8bbe42802c64bc3165f2a, type: 3}
   debugDictionary: 0
+  townName: 1
 --- !u!114 &1693660195
 MonoBehaviour:
   m_ObjectHideFlags: 0

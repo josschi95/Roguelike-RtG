@@ -192,5 +192,18 @@ namespace JS.WorldMap
             }
             return null;
         }
+
+        public bool HasMinerals(int x, int y)
+        {
+            if (coalMap[x,y] > 0) return true;
+            if (copperMap[x,y] > 0) return true;
+            if (ironMap[x,y] > 0) return true;
+            if (silverMap[x,y] > 0) return true;
+            if (goldMap[x,y] > 0) return true;
+            if (mithrilMap[x,y] > 0) return true;
+            if (adamantineMap[x,y] > 0) return true;
+            if (gemstoneMap[x,y] > 0) return true;
+            return false;
+        }
     }
 }

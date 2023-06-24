@@ -693,7 +693,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UiIcons_28
+      name: x_red
       rect:
         serializedVersion: 2
         x: 0
@@ -735,7 +735,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UiIcons_30
+      name: checkmark_green
       rect:
         serializedVersion: 2
         x: 32
@@ -819,7 +819,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UiIcons_34
+      name: plus_green
       rect:
         serializedVersion: 2
         x: 32
@@ -1084,14 +1084,11 @@ TextureImporter:
       UiIcons_0: 432948768
       UiIcons_1: 444204533
       UiIcons_2: -469476817
-      UiIcons_28: -868593954
       UiIcons_29: 703068639
       UiIcons_3: 1392239144
-      UiIcons_30: 2048252118
       UiIcons_31: -901785363
       UiIcons_32: -869714983
       UiIcons_33: -546844543
-      UiIcons_34: 1831204584
       UiIcons_35: -2035362391
       UiIcons_36: -1719902970
       UiIcons_37: 856109745
@@ -1107,6 +1104,7 @@ TextureImporter:
       UiIcons_5: 1577500236
       UiIcons_6: 1967747603
       UiIcons_7: -1429926980
+      checkmark_green: 2048252118
       icon_check: -552785502
       icon_diagonal_01: 2130582278
       icon_diagonal_02: -1198322351
@@ -1127,6 +1125,8 @@ TextureImporter:
       icon_vertical: -880488630
       icon_west: 1619487849
       icon_x: 349731442
+      plus_green: 1831204584
+      x_red: -868593954
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

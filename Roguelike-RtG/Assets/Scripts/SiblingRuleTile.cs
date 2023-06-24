@@ -1,11 +1,14 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 [CreateAssetMenu(menuName ="2D/Tiles/Sibling Rule Tile")]
 public class SiblingRuleTile : RuleTile
 {
     public enum SiblingGroup
     {
+        Land,
         Biomes,
         Rivers,
         Features,

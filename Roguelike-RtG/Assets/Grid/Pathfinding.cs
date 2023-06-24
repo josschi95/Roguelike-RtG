@@ -9,8 +9,8 @@ public class Pathfinding : MonoBehaviour
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
 
-    private List<GridNode> openList; //nodes to search
-    private List<GridNode> closedList; //already searched
+    private Heap<GridNode> openList; //nodes to search
+    private HashSet<GridNode> closedList; //already searched
 
     //[SerializeField] private bool allowDiagonals = false;
 
@@ -46,8 +46,9 @@ public class Pathfinding : MonoBehaviour
 
             return null;
         }
-        openList = new List<GridNode> { start };
-        closedList = new List<GridNode>();
+        openList = new Heap<GridNode>(grid.MaxSize);
+        closedList = new HashSet<GridNode>();
+        openList.Add(start);
 
         for (int x = 0; x < grid.Width; x++)
         {
@@ -55,27 +56,20 @@ public class Pathfinding : MonoBehaviour
             {
                 GridNode pathNode = grid.GetGridObject(x, y);
                 pathNode.gCost = int.MaxValue;
-                pathNode.CalculateFCost();
                 pathNode.cameFromNode = null;
             }
         }
 
         start.gCost = 0;
-        start.hCost = CalculateDistanceCost(start, end);
-        start.CalculateFCost();
+        start.hCost = GetDistance(start, end);
 
         while (openList.Count > 0)
         {
-            GridNode currentNode = GetLowestFCostNode(openList);
-
-            if (currentNode == end)
-            {
-                //Reached final node
-                return CalculatePath(end);
-            }
-
-            openList.Remove(currentNode);
+            GridNode currentNode = openList.RemoveFirst();
             closedList.Add(currentNode);
+
+            //Reached final node
+            if (currentNode == end) return CalculatePath(end);
 
             //foreach (GridNode neighbour in GetNeighbourList(currentNode))
             foreach (GridNode neighbour in currentNode.neighbors_all)
@@ -96,15 +90,14 @@ public class Pathfinding : MonoBehaviour
                 }
 
                 //Adding in movement cost here of the neighbor node to account for areas that are more difficult to move through
-                int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbour) + neighbour.movementCost;
+                int tentativeGCost = currentNode.gCost + GetDistance(currentNode, neighbour) + neighbour.movementCost;
 
                 if (tentativeGCost < neighbour.gCost)
                 {
                     //If it's lower than the cost previously stored on the neightbor, update it
                     neighbour.cameFromNode = currentNode;
                     neighbour.gCost = tentativeGCost;
-                    neighbour.hCost = CalculateDistanceCost(neighbour, end);
-                    neighbour.CalculateFCost();
+                    neighbour.hCost = GetDistance(neighbour, end);
 
                     if (!openList.Contains(neighbour)) openList.Add(neighbour);
                 }
@@ -197,14 +190,6 @@ public class Pathfinding : MonoBehaviour
         return nodes;
     }
 
-    //Return a list of all neighbors, up/down/left/right
-    private List<GridNode> GetNeighbourList(GridNode currentNode)
-    {
-        return currentNode.neighbors_all;
-        //if (allowDiagonals) return currentNode.neighbors_all;
-        //return currentNode.neighbors_adj;
-    }
-
     private List<GridNode> CalculatePath(GridNode endNode)
     {
         List<GridNode> path = new List<GridNode>();
@@ -231,7 +216,7 @@ public class Pathfinding : MonoBehaviour
         return cost;
     }
 
-    private int CalculateDistanceCost(GridNode a, GridNode b)
+    private int GetDistance(GridNode a, GridNode b)
     {
         int xDistance = Mathf.Abs(a.x - b.x);
         int yDistance = Mathf.Abs(a.y - b.y);
@@ -240,21 +225,6 @@ public class Pathfinding : MonoBehaviour
         //if (allowDiagonals) return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
         //return MOVE_STRAIGHT_COST * remaining;
     }
-
-    private GridNode GetLowestFCostNode(List<GridNode> pathNodeList)
-    {
-        GridNode lowestFCostNode = pathNodeList[0];
-
-        for (int i = 0; i < pathNodeList.Count; i++)
-        {
-            if (pathNodeList[i].fCost < lowestFCostNode.fCost)
-                lowestFCostNode = pathNodeList[i];
-        }
-
-        return lowestFCostNode;
-    }
-
-
 
     #region - Areas - 
     public List<GridNode> GetNodesInRange_Circle(GridNode fromNode, int range)

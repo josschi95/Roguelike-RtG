@@ -294,7 +294,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_9
+      name: grass_sand_NW
       rect:
         serializedVersion: 2
         x: 144
@@ -315,7 +315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_10
+      name: grass_sand_N
       rect:
         serializedVersion: 2
         x: 160
@@ -336,7 +336,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_11
+      name: grass_sand_NE
       rect:
         serializedVersion: 2
         x: 176
@@ -609,7 +609,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_24
+      name: grass_sand_W
       rect:
         serializedVersion: 2
         x: 144
@@ -651,7 +651,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_26
+      name: grass_sand_E
       rect:
         serializedVersion: 2
         x: 176
@@ -924,7 +924,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_39
+      name: grass_sand_SW
       rect:
         serializedVersion: 2
         x: 144
@@ -945,7 +945,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_40
+      name: grass_sand_S
       rect:
         serializedVersion: 2
         x: 160
@@ -966,7 +966,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_41
+      name: grass_sand_SE
       rect:
         serializedVersion: 2
         x: 176
@@ -1239,7 +1239,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_54
+      name: grass_sand_inner_NW
       rect:
         serializedVersion: 2
         x: 144
@@ -1260,7 +1260,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_55
+      name: grass_sand_inner_NE
       rect:
         serializedVersion: 2
         x: 160
@@ -1449,7 +1449,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_64
+      name: grass_sand_inner_SW
       rect:
         serializedVersion: 2
         x: 144
@@ -1470,7 +1470,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_65
+      name: grass_sand_inner_SE
       rect:
         serializedVersion: 2
         x: 160
@@ -5615,7 +5615,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5636,7 +5636,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5657,7 +5657,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5678,7 +5678,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5699,7 +5699,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5720,7 +5720,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5741,7 +5741,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5762,7 +5762,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5802,6 +5802,18 @@ TextureImporter:
       grass_horizontal: -214549686
       grass_left: -409556619
       grass_right: 1205265106
+      grass_sand_E: -1222599423
+      grass_sand_N: 905511991
+      grass_sand_NE: -1106358542
+      grass_sand_NW: 177648423
+      grass_sand_S: -1285713092
+      grass_sand_SE: -1609760583
+      grass_sand_SW: -1193236813
+      grass_sand_W: 8049992
+      grass_sand_inner_NE: -590935108
+      grass_sand_inner_NW: 161792042
+      grass_sand_inner_SE: -432741340
+      grass_sand_inner_SW: 2105743305
       grass_single: 1474673853
       grass_top: -1755094543
       grass_vertical: 1131451354
@@ -5845,7 +5857,6 @@ TextureImporter:
       snow_single: -1172946292
       snow_top: -683402485
       snow_vertical: 345792500
-      tileset_10: 905511991
       tileset_100: 1170661964
       tileset_101: -1314694602
       tileset_102: -1489280184
@@ -5855,7 +5866,6 @@ TextureImporter:
       tileset_107: 1444756007
       tileset_108: 1566692995
       tileset_109: -80236756
-      tileset_11: -1106358542
       tileset_110: -465677837
       tileset_111: 488043356
       tileset_112: 38237411
@@ -5988,7 +5998,6 @@ TextureImporter:
       tileset_237: -952761861
       tileset_238: 1606889763
       tileset_239: 1468319667
-      tileset_24: 8049992
       tileset_240: 1280915545
       tileset_241: 1470235566
       tileset_242: -951331295
@@ -6010,7 +6019,6 @@ TextureImporter:
       tileset_257: -1918001940
       tileset_258: -453961425
       tileset_259: -769186953
-      tileset_26: -1222599423
       tileset_260: 45316347
       tileset_261: 1681841234
       tileset_262: 183493180
@@ -6039,21 +6047,14 @@ TextureImporter:
       tileset_283: 1047283512
       tileset_284: -2143782889
       tileset_29: 1789376369
-      tileset_39: -1193236813
-      tileset_40: -1285713092
-      tileset_41: -1609760583
       tileset_42: 851829059
       tileset_43: 861157343
       tileset_44: 829527548
       tileset_47: 643924302
       tileset_50: -656073786
       tileset_53: -1077680421
-      tileset_54: 161792042
-      tileset_55: -590935108
       tileset_56: -1960775380
       tileset_57: 1946153762
-      tileset_64: 2105743305
-      tileset_65: -432741340
       tileset_66: -360174065
       tileset_67: -164903874
       tileset_68: -985062941
@@ -6074,7 +6075,6 @@ TextureImporter:
       tileset_86: 342819070
       tileset_87: 43278772
       tileset_89: 58640344
-      tileset_9: 177648423
       tileset_90: 1721915281
       tileset_91: -2093566371
       tileset_92: -722731014

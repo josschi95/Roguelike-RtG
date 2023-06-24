@@ -1,8 +1,6 @@
 using JS.WorldMap;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Diagnostics;
 
 namespace JS.WorldMap.Generation
 {
@@ -17,13 +15,8 @@ namespace JS.WorldMap.Generation
 
         public void GenerateRoads()
         {
-            Stopwatch sw = Stopwatch.StartNew();
-
             SetTravelCosts();
             FindPaths();
-
-            sw.Stop();
-            UnityEngine.Debug.Log("Total Road Time: " + sw.ElapsedMilliseconds + "ms");
         }
 
         private void SetTravelCosts()
@@ -42,7 +35,7 @@ namespace JS.WorldMap.Generation
                     var river = worldMap.TerrainData.FindRiverAt(x, y, out var index);
                     if (river != null)
                     {
-                        cost = 10;
+                        cost = 15;
                         var flow = river.Nodes[index].PathDirection;
                         if (flow == Compass.NorthEast || flow == Compass.NorthWest || flow == Compass.SouthEast || flow == Compass.SouthWest)
                             cost = 500;
@@ -70,7 +63,7 @@ namespace JS.WorldMap.Generation
                 var end = FindNearest(settlement);
                 if (end == null)
                 {
-                    UnityEngine.Debug.LogWarning("Couldn't find end");
+                    Debug.LogWarning("Couldn't find end");
                     continue;
                 }
                 newRoad.pointB = end.ID;
@@ -79,13 +72,13 @@ namespace JS.WorldMap.Generation
                 if (path == null)
                 {
                     //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                    UnityEngine.Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
+                    //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
                     continue;
                 }
                 BuildRoad(newRoad, path);
                 roads.Add(newRoad);
                 //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                UnityEngine.Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
+                //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
             }
 
             worldMap.TerrainData.Roads = roads.ToArray();
@@ -100,7 +93,7 @@ namespace JS.WorldMap.Generation
             foreach(var settlement in worldMap.SettlementData.Settlements)
             {
                 if (settlement == start) continue;
-                if (DuplicateRoad(start, settlement)) continue;
+                if (IsDuplicateRoad(start, settlement)) continue;
 
                 var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
                 if (dist < minDist)
@@ -112,7 +105,7 @@ namespace JS.WorldMap.Generation
             return closestSettlement;
         }
 
-        private bool DuplicateRoad(Settlement start, Settlement end)
+        private bool IsDuplicateRoad(Settlement start, Settlement end)
         {
             for (int i = 0; i < roads.Count; i++)
             {
@@ -126,7 +119,6 @@ namespace JS.WorldMap.Generation
             }
             return false;
         }
-
 
         private void BuildRoad(Road road, List<WorldTile> list)
         {

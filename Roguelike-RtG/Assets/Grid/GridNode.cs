@@ -2,7 +2,7 @@ using JS.ECS;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridNode
+public class GridNode : IHeapItem<GridNode>
 {
     public Grid<GridNode> grid {  get; private set; }
     public int x { get; private set; }
@@ -11,8 +11,31 @@ public class GridNode
     //A* Pathfinding
     public int gCost; //the movement cost to move from the start node to this node, following the existing path
     public int hCost; //the estimated movement cost to move from this node to the end node
-    public int fCost; //the current best guess as to the cost of the path
+    public int fCost  //the current best guess as to the cost of the path
+    {
+        get
+        {
+            return gCost + hCost;
+        }
+    }
+   
+    private int heapIndex;
+    public int HeapIndex
+    {
+        get => heapIndex;
+        set
+        {
+            heapIndex = value;
+        }
+    }
     public GridNode cameFromNode;
+
+    public int CompareTo(GridNode other)
+    {
+        int compare = fCost.CompareTo(other.fCost);
+        if (compare == 0) compare = hCost.CompareTo(other.hCost);
+        return -compare; //want to return 1 if it's lower, so return negative value
+    }
 
     public bool isWater = false; //set to true when a water block is placed here
     public bool stairsUp = false;
@@ -89,10 +112,5 @@ public class GridNode
     {
         movementCost = Mathf.Clamp(cost, 0, int.MaxValue);
         grid.TriggerGridObjectChanged(x, y);
-    }
-
-    public void CalculateFCost()
-    {
-        fCost = gCost + hCost;
     }
 }

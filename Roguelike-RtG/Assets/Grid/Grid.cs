@@ -22,7 +22,7 @@ public class Grid<TGridObject>
     private Vector3 originPosition;
     private TGridObject[,] gridArray;
 
-    public int MaxHeapSize
+    public int MaxSize
     {
         get
         {

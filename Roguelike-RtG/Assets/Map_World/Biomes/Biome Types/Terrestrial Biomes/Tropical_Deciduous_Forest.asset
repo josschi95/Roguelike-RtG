@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 12
   <BiomeName>k__BackingField: Tropical Seasonal Forest
-  <WorldBase>k__BackingField: {fileID: 11400000, guid: 5577f051ee79aa84aa055d25da12e2b4, type: 2}
-  <WorldTile>k__BackingField: {fileID: 11400000, guid: 839faba153141c149bbbb78ff52ef7a9, type: 2}
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: d33f205b06e93784e8b21844d072ddb0, type: 2}
+  <WorldAccent>k__BackingField: {fileID: 11400000, guid: 000b8abd2ea54b144957cd300cd362b2, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 0

@@ -23,8 +23,12 @@ namespace JS.WorldMap
         [SerializeField] private int _population;
         public int Population => _population;
 
+        public int Defensibility;
+        public int ResourceRating;
+        public List<Facility> Facilities;
+
         //public bool isSeaFaring { get; private set; }
-        public bool isSubterranean { get; private set; }
+        //public bool isSubterranean { get; private set; }
 
         public List<GridCoordinates> Territory;
         public List<GridCoordinates> Reach;
@@ -40,8 +44,6 @@ namespace JS.WorldMap
 
             //Set to a seafaring settlement if placed on an island
             //isSeaFaring = node.Island != null;
-            //Sets the settlement as subterranean if placed in a mountain
-            isSubterranean = node.Mountain != null;
 
             typeID = type.ID;
             tribeID = humanoids.ID;
@@ -49,6 +51,7 @@ namespace JS.WorldMap
 
             Territory = new List<GridCoordinates>();
             Reach = new List<GridCoordinates>();
+            Facilities = new List<Facility>();
             foreignRelations = new Dictionary<int, int>();
         }
 
@@ -110,4 +113,11 @@ namespace JS.WorldMap
             foreignRelations.Clear();
         }
     }
+}
+
+public class Facility
+{
+    public int Workers;
+    public string Input;
+    public string Output;
 }

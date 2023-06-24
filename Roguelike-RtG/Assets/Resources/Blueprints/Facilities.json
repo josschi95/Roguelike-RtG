@@ -1,0 +1,114 @@
+{
+    "Facilities": [
+        {
+            "Name": "Wheat Field",
+            "Workers": "5",
+            "Output": "Wheat"
+        },
+        {
+            "Name": "Corn Field",
+            "Workers": "5",
+            "Output": "Corn"
+        },
+        {
+            "Name": "Rice Field",
+            "Workers": "5",
+            "Output": "Rice"
+        },
+        {
+            "Name": "Cabbage Field",
+            "Workers": "5",
+            "Output": "Cabbage"
+        },
+        {
+            "Name": "Bean Field",
+            "Workers": "5",
+            "Output": "Beans"
+        },
+        {
+            "Name": "Apple Orchard",
+            "Workers": "5",
+            "Output": "Apples"
+        },
+        {
+            "Name": "Citrus Orchard",
+            "Workers": "5",
+            "Output": "Citrus"
+        },
+        {
+            "Name": "Vineyard",
+            "Workers": "5",
+            "Output": "Grapes"
+        },
+        {
+            "Name": "Sugarcane Farm",
+            "Workers": "5",
+            "Output": "Sugar"
+        },
+        {
+            "Name": "Palm Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Sunflower Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Olive Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Tea Field",
+            "Workers": "5",
+            "Output": "Tea"
+        },
+        {
+            "Name": "Coffee Field",
+            "Workers": "5",
+            "Output": "Coffee"
+        },
+        {
+            "Name": "Narcotics Farm",
+            "Workers": "5",
+            "Output": "Narcotics"
+        },
+        {
+            "Name": "Chicken Farm",
+            "Workers": "5",
+            "Output": "Eggs,Meat"
+        },
+        {
+            "Name": "Pig Farm",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+        {
+            "Name": "Cow Farm",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+        {
+            "Name": "Dairy Farm",
+            "Workers": "5",
+            "Output": "Milk,Cheese,Butter"
+        },
+        {
+            "Name": "Sheep Farm",
+            "Workers": "5",
+            "Output": "Wool"
+        },
+        {
+            "Name": "Fishery",
+            "Workers": "5",
+            "Output": "Fish"
+        },
+        {
+            "Name": "Apiary",
+            "Workers": "5",
+            "Output": "Honey"
+        }
+    ]
+}

@@ -8,7 +8,7 @@ namespace JS.WorldMap
         [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
         [field: SerializeField] public RuleTile WorldBase { get; private set; }
-        [field: SerializeField] public RuleTile WorldTile { get; private set; }
+        [field: SerializeField] public RuleTile WorldAccent { get; private set; }
         [field: SerializeField] public RuleTile LocalTile { get; private set; }
         [field: SerializeField] public bool isLand { get; private set; } = true;
         //True for forested biomes and mountains
@@ -26,29 +26,19 @@ namespace JS.WorldMap
         public int MinPrecipitation => minAnnualPrecipitation;
         public int MaxPrecipitation => maxAnnualPrecipitation;
 
-        [Header("Vegetation")]
+        /*[Header("Vegetation")]
         [Range(0, 1)]
         [SerializeField] private float treeDensity;
         [Range(0, 1)]
         [SerializeField] private float shrubDensity;
         [Range(0, 1)]
-        [SerializeField] private float grassDensity;
-
+        [SerializeField] private float grassDensity;*/
+        
         [Header("Resources")]
-        [Range(0, 1)]
-        [SerializeField] private float foodAvailability;
-        [Range(0, 1)]
-        [SerializeField] private float waterAvailability;
-        [Range(0, 1)]
-        [SerializeField] private float lumberAvailability;
-
-        [Space][Space]
-
-        //have an array of animals which would be present
-        [SerializeField] private string[] vegetation;
-        [SerializeField] private string[] animals;
-        //and a separate array of monsters
-        [SerializeField] private string[] monsters;
+        [Range(0, 5)]
+        [SerializeField] private int agricultureRating;
+        [Range(0, 5)]
+        [SerializeField] private int lumberRating;
 
 #pragma warning disable 0414
 #if UNITY_EDITOR

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 1
   <BiomeName>k__BackingField: Ocean_Surface
-  <WorldTile>k__BackingField: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
+  <WorldAccent>k__BackingField: {fileID: 0}
   <LocalTile>k__BackingField: {fileID: 0}
-  <RuleTile>k__BackingField: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
   <isLand>k__BackingField: 0
+  <isDifficultTerrain>k__BackingField: 0
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0

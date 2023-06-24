@@ -10,7 +10,6 @@ namespace JS.WorldMap.Generation
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private TerrainData terrainData;
         [SerializeField] private BiomeHelper biomeHelper;
-        //[SerializeField] private SettlementData settlementData;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private TribalRelation tribeRelations;
         private WorldSize worldSize;
@@ -76,8 +75,8 @@ namespace JS.WorldMap.Generation
             {
                 var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
 
-                //Try to correct to a land-node
-                if (!node.IsLand) node = TryFindLand(node);
+                if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea
+                if (node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) continue;
 
                 var tribe = tribes[tribeIndex];
@@ -87,7 +86,18 @@ namespace JS.WorldMap.Generation
             }
 
             //Adjust settlements to more defensible locations - near rivers, near mountains but not in, etc.
+            DetermineDefensability();
 
+            /*Determine maximum sustainable population
+            On or adjacent to arable land? +1, add farm facility
+            On or adjacent to water source? +1, add fishery facility, docks
+            On or adjacent to mineral deposit? +1, add mine facility
+            On or adjacent to forest? +1, add lumber mill
+
+
+            On an island? Clamp that value, probs max Village, maybe town depending on size
+
+            */
             //All settlements start out as hamlets, then calculate the resource wealth of the surrounding area
             //Using that, as well as a tribe's ExpansionRating, claim territory for each settlement and grow in size
             //Settlement location also needs to be tracked on the Regional scale, 
@@ -134,6 +144,29 @@ namespace JS.WorldMap.Generation
             return landNode;
         }
 
+        /// <summary>
+        /// Returns the nearest WorldTile that is not in the Mountains.
+        /// </summary>
+        private WorldTile TryFindPlains(WorldTile tile)
+        {
+            WorldTile flatNode = null;
+            float dist = int.MaxValue;
+            var nodes = worldMap.GetNodesInRange_Square(tile, landCheckRadius);
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (!nodes[i].IsLand) continue; //no water
+                if (nodes[i].Mountain != null) continue; //no mountains
+
+                var newDist = GridMath.GetStraightDist(tile.x, tile.y, nodes[i].x, nodes[i].y);
+                if (newDist < dist)
+                {
+                    dist = newDist;
+                    flatNode = nodes[i];
+                }
+            }
+
+            return flatNode;
+        }
 
         private SettlementType GetSettlementType()
         {
@@ -194,7 +227,7 @@ namespace JS.WorldMap.Generation
                     
                     mapFlags[neighbor.x, neighbor.y] = 1;
                     if (!neighbor.IsLand) continue; //is water
-                    if (settlement.isSubterranean != (neighbor.Mountain != null)) continue; //subterranean can't extend outside mountain, others can't extend into mountains
+                    //if (settlement.isSubterranean != (neighbor.Mountain != null)) continue; //subterranean can't extend outside mountain, others can't extend into mountains
                     if (GetTribe(settlement.TribeID).opposedBiomes.Contains(biomeHelper.GetBiome(neighbor.BiomeID))) continue; //won't extend into opposed biomes
 
                     var claimant = FindClaimedTerritory(neighbor.x, neighbor.y);
@@ -325,125 +358,35 @@ namespace JS.WorldMap.Generation
             }
             return null;
         }
+
+        //Determine settlement growth based on resource availability
+        //Settlements cannot start mining until they are Villages at best
+
+        private void DetermineDefensability()
+        {
+            foreach (var settlement in settlements)
+            {
+                var node = worldMap.GetNode(settlement.X, settlement.Y);
+                for (int i = 0; i < node.neighbors_all.Count; i++)
+                {
+                    //The settlement borders a natural body of water or a mountain
+                    if (!node.neighbors_all[i].IsLand || node.neighbors_all[i].Mountain != null)
+                    {
+                        settlement.Defensibility++;
+                    }
+                }
+            }
+        }
+
+        private void GetResources()
+        {
+            foreach(var settlement in settlements)
+            {
+                var node = worldMap.GetNode(settlement.X, settlement.Y);
+
+                //Will need to hold a database for the facilities, as well as a loading that in from JSOn
+                //
+            }
+        }
     }
 }
-
-        #region - Obsolete -
-        /*
-        private WorldTile GetTribeSettlementSite(HumanoidTribe tribe)
-        {
-            if (TryFindMountainNode(tribe, out WorldTile mountain)) return mountain;
-
-            if (TryFindIslandNode(tribe, out WorldTile island)) return island;
-
-            //This one here is hurting quite a bit compared to the others
-            var initialTime = Time.realtimeSinceStartup;
-            if (TryFindPreferredBiome(tribe, out WorldTile biome))
-            {
-                //Debug.LogWarning("Preferred biome found at " + (Time.realtimeSinceStartup - initialTime));
-                return biome;
-            }
-
-            if (TryFindUnopposedBiome(tribe, out WorldTile node)) return node;
-
-            if (TryFindAnyNode(out WorldTile lastNode)) return lastNode;
-
-            return null;
-        }
-
-        private bool TryFindMountainNode(HumanoidTribe tribe, out WorldTile node)
-        {
-            node = null;
-
-            var mountainPreference = 15;
-            if (tribe.PrefersMountains) mountainPreference = 75;
-            if (worldGenerator.rng.Next(0, 100) > mountainPreference) return false;
-
-            var allMountainNodes = new List<WorldTile>();
-            foreach (MountainRange mountain in terrainData.Mountains)
-            {
-                for (int i = 0; i < mountain.Nodes.Count; i++)
-                {
-                    if (!availableNodes.Contains(mountain.Nodes[i])) continue;
-                    allMountainNodes.Add(mountain.Nodes[i]);
-                }
-            }
-            if (allMountainNodes.Count == 0) return false;
-
-            int index = worldGenerator.rng.Next(0, allMountainNodes.Count);
-            //Debug.Log("Found Mountain Home");
-            node = allMountainNodes[index];
-            return true;
-        }
-
-        private bool TryFindIslandNode(HumanoidTribe tribe, out WorldTile node)
-        {
-            node = null;
-
-            var islandPreference = 15;
-            if (tribe.PrefersIslands) islandPreference = 75;
-            if (worldGenerator.rng.Next(0, 100) > islandPreference) return false;
-
-            var allIslandNodes = new List<WorldTile>();
-            foreach (Island island in terrainData.Islands)
-            {
-                if (island.Nodes.Count < 5) continue; //ignore small islands
-                for (int i = 0; i < island.Nodes.Count; i++)
-                {
-                    if (!availableNodes.Contains(island.Nodes[i])) continue;
-                    if (tribe.opposedBiomes.Contains(GetBiome(island.Nodes[i].BiomeID))) continue;
-                    allIslandNodes.Add(island.Nodes[i]);
-                }
-            }
-            if (allIslandNodes.Count == 0) return false;
-
-            int index = worldGenerator.rng.Next(0, allIslandNodes.Count);
-            //Debug.Log("Found Island Home");
-            node = allIslandNodes[index];
-            return true;
-        }
-
-        private bool TryFindPreferredBiome(HumanoidTribe tribe, out WorldTile node)
-        {
-
-            node = null;
-            if (tribe.preferredBiomes.Count == 0) return false;
-            if (worldGenerator.rng.Next(0, 100) < 25) return false; //25% chance of not getting a preferred biome
-            Biome chosenBiome = tribe.preferredBiomes[worldGenerator.rng.Next(0, tribe.preferredBiomes.Count)];
-
-            if (biomes[chosenBiome].Count == 0) return false;
-            int index = worldGenerator.rng.Next(0, biomes[chosenBiome].Count);
-            node = biomes[chosenBiome][index];
-            return true;
-        }
-
-        private bool TryFindUnopposedBiome(HumanoidTribe tribe, out WorldTile node)
-        {
-            node = null;
-            var nodeList = new List<WorldTile>();
-
-            for (int i = 0; i < availableNodes.Count; i++)
-            {
-                if (tribe.opposedBiomes.Contains(GetBiome(availableNodes[i].BiomeID))) continue;
-                nodeList.Add(availableNodes[i]);
-            }
-            if (nodeList.Count == 0) return false;
-
-            int index = worldGenerator.rng.Next(0, nodeList.Count);
-            //Debug.Log("Found Unopposed Biome");
-            node = nodeList[index];
-            return true;
-        }
-
-        private bool TryFindAnyNode(out WorldTile node)
-        {
-            node = null;
-            if (availableNodes.Count == 0) return false;
-
-            int index = worldGenerator.rng.Next(0, availableNodes.Count);
-            //Debug.Log("Found Any Site");
-            node = availableNodes[index];
-            return true;
-        }
-        */
-        #endregion

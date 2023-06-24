@@ -6,75 +6,136 @@ using System.Linq;
 
 public class MarkovChainNames : MonoBehaviour
 {
-    [SerializeField] private int syllables = 2;
+    [Range(5, 20)]
+    [SerializeField] private int nameLength = 5;
+    [Range(1, 20)]
+    [SerializeField] private int namesToGenerate = 1;
     [SerializeField] private bool cleanText;
     [Space]
 
     [SerializeField] private TextAsset[] textFiles;
     [SerializeField] private bool debugDictionary;
 
-    private string[] charactersToRemove = { "[", "]", "{", "}", "(", ")", ".", ",", "!", "?", ";", ":", " " };
-    private string vowels = "aeiouy";
+    private string[] charactersToRemove = { "[", "]", "{", "}", "(", ")", ".", ",", "!", "?", ";", ":", " ", "\n" };
 
-    [ContextMenu("Generate")]
-    public void Generate()
-    {
-        Debug.Log(GetName());
-    }
+    private List<char> uppers;
+    private Dictionary<char, List<char>> markovModel;
 
-    private string GetName()
+    private string GetNewName()
     {
         var markovModel = MakeMarkovModel();
-        int n = 0;
 
-        string currentState = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
-        string nextState;
-        string output = "";
+        char currentState = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
+        char nextState;
+        string output = string.Empty;
         output += currentState;
-        output = output.Trim();
 
-        while(n < syllables)
+        for (int i = 0; i < nameLength; i++)
         {
             if (!markovModel.ContainsKey(currentState)) break;
 
             int index = Random.Range(0, markovModel[currentState].Count);
             nextState = markovModel[currentState][index];
-            nextState = nextState.Trim();
             output += nextState;
 
             currentState = nextState;
-
-            n++;
         }
 
-        return output.Replace(" ", "");
+        return output;
     }
 
-    private Dictionary<string, List<string>> MakeMarkovModel()
+    private char GetUpper()
     {
+        char c = 'c';
+        while (!char.IsUpper(c))
+        {
+            c = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
+        }
+        return c;
+    }
+    public void GetName()
+    {
+        if (markovModel == null) Debug.LogError("Model has not been generated.");
+
+        char currentState = uppers[Random.Range(0, uppers.Count)];
+        //char currentState = markovModel.ElementAt(Random.Range(0, markovModel.Count)).Key;
+        //char currentState = GetUpper();
+        char nextState;
+        string output = string.Empty;
+        output += currentState;
+
+        for (int i = 0; i < nameLength; i++)
+        {
+            if (!markovModel.ContainsKey(currentState)) break;
+
+            int index = Random.Range(0, markovModel[currentState].Count);
+            nextState = markovModel[currentState][index];
+            output += nextState;
+
+            currentState = nextState;
+        }
+
+        Debug.Log(output);
+    }
+
+    public void GetNames()
+    {
+        for (int i = 0; i < namesToGenerate; i++)
+        {
+            GetName();
+        }
+    }
+
+
+    public void GenerateModels()
+    {
+        uppers = new List<char>();
+        markovModel = new Dictionary<char, List<char>>();
         string[] names = GetText();
 
-        var markovModel = new Dictionary<string, List<string>>();
+        foreach(var name in names)
+        {
+            for (int i = 0; i < name.Length - 1; i++)
+            {
+                var first = name[i];
+                var second = name[i + 1];
+
+                //Create a separate list starting with all uppercase 
+                if (char.IsUpper(first)) uppers.Add(first);
+
+                if (!markovModel.ContainsKey(first))
+                {
+                    markovModel[first] = new List<char>();
+                }
+                markovModel[first].Add(second);
+            }
+        }
+
+        foreach (var pair in markovModel)
+        {
+            for (int i = 0; i < pair.Value.Count; i++)
+            {
+                if (debugDictionary) Debug.Log(pair.Key + ": " + pair.Value[i]);
+            }
+        }
+    }
+
+    private Dictionary<char, List<char>> MakeMarkovModel()
+    {
+        string[] names = GetText();
+        var markovModel = new Dictionary<char, List<char>>();
 
         for (int i = 0; i < names.Length; i++)
         {
-            var syllables = GetSyllables(names[i]);
-            if (syllables.Count <= 1)
+            for (int j = 0; j < names[i].Length - 1; j++)
             {
-                Debug.Log("Removing " + names[i]);
-                continue;
-            }
-
-            for (int j = 0; j < syllables.Count - 1; j++)
-            {
-                string prefix = syllables[j];
-                string suffix = syllables[j + 1];
-
-                if (!markovModel.ContainsKey(prefix))
+                var first = names[i][j];
+                var second = names[i][j + 1];
+                if (!markovModel.ContainsKey(first))
                 {
-                    markovModel[prefix] = new List<string>();
+                    markovModel[first] = new List<char>();
                 }
-                markovModel[prefix].Add(suffix);
+                markovModel[first].Add(second);
             }
         }
 
@@ -107,71 +168,10 @@ public class MarkovChainNames : MonoBehaviour
             }
         }
         //splits the text into an array of words
-        string[] names = body.Trim().Split(" ");
+        string[] names = body.Trim().Split(",");
 
         //Debug.Log(words.Length);
 
         return names;
     }
-
-    private string[] GetSyllables()
-    {
-        var names = GetText();
-        var list = new List<string>();
-
-        for (int i = 0; i < names.Length; i++)
-        {
-            list.AddRange(GetSyllables(names[i]));
-        }
-
-        return list.ToArray();
-    }
-
-    private List<string> GetSyllables(string word)
-    {
-        word = word.ToLower().Trim();
-        var syllableList = new List<string>();
-        bool lastWasVowel = false;
-
-        //StringBuilder currSyllable = new StringBuilder();
-        string currSyllable = "";
-        foreach (char c in word)
-        {
-            if (vowels.Contains(c))
-            {
-                if (!lastWasVowel)
-                {
-                    lastWasVowel = true;
-
-                    // Finish this syllable and add to the list
-                    //syllableList.Add(currSyllable.ToString());
-                    syllableList.Add(currSyllable);
-                    currSyllable = "";//currSyllable.Clear();
-                }
-            }
-            else
-            {
-                lastWasVowel = false;
-            }
-
-            // Add this character to the current syllable
-            currSyllable += c;
-            //currSyllable.Append(c);
-        }
-
-        if ((word.EndsWith("e") || (word.EndsWith("es") || word.EndsWith("ed"))) && !word.EndsWith("le"))
-        {
-            // Remove the last syllable?
-            //syllableList.RemoveAt(syllableList.Count - 1);
-        }
-
-        for (int i = syllableList.Count - 1; i >= 0; i--)
-        {
-            syllableList[i] = syllableList[i].Trim();
-            if (syllableList[i].Length <= 1) syllableList.RemoveAt(i);
-        }
-
-        return syllableList;
-    }
-
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 7
   <BiomeName>k__BackingField: Savanna
-  <WorldBase>k__BackingField: {fileID: 11400000, guid: dda6c88da2e8586489a5ae8456b8542f, type: 2}
-  <WorldTile>k__BackingField: {fileID: 11400000, guid: a4fdc191f8710d541b8984735b9edf7f, type: 2}
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: 76fc16b81a8234343b136eb15074bba1, type: 2}
+  <WorldAccent>k__BackingField: {fileID: 11400000, guid: a4fdc191f8710d541b8984735b9edf7f, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 0

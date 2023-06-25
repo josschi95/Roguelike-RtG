@@ -7,6 +7,8 @@ namespace DelaunayVoronoi
     public class Triangle
     {
         public Point[] Vertices { get; } = new Point[3];
+
+        public readonly HashSet<Edge> edges;
         public Point Circumcenter { get; private set; }
         public double RadiusSquared;
 
@@ -53,6 +55,14 @@ namespace DelaunayVoronoi
             Vertices[0].AdjacentTriangles.Add(this);
             Vertices[1].AdjacentTriangles.Add(this);
             Vertices[2].AdjacentTriangles.Add(this);
+
+            edges = new HashSet<Edge>
+            {
+                new Edge(point1, point2),
+                new Edge(point2, point3),
+                new Edge(point1, point3)
+            };
+
             UpdateCircumcircle();
         }
 
@@ -99,6 +109,16 @@ namespace DelaunayVoronoi
             var d_squared = (point.X - Circumcenter.X) * (point.X - Circumcenter.X) +
                 (point.Y - Circumcenter.Y) * (point.Y - Circumcenter.Y);
             return d_squared < RadiusSquared;
+        }
+
+        private bool HasVertex(Point point)
+        {
+            return Vertices[0] == point || Vertices[1] == point || Vertices[2] == point;
+        }
+
+        public bool HasVertexFrom(Triangle triangle)
+        {
+            return HasVertex(triangle.Vertices[0]) || HasVertex(triangle.Vertices[1]) || HasVertex(triangle.Vertices[2]);
         }
     }
 }

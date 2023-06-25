@@ -153,8 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e218392228254349aaa6a6d129f70a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  n_gram: 2
   nameLength: 5
-  namesToGenerate: 5
+  namesToGenerate: 1
   cleanText: 1
   textFiles:
   - {fileID: 4900000, guid: 6869690fa4f8bbe42802c64bc3165f2a, type: 3}

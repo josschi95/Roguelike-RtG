@@ -1,6 +1,7 @@
 using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
+using DelaunayVoronoi;
 
 namespace JS.WorldMap.Generation
 {
@@ -16,7 +17,8 @@ namespace JS.WorldMap.Generation
         public void GenerateRoads()
         {
             SetTravelCosts();
-            FindPaths();
+            //FindPaths();
+            FindPathsNew();
         }
 
         private void SetTravelCosts()
@@ -25,12 +27,12 @@ namespace JS.WorldMap.Generation
             {
                 for (int y = 0; y < worldMap.Height; y++)
                 {
-                    var cost = 2;
+                    var cost = 3;
                     var node = worldMap.GetNode(x, y);
-                    if (worldMap.TerrainData.Coasts[x, y]) cost = 3;
+                    if (worldMap.TerrainData.Coasts[x, y]) cost = 5;
 
                     var biome = biomeHelper.GetBiome(node.BiomeID);
-                    if (biome.isDifficultTerrain) cost = 4;
+                    if (biome.isDifficultTerrain) cost = 7;
 
                     var river = worldMap.TerrainData.FindRiverAt(x, y, out var index);
                     if (river != null)
@@ -83,6 +85,55 @@ namespace JS.WorldMap.Generation
 
             worldMap.TerrainData.Roads = roads.ToArray();
             worldMap.TerrainData.Bridges = bridges.ToArray();
+        }
+
+        private void FindPathsNew()
+        {
+            //look around node 66,175 with seed 10, Small map
+            Debug.LogWarning("Pick up from here.");
+
+            roads = new List<Road>();
+            bridges = new List<Bridge>();
+            var points = new List<Point>();
+
+            foreach(var settlement in worldMap.SettlementData.Settlements)
+            {
+                points.Add(new Point(settlement.X, settlement.Y));
+            }
+
+            var triangles = BowyerWatson.Triangulate(points);
+            var graph = new HashSet<Edge>();
+            foreach (var triangle in triangles)
+                graph.UnionWith(triangle.edges);
+
+            var tree = Kruskal.MinimumSpanningTree(graph);
+
+            foreach(var edge in tree)
+            {
+                var a = worldMap.GetNode((int)edge.Point1.X, (int)edge.Point1.Y);
+                var b = worldMap.GetNode((int)edge.Point2.X, (int)edge.Point2.Y);
+                Debug.Log(a.x + "," + a.y + " : " + b.x + "," + b.y);
+                var newRoad = new Road();
+                newRoad.pointA = Find(a).ID;
+                newRoad.pointB = Find(b).ID;
+
+                var path = worldMap.FindNodePath(a.x, a.y, b.x, b.y);
+                if (path == null) continue;
+
+                BuildRoad(newRoad, path);
+                roads.Add(newRoad);
+            }
+            worldMap.TerrainData.Roads = roads.ToArray();
+            worldMap.TerrainData.Bridges = bridges.ToArray();
+        }
+
+        private Settlement Find(WorldTile tile)
+        {
+            foreach (var settlement in worldMap.SettlementData.Settlements)
+            {
+                if (tile.x == settlement.X && tile.y == settlement.Y) return settlement;
+            }
+            return null;
         }
 
         private Settlement FindNearest(Settlement start)

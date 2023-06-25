@@ -20,20 +20,21 @@ namespace JS.WorldMap
         public int TypeID => typeID;
         [SerializeField] private int tribeID;
         public int TribeID => tribeID;
+
         [SerializeField] private int _population;
         public int Population => _population;
+
+        public int FoodProduction;
 
         public int Defensibility;
         public int ResourceRating;
         public List<Facility> Facilities;
 
-        //public bool isSeaFaring { get; private set; }
-        //public bool isSubterranean { get; private set; }
-
         public List<GridCoordinates> Territory;
         public List<GridCoordinates> Reach;
 
         [SerializeField] private Dictionary<int, int> foreignRelations; //ID, disposition
+
 
         public Settlement(string name, int ID, WorldTile node, SettlementType type, HumanoidTribe humanoids, int population)
         {

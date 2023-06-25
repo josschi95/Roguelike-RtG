@@ -11,7 +11,7 @@ public class MarkovNameEditor : Editor
 
         MarkovChainNames markov = (MarkovChainNames)target;
 
-        if (GUILayout.Button("Generate Models")) markov.GenerateModels();
+        if (GUILayout.Button("Generate Models")) markov.GenerateModel();
         GUILayout.Space(10);
         if (GUILayout.Button("Get Name")) markov.GetName();
         if (GUILayout.Button("Get Names")) markov.GetNames();

@@ -151,14 +151,14 @@ namespace JS.WorldMap
 
                 foreach (WorldTile neighbour in GetNeighbourList(currentNode, allowDiagonals))
                 {
-                    if (closedSet.Contains(neighbour)) continue;
+                    if (!neighbour.IsLand || closedSet.Contains(neighbour)) continue;
 
-                    if (!neighbour.IsLand)// || neighbour.isOccupied)
+                    /*if (!neighbour.IsLand)
                     {
                         //Debug.Log(startX + "," + startY +  ": Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
                         closedSet.Add(neighbour);
                         continue;
-                    }
+                    }*/
 
                     //Don't allow the passage of one settlement through another's territory
                     if (settlement != null)
@@ -182,6 +182,7 @@ namespace JS.WorldMap
                         neighbour.hCost = GetDistance(neighbour, endNode);
 
                         if (!openList.Contains(neighbour)) openList.Add(neighbour);
+                        else openList.UpdateItem(neighbour);
                     }
                 }
             }

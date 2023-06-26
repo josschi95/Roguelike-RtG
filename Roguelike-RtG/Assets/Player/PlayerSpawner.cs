@@ -17,7 +17,7 @@ namespace JS.WorldMap
             player.Name = "Player";
 
             var physics = EntityManager.GetComponent<ECS.Transform>(player);
-            TransformSystem.SetPosition(physics, playerData.Position, playerData.LocalPosition);
+            TransformSystem.SetPosition(physics, playerData.World, playerData.Region, playerData.Local);
 
             var brain = EntityManager.GetComponent<Brain>(player);
             brain.IsHibernating = false;

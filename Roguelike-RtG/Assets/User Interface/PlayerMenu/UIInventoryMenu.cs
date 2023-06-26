@@ -94,14 +94,6 @@ public class UIInventoryMenu : MonoBehaviour
             //Enable/disable category if it is empty or has children
             if (parent.childCount - 1 <= 0) parent.gameObject.SetActive(false);
             else parent.gameObject.SetActive(true);
-            if (parent.childCount > 1)
-            {
-                Debug.Log(category.name + " children: " + parent.childCount);
-                for (int i = 0; i < parent.childCount; i++)
-                {
-                    Debug.Log(parent.GetChild(i).gameObject.name);
-                }
-            }
 
             //change the collapse indicator based on if it is shown or not
             if (category.isShown) category.header.text = "[-] ";

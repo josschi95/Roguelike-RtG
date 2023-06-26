@@ -1932,7 +1932,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_87
+      name: armor_leather
       rect:
         serializedVersion: 2
         x: 928
@@ -3696,7 +3696,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_171
+      name: boots_02
       rect:
         serializedVersion: 2
         x: 1568
@@ -3717,7 +3717,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_172
+      name: shoes_07
       rect:
         serializedVersion: 2
         x: 1600
@@ -3738,7 +3738,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_173
+      name: boots_03
       rect:
         serializedVersion: 2
         x: 1632
@@ -3759,7 +3759,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_174
+      name: boots_04
       rect:
         serializedVersion: 2
         x: 1664
@@ -3780,7 +3780,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_175
+      name: boots_05
       rect:
         serializedVersion: 2
         x: 1696
@@ -3801,7 +3801,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_176
+      name: boots_06
       rect:
         serializedVersion: 2
         x: 1728
@@ -3822,7 +3822,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_177
+      name: boots_07
       rect:
         serializedVersion: 2
         x: 1760
@@ -3843,7 +3843,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_178
+      name: boots_08
       rect:
         serializedVersion: 2
         x: 1792
@@ -3864,7 +3864,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_179
+      name: boots_09
       rect:
         serializedVersion: 2
         x: 1824
@@ -3885,7 +3885,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_180
+      name: boots_10
       rect:
         serializedVersion: 2
         x: 1856
@@ -3906,7 +3906,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boots
+      name: boots_leather
       rect:
         serializedVersion: 2
         x: 1888
@@ -3927,7 +3927,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_182
+      name: boots_gold
       rect:
         serializedVersion: 2
         x: 1920
@@ -3948,7 +3948,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_183
+      name: boots_iron
       rect:
         serializedVersion: 2
         x: 1952
@@ -3969,7 +3969,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_184
+      name: boots_green
       rect:
         serializedVersion: 2
         x: 1984
@@ -3990,7 +3990,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_185
+      name: boots_mage
       rect:
         serializedVersion: 2
         x: 2016
@@ -4011,7 +4011,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_186
+      name: shoes_01
       rect:
         serializedVersion: 2
         x: 0
@@ -4032,7 +4032,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_187
+      name: shoes_02
       rect:
         serializedVersion: 2
         x: 32
@@ -4053,7 +4053,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_188
+      name: shoes_03
       rect:
         serializedVersion: 2
         x: 64
@@ -4074,7 +4074,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_189
+      name: shoes_04
       rect:
         serializedVersion: 2
         x: 96
@@ -4095,7 +4095,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_190
+      name: shoes_05
       rect:
         serializedVersion: 2
         x: 128
@@ -4116,7 +4116,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_191
+      name: shoes_06
       rect:
         serializedVersion: 2
         x: 160
@@ -4137,7 +4137,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_192
+      name: boots_01
       rect:
         serializedVersion: 2
         x: 192
@@ -4851,7 +4851,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_226
+      name: gloves_00
       rect:
         serializedVersion: 2
         x: 1440
@@ -4872,7 +4872,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_227
+      name: gloves_01
       rect:
         serializedVersion: 2
         x: 1472
@@ -4893,7 +4893,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_228
+      name: gloves_iron
       rect:
         serializedVersion: 2
         x: 1504
@@ -4914,7 +4914,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_229
+      name: gloves_mithril
       rect:
         serializedVersion: 2
         x: 1536
@@ -4935,7 +4935,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_230
+      name: gloves_blue
       rect:
         serializedVersion: 2
         x: 1568
@@ -4956,7 +4956,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gloves
+      name: gloves_leather
       rect:
         serializedVersion: 2
         x: 1600
@@ -4977,7 +4977,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_232
+      name: gloves_02
       rect:
         serializedVersion: 2
         x: 1632
@@ -4998,7 +4998,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_233
+      name: gloves_03
       rect:
         serializedVersion: 2
         x: 1664
@@ -5019,7 +5019,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_234
+      name: gloves_steel
       rect:
         serializedVersion: 2
         x: 1696
@@ -5040,7 +5040,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_235
+      name: gloves_04
       rect:
         serializedVersion: 2
         x: 1728
@@ -5061,7 +5061,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_236
+      name: gloves_05
       rect:
         serializedVersion: 2
         x: 1760
@@ -5082,7 +5082,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_237
+      name: gloves_mage
       rect:
         serializedVersion: 2
         x: 1792
@@ -5103,7 +5103,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_238
+      name: gloves_06
       rect:
         serializedVersion: 2
         x: 1824
@@ -5124,7 +5124,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_239
+      name: gloves_wraps_01
       rect:
         serializedVersion: 2
         x: 1856
@@ -5145,7 +5145,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_240
+      name: gloves_wraps_02
       rect:
         serializedVersion: 2
         x: 1888
@@ -5166,7 +5166,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_241
+      name: gloves_wraps_03
       rect:
         serializedVersion: 2
         x: 1920
@@ -5187,7 +5187,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_242
+      name: gloves_wraps_04
       rect:
         serializedVersion: 2
         x: 1952
@@ -5208,7 +5208,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_243
+      name: gloves_wraps_05
       rect:
         serializedVersion: 2
         x: 1984
@@ -5229,7 +5229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_244
+      name: gloves_wraps_06
       rect:
         serializedVersion: 2
         x: 2016
@@ -5250,7 +5250,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_245
+      name: gloves_mithril_02
       rect:
         serializedVersion: 2
         x: 0
@@ -5271,7 +5271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_246
+      name: gloves_wraps_07
       rect:
         serializedVersion: 2
         x: 32
@@ -6069,7 +6069,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_284
+      name: shield_buckler_01
       rect:
         serializedVersion: 2
         x: 1248
@@ -6090,7 +6090,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_285
+      name: shield_buckler_02
       rect:
         serializedVersion: 2
         x: 1280
@@ -6111,7 +6111,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_286
+      name: shield_buckler_03
       rect:
         serializedVersion: 2
         x: 1312
@@ -6132,7 +6132,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_287
+      name: shield_buckler_04
       rect:
         serializedVersion: 2
         x: 1344
@@ -6153,7 +6153,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_288
+      name: shield_buckler_05
       rect:
         serializedVersion: 2
         x: 1376
@@ -6174,7 +6174,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_289
+      name: shield_buckler_06
       rect:
         serializedVersion: 2
         x: 1408
@@ -6195,7 +6195,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_290
+      name: shield_tower_01
       rect:
         serializedVersion: 2
         x: 1440
@@ -6216,7 +6216,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_291
+      name: shield_buckler_07
       rect:
         serializedVersion: 2
         x: 1472
@@ -6237,7 +6237,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_292
+      name: shield_tower_02
       rect:
         serializedVersion: 2
         x: 1504
@@ -6258,7 +6258,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_293
+      name: shield_tower_03
       rect:
         serializedVersion: 2
         x: 1536
@@ -6279,7 +6279,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_294
+      name: shield_tower_04
       rect:
         serializedVersion: 2
         x: 1568
@@ -6300,7 +6300,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_295
+      name: shield_tower_05
       rect:
         serializedVersion: 2
         x: 1600
@@ -6321,7 +6321,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_296
+      name: shield_tower_06
       rect:
         serializedVersion: 2
         x: 1632
@@ -6342,7 +6342,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_297
+      name: shield_tower_07
       rect:
         serializedVersion: 2
         x: 1664
@@ -6363,7 +6363,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_298
+      name: shield_tower_08
       rect:
         serializedVersion: 2
         x: 1696
@@ -6384,7 +6384,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_299
+      name: shield_tower_09
       rect:
         serializedVersion: 2
         x: 1728
@@ -6405,7 +6405,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_300
+      name: shield_tower_10
       rect:
         serializedVersion: 2
         x: 1760
@@ -6426,7 +6426,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_301
+      name: shield_tower_11
       rect:
         serializedVersion: 2
         x: 1792
@@ -6846,7 +6846,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_321
+      name: shield_targe_01
       rect:
         serializedVersion: 2
         x: 384
@@ -6930,7 +6930,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_325
+      name: shield_targe_02
       rect:
         serializedVersion: 2
         x: 512
@@ -6951,7 +6951,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_326
+      name: shield_targe_03
       rect:
         serializedVersion: 2
         x: 544
@@ -6972,7 +6972,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_327
+      name: shield_targe_04
       rect:
         serializedVersion: 2
         x: 576
@@ -6993,7 +6993,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_328
+      name: shield_targe_05
       rect:
         serializedVersion: 2
         x: 608
@@ -7014,7 +7014,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_329
+      name: shield_targe_06
       rect:
         serializedVersion: 2
         x: 640
@@ -7035,7 +7035,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_330
+      name: shield_targe_07
       rect:
         serializedVersion: 2
         x: 672
@@ -7056,7 +7056,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_331
+      name: shield_targe_08
       rect:
         serializedVersion: 2
         x: 704
@@ -7077,7 +7077,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: items_332
+      name: shield_targe_09
       rect:
         serializedVersion: 2
         x: 736
@@ -17567,6 +17567,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       armor: 1908902993
+      armor_leather: 2135788410
       beard_long_black: 487916406
       beard_long_blonde: -1570673160
       beard_long_green: 582913056
@@ -17579,7 +17580,21 @@ TextureImporter:
       beard_short_red: -283058143
       beard_short_white: -631853810
       belt_01: -976871141
-      boots: 834773230
+      boots_01: 1501249804
+      boots_02: -1326492180
+      boots_03: -376519079
+      boots_04: 778083987
+      boots_05: 2039821203
+      boots_06: 1875834621
+      boots_07: -635654230
+      boots_08: 319179699
+      boots_09: 531287131
+      boots_10: -2034673164
+      boots_gold: -1043910474
+      boots_green: -205057788
+      boots_iron: -191215387
+      boots_leather: 834773230
+      boots_mage: -1754339244
       bow_01: 1048812216
       bow_02: 1117413978
       cloak_black: 1314010852
@@ -17594,7 +17609,27 @@ TextureImporter:
       cloak_tan: -1952762065
       cloak_white: -807237160
       cloak_yellow: -953056285
-      gloves: 1956637568
+      gloves_00: -1514717715
+      gloves_01: 1685965712
+      gloves_02: -269632436
+      gloves_03: 1705901970
+      gloves_04: 1809465086
+      gloves_05: -407345059
+      gloves_06: 257863091
+      gloves_blue: -1560766988
+      gloves_iron: 1838836256
+      gloves_leather: 1956637568
+      gloves_mage: -461320570
+      gloves_mithril: 1057767189
+      gloves_mithril_02: 305523743
+      gloves_steel: 594822085
+      gloves_wraps_01: 781606711
+      gloves_wraps_02: 1763959776
+      gloves_wraps_03: 1658669774
+      gloves_wraps_04: -883850632
+      gloves_wraps_05: -2055355152
+      gloves_wraps_06: 1540433869
+      gloves_wraps_07: -1387474751
       helm: -359263311
       items_100: 1162179441
       items_101: 1020143640
@@ -17672,29 +17707,8 @@ TextureImporter:
       items_169: -1135272866
       items_17: -562852858
       items_170: -1540132607
-      items_171: -1326492180
-      items_172: -728534433
-      items_173: -376519079
-      items_174: 778083987
-      items_175: 2039821203
-      items_176: 1875834621
-      items_177: -635654230
-      items_178: 319179699
-      items_179: 531287131
       items_18: -1023068536
-      items_180: -2034673164
-      items_182: -1043910474
-      items_183: -191215387
-      items_184: -205057788
-      items_185: -1754339244
-      items_186: -1484268746
-      items_187: 9304696
-      items_188: -292108089
-      items_189: -57398326
       items_19: -1078291102
-      items_190: -1418457219
-      items_191: 1461363923
-      items_192: 1501249804
       items_20: -1396152707
       items_205: 110516754
       items_206: 2130819817
@@ -17719,28 +17733,8 @@ TextureImporter:
       items_223: -1285152179
       items_224: 1331356997
       items_225: 1706063306
-      items_226: -1514717715
-      items_227: 1685965712
-      items_228: 1838836256
-      items_229: 1057767189
       items_23: 910898271
-      items_230: -1560766988
-      items_232: -269632436
-      items_233: 1705901970
-      items_234: 594822085
-      items_235: 1809465086
-      items_236: -407345059
-      items_237: -461320570
-      items_238: 257863091
-      items_239: 781606711
       items_24: 992688338
-      items_240: 1763959776
-      items_241: 1658669774
-      items_242: -883850632
-      items_243: -2055355152
-      items_244: 1540433869
-      items_245: 305523743
-      items_246: -1387474751
       items_247: 1046090334
       items_248: 635702660
       items_249: -294726770
@@ -17781,26 +17775,8 @@ TextureImporter:
       items_280: -175711242
       items_281: -580613886
       items_282: -605411851
-      items_284: -1206323482
-      items_285: -539789959
-      items_286: -1516541127
-      items_287: -1181511939
-      items_288: 1250273469
-      items_289: -911995131
       items_29: -466229565
-      items_290: 1261024690
-      items_291: -1040099153
-      items_292: 786173977
-      items_293: 2136074003
-      items_294: 1363351608
-      items_295: -904873886
-      items_296: 950799384
-      items_297: 672660547
-      items_298: 485226974
-      items_299: 1295937902
       items_30: 401658382
-      items_300: 51210837
-      items_301: -1585204480
       items_302: 1130332325
       items_303: 1280980072
       items_304: -1979117158
@@ -17822,19 +17798,10 @@ TextureImporter:
       items_319: -861186498
       items_32: -1223295768
       items_320: 332210107
-      items_321: 1165734528
       items_322: 2141482101
       items_323: 549861432
       items_324: -188500950
-      items_325: -227520454
-      items_326: -1262955514
-      items_327: 1640879898
-      items_328: 1739313075
-      items_329: -1212770557
       items_33: -2136630262
-      items_330: 1721552388
-      items_331: -1523178005
-      items_332: 427295120
       items_333: 103767025
       items_334: 692160717
       items_335: 945483260
@@ -18381,7 +18348,6 @@ TextureImporter:
       items_84: 1537018791
       items_85: -112476789
       items_86: 1092822332
-      items_87: 2135788410
       items_88: 1380883221
       items_89: -1921260038
       items_90: 934366934
@@ -18396,6 +18362,40 @@ TextureImporter:
       items_99: -1612766018
       robes: 1958584168
       shield: 1411189724
+      shield_buckler_01: -1206323482
+      shield_buckler_02: -539789959
+      shield_buckler_03: -1516541127
+      shield_buckler_04: -1181511939
+      shield_buckler_05: 1250273469
+      shield_buckler_06: -911995131
+      shield_buckler_07: -1040099153
+      shield_targe_01: 1165734528
+      shield_targe_02: -227520454
+      shield_targe_03: -1262955514
+      shield_targe_04: 1640879898
+      shield_targe_05: 1739313075
+      shield_targe_06: -1212770557
+      shield_targe_07: 1721552388
+      shield_targe_08: -1523178005
+      shield_targe_09: 427295120
+      shield_tower_01: 1261024690
+      shield_tower_02: 786173977
+      shield_tower_03: 2136074003
+      shield_tower_04: 1363351608
+      shield_tower_05: -904873886
+      shield_tower_06: 950799384
+      shield_tower_07: 672660547
+      shield_tower_08: 485226974
+      shield_tower_09: 1295937902
+      shield_tower_10: 51210837
+      shield_tower_11: -1585204480
+      shoes_01: -1484268746
+      shoes_02: 9304696
+      shoes_03: -292108089
+      shoes_04: -57398326
+      shoes_05: -1418457219
+      shoes_06: 1461363923
+      shoes_07: -728534433
       sword: -2108004057
   spritePackingTag: 
   pSDRemoveMatte: 0

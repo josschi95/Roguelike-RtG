@@ -235,7 +235,7 @@ namespace JS.ECS
             if (!CanAct()) return;
             if (GridManager.WorldMapActive) return;
 
-            var items = TransformSystem.GetTakeablesAt(inputTarget.Transform.Position, inputTarget.Transform.LocalPosition);
+            var items = TransformSystem.GetTakeablesAt(inputTarget.Transform);
             items.Remove(inputTarget.Physics);
 
             if (items.Count == 0) MessageSystem.NewMessage("There is nothing to take.");
@@ -271,7 +271,7 @@ namespace JS.ECS
         private void TryMoveUp()
         {
             if (GridManager.WorldMapActive) return;
-            else if (inputTarget.Transform.Position.z == 0) //if I do add upward verticality, will instead need to check if outside
+            else if (inputTarget.Transform.WorldPosition.z == 0) //if I do add upward verticality, will instead need to check if outside
             {
                 //Load World Map
                 WorldLocomotionSystem.SwitchToWorldMap(inputTarget.Transform);

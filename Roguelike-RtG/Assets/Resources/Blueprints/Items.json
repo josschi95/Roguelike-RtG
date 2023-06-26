@@ -105,11 +105,6 @@
                 }
             ]
         },
-
-
-
-
-
         {
             "Name": "BaseMissileWeapon",
             "Inherits": "MissileWeapon",
@@ -208,7 +203,67 @@
             ]
         },
         {
-            "Name": "BaseArmor",
+            "Name": "BaseHeadArmor",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,helm" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "AV=1", "DV=0", "Slot=Head" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseEyes",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,helm" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "AV=0", "DV=0", "Slot=Eyes" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseNeck",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,amulet" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "AV=1", "DV=0", "Slot=Neck" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseBodyArmor",
             "Inherits": "Armor",
             "Components": [
                 {
@@ -223,7 +278,126 @@
                 }
             ]
         },
-
+        {
+            "Name": "BaseBack",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,shoulders" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "Slot=Back" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseArm",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,shoulders" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "Slot=Arm" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseHand",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,gloves_01" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "Slot=Hand" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseBelt",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,gloves_01" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "Slot=Belt" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseFeet",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,boots_01" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "Slot=Feet" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
+        {
+            "Name": "BaseRing",
+            "Inherits": "Armor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,shoulders" ]
+                },
+                {
+                    "Name": "Armor",
+                    "Parameters": [ "AV=0", "DV=0", "Slot=Ring" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "Runes",
+                    "Value": "ArmorRunes,CommonRunes"
+                }
+            ]
+        },
 
 
 
@@ -259,6 +433,7 @@
                 }
             ]
         },
+
         {
             "Name": "WoodenShield",
             "Inherits": "BaseShield",
@@ -276,8 +451,36 @@
             ]
         },
         {
+            "Name": "LeatherArmor",
+            "Inherits": "BaseBodyArmor",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,armor_leather" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "MaterialTag",
+                    "Value": "Leather"
+                }
+            ]
+        },
+        {
             "Name": "LeatherBoots",
-            "Inherits": "BaseArmor"
+            "Inherits": "BaseFeet",
+            "Components": [
+                {
+                    "Name": "Render",
+                    "Parameters": [ "Tile=items,boots_leather" ]
+                }
+            ],
+            "Tags": [
+                {
+                    "Name": "MaterialTag",
+                    "Value": "Leather"
+                }
+            ]
         }
     ]
 }

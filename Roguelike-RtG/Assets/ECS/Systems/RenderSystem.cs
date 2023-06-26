@@ -63,7 +63,8 @@ namespace JS.ECS
         private bool EntityOnCurrentMap(Render render)
         {
             if (GridManager.WorldMapActive) return render.RenderOnWorldMap;
-            return render.Transform.Position == GridManager.ActiveGrid.Position;
+            if (render.Transform.WorldPosition != GridManager.ActiveGrid.World) return false;
+            return render.Transform.RegionPosition == GridManager.ActiveGrid.Region;
         }
 
         /// <summary>
@@ -97,14 +98,14 @@ namespace JS.ECS
             {
                 if (!activeCompoundRenders.ContainsKey(render) || activeCompoundRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = (Vector3Int)TransformSystem.GetWorldMapPos(render.Transform);
+                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = render.Transform.WorldPosition;
                 else activeCompoundRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
             }
             else
             {
                 if (!activeSingleRenders.ContainsKey(render) || activeSingleRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = (Vector3Int)TransformSystem.GetWorldMapPos(render.Transform);
+                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = render.Transform.WorldPosition;
                 else activeSingleRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
             }
         }

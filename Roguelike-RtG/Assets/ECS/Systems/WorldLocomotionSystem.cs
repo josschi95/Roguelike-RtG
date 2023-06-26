@@ -35,16 +35,20 @@ namespace JS.ECS
         {
             cost = 0;
             if (!GridManager.WorldMapActive) return false; //Can only fast travel when viewing the world map
-            if (!instance.WithinWorldBounds((Vector2Int)t.Position + DirectionHelper.GetVector(direction))) return false;
+            if (!instance.WithinWorldBounds((Vector2Int)t.WorldPosition + DirectionHelper.GetVector(direction)))
+            {
+                //Debug.Log("Not within world bounds");
+                return false;
+            }
 
             //the returned cost will have to be equal to the movement penalty for the declared space
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
 
             //So this moves them a full world tile but keeps their regional position within a world tile the same
-            var newPos = t.Position + (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
-            TransformSystem.SetPosition(t, newPos);
-            //obj.LocalPosition = instance.localCenter;
+            //var newPos = t.RegionPosition + (Vector3Int)DirectionHelper.GetVector(direction) * instance.worldGenParams.RegionDimensions.x;
+            var newPos = t.WorldPosition + (Vector3Int)DirectionHelper.GetVector(direction);
 
+            TransformSystem.SetPosition(t, newPos, instance.regionCenter, instance.localCenter);
             return true;
         }
 
@@ -69,10 +73,9 @@ namespace JS.ECS
         private bool SwitchFromWorldToLocalMap(Transform transform)
         {
             //Don't know how, but make sure no other entity can swap map focus
-            if (!EntityManager.TryGetComponent<InputHandler>(transform.entity, out _)) return false;
+            if (!EntityManager.TryGetComponent<CameraFocus>(transform.entity, out _)) return false;
 
-            GridManager.OnEnterLocalMap(transform.Position);
-            transform.LocalPosition = localCenter;
+            GridManager.OnEnterLocalMap(transform.WorldPosition, transform.RegionPosition);
             return true;
         }
 
@@ -90,7 +93,7 @@ namespace JS.ECS
             if (!EntityManager.TryGetComponent<InputHandler>(transform.entity, out _)) return false;
 
             //Can only switch to World Map if on the surface
-            if (transform.Position.z < 0) return false;
+            if (transform.WorldPosition.z < 0) return false;
             
             //Will also need to check if the player is in combat, possibly other factors
             //Maybe terrain, etc.

@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     //Position
-    public Vector3Int Position;
-    public Vector2Int LocalPosition;
+    public Vector3Int World;
+    public Vector2Int Region;
+    public Vector2Int Local;
 }

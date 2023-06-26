@@ -45,12 +45,18 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive)
             {
-                Controller.SmoothToPosition(TransformSystem.GetWorldMapPos(Transform));
+                Controller.SmoothToPosition((Vector2Int)Transform.WorldPosition);
+                return;
             }
-            else
+
+            //Player crossed into a new map, change scenes
+            if (GridManager.ActiveGrid.World != Transform.WorldPosition || GridManager.ActiveGrid.Region != Transform.RegionPosition)
             {
-                Controller.SmoothToPosition(Transform.LocalPosition);
+                //Debug.Log("Player Switching Map");
+                GridManager.OnEnterLocalMap(Transform.WorldPosition, Transform.RegionPosition);
             }
+
+            Controller.SmoothToPosition(Transform.LocalPosition);
 
             /*if (Transform.Depth == 1)
             {

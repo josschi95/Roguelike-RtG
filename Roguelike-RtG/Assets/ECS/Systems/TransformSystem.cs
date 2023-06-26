@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace JS.ECS
 {
@@ -33,25 +34,48 @@ namespace JS.ECS
             instance.transforms.Remove(t);
         }
 
-        public static void SetPosition(Transform t, Vector3Int world, Vector2Int local)
+        public static void SetPosition(Transform t, Vector3Int world, Vector2Int region, Vector2Int local)
         {
-            t.Position = world;
+            t.WorldPosition = world;
+            t.RegionPosition = region;
             SetLocal(t, local);
         }
 
-        public static void SetPosition(Transform t, Vector3Int pos)
+        /// <summary>
+        /// Sets all of t's positions to to's positions
+        /// </summary>
+        public static void SetPosition(Transform t, Transform to)
         {
-            t.Position = pos;
+            t.WorldPosition = to.WorldPosition;
+            t.RegionPosition = to.RegionPosition;
+            SetLocal(t, to.LocalPosition);
+        }
+
+        public static void SetWorldPosition(Transform t, Vector3Int pos)
+        {
+            t.WorldPosition = pos;
+            EntityManager.FireEvent(t.entity, transformChanged);
+        }
+
+        public static void SetRegionPosition(Transform t, Vector2Int pos)
+        {
+            t.RegionPosition = pos;
             EntityManager.FireEvent(t.entity, transformChanged);
         }
 
         public static void SetLocal(Transform transform, Vector2Int pos)
         {
+            transform.LocalPosition = pos;
+
             if (transform.CurrentNode == null) GetCurrentNode(transform);
-            if (transform.CurrentNode == null) return;
+            if (transform.CurrentNode == null)
+            {
+                EntityManager.FireEvent(transform.entity, transformChanged);
+                return;
+            }
 
             transform.CurrentNode.Entities.Remove(transform.entity);
-            transform.LocalPosition = pos;
+            
             GetCurrentNode(transform);
 
             if (!transform.CurrentNode.Entities.Contains(transform.entity))
@@ -62,22 +86,20 @@ namespace JS.ECS
 
         private static void GetCurrentNode(Transform t)
         {
-            var grid = GridManager.GetGrid(t.Position);
+            var grid = GridManager.GetGrid(t.WorldPosition, t.RegionPosition);
             if (grid == null) return;
             t.CurrentNode = grid.Grid.GetGridObject(t.LocalPosition.x, t.LocalPosition.y);
         }
 
-        public static Vector2Int GetWorldMapPos(Transform t)
+        public static List<Physics> GetEntitiesAt(Transform t, Vector2Int local)
         {
-            int x = Mathf.FloorToInt(t.Position.x / 3);
-            int y = Mathf.FloorToInt(t.Position.y / 3);
-            return new Vector2Int(x, y);
+            return GetEntitiesAt(t.WorldPosition, t.RegionPosition, local);
         }
 
-        public static List<Physics> GetEntitiesAt(Vector3Int world,  Vector2Int local)
+        public static List<Physics> GetEntitiesAt(Vector3Int world, Vector2Int region, Vector2Int local)
         {
             var entities = new List<Physics>();
-            var grid = GridManager.GetGrid(world);
+            var grid = GridManager.GetGrid(world, region);
             if (grid == null) return entities;
 
             foreach (var entity in grid.Grid.GetGridObject(local.x, local.y).Entities)
@@ -92,10 +114,10 @@ namespace JS.ECS
             return entities;
         }
 
-        public static Physics[] GetLocalEntitiesInLine(Vector3Int world, Vector2Int localStart, Compass direction, int range)
+        public static Physics[] GetLocalEntitiesInLine(Vector3Int world, Vector2Int region, Vector2Int localStart, Compass direction, int range)
         {
             var entities = new List<Physics>();
-            var grid = GridManager.GetGrid(world);
+            var grid = GridManager.GetGrid(world, region);
             if (grid == null) return entities.ToArray();
 
             var nodes = new GridNode[range];
@@ -119,10 +141,10 @@ namespace JS.ECS
             return entities.ToArray();
         }
 
-        public static List<Physics> GetTakeablesAt(Vector3Int world, Vector2Int local)
+        public static List<Physics> GetTakeablesAt(Transform t)
         {
             var entities = new List<Physics>();
-            var phys = GetEntitiesAt(world, local);
+            var phys = GetEntitiesAt(t, t.LocalPosition);
             for (int i = 0; i < phys.Count; i++)
             {
                 if (phys[i].IsTakeable) entities.Add(phys[i]);

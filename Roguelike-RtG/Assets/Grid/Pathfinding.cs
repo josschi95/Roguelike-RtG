@@ -74,7 +74,7 @@ public class Pathfinding : MonoBehaviour
             //foreach (GridNode neighbour in GetNeighbourList(currentNode))
             foreach (GridNode neighbour in currentNode.neighbors_all)
             {
-                if (closedList.Contains(neighbour)) continue;
+                if (!neighbour.isWalkable || closedList.Contains(neighbour)) continue;
 
                 //if the neighbor is the endNode and choosing to ignore whether it is walkable, add it to the closed list
                 if (neighbour == end && ignoreEndNode)
@@ -82,7 +82,7 @@ public class Pathfinding : MonoBehaviour
                     //Do nothing here, bypass the next if statement
                     //Debug.Log("Ignoring End Node");
                 }
-                else if (!neighbour.isWalkable || neighbour.isOccupied)
+                else if (neighbour.isOccupied)
                 {
                     //Debug.Log("Removing unwalkable/occupied tile " + neighbour.x + "," + neighbour.y);
                     closedList.Add(neighbour);
@@ -100,6 +100,7 @@ public class Pathfinding : MonoBehaviour
                     neighbour.hCost = GetDistance(neighbour, end);
 
                     if (!openList.Contains(neighbour)) openList.Add(neighbour);
+                    else openList.UpdateItem(neighbour);
                 }
             }
         }

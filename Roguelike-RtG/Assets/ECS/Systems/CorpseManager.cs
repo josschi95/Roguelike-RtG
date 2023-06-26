@@ -26,7 +26,7 @@ namespace JS.ECS
 
             var entityPos = EntityManager.GetComponent<Transform>(entity);
             var corpsePos = EntityManager.GetComponent<Transform>(newCorpse);
-            TransformSystem.SetPosition(corpsePos, entityPos.Position, entityPos.LocalPosition);
+            TransformSystem.SetPosition(corpsePos, entityPos);
 
             //EntityManager.TryGetComponent<Inventory>(entity, out  var inventory);
 

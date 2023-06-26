@@ -7,7 +7,7 @@ namespace JS.WorldMap
     public class LocalMapGenerator : MonoBehaviour
     {
         [SerializeField] private Vector3IntVariable worldPos;
-        private Vector2Int regionPos;
+        private Vector2Int regionPos; //Current region tile within the region map
 
         [Space]
 
@@ -38,10 +38,11 @@ namespace JS.WorldMap
 
         private void GenerateLocalMap()
         {
-            var worldX = Mathf.FloorToInt(worldPos.Value.x / worldGenParams.LocalDimensions.x);
-            var worldY = Mathf.FloorToInt(worldPos.Value.y / worldGenParams.LocalDimensions.y);
-            regionPos.x = worldPos.Value.x % worldGenParams.LocalDimensions.x;
-            regionPos.y = worldPos.Value.y % worldGenParams.LocalDimensions.y;
+            var grid = GridManager.ActiveGrid;
+            var worldX = grid.World.x;
+            var worldY = grid.World.y;
+            regionPos = grid.Region;
+
             //var node = worldData.GetNode(worldX, worldY);
 
             //Seed is equal to the world tile + the regional x + y
@@ -66,9 +67,17 @@ namespace JS.WorldMap
         private void HandleRivers(int worldX, int worldY)
         {
             var river = worldData.TerrainData.FindRiverAt(worldX, worldY, out var index);
-            if (river == null) return; //There is no river
+            if (river == null)
+            {
+                Debug.Log("No river in world map.");
+                return; //There is no river
+            }
 
-            if (!RiverIsInMap(river.Nodes[index], out int regionIndex)) return; //The river doesn't pass through this tile
+            if (!RiverIsInMap(river.Nodes[index], out int regionIndex))
+            {
+                Debug.Log("No river in region map.");
+                return; //The river doesn't pass through this tile
+            }
             var direction = GetRiverDirection(river.Nodes[index], regionIndex);
 
             int startOffset = river.Nodes[index].Offset; //the offset at which the river enters the region map
@@ -91,9 +100,6 @@ namespace JS.WorldMap
         /// <summary>
         /// Returns true if the given river flows through this part of the map.
         /// </summary>
-        /// <param name="river"></param>
-        /// <param name="regionIndex">Regional position within river's flow.</param>
-        /// <returns></returns>
         private bool RiverIsInMap(RiverNode river, out int regionIndex)
         {
             regionIndex = 0;
@@ -212,6 +218,7 @@ namespace JS.WorldMap
 
         private void DigRiver(Compass direction, int riverWidth, int startOffset, int endOffset)
         {
+            Debug.Log("Digging River");
             var grid = GridManager.ActiveGrid.Grid;
             var centerLine = new List<GridNode>();
 
@@ -220,7 +227,21 @@ namespace JS.WorldMap
             int middleY = Mathf.RoundToInt(width / 2);
             int middleX = Mathf.RoundToInt(height / 2);
             
+            //So the new way that I'm going to do this is to lay down a perlin map and then make the river
+            //find its way through that. This should hopefully resutl in a more windy river
 
+            var perlin = PerlinNoise.GenerateHeightMap(worldGenParams.LocalDimensions.x, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            var previousCosts = new int[perlin.GetLength(0), perlin.GetLength(1)];
+
+            for (int x = 0; x < perlin.GetLength(0); x++)
+            {
+                for (int y = 0; y < perlin.GetLength(1); y++)
+                {
+                    var node = grid.GetGridObject(x, y);
+                    previousCosts[x, y] = node.movementCost;
+                    node.SetMoveCost(Mathf.RoundToInt(perlin[x, y] * 100));
+                }
+            }
 
             Debug.Log(startOffset + ", " + endOffset);
             if (direction == Compass.North || direction == Compass.South)
@@ -278,6 +299,16 @@ namespace JS.WorldMap
                 for (int i = 0; i < nodes.Count; i++)
                 {
                     nodes[i].isWater = true;
+                }
+            }
+            
+            //Return values to their previous penalties
+            for (int x = 0; x < perlin.GetLength(0); x++)
+            {
+                for (int y = 0; y < perlin.GetLength(1); y++)
+                {
+                    var node = grid.GetGridObject(x, y);
+                    node.SetMoveCost(previousCosts[x, y]);
                 }
             }
         }

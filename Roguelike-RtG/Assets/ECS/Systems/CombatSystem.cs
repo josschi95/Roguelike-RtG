@@ -30,7 +30,7 @@ namespace JS.ECS
         {
             if (GridManager.WorldMapActive) return false;
 
-            var validTargets = TransformSystem.GetEntitiesAt(combatant.Transform.Position, attackPos);
+            var validTargets = TransformSystem.GetEntitiesAt(combatant.Transform, attackPos);
             validTargets.Remove(EntityManager.GetComponent<Physics>(combatant.entity));
 
             if (validTargets == null || validTargets.Count == 0)

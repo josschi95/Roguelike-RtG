@@ -131,7 +131,7 @@ namespace JS.ECS
 
                 EntityManager.TryGetComponent<Transform>(inventory.entity, out var ownerPos);
                 EntityManager.TryGetComponent<Transform>(droppedItem, out var itemPos);
-                TransformSystem.SetPosition(itemPos, ownerPos.Position, ownerPos.LocalPosition);
+                TransformSystem.SetPosition(itemPos, ownerPos);
             }
             else
             {
@@ -139,7 +139,7 @@ namespace JS.ECS
                 //Debug.Log("Dropping all of " + numToDrop + " " + item.Name);
                 EntityManager.TryGetComponent<Transform>(inventory.entity, out var ownerPos);
                 var transform = EntityManager.AddComponent(item, new Transform()) as Transform;
-                TransformSystem.SetPosition(transform, ownerPos.Position, ownerPos.LocalPosition);
+                TransformSystem.SetPosition(transform, ownerPos);
                 EntityManager.FireEvent(item, new RemovedFromInventory());
             }
         }

@@ -16,12 +16,11 @@ namespace JS.WorldMap.Generation
 
         public void GenerateRoads()
         {
-            SetTravelCosts();
-            //FindPaths();
-            FindPathsNew();
+            SetMovementPenalties();
+            ConstructRoads();
         }
 
-        private void SetTravelCosts()
+        private void SetMovementPenalties()
         {
             for (int x = 0; x < worldMap.Width; x++)
             {
@@ -44,7 +43,6 @@ namespace JS.WorldMap.Generation
                     }
 
                     if (node.BiomeID == biomeHelper.Mountain.ID) cost = 100;
-                    if (node.Rivers.Count > 1) cost = 500;
                     if (!node.IsLand) cost = 500;
 
                     node.movementCost = cost;
@@ -52,45 +50,10 @@ namespace JS.WorldMap.Generation
             }
         }
 
-        private void FindPaths()
-        {
-            roads = new List<Road>();
-            bridges = new List<Bridge>();
-
-            foreach (var settlement in worldMap.SettlementData.Settlements)
-            {
-                var newRoad = new Road();
-                newRoad.pointA = settlement.ID;
-
-                var end = FindNearest(settlement);
-                if (end == null)
-                {
-                    Debug.LogWarning("Couldn't find end");
-                    continue;
-                }
-                newRoad.pointB = end.ID;
-
-                var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);
-                if (path == null)
-                {
-                    //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                    //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
-                    continue;
-                }
-                BuildRoad(newRoad, path);
-                roads.Add(newRoad);
-                //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
-                //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
-            }
-
-            worldMap.TerrainData.Roads = roads.ToArray();
-            worldMap.TerrainData.Bridges = bridges.ToArray();
-        }
-
-        private void FindPathsNew()
+        private void ConstructRoads()
         {
             //look around node 66,175 with seed 10, Small map
-            Debug.LogWarning("Pick up from here.");
+            //Debug.LogWarning("Pick up from here.");
 
             roads = new List<Road>();
             bridges = new List<Bridge>();
@@ -112,7 +75,7 @@ namespace JS.WorldMap.Generation
             {
                 var a = worldMap.GetNode((int)edge.Point1.X, (int)edge.Point1.Y);
                 var b = worldMap.GetNode((int)edge.Point2.X, (int)edge.Point2.Y);
-                Debug.Log(a.x + "," + a.y + " : " + b.x + "," + b.y);
+
                 var newRoad = new Road();
                 newRoad.pointA = Find(a).ID;
                 newRoad.pointB = Find(b).ID;
@@ -134,41 +97,6 @@ namespace JS.WorldMap.Generation
                 if (tile.x == settlement.X && tile.y == settlement.Y) return settlement;
             }
             return null;
-        }
-
-        private Settlement FindNearest(Settlement start)
-        {
-            float minDist = int.MaxValue;
-            Settlement closestSettlement = null;
-
-            foreach(var settlement in worldMap.SettlementData.Settlements)
-            {
-                if (settlement == start) continue;
-                if (IsDuplicateRoad(start, settlement)) continue;
-
-                var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
-                if (dist < minDist)
-                {
-                    closestSettlement = settlement;
-                    minDist = dist;
-                }
-            }
-            return closestSettlement;
-        }
-
-        private bool IsDuplicateRoad(Settlement start, Settlement end)
-        {
-            for (int i = 0; i < roads.Count; i++)
-            {
-                if (roads[i].pointA == start.ID || roads[i].pointB == start.ID)
-                {
-                    if (roads[i].pointA == end.ID || roads[i].pointB == end.ID)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         private void BuildRoad(Road road, List<WorldTile> list)
@@ -203,6 +131,78 @@ namespace JS.WorldMap.Generation
                 }
             }
         }
+
+        #region - Obsolete -
+        private void FindPaths_Old()
+        {
+            roads = new List<Road>();
+            bridges = new List<Bridge>();
+
+            foreach (var settlement in worldMap.SettlementData.Settlements)
+            {
+                var newRoad = new Road();
+                newRoad.pointA = settlement.ID;
+
+                var end = FindNearest(settlement);
+                if (end == null)
+                {
+                    Debug.LogWarning("Couldn't find end");
+                    continue;
+                }
+                newRoad.pointB = end.ID;
+
+                var path = worldMap.FindNodePath(settlement.X, settlement.Y, end.X, end.Y);
+                if (path == null)
+                {
+                    //Debug.Log("No path found between " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                    //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.red, 1000f);
+                    continue;
+                }
+                BuildRoad(newRoad, path);
+                roads.Add(newRoad);
+                //Debug.Log("Road Successfully built " + settlement.X + ", " + settlement.Y + " and " + end.X + "," + end.Y);
+                //Debug.DrawLine(new Vector3(settlement.X, settlement.Y), new Vector3(end.X, end.Y), Color.green, 1000f);
+            }
+
+            worldMap.TerrainData.Roads = roads.ToArray();
+            worldMap.TerrainData.Bridges = bridges.ToArray();
+        }
+
+        private Settlement FindNearest(Settlement start)
+        {
+            float minDist = int.MaxValue;
+            Settlement closestSettlement = null;
+
+            foreach (var settlement in worldMap.SettlementData.Settlements)
+            {
+                if (settlement == start) continue;
+                if (IsDuplicateRoad(start, settlement)) continue;
+
+                var dist = Vector2.Distance(new Vector2(start.X, start.Y), new Vector2(settlement.X, settlement.Y));
+                if (dist < minDist)
+                {
+                    closestSettlement = settlement;
+                    minDist = dist;
+                }
+            }
+            return closestSettlement;
+        }
+
+        private bool IsDuplicateRoad(Settlement start, Settlement end)
+        {
+            for (int i = 0; i < roads.Count; i++)
+            {
+                if (roads[i].pointA == start.ID || roads[i].pointB == start.ID)
+                {
+                    if (roads[i].pointA == end.ID || roads[i].pointB == end.ID)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }
 

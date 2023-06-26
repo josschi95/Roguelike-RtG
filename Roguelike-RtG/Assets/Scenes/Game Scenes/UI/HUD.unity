@@ -9814,37 +9814,37 @@ MonoBehaviour:
     header: {fileID: 108263417}
     isShown: 0
   - name: Missile Weapon
-    defaultTitle: 
+    defaultTitle: Missile Weapon
     button: {fileID: 1457679327}
     header: {fileID: 1442017762}
     isShown: 0
   - name: Potion
-    defaultTitle: 
+    defaultTitle: Potions
     button: {fileID: 645689199}
     header: {fileID: 859212769}
     isShown: 0
   - name: Scroll
-    defaultTitle: 
+    defaultTitle: Scrolls
     button: {fileID: 178911144}
     header: {fileID: 323099155}
     isShown: 0
   - name: Shield
-    defaultTitle: 
+    defaultTitle: Shields
     button: {fileID: 398594891}
     header: {fileID: 1503141204}
     isShown: 0
   - name: Tool
-    defaultTitle: 
+    defaultTitle: Tools
     button: {fileID: 2003660069}
     header: {fileID: 551409979}
     isShown: 0
   - name: Valuable
-    defaultTitle: 
+    defaultTitle: Valuables
     button: {fileID: 1639846837}
     header: {fileID: 416937928}
     isShown: 0
   - name: Miscellaneous
-    defaultTitle: 
+    defaultTitle: Miscellaneous
     button: {fileID: 1952913478}
     header: {fileID: 440100860}
     isShown: 0

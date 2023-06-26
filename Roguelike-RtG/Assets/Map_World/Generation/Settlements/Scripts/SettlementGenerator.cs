@@ -234,7 +234,7 @@ namespace JS.WorldMap.Generation
                 for (int i = 0; i < node.neighbors_all.Count; i++)
                 {
                     //The settlement borders a natural body of water or a mountain
-                    if (!node.neighbors_all[i].IsLand || node.neighbors_all[i].Mountain != null)
+                    if (!node.neighbors_all[i].IsLand || node.neighbors_all[i].Mountain != null || node.neighbors_all[i].Rivers.Count > 0)
                     {
                         settlement.Defensibility++;
                     }

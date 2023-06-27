@@ -76,7 +76,6 @@ namespace JS.WorldMap.Generation
         {
             Initialize(mapSize, newSeed);
             //int ranToWater = 0, ranToEdge = 0;
-            Debug.Log(numIterations);
             for (int iteration = 0; iteration < numIterations; iteration++)
             {
                 // Create water droplet at random point on map

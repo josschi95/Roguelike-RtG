@@ -30,7 +30,7 @@ namespace JS.ECS
 
         public override void OnEvent(Event newEvent)
         {
-            if (newEvent is TransformChanged) RenderSystem.UpdatePosition(this);
+            if (newEvent is TransformChanged t) RenderSystem.UpdatePosition(this, t.smooth);
             else if (newEvent is AddedToInventory) RenderSystem.RemoveRender(this);
             else if (newEvent is RemovedFromInventory) RenderSystem.NewRender(this);
             else if (newEvent is Death) RenderSystem.RemoveRender(this);

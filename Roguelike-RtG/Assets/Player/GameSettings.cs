@@ -1,5 +1,6 @@
 using UnityEngine;
 using JS.EventSystem;
+using JS.ECS;
 
 [CreateAssetMenu(menuName = "Player/Game Settings")]
 public class GameSettings : ScriptableObject
@@ -68,7 +69,7 @@ public class GameSettings : ScriptableObject
 
     #region - General -
     [Header("General")]
-    [SerializeField] private AnimationMode animationMode = AnimationMode.Full;
+    [SerializeField] private AnimationMode animationMode = AnimationMode.Staggered;
     public AnimationMode AnimationMode
     {
         get => animationMode;
@@ -76,6 +77,7 @@ public class GameSettings : ScriptableObject
         {
             animationMode = value;
             PlayerPrefs.SetInt("animationMode", (int)animationMode);
+            TimeSystem.OnAnimationChange(animationMode);
         }
     }
 
@@ -114,7 +116,7 @@ public class GameSettings : ScriptableObject
         SFXVolume = PlayerPrefs.GetInt("sfxVolumeModifier", 100);
 
         //General
-        AnimationMode = (AnimationMode)PlayerPrefs.GetInt("animationMode", (int)AnimationMode.Full);
+        AnimationMode = (AnimationMode)PlayerPrefs.GetInt("animationMode", (int)AnimationMode.Staggered);
         TextSpeed = PlayerPrefs.GetInt("textSpeed", 50);
         UseMetric = IntToBool.GetBool(PlayerPrefs.GetInt("useMetric", 1));
     }
@@ -122,9 +124,9 @@ public class GameSettings : ScriptableObject
 
 public enum AnimationMode
 {
-    Full,
+    Staggered,
+    Quick,
     Instant,
-    Off
 }
 
 //Notes : Other settings to add

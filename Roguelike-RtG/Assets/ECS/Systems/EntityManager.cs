@@ -123,7 +123,7 @@ namespace JS.ECS
 
         private T GetEntityComponent<T>(Entity entity) where T : ComponentBase
         {
-            if (!entities.ContainsKey(entity)) return null;
+            if (!entities.ContainsKey(entity)) throw new System.NullReferenceException("Entity does not exist!");
 
             foreach(ComponentBase component in entities[entity].components)
             {

@@ -1,3 +1,4 @@
+using JS.ECS;
 using JS.WorldMap;
 using System.Collections;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour
     private bool isPanning;
 
     private Coroutine smoothingCoroutine;
+    private bool followTarget = true;
 
     //private float minX = -10.5f, minY = -10.5f, maxX = 200.5f, maxY = 200.5f;
 
@@ -53,6 +55,7 @@ public class CameraController : MonoBehaviour
     private IEnumerator PanCamera()
     {
         isPanning = true;
+        followTarget = false;
         while (isPanning)
         {
             if (!mousePosition.action.WasPerformedThisFrame()) yield return null;
@@ -79,10 +82,30 @@ public class CameraController : MonoBehaviour
         */
     }
 
+    private UnityEngine.Transform target;
+    private UnityEngine.Transform Target
+    {
+        get
+        {
+            if (target == null)
+            {
+                var newTarget = RenderSystem.GetGameObject(EntityManager.Player);
+                if (newTarget != null) target = newTarget.transform;
+            }
+            return target;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (Target == null || !followTarget) return;
+        transform.position = new Vector3(Target.position.x, Target.position.y, transform.position.z);
+    }
+
     public void SmoothToPosition(Vector2Int pos)
     {
-        if (smoothingCoroutine != null) StopCoroutine(smoothingCoroutine);
-        smoothingCoroutine = StartCoroutine(SmoothCam(pos));
+        //if (smoothingCoroutine != null) StopCoroutine(smoothingCoroutine);
+        //smoothingCoroutine = StartCoroutine(SmoothCam(pos));
     }
 
     private IEnumerator SmoothCam(Vector2Int pos)

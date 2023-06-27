@@ -1,6 +1,8 @@
 using JS.EventSystem;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 //So another possible option would be to separate Menu Input, World Map Input, and Local Map Input into 3 separate
 //InputActionAssets and also into separate scripts
@@ -17,12 +19,17 @@ namespace JS.ECS
         [Header("Game Events")]
         [SerializeField] private GameEvent openPlayerMenu;
         [SerializeField] private GameEvent closePlayerMenu;
-        private bool menuOpen = false;
+        [SerializeField] private GameEvent openGameMenu;
+        [SerializeField] private GameEvent closeGameMenu;
+
+        private bool gameMenuOpen = false;
+        private bool playerMenuOpen = false;
 
         private bool allowInput = false; //set to true on World or Local map scene loaded
         private bool controlPressed = false;
 
         private InputHandler inputTarget;
+        private Coroutine holdInputCoroutine;
         
         private void Awake()
         {
@@ -34,75 +41,209 @@ namespace JS.ECS
             instance = this;
         }
 
-        private void OnEnable()
-        {
-            //Mouse
-            playerInput.actions["Mouse Position"].performed += i => MousePosition();
-            playerInput.actions["LMB"].performed += i => LMB();
-            playerInput.actions["RMB"].performed += i => RMB();
+        private void OnEnable() => MapInput();
 
-            //Directional Input
-            playerInput.actions["North"].performed += i => North();
-            playerInput.actions["South"].performed += i => South();
-            playerInput.actions["East"].performed += i => East();
-            playerInput.actions["West"].performed += i => West();
-
-            playerInput.actions["NorthEast"].performed += i => NorthEast();
-            playerInput.actions["NorthWest"].performed += i => NorthWest();
-            playerInput.actions["SouthEast"].performed += i => SouthEast();
-            playerInput.actions["SouthWest"].performed += i => SouthWest();
-
-            playerInput.actions["Up"].performed += i => Up();
-            playerInput.actions["Down"].performed += i => Down();
-            playerInput.actions["Cell"].performed += i => Cell();
-
-            //Menus
-            playerInput.actions["Menu"].performed += i => Menu();
-
-            //Interactions
-            playerInput.actions["Get"].performed += i => Get();
-
-            //Secondary Input
-            playerInput.actions["Control"].performed += i => controlPressed = true;
-            playerInput.actions["Control"].canceled += i => controlPressed = false;
-        }
-
-        private void OnDisable()
-        {
-            //Mouse
-            playerInput.actions["Mouse Position"].performed -= i => MousePosition();
-            playerInput.actions["LMB"].performed -= i => LMB();
-            playerInput.actions["RMB"].performed -= i => RMB();
-
-            //Directional Input
-            playerInput.actions["North"].performed -= i => North();
-            playerInput.actions["South"].performed -= i => South();
-            playerInput.actions["East"].performed -= i => East();
-            playerInput.actions["West"].performed -= i => West();
-
-            playerInput.actions["NorthEast"].performed -= i => NorthEast();
-            playerInput.actions["NorthWest"].performed -= i => NorthWest();
-            playerInput.actions["SouthEast"].performed -= i => SouthEast();
-            playerInput.actions["SouthWest"].performed -= i => SouthWest();
-
-            playerInput.actions["Up"].performed -= i => Up();
-            playerInput.actions["Down"].performed -= i => Down();
-            playerInput.actions["Cell"].performed -= i => Cell();
-
-            //Menus
-            playerInput.actions["Menu"].performed -= i => Menu();
-
-            //Interactions
-            playerInput.actions["Get"].performed -= i => Get();
-
-            //Secondary Input
-            playerInput.actions["Control"].performed -= i => controlPressed = true;
-            playerInput.actions["Control"].canceled -= i => controlPressed = false;
-        }
+        private void OnDisable() => ClearInput();
 
         //Called from GameEventListener on World/LocalMapSceneLoaded
         public void OnGameStart() => allowInput = true;
         public void OnGameStop() => allowInput = false;
+
+        private void MapInput()
+        {
+            //Mouse
+            playerInput.actions["Mouse Position"].performed += _ => MousePosition();
+            playerInput.actions["LMB"].performed += _ => LMB();
+            playerInput.actions["RMB"].performed += _ => RMB();
+
+            //Directional Input
+            playerInput.actions["North"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("North"));
+                }
+                else North();
+            };
+            playerInput.actions["South"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("South"));
+                }
+                else South();
+            };
+            playerInput.actions["East"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("East"));
+                }
+                else East();
+            };
+            playerInput.actions["West"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("West"));
+                }
+                else West();
+            };
+
+            playerInput.actions["NorthEast"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("NorthEast"));
+                }
+                else NorthEast();
+            };
+            playerInput.actions["NorthWest"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("NorthWest"));
+                }
+                else NorthWest();
+            };
+            playerInput.actions["SouthEast"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("SouthEast"));
+                }
+                else SouthEast();
+            };
+            playerInput.actions["SouthWest"].performed += context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("SouthWest"));
+                }
+                else SouthWest();
+            };
+
+            playerInput.actions["Up"].performed += _ => Up();
+            playerInput.actions["Down"].performed += _ => Down();
+            playerInput.actions["Cell"].performed += _ => Cell();
+
+            //Menus
+            playerInput.actions["Menu"].performed += _ => Menu();
+            playerInput.actions["Esc"].performed += _ => Esc();
+
+            //Interactions
+            playerInput.actions["Get"].performed += _ => Get();
+
+            //Secondary Input
+            playerInput.actions["Control"].performed += _ => controlPressed = true;
+            playerInput.actions["Control"].canceled += _ => controlPressed = false;
+        }
+
+        private void ClearInput()
+        {
+            //Mouse
+            playerInput.actions["Mouse Position"].performed -= _ => MousePosition();
+            playerInput.actions["LMB"].performed -= _ => LMB();
+            playerInput.actions["RMB"].performed -= _ => RMB();
+
+            //Directional Input
+            playerInput.actions["North"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("North"));
+                }
+                else North();
+            };
+            playerInput.actions["South"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("South"));
+                }
+                else South();
+            };
+            playerInput.actions["East"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("East"));
+                }
+                else East();
+            };
+            playerInput.actions["West"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("West"));
+                }
+                else West();
+            };
+
+            playerInput.actions["NorthEast"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("NorthEast"));
+                }
+                else NorthEast();
+            };
+            playerInput.actions["NorthWest"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("NorthWest"));
+                }
+                else NorthWest();
+            };
+            playerInput.actions["SouthEast"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("SouthEast"));
+                }
+                else SouthEast();
+            };
+            playerInput.actions["SouthWest"].performed -= context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    if (holdInputCoroutine != null) StopCoroutine(holdInputCoroutine);
+                    holdInputCoroutine = StartCoroutine(HoldInput("SouthWest"));
+                }
+                else SouthWest();
+            };
+
+            playerInput.actions["Up"].performed -= _ => Up();
+            playerInput.actions["Down"].performed -= _ => Down();
+            playerInput.actions["Cell"].performed -= _ => Cell();
+
+            //Menus
+            playerInput.actions["Menu"].performed -= _ => Menu();
+            playerInput.actions["Esc"].performed -= _ => Esc();
+
+            //Interactions
+            playerInput.actions["Get"].performed -= _ => Get();
+
+            //Secondary Input
+            playerInput.actions["Control"].performed -= _ => controlPressed = true;
+            playerInput.actions["Control"].canceled -= _ => controlPressed = false;
+        }
 
         public static void OnNewInputTarget(InputHandler input)
         {
@@ -115,6 +256,18 @@ namespace JS.ECS
         {
             if (!allowInput || inputTarget == null || inputTarget.Actor == null || !inputTarget.Actor.IsTurn) return false;
             return true;
+        }
+
+        private IEnumerator HoldInput(string input)
+        {
+            while (playerInput.actions[input].IsPressed())
+            {
+                if (inputTarget.Actor.IsTurn)
+                {
+                    Invoke(input, 0.0001f);
+                }
+                yield return null;
+            }
         }
 
         #region - Mouse Input -
@@ -210,12 +363,22 @@ namespace JS.ECS
         #endregion
 
         #region - Menu Input -
+        private void Esc()
+        {
+            if (!allowInput) return;
+
+            gameMenuOpen = !gameMenuOpen;
+            if (gameMenuOpen) openGameMenu?.Invoke();
+            else closeGameMenu?.Invoke();
+            Debug.LogWarning("Pick up from here");
+        }
+
         private void Menu()
         {
             if (!allowInput) return;
 
-            menuOpen = !menuOpen;
-            if (menuOpen) openPlayerMenu?.Invoke();
+            playerMenuOpen = !playerMenuOpen;
+            if (playerMenuOpen) openPlayerMenu?.Invoke();
             else closePlayerMenu?.Invoke();
         }
 

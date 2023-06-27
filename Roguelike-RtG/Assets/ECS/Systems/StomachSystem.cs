@@ -45,10 +45,10 @@ public class StomachSystem : MonoBehaviour
             if (stomachs[i].entity == EntityManager.Player)
             {
                 if (hunger != stomachs[i].Hunger && hunger != HungerState.Neutral)
-                    MessageSystem.NewMessage("You become " + hunger.ToString());
+                    MessageSystem.NewMessage("You are " + hunger.ToString());
 
                 if (thirst != stomachs[i].Thirst && thirst != ThirstState.Neutral)
-                    MessageSystem.NewMessage("You become " + thirst.ToString());
+                    MessageSystem.NewMessage("You are " + thirst.ToString());
             }
 
             //Add/Remove condition as necessary

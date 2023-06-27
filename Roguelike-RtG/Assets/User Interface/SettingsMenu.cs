@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,16 @@ public class SettingsMenu : MonoBehaviour
 
         saveChangesButton.onClick.RemoveAllListeners();
         discardChangesButton.onClick.RemoveAllListeners();
+
+        int count = System.Enum.GetNames(typeof(AnimationMode)).Length;
+        List<string> options = new List<string>();
+
+        animationDropdown.ClearOptions();
+        for (int i = 0; i < count; i++)
+        {
+            options.Add(((AnimationMode)i).ToString());
+        }
+        animationDropdown.AddOptions(options);
     }
 
     private void OnDisable()

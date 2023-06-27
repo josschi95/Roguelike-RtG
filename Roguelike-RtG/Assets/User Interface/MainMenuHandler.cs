@@ -11,6 +11,7 @@ public class MainMenuHandler : MonoBehaviour
 {
     public bool characterSaveExists;
     [SerializeField] private WorldData worldMapData;
+    [SerializeField] private GameSettings gameSettings;
     private bool worldSaveExists;
     
     [Space]
@@ -57,6 +58,8 @@ public class MainMenuHandler : MonoBehaviour
         }
 
         confirmQuitButton.onClick.AddListener(OnConfirmQuitGame);
+
+        gameSettings.LoadSavedValues();
     }
 
     private void ClearButtonEvents()

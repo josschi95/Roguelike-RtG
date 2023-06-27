@@ -11,7 +11,10 @@ namespace JS.ECS
     /// <summary>
     /// Event to inform an entity that its Transform has changed.
     /// </summary>
-    public class TransformChanged : Event { }
+    public class TransformChanged : Event 
+    {
+        public bool smooth = false;
+    }
 
     #region - Turn/Round Events -
     /// <summary>

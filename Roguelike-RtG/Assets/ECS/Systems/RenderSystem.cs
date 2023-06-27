@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /************ Sorting Layers ************
@@ -33,6 +34,8 @@ namespace JS.ECS
         
         private Dictionary<Render, SingleRenderer> activeSingleRenders;
         private Dictionary<Render, CompoundRenderer> activeCompoundRenders;
+
+        private bool skipAnimations = false; //When set to true, all animations end and objects are set to their end positions
 
         private void Awake()
         {
@@ -81,12 +84,12 @@ namespace JS.ECS
         /// Updates the position of the object's render when its transform changes.
         /// </summary>
         /// <param name="render"></param>
-        public static void UpdatePosition(Render render)
+        public static void UpdatePosition(Render render, bool smooth = false)
         {
-            instance.UpdateRenderPosition(render);
+            instance.UpdateRenderPosition(render, smooth);
         }
 
-        private void UpdateRenderPosition(Render render)
+        private void UpdateRenderPosition(Render render, bool smooth = false)
         {
             if (!EntityOnCurrentMap(render))
             {
@@ -98,15 +101,31 @@ namespace JS.ECS
             {
                 if (!activeCompoundRenders.ContainsKey(render) || activeCompoundRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeCompoundRenders[render].transform.position = render.Transform.WorldPosition;
-                else activeCompoundRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
+                if (GridManager.WorldMapActive)
+                {
+                    if (smooth) StartCoroutine(SlideWorld(render));
+                    else activeCompoundRenders[render].transform.position = render.Transform.WorldPosition;
+                }
+                else
+                {
+                    if (smooth) StartCoroutine(SlideLocal(render));
+                    else activeCompoundRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
+                }
             }
             else
             {
                 if (!activeSingleRenders.ContainsKey(render) || activeSingleRenders[render] == null) StartRendering(render);
 
-                if (GridManager.WorldMapActive) activeSingleRenders[render].transform.position = render.Transform.WorldPosition;
-                else activeSingleRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
+                if (GridManager.WorldMapActive)
+                {
+                    if (smooth) StartCoroutine(SlideWorld(render));
+                    else activeSingleRenders[render].transform.position = render.Transform.WorldPosition;
+                }
+                else
+                {
+                    if (smooth) StartCoroutine(SlideLocal(render));
+                    else activeSingleRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
+                }
             }
         }
 
@@ -186,6 +205,109 @@ namespace JS.ECS
             }
             return null;
         }
+
+        public static GameObject GetGameObject(Entity entity)
+        {
+            if (entity == null) return null;
+
+            foreach(var pair in instance.activeCompoundRenders)
+            {
+                if (pair.Key.entity == entity) return pair.Value.gameObject;
+            }
+            foreach (var pair in instance.activeSingleRenders)
+            {
+                if (pair.Key.entity == entity) return pair.Value.gameObject;
+            }
+
+            return null;
+        }
+        #region - Animations -
+        private IEnumerator SlideLocal(Render render)
+        {
+            UnityEngine.Transform transform;
+
+            if (activeSingleRenders.ContainsKey(render)) 
+                transform = activeSingleRenders[render].transform;
+            else if (activeCompoundRenders.ContainsKey(render)) 
+                transform = activeCompoundRenders[render].transform;
+            else yield break;
+
+            var start = transform.position;
+            var end = (Vector3Int)render.Transform.LocalPosition;
+            float t = 0f;
+            while (t < TimeSystem.AnimationTime && !skipAnimations)
+            {
+                transform.position = Vector3.Lerp(start, end, t / TimeSystem.AnimationTime);
+                t += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = end;
+        }
+
+        private IEnumerator SlideWorld(Render render)
+        {
+            UnityEngine.Transform transform;
+
+            if (activeSingleRenders.ContainsKey(render))
+                transform = activeSingleRenders[render].transform;
+            else if (activeCompoundRenders.ContainsKey(render))
+                transform = activeCompoundRenders[render].transform;
+            else yield break;
+
+            var start = transform.position;
+            var end = render.Transform.WorldPosition;
+            float t = 0f;
+            while (t < TimeSystem.AnimationTime && !skipAnimations)
+            {
+                transform.position = Vector3.Lerp(start, end, t / TimeSystem.AnimationTime);
+                t += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = end;
+        }
+
+        private IEnumerator Jab(Render render, Vector3 direction)
+        {
+            UnityEngine.Transform transform;
+
+            if (activeSingleRenders.ContainsKey(render))
+                transform = activeSingleRenders[render].transform;
+            else if (activeCompoundRenders.ContainsKey(render))
+                transform = activeCompoundRenders[render].transform;
+            else yield break;
+
+            var start = transform.position;
+            var mid = start + (direction * 0.5f);
+            float t = 0f;
+
+            while (t < TimeSystem.AnimationTime && !skipAnimations)
+            {
+                if (t <  TimeSystem.AnimationTime / 2)
+                {
+                    transform.position = Vector3.Lerp(start, mid, t / TimeSystem.AnimationTime);
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(mid, start, t / TimeSystem.AnimationTime);
+                }
+
+                t += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = start;
+        }
+
+        public static void SkipAnimations()
+        {
+            instance.skipAnimations = true;
+            instance.Invoke("ResetAnimations", 0.01f);
+        }
+
+        private void ResetAnimations()
+        {
+            skipAnimations = false;
+        }
+        #endregion
 
         #region - Sprite Flash -
         /// <summary>

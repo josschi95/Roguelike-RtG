@@ -1709,11 +1709,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Full
+    - m_Text: Staggered
+      m_Image: {fileID: 0}
+    - m_Text: Quick
       m_Image: {fileID: 0}
     - m_Text: Instant
-      m_Image: {fileID: 0}
-    - m_Text: Off
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

@@ -6,6 +6,24 @@
             "id": "6b23f2f4-3906-4a6a-9830-9b7de91fd40b",
             "actions": [
                 {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "64349435-a1a1-4306-a6a6-3eedff041344",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Esc",
+                    "type": "Button",
+                    "id": "44a274e4-49df-471b-a6dc-084b81e8b692",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Mouse Position",
                     "type": "Value",
                     "id": "e21e5e2c-606b-442a-a349-f2cb77d6533b",
@@ -47,7 +65,7 @@
                     "id": "b25cb2db-62d0-4f6b-bddc-1a0acec8d60d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -56,7 +74,7 @@
                     "id": "e41bedca-47dc-48a9-87eb-1017b53c3633",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -65,7 +83,7 @@
                     "id": "b927b34d-d351-4b58-bc8e-ee17343bf52f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -74,7 +92,7 @@
                     "id": "82a3b30e-b821-4886-8640-e06e92062938",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -83,7 +101,7 @@
                     "id": "a94f1c0c-9c2d-46de-bdc0-dbf6009e9444",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -92,7 +110,7 @@
                     "id": "8324fe58-7d5b-442c-b3e1-6b3fe679b636",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -101,7 +119,7 @@
                     "id": "79987094-63eb-4afd-947c-66fe51a4b344",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -110,7 +128,7 @@
                     "id": "7cd176d6-39d4-4edc-b4ef-56b6c3b4bbb9",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": false
                 },
                 {
@@ -150,15 +168,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Menu",
-                    "type": "Button",
-                    "id": "64349435-a1a1-4306-a6a6-3eedff041344",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Get",
                     "type": "Button",
                     "id": "a784cfc9-2a9f-4cea-855a-48cac263f4b3",
@@ -169,17 +178,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "407132b1-5aee-4a06-8503-0c48b86c9892",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse Position",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "ce32d47e-8e10-4b26-9101-3db3986cc01f",
@@ -336,17 +334,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cb2b5be3-866f-454b-9d61-67d4aca0d62c",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Menu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "14333df1-4578-4ada-9fa2-dfec18611041",
                     "path": "<Keyboard>/numpad5",
                     "interactions": "",
@@ -364,6 +351,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Get",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb2b5be3-866f-454b-9d61-67d4aca0d62c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "407132b1-5aee-4a06-8503-0c48b86c9892",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "466da725-f080-45dc-9ca5-73cebc645390",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -17,6 +17,6 @@ MonoBehaviour:
   masterVolumeModifier: 100
   musicVolumeModifier: 100
   sfxVolumeModifier: 100
-  animationMode: 0
+  animationMode: 1
   textSpeed: 50
   useMetric: 1

@@ -20,7 +20,6 @@ namespace JS.SceneManagement
         //Event to raise on startup
         [SerializeField] private GameEvent bootEvent;
         [SerializeField] private ScenePicker eventLogger;
-        [SerializeField] private GameSettings gameSettings;
         [SerializeField] private WorldData worldMap;
         [Space]
 
@@ -45,14 +44,12 @@ namespace JS.SceneManagement
         private void Boot()
         {
             bootEvent?.Invoke();
-            gameSettings.LoadSavedValues();
             worldMap.IsLoaded = false;
             LoadSceneCollectionAdditive(bootScenes);
-
-            LoadAllFiles();
+            LoadBlueprints();
         }
 
-        private void LoadAllFiles()
+        private void LoadBlueprints()
         {
             EntityFactory.LoadBlueprints();
             BodyFactory.LoadBodies();

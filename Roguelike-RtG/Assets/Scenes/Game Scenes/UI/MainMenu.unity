@@ -3185,6 +3185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSaveExists: 0
   worldMapData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  gameSettings: {fileID: 11400000, guid: d1539ae491201f84b8b1cb17a9d43777, type: 2}
   loadWorldCommand: {fileID: 11400000, guid: 86469ad3a99da894f8a09e3982ec54f1, type: 2}
   newWorldEvent: {fileID: 11400000, guid: 6148589601efcdf459b1ad917220d8a3, type: 2}
   newWorldButton: {fileID: 960712311}

@@ -4,6 +4,7 @@ namespace JS.ECS
     {
         public bool IsTurn { get; private set; } = false;
         public int ActionPoints = 0;
+        public bool TurnDelay = false;
 
         public int Speed
         {
@@ -17,7 +18,10 @@ namespace JS.ECS
             }
         }
 
-        public TimedActor() { }
+        public TimedActor() 
+        {
+            Priority = 50;
+        }
 
         public override void OnRegistered()
         {
@@ -34,6 +38,9 @@ namespace JS.ECS
         {
             switch (newEvent)
             {
+                case TransformChanged t:
+                    t.smooth = true;
+                    break;
                 case TurnStart:
                     IsTurn = true; 
                     break;

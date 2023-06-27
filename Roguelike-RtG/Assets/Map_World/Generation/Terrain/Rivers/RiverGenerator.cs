@@ -19,12 +19,12 @@ namespace JS.WorldMap.Generation
         private List<River> rivers;
         private List<RiverGroup> riverGroups;
 
-        private int localSize;
+        private int localMapDimensions;
         private float headWaterHeight;
 
         public void GenerateRivers(int localSize, int riverCount)
         {
-            this.localSize = localSize;
+            localMapDimensions = localSize;
             int attempts = 0;
             rivers = new List<River>();
 
@@ -350,9 +350,10 @@ namespace JS.WorldMap.Generation
                 if (i == 0) river.Nodes[i].Size = 1;
                 else if (worldGenerator.PRNG.Next(1, 100) > 50) river.Nodes[i].Size = river.Nodes[i - 1].Size + 1;
                 else river.Nodes[i].Size = river.Nodes[i - 1].Size;
-
+                river.Nodes[i].Size = Mathf.Clamp(river.Nodes[i].Size, 0, 40);
                 //Offset - Set it anywhere between local map size with a border of 10 + river size
-                river.Nodes[i].Offset = worldGenerator.PRNG.Next(10 + river.Nodes[i].Size, localSize - 10 - river.Nodes[i].Size);
+
+                river.Nodes[i].Offset = worldGenerator.PRNG.Next(10 + river.Nodes[i].Size, localMapDimensions - 10 - river.Nodes[i].Size);
 
                 if (i == 0) //Direction is only dependent on following node
                 {

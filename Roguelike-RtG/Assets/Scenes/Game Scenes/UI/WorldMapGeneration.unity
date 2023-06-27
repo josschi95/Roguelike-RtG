@@ -1061,6 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
+  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   erosionRadius: 3
   inertia: 0.05
   sedimentCapacityFactor: 4
@@ -2744,6 +2745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e218392228254349aaa6a6d129f70a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  n_gram: 2
   nameLength: 5
   namesToGenerate: 5
   cleanText: 1
@@ -2972,7 +2974,6 @@ MonoBehaviour:
   worldGenerator: {fileID: 1549498269}
   markov: {fileID: 833641285}
   mapFeatures: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
-  terrainData: {fileID: 11400000, guid: a8dc3ffc54210114e8e6c431f30bd679, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   tribeRelations: {fileID: 11400000, guid: 5b5e601d5d7858f49bfef3e199366d25, type: 2}
@@ -2991,9 +2992,6 @@ MonoBehaviour:
   town: {fileID: 11400000, guid: 45cc3dcd1a38d9b479ea2bcf2151fd1d, type: 2}
   village: {fileID: 11400000, guid: 574ae0ee45743f142be67917e03e624c, type: 2}
   hamlet: {fileID: 11400000, guid: d4407ac68a31b8845b319b9a253f638c, type: 2}
-  usePoisson: 1
-  poissonRadius: 15
-  landCheckRadius: 5
 --- !u!114 &907612580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5570,6 +5568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f83a2d586ebbbc468e9f80101434a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useErosion: 1
   AutoGenSavedWorld: {fileID: 11400000, guid: 9b276acab35f0604f8ebe62c06596501, type: 2}
   generationPanel: {fileID: 1187939944}
   worldSize: 0

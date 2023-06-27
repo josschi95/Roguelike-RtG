@@ -172,8 +172,18 @@ namespace JS.WorldMap.Generation
         public void ErodeLandMasses()
         {
             float[,] heightMap = terrainData.HeightMap;
+            float[,] initial = terrainData.HeightMap;
             heightMap = erosion.Erode(heightMap, worldGenParams.Raindrops(worldSize), worldMap.Seed);
             terrainData.HeightMap = heightMap;
+
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    float diff = initial[x, y] - heightMap[x, y];
+                    //if (diff != 0) Debug.Log("Difference: [" + x + "," + y + "] = " + diff);
+                }
+            }
         }
 
         public void SetNodeAltitudeValues()

@@ -11,6 +11,8 @@ namespace JS.WorldMap.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {
+        public bool useErosion = true;
+
         public System.Random PRNG { get; private set; }
         public int Seed { get; private set; }
 
@@ -167,9 +169,13 @@ namespace JS.WorldMap.Generation
             progressBar.fillAmount = 0.2f;
             yield return StartCoroutine(UpdateProgress("Eroding Land Masses"));
 
-            terrainGenerator.ErodeLandMasses();
-            progressBar.fillAmount = 0.2f;
-            yield return StartCoroutine(UpdateProgress("Allocating Height Map"));
+            if (useErosion)
+            {
+                terrainGenerator.ErodeLandMasses();
+                progressBar.fillAmount = 0.2f;
+                yield return StartCoroutine(UpdateProgress("Allocating Height Map"));
+            }
+
 
             terrainGenerator.SetNodeAltitudeValues();
             progressBar.fillAmount = 0.2f;

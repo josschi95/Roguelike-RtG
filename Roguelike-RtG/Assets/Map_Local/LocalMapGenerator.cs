@@ -66,18 +66,12 @@ namespace JS.WorldMap
         #region - Rivers -
         private void HandleRivers(int worldX, int worldY)
         {
-            var river = worldData.TerrainData.FindRiverAt(worldX, worldY, out var index);
-            if (river == null)
-            {
-                Debug.Log("No river in world map.");
-                return; //There is no river
-            }
+            var river = worldData.TerrainData.FindRiverAt(worldX, worldY, out var index); 
+            if (river == null) return; //There is no river
+            //The river doesn't pass through this tile
+            if (!RiverIsInMap(river.Nodes[index], out int regionIndex)) return;
+            Debug.LogWarning("River offset is still unaligned");
 
-            if (!RiverIsInMap(river.Nodes[index], out int regionIndex))
-            {
-                Debug.Log("No river in region map.");
-                return; //The river doesn't pass through this tile
-            }
             var direction = GetRiverDirection(river.Nodes[index], regionIndex);
 
             int startOffset = river.Nodes[index].Offset; //the offset at which the river enters the region map

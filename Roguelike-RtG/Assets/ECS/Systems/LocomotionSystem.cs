@@ -35,7 +35,11 @@ namespace JS.ECS
         private bool TryMove(Transform obj, Compass direction, out int cost)
         {
             cost = 0;
-            if (!ProjectedPositionIsValid(obj, direction)) return false;
+            if (!ProjectedPositionIsValid(obj, direction))
+            {
+                Debug.Log("Position not valid");
+                return false;
+            }
 
             //Highly considering storing all entities within GridManager's GameGrid class, sort of like a Scene folder
             var entitiesAtPosition = TransformSystem.GetEntitiesAt(worldTracer, regionTracer, localTracer);
@@ -52,7 +56,7 @@ namespace JS.ECS
             //by default this is 0, but can be modified by difficult terrain, terrain type, etc.
             
             if (obj.WorldPosition != worldTracer) TransformSystem.SetPosition(obj, worldTracer, regionTracer, localTracer);
-            else if (obj.RegionPosition != regionTracer) TransformSystem.SetWorldPosition(obj, worldTracer);
+            else if (obj.RegionPosition != regionTracer) TransformSystem.SetPosition(obj, worldTracer, regionTracer, localTracer);
             else TransformSystem.SetLocal(obj, localTracer);
             return true;
         }

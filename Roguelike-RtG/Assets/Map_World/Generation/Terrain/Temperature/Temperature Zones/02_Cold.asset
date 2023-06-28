@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 2
   temperatureValue: 0.4
-  Tile: {fileID: 11400000, guid: e8606bf051ba0a544b77934584b4088b, type: 2}
+  <HighlightColor>k__BackingField: {r: 0, g: 0.9058824, b: 0.5254902, a: 1}

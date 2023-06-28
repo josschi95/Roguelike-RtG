@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27096731b8f6ae43a038ee3cb2f6275, type: 3}
   m_Name: 00_Coldest
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
   temperatureValue: 0.05
-  Tile: {fileID: 11400000, guid: 52694e1b1f248f747adc89ce839d9846, type: 2}
+  <HighlightColor>k__BackingField: {r: 0, g: 1, b: 1, a: 1}

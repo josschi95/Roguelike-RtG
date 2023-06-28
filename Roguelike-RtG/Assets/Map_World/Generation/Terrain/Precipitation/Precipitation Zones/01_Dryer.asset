@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 1
   precipitationValue: 0.2
-  Tile: {fileID: 11400000, guid: 0946be4f0e3862040bf29a1c0421959f, type: 2}
+  Tile: {fileID: 0}
+  <HighlightColor>k__BackingField: {r: 0.9607844, g: 0.9607844, b: 0.09019608, a: 1}

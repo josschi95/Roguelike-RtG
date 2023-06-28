@@ -21,17 +21,16 @@ namespace JS.WorldMap
         [SerializeField] private int tribeID;
         public int TribeID => tribeID;
 
-        [SerializeField] private int _population;
-        public int Population => _population;
+        public int Population;
 
         public int FoodProduction;
+        public int FoodSupply;
 
         public int Defensibility;
         public int ResourceRating;
         public List<Facility> Facilities;
-
+        public Dictionary<string, int> Resources;
         public List<GridCoordinates> Territory;
-        public List<GridCoordinates> Reach;
 
         [SerializeField] private Dictionary<int, int> foreignRelations; //ID, disposition
 
@@ -48,11 +47,11 @@ namespace JS.WorldMap
 
             typeID = type.ID;
             tribeID = humanoids.ID;
-            _population = population;
+            Population = population;
 
             Territory = new List<GridCoordinates>();
-            Reach = new List<GridCoordinates>();
             Facilities = new List<Facility>();
+            Resources = new Dictionary<string, int>();
             foreignRelations = new Dictionary<int, int>();
         }
 
@@ -65,7 +64,7 @@ namespace JS.WorldMap
         public void AdjustSize(SettlementType type, int newPopulation)
         {
             typeID = type.ID;
-            _population = newPopulation;
+            Population = newPopulation;
         }
 
         public bool OwnsTerritory(int x, int y)
@@ -110,26 +109,53 @@ namespace JS.WorldMap
         public void DeconstructSettlement()
         {
             Territory.Clear();
-            Reach.Clear();
             foreignRelations.Clear();
         }
+    }
+
+    public class CitySeed
+    {
+        public WorldTile Node;
+        public SettlementType Type;
+        public SettlementType LargestSize; //How big it was at the height of its population
+
+        public int Population;
+        public int AvailableWorkforce;
+        public int FoodProduction;
+        public int Defensibility;
+
+        public List<WorldTile> Territory = new List<WorldTile>();
+        public List<Facility> Facilities = new List<Facility>();
     }
 }
 
 public class Facility
 {
     public string Name;
-    public int Workers;
+    public int AssignedWorkers;
+    public int RequiredWorkers;
+
     public string Input;
     public string Output;
+    public int MaxCount;
+
+    public int X, Y;
 
     public Facility() { }
 
-    public Facility(string name, int workers, string input, string output)
+    public Facility(string name, int workers, string input, string output, int x, int y)
     {
         Name = name;
-        Workers = workers;
+        RequiredWorkers = workers;
         Input = input;
         Output = output;
+        X = x; Y = y;
     }
+}
+
+public class SettlementStructure
+{
+    public int ID;
+    public string Name;
+    public int Size; //Square
 }

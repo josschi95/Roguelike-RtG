@@ -1,6 +1,15 @@
 {
     "Facilities": [
         {
+            "Name": "House",
+            "Workers": "5"
+        },
+
+
+
+
+
+        {
             "Name": "Wheat Field",
             "Workers": "5",
             "Output": "Wheat"
@@ -109,6 +118,83 @@
             "Name": "Apiary",
             "Workers": "5",
             "Output": "Honey"
+        },
+        {
+            "Name": "Hunting Lodge",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+
+
+
+
+
+        {
+            "Name": "Coal Mine",
+            "Workers": "5",
+            "Output": "Coal"
+        },
+        {
+            "Name": "Copper Mine",
+            "Workers": "5",
+            "Output": "Copper Ore"
+        },
+        {
+            "Name": "Iron Mine",
+            "Workers": "5",
+            "Output": "Iron Ore"
+        },
+        {
+            "Name": "Silver Mine",
+            "Workers": "5",
+            "Output": "Silver Ore"
+        },
+        {
+            "Name": "Gold Mine",
+            "Workers": "5",
+            "Output": "Gold Ore"
+        },
+        {
+            "Name": "Mithril Mine",
+            "Workers": "5",
+            "Output": "Mithril Ore"
+        },
+        {
+            "Name": "Adamantine Mine",
+            "Workers": "5",
+            "Output": "Adamantine Ore"
+        },
+        {
+            "Name": "Gemstone Mine",
+            "Workers": "5",
+            "Output": "Gems"
+        },
+        {
+            "Name": "Quarry",
+            "Workers": "5",
+            "Output": "Stone"
+        },
+        {
+            "Name": "Saltern",
+            "Workers": "5",
+            "Output": "Salt"
+        },
+
+
+
+
+
+        {
+            "Name": "Bakery",
+            "Workers": "2",
+            "Input": "Wheat",
+            "Output": "Bread"
+        },
+        {
+            "Name": "Brewery",
+            "Workers": "2",
+            "Input": "Wheat",
+            "Output": "Bread"
         }
     ]
 }

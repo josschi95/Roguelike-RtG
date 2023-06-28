@@ -13,7 +13,8 @@ namespace JS.WorldMap
         [field: SerializeField] public bool isLand { get; private set; } = true;
         //True for forested biomes and mountains
         [field: SerializeField] public bool isDifficultTerrain { get; private set; }
-
+        [field: SerializeField] public bool CanBeHunted { get; private set; }
+        [field: SerializeField] public int DangerModifier { get; private set; }
         [Header("Temperature and Precipitation")]
         [SerializeField] private int minAvgAnnualTemperature;
         [SerializeField] private int maxAvgAnnualTemperature;

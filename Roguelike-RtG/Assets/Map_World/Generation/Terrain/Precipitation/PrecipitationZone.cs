@@ -15,5 +15,6 @@ namespace JS.WorldMap
         public float PrecipitationValue => precipitationValue;
 
         [field: SerializeField] public TileBase Tile;
+        [field: SerializeField] public Color HighlightColor { get; private set; }
     }
 }

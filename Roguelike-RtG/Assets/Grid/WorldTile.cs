@@ -7,6 +7,7 @@ namespace JS.WorldMap
     //Do Not Serialize this class, results in a recursive serialization issue
     public class WorldTile : IHeapItem<WorldTile>
     {
+        #region - Pathfinding -
         private Grid<WorldTile> grid;
         public int x { get; private set; }
         public int y { get; private set; }
@@ -41,6 +42,7 @@ namespace JS.WorldMap
             if (compare == 0) compare = hCost.CompareTo(other.hCost);
             return -compare; //want to return 1 if it's lower, so return negative value
         }
+        #endregion
 
         #region - Altitude -
         public bool isTectonicPoint { get; set; }
@@ -87,6 +89,8 @@ namespace JS.WorldMap
             set => biomeGroup = value;
         }
         #endregion
+
+        public int DangerTier;
 
         public WorldTile(Grid<WorldTile> grid, int x, int y)
         {

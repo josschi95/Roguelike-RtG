@@ -14,14 +14,15 @@ namespace JS.WorldMap
 
             GUILayout.Space(10);
 
-            if (GUILayout.Button("Clear Info")) display.ClearInfoMap();
+            if (GUILayout.Button("Clear Info")) display.ResetInfoMap();
 
             GUILayout.Space(10);
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Heat Map")) display.DisplayHeatMap();
-            if (GUILayout.Button("Moisture Map")) display.DisplayMoistureMap();
-            if (GUILayout.Button("Wind Map")) display.DisplayWindMap();
+            if (GUILayout.Button("Heat")) display.DisplayHeatMap();
+            if (GUILayout.Button("Moisture")) display.DisplayMoistureMap();
+            if (GUILayout.Button("Wind")) display.DisplayWindMap();
+            if (GUILayout.Button("Danger")) display.DisplayDangerMap();
             GUILayout.EndHorizontal();
 
 

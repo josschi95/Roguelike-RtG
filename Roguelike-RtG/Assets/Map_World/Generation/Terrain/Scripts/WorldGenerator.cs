@@ -26,6 +26,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private SettlementData settlementData;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private TimeKeeper timeKeeper;
+        [SerializeField] private BiomeHelper biomeHelper;
 
         [Space]
 
@@ -135,10 +136,11 @@ namespace JS.WorldMap.Generation
 
         private IEnumerator GenerateWorld()
         {
-            
             //Generate Terrain and Terrain Features
             yield return StartCoroutine(HandleTerrainGeneration());
             
+            SetDangerZones();
+
             //Generate Settlements, Roads, and Relations
             yield return StartCoroutine(HandleSettlementGeneration());
 
@@ -147,7 +149,6 @@ namespace JS.WorldMap.Generation
             //Generate Historical Figures, Locations, Items, and Events
 
             //Place points of interest using Poisson
-
 
             PlacePlayerAtStart();
 
@@ -175,7 +176,6 @@ namespace JS.WorldMap.Generation
                 progressBar.fillAmount = 0.2f;
                 yield return StartCoroutine(UpdateProgress("Allocating Height Map"));
             }
-
 
             terrainGenerator.SetNodeAltitudeValues();
             progressBar.fillAmount = 0.2f;
@@ -244,6 +244,39 @@ namespace JS.WorldMap.Generation
         }
 
         /// <summary>
+        /// Assigns each WorldTile a Danger Level based on distance from a randomly selected point
+        /// </summary>
+        private void SetDangerZones()
+        {
+            int largest = 0;
+            LandMass continent = null;
+            int size = terrainGenerator.mapSize;
+
+            foreach(var mass in worldMap.TerrainData.LandMasses)
+            {
+                if (mass.Size != LandSize.Continent) continue;
+                if (mass.GridNodes.Length <= largest) continue;
+
+                largest = mass.GridNodes.Length;
+                continent = mass;
+            }
+
+            var center = continent.GridNodes[PRNG.Next(0, continent.GridNodes.Length)];
+
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    var dist = GridMath.GetStraightDist(center.x, center.y, x, y) / size;
+                    var dt = Mathf.RoundToInt(dist * 10);
+                    var node = worldMap.GetNode(x, y);
+                    dt = Mathf.Clamp(dt + biomeHelper.GetBiome(node.BiomeID).DangerModifier, 0, 9);
+                    node.DangerTier = dt;
+                }
+            }
+        }
+
+        /// <summary>
         /// Places player at a random settlement
         /// </summary>
         private void PlacePlayerAtStart()
@@ -290,10 +323,9 @@ namespace JS.WorldMap.Generation
             terrainGenerator.GenerateHeightMap();
             terrainGenerator.ErodeLandMasses();
             terrainGenerator.SetNodeAltitudeValues();
-            terrainGenerator.IdentifyCoasts();
 
+            terrainGenerator.IdentifyCoasts();
             terrainGenerator.IdentifyMountains();
-            //worldMap.TerrainData.Mountains = data.Mountains;
             worldMap.TerrainData.Lakes = data.Lakes;
             worldMap.TerrainData.LandMasses = data.Land;
 
@@ -302,6 +334,8 @@ namespace JS.WorldMap.Generation
             terrainGenerator.GeneratePrecipitationMap();
             terrainGenerator.GenerateBiomes();
             terrainGenerator.GenerateOreDeposits();
+
+            SetDangerZones();
         }
 
         private void RecreateSettlements(WorldSaveData data)

@@ -14,6 +14,6 @@ namespace JS.WorldMap
         [SerializeField] private float temperatureValue;
         public float TemperatureValue => temperatureValue;
 
-        [field: SerializeField] public TileBase Tile;
+        [field: SerializeField] public Color HighlightColor { get; private set; }
     }
 }

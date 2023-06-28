@@ -18,32 +18,12 @@ MonoBehaviour:
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: fae1f13cf4da2914fa2602daaefa6768, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
-  <isDifficultTerrain>k__BackingField: 0
+  <isDifficultTerrain>k__BackingField: 1
+  <CanBeHunted>k__BackingField: 1
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 7
   minAnnualPrecipitation: 45
   maxAnnualPrecipitation: 1000
-  treeDensity: 0
-  shrubDensity: 0
-  grassDensity: 0
-  foodAvailability: 0.25
-  waterAvailability: 0
-  lumberAvailability: 1
-  vegetation:
-  - coniferous trees
-  animals:
-  - Gray wolf
-  - grizzly bear
-  - black bear
-  - tiger
-  - Moose
-  - deer
-  - Raptors (birds)
-  monsters:
-  - frost giant
-  - ice drake
-  - jabberwock
-  - winter wolf
-  - (dire) wolf
-  - wolverine
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: 

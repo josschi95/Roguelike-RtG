@@ -18,7 +18,8 @@ MonoBehaviour:
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: 6e0fd37c95d6c7943b41c15a29cce30a, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
-  <isDifficultTerrain>k__BackingField: 0
+  <isDifficultTerrain>k__BackingField: 1
+  <CanBeHunted>k__BackingField: 1
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 250

@@ -5577,6 +5577,7 @@ MonoBehaviour:
   settlementData: {fileID: 11400000, guid: 0058e04da8ab4ae4f8d90b5059b3164f, type: 2}
   playerData: {fileID: 11400000, guid: 5c510c1b38519284b8098f1d495d94d9, type: 2}
   timeKeeper: {fileID: 11400000, guid: 3f97ef86c2d39b84fb1be41363108595, type: 2}
+  biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   terrainGenerator: {fileID: 261351981}
   riverGenerator: {fileID: 261351985}
   settlementGenerator: {fileID: 907612579}

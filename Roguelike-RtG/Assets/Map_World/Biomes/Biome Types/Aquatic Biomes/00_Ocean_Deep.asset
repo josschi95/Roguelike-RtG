@@ -19,17 +19,12 @@ MonoBehaviour:
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 0
   <isDifficultTerrain>k__BackingField: 0
+  <CanBeHunted>k__BackingField: 0
+  <DangerModifier>k__BackingField: 2
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0
   maxAnnualPrecipitation: 1000
-  treeDensity: 0
-  shrubDensity: 0
-  grassDensity: 0
-  foodAvailability: 1
-  waterAvailability: 0
-  lumberAvailability: 0
-  vegetation: []
-  animals: []
-  monsters: []
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: 

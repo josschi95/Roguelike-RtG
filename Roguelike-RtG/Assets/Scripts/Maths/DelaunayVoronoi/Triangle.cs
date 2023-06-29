@@ -83,7 +83,8 @@ namespace DelaunayVoronoi
 
             if (div == 0)
             {
-                throw new DivideByZeroException();
+                div = 0.00001f;
+                //throw new DivideByZeroException();
             }
 
             var center = new Point(aux1 / div, aux2 / div);

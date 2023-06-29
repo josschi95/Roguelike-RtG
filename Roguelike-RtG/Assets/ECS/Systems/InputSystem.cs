@@ -255,6 +255,7 @@ namespace JS.ECS
         private bool CanAct()
         {
             if (!allowInput || inputTarget == null || inputTarget.Actor == null || !inputTarget.Actor.IsTurn) return false;
+            if (gameMenuOpen || playerMenuOpen) return false;
             return true;
         }
 
@@ -370,7 +371,11 @@ namespace JS.ECS
             gameMenuOpen = !gameMenuOpen;
             if (gameMenuOpen) openGameMenu?.Invoke();
             else closeGameMenu?.Invoke();
-            Debug.LogWarning("Pick up from here");
+        }
+
+        public void OnGameMenuClosed()
+        {
+            gameMenuOpen = false;
         }
 
         private void Menu()
@@ -380,6 +385,11 @@ namespace JS.ECS
             playerMenuOpen = !playerMenuOpen;
             if (playerMenuOpen) openPlayerMenu?.Invoke();
             else closePlayerMenu?.Invoke();
+        }
+
+        public void OnPlayerMenuClsoed()
+        {
+            playerMenuOpen = false;
         }
 
         private void Inventory()

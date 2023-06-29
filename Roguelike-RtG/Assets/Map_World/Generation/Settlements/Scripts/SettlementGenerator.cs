@@ -21,15 +21,15 @@ namespace JS.WorldMap.Generation
         [SerializeField] private SettlementType town;
         [SerializeField] private SettlementType village;
         [SerializeField] private SettlementType hamlet;
+        private int startingPopulation = 25;
         private int[] settlementCount;
 
-        private List<WorldTile> availableNodes;
-        private List<Settlement> settlements;
         private List<CitySeed> seeds;
-        private Dictionary<HumanoidTribe, List<WorldTile>> tribeTerritories;
+        private List<Settlement> settlements;
+        private string historyReport;
 
         private int poissonRadius = 10;
-        private int landCheckRadius = 5;
+        private int adjustmentRange = 5;
 
         /// <summary>
         /// Sets the initial values for Settlement Generation.
@@ -44,12 +44,11 @@ namespace JS.WorldMap.Generation
             {
                 settlementCount[i] *= tribes.Length;
             }
+        }
 
-            tribeTerritories = new Dictionary<HumanoidTribe, List<WorldTile>>();
-            for (int i = 0; i < tribes.Length; i++)
-            {
-                tribeTerritories[tribes[i]] = new List<WorldTile>();
-            }
+        private void Report(string message)
+        {
+            historyReport += message + "\n";
         }
 
         private HumanoidTribe GetTribe(int ID)
@@ -64,9 +63,12 @@ namespace JS.WorldMap.Generation
         #region - Settlement Placement -
         public void PlaceSettlements()
         {
+            historyReport = string.Empty;
+
+            markov.townName = true;
             var size = new Vector2(worldMap.Width, worldMap.Height);
             var points = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
-            int tribeIndex = 0;
+
             for (int i = 0; i < points.Count; i++)
             {
                 var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
@@ -75,14 +77,26 @@ namespace JS.WorldMap.Generation
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) continue;
 
-                PlaceSettlement(node, hamlet, tribes[tribeIndex]);
-                tribeIndex++;
-                if (tribeIndex >= tribes.Length) tribeIndex = 0;
+                //Place seed at the node
+                var newSeed = new CitySeed()
+                {
+                    Node = node,
+                    Name = markov.GetName(),
+                    Population = startingPopulation,
+                    Type = hamlet,
+                };
+                seeds.Add(newSeed);
             }
 
-            //Adjust settlements to more defensible locations - near rivers, near mountains but not in, etc.
-            DetermineDefensability();
             SetStartingValues();
+
+            int seedGrowthYears = 10;
+            for (int i = 0; i < seedGrowthYears; i++)
+            {
+                Report("\nYear " + i);
+                RunSettlementHistory();
+                //Debug.Break();
+            }
 
             //ClaimResources();
             /*Determine maximum sustainable population
@@ -113,35 +127,15 @@ namespace JS.WorldMap.Generation
             //Probably use flood fill again
             //GetSettlementConnections();
 
+            ConvertSeedsToSettlements();
             //GetTerritoryReport();
-            ConvertSeeds();
+            ReportWriter.FileReport("Settlement History", historyReport);
 
             DrawLines();
             worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
         }
 
-        private void DrawLines()
-        {
-            var test = new List<Point>();
-            for (int i = 0; i < settlements.Count; i++)
-            {
-                test.Add(new Point(settlements[i].X, settlements[i].Y));
-            }
-
-            var triangles = BowyerWatson.Triangulate(test);
-            var graph = new HashSet<Edge>();
-            foreach(var triangle in triangles)
-                graph.UnionWith(triangle.edges);
-
-            var tree = Kruskal.MinimumSpanningTree(graph);
-            foreach(var edge in tree)
-            {
-                var a = new Vector3((float)edge.Point1.X, (float)edge.Point1.Y);
-                var b = new Vector3((float)edge.Point2.X, (float)edge.Point2.Y);
-                Debug.DrawLine(a, b, Color.green, 1000f);
-            }
-        }
-
+        #region - Seed Placement Adjustments -
         /// <summary>
         /// Returns the nearest WorldTile that is land, within the landCheckRadius
         /// </summary>
@@ -150,7 +144,7 @@ namespace JS.WorldMap.Generation
             WorldTile landNode = null;
             float dist = int.MaxValue;
 
-            var nodes = worldMap.GetNodesInRange_Square(tile, landCheckRadius);
+            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue;
@@ -171,7 +165,7 @@ namespace JS.WorldMap.Generation
         {
             WorldTile flatNode = null;
             float dist = int.MaxValue;
-            var nodes = worldMap.GetNodesInRange_Square(tile, landCheckRadius);
+            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue; //no water
@@ -195,7 +189,7 @@ namespace JS.WorldMap.Generation
         {
             WorldTile flatNode = null;
             float dist = int.MaxValue;
-            var nodes = worldMap.GetNodesInRange_Square(tile, landCheckRadius);
+            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue; //no water
@@ -212,39 +206,10 @@ namespace JS.WorldMap.Generation
 
             return flatNode;
         }
-
-        /// <summary>
-        /// Places a new settlement of the given type and tribe at the node and assigns territory and area of influence
-        /// </summary>
-        private Settlement PlaceSettlement(WorldTile node, SettlementType type, HumanoidTribe tribe)
-        {
-            markov.townName = true;
-            var name = markov.GetName();
-            int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
-            var newSettlement = new Settlement(name, settlements.Count, node, type, tribe, population);
-
-            settlements.Add(newSettlement);
-            tribeTerritories[tribe].Add(node);
-
-            return newSettlement;
-        }
+        #endregion
         #endregion
 
         #region - Settlement Expansion -
-        private void DetermineDefensability()
-        {
-            foreach (var seed in seeds)
-            {
-                foreach(var neighbor in seed.Node.neighbors_all)
-                {
-                    if (!neighbor.IsLand || neighbor.Mountain != null || neighbor.Rivers.Count > 0)
-                    {
-                        seed.Defensibility++;
-                    }
-                }
-            }
-        }
-
         public void SetStartingValues()
         {
             //Grant each settlement a starting farm and fishery if relevant
@@ -259,6 +224,15 @@ namespace JS.WorldMap.Generation
                 //Settlements adjacent to forests get Hunting Lodges
                 if (biomeHelper.GetBiome(seed.Node.BiomeID).CanBeHunted)
                     seed.Facilities.Add(new Facility("Hunting Lodge", 5, string.Empty, "Food", seed.Node.x, seed.Node.y));
+
+                //Determine initial defensibility based on natural barriers
+                foreach (var neighbor in seed.Node.neighbors_all)
+                {
+                    if (!neighbor.IsLand || neighbor.Mountain != null || neighbor.Rivers.Count > 0)
+                    {
+                        seed.Defensibility++;
+                    }
+                }
             }
         }
 
@@ -330,13 +304,13 @@ namespace JS.WorldMap.Generation
             return hamlet;
         }
 
-
-
         //I will likely end up moving this over to a HistoryGenerator class later on
         private void RunSettlementHistory()
         {
-            foreach(var seed in seeds)
+            for (int i = seeds.Count - 1; i >= 0; i--)
             {
+                var seed = seeds[i];
+                Report(seed.Name);
                 if (worldGenerator.PRNG.Next(0, 100) > 75)
                 {
                     /*apply the effect of a random event
@@ -344,65 +318,142 @@ namespace JS.WorldMap.Generation
                     BadHarvest(foodMod = 0.5), RaiderAttack, MonsterAttack, etc. */
                 }
 
-                //Calculate this year's food yield
-                seed.FoodProduction = CalculateFoodProduction(seed);
+                AssignWorkers(seed);
 
-                //Adjust population to available food supply
-                seed.Population = seed.FoodProduction;
+                CalculateFoodProduction(seed);
+
+                AdjustToFoodProduction(seed);
 
                 //Decrease population based on how dangerous the area is, minus their defenses
-                seed.Population -= Mathf.Clamp(seed.Node.DangerTier - seed.Defensibility, 0, int.MaxValue);
+                int casualties = Mathf.Clamp(seed.Node.DangerTier - seed.Defensibility, 0, seed.Population);
+                seed.Population -= casualties;
 
-                var adjustedType = GetAdjustedType(seed);
-
-                int availableWorkforce = seed.Population;
-                foreach (var facility in seed.Facilities)
+                if (casualties > 0)
                 {
-                    availableWorkforce -= facility.AssignedWorkers;
+                    seed.casualties += casualties;
+                    Report(seed.Name + " lost " + casualties + " lives to the wilds.");
                 }
 
+                if (seed.Population <= 0)
+                {
+                    Report(seed.Name + " was lost.");
+                    Report(seed.starvations + " members starved to death.");
+                    Report(seed.casualties + " were killed by monsters.");
+                    Report(seed.plagueDeaths + " were killed by the plague.");
+                    Report("\n");
 
+                    seeds.Remove(seed);
+                    continue;
+                }
+                else if (seed.Population <= hamlet.minPopulation)
+                {
+                    //Migrate to nearest settlement
+                }
+
+                var adjustedType = GetAdjustedType(seed);
+                if (adjustedType != seed.Type)
+                {
+                    Report(seed.Name + " transitioned from a " + seed.Type.TypeName + " to a " + adjustedType.TypeName);
+                }
+                seed.Type = adjustedType;
+                Report("\n");
             }
         }
 
-        private int CalculateFoodProduction(CitySeed settlement)
+        /// <summary>
+        /// Assigns available workforce to each facility
+        /// </summary>
+        private void AssignWorkers(CitySeed seed)
         {
-            int production = 0;
-            foreach (var facility in settlement.Facilities)
+            int availableWorkforce = seed.Population;
+            for (int i = 0; i < seed.Facilities.Count; i++)
+            {
+                seed.Facilities[i].AssignedWorkers = 0;
+            }
+
+            foreach(var facility in seed.Facilities)
+            {
+                if (availableWorkforce <= 0) break;
+
+                while(availableWorkforce > 0 && facility.AssignedWorkers < facility.RequiredWorkers)
+                {
+                    availableWorkforce--;
+                    facility.AssignedWorkers++;
+                }
+            }
+
+            foreach (var facility in seed.Facilities)
+            {
+                if (facility.AssignedWorkers < facility.RequiredWorkers)
+                {
+                    Report(seed.Name + "'s " + facility.Name + " is undermanned: " + 
+                        facility.AssignedWorkers + "/" + facility.RequiredWorkers);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Calculate the year's food yield
+        /// </summary>
+        private void CalculateFoodProduction(CitySeed seed)
+        {
+            seed.FoodProduction = 0;
+            foreach (var facility in seed.Facilities)
             {
                 var node = worldMap.GetNode(facility.X, facility.Y);
+                float manning = (float)facility.AssignedWorkers / facility.RequiredWorkers;
+
                 if (facility.Name.Equals("Crop Farm"))
                 {
-                    
                     float p = node.precipitationValue * 100;
-                    float t = Mathf.Pow(-4f * node.heatValue, 2) + 5.6f * node.heatValue - 0.96f;
-                    Debug.Log("t: " + t);
-                    production += Mathf.RoundToInt(50 * p * t);
+                    float t = -4f * (node.heatValue * node.heatValue) + 5.6f * node.heatValue - 0.96f;
+                    float farmability = (p * 1) * 0.01f;
+
+                    int output = Mathf.RoundToInt(50 * farmability * manning);
+
+                    seed.FoodProduction += output;
+                    Report(seed.Name + "'s Farm produced " + output + " food");
                 }
                 else if (facility.Name.Equals("Docks"))
                 {
-                    production += 50 - node.DangerTier;
+                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning), 0, 50);
+                    seed.FoodProduction += output;
+                    Report(seed.Name + "'s Docks produced " + output + " food");
                 }
                 else if (facility.Name.Equals("Hunting Lodge"))
                 {
-                    production += 50 - node.DangerTier;
+                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning), 0, 50);
+                    seed.FoodProduction += output;
+                    Report(seed.Name + "'s Hunting Lodge produced " + output + " food");
                 }
             }
-            return production;
+        }
+
+        private void AdjustToFoodProduction(CitySeed seed)
+        {
+            if (seed.Population > seed.FoodProduction)
+            {
+                seed.starvations += (seed.Population - seed.FoodProduction);
+
+                Report(seed.Name + "'s population shrank from " + seed.Population + " to " + seed.FoodProduction);
+            }
+            else if (seed.Population < seed.FoodProduction)
+            {
+                Report(seed.Name + "'s population grew from " + seed.Population + " to " + seed.FoodProduction);
+            }
+            //Adjust population to available food supply
+            seed.Population = seed.FoodProduction;
         }
 
         private SettlementType GetAdjustedType(CitySeed settlement)
         {
-            for (int i = 0; i < settlementTypes.Length; i++)
-            {
-                if (settlement.Population < settlementTypes[i].minPopulation) continue;
-                if (settlement.Population > settlementTypes[i].maxPopulation) continue;
-                return settlementTypes[i];
-            }
-            return city;
+            if (settlement.Population >= city.minPopulation) return city;
+            if (settlement.Population >= town.minPopulation) return town;
+            if (settlement.Population >= village.minPopulation) return village;
+            return hamlet;
         }
 
-        private void ConvertSeeds()
+        private void ConvertSeedsToSettlements()
         {
             markov.townName = true;
             
@@ -430,6 +481,29 @@ namespace JS.WorldMap.Generation
             return tribalBids[worldGenerator.PRNG.Next(0, tribalBids.Count)];
         }
         #endregion
+
+        //Draws a minimum spanning tree that represents where all of the roads will be formed
+        private void DrawLines()
+        {
+            var test = new List<Point>();
+            for (int i = 0; i < settlements.Count; i++)
+            {
+                test.Add(new Point(settlements[i].X, settlements[i].Y));
+            }
+
+            var triangles = BowyerWatson.Triangulate(test);
+            var graph = new HashSet<Edge>();
+            foreach (var triangle in triangles)
+                graph.UnionWith(triangle.edges);
+
+            var tree = Kruskal.MinimumSpanningTree(graph);
+            foreach (var edge in tree)
+            {
+                var a = new Vector3((float)edge.Point1.X, (float)edge.Point1.Y);
+                var b = new Vector3((float)edge.Point2.X, (float)edge.Point2.Y);
+                Debug.DrawLine(a, b, Color.green, 1000f);
+            }
+        }
 
         #region - Obsolete -
         private Settlement FindNearestSettlement(Settlement fromSettlement)
@@ -500,7 +574,6 @@ namespace JS.WorldMap.Generation
             return settlementTypes[settlementTypes.Length - 1]; //hamlets
         }
 
-
         private void ExpandTerritory(Settlement settlement)
         {
             //clamp max size based on settlement size
@@ -518,7 +591,7 @@ namespace JS.WorldMap.Generation
                 var node = queue.Dequeue();
                 if (!settlement.OwnsTerritory(node.x, node.y))
                 {
-                    AssignTerritory(settlement, node);
+                    //AssignTerritory(settlement, node);
                     //territoryToAdd--;
                 }
 
@@ -544,15 +617,6 @@ namespace JS.WorldMap.Generation
             }
         }
 
-        private void AssignTerritory(Settlement settlement, WorldTile territory)
-        {
-            settlement.AddTerritory(territory);
-            availableNodes.Remove(territory);
-
-            if (!tribeTerritories[GetTribe(settlement.TribeID)].Contains(territory))
-                tribeTerritories[GetTribe(settlement.TribeID)].Add(territory);
-        }
-
         public Settlement FindClaimedTerritory(int x, int y)
         {
             if (settlements == null) return null;
@@ -562,31 +626,6 @@ namespace JS.WorldMap.Generation
                 if (settlements[i].OwnsTerritory(x, y)) return settlements[i];
             }
             return null;
-        }
-
-        /// <summary>
-        /// Prints a report of the spread of settlement types for each tribe
-        /// </summary>
-        private void GetTerritoryReport()
-        {
-            for (int i = 0; i < tribes.Length; i++)
-            {
-                int count = 0, hamlets = 0, villages = 0, towns = 0, cities = 0;
-                for (int j = 0; j < settlements.Count; j++)
-                {
-                    if (GetTribe(settlements[j].TribeID) == tribes[i])
-                    {
-                        count++;
-                        if (settlements[j].TypeID == 0) cities++;
-                        if (settlements[j].TypeID == 1) towns++;
-                        if (settlements[j].TypeID == 2) villages++;
-                        if (settlements[j].TypeID == 3) hamlets++;
-                    }
-                }
-                Debug.Log(tribes[i].ToString() + ": " + count + " settlements, " + tribeTerritories[tribes[i]].Count + " nodes, " +
-                    "hamlets: " + hamlets + ", villages: " + villages + ", towns: " + towns + ", cities: " + cities);
-
-            }
         }
         #endregion
     }

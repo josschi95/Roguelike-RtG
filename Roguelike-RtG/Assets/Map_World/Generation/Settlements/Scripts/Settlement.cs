@@ -115,6 +115,7 @@ namespace JS.WorldMap
 
     public class CitySeed
     {
+        public string Name;
         public WorldTile Node;
         public SettlementType Type;
         public SettlementType LargestSize; //How big it was at the height of its population
@@ -126,6 +127,12 @@ namespace JS.WorldMap
 
         public List<WorldTile> Territory = new List<WorldTile>();
         public List<Facility> Facilities = new List<Facility>();
+
+
+
+        public int starvations;
+        public int casualties;
+        public int plagueDeaths;
     }
 }
 

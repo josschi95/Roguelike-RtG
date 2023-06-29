@@ -4,7 +4,7 @@ namespace JS.WorldMap
     public class LandMass
     {
         public int ID { get; private set; }
-        public GridCoordinates[] GridNodes { get; set; }
+        public GridCoordinates[] GridNodes;
         public LandSize Size;
 
         public LandMass(int ID)

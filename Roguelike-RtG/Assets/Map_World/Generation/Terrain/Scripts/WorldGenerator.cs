@@ -254,6 +254,7 @@ namespace JS.WorldMap.Generation
 
             foreach(var mass in worldMap.TerrainData.LandMasses)
             {
+                if (mass.GridNodes == null) UnityEngine.Debug.LogWarning("Nodes are null!");
                 if (mass.Size != LandSize.Continent) continue;
                 if (mass.GridNodes.Length <= largest) continue;
 

@@ -157,8 +157,18 @@ MonoBehaviour:
   nameLength: 5
   namesToGenerate: 1
   cleanText: 1
+  corpora:
+  - Name: Herbs
+    Assets:
+    - {fileID: 4900000, guid: 31ab908f7bdde924684aee736e7498eb, type: 3}
+  - Name: Settlements
+    Assets:
+    - {fileID: 4900000, guid: 6869690fa4f8bbe42802c64bc3165f2a, type: 3}
+  - Name: Names
+    Assets:
+    - {fileID: 4900000, guid: c1391f82ea547a04491a5f5373fa3f2d, type: 3}
   textFiles:
-  - {fileID: 4900000, guid: 6869690fa4f8bbe42802c64bc3165f2a, type: 3}
+  - {fileID: 4900000, guid: 31ab908f7bdde924684aee736e7498eb, type: 3}
   debugDictionary: 0
   townName: 1
 --- !u!114 &1693660195

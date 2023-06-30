@@ -1,0 +1,368 @@
+{
+	"AlchemyEffects": [
+
+		{ "Name": "***** CORE *****" },
+
+		{
+			"Name": "Restore Health",
+			"Biome": ""
+		},
+		{
+			"Name": "Damage Health",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Health Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Health Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Regenerate Health",
+			"Biome": ""
+		},
+		{
+			"Name": "Degrade Health",
+			"Biome": ""
+		},
+
+		{
+			"Name": "Restore Mana",
+			"Biome": ""
+		},
+		{
+			"Name": "Damage Mana",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Mana Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Mana Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Regenerate Mana",
+			"Biome": ""
+		},
+		{
+			"Name": "Degrade Mana",
+			"Biome": ""
+		},
+
+		{
+			"Name": "Restore Stamina",
+			"Biome": ""
+		},
+		{
+			"Name": "Damage Stamina",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Stamina Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Stamina Regen",
+			"Biome": ""
+		},
+		{
+			"Name": "Regenerate Stamina",
+			"Biome": ""
+		},
+		{
+			"Name": "Degrade Stamina",
+			"Biome": ""
+		},
+
+
+		{ "Name": "***** ATTRIBUTES *****" },
+
+		{
+			"Name": "Restore",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Strength",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Strength",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Agility",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Agility",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Vitality",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Vitality",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Knowledge",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Knowledge",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Willpower",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Willpower",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Charisma",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Charisma",
+			"Biome": ""
+		},
+
+		{ "Name": "***** SKILLS *****" },
+
+		{
+			"Name": "Fortify Skill",
+			"Biome": ""
+		},
+
+		{ "Name": "***** COMBAT *****" },
+
+		{
+			"Name": "Fortify Defense",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Defense",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Dodge",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Dodge",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Encumberance",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Encumbrance",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Accuracy",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Accuracy",
+			"Biome": ""
+		},
+		{
+			"Name": "Fortify Speed",
+			"Biome": ""
+		},
+		{
+			"Name": "Weaken Speed",
+			"Biome": ""
+		},
+
+		{ "Name": "***** DAMAGE TYPES *****" },
+
+		{
+			"Name": "Resist Blunt",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Blunt",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Pierce",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Pierce",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Slashing",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Slashing",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Fire",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Fire",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Frost",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Frost",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Lightning",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Lightning",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Poison",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Poison",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Acid",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Acid",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Sonic",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Sonic",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Positive Energy",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Positive Energy",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Negative Energy",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Negative Energy",
+			"Biome": ""
+		},
+		{
+			"Name": "Resist Mystic",
+			"Biome": ""
+		},
+		{
+			"Name": "Weakness to Mystic",
+			"Biome": ""
+		},
+
+		{ "Name": "***** CONDITIONS/CURES *****" },
+
+		{
+			"Name": "Cure Disease",
+			"Biome": ""
+		},
+		{
+			"Name": "Cure Poison",
+			"Biome": ""
+		},
+		{
+			"Name": "Enrage",
+			"Biome": ""
+		},
+		{
+			"Name": "Pacify",
+			"Biome": ""
+		},
+		{
+			"Name": "Fear",
+			"Biome": ""
+		},
+		{
+			"Name": "Calm",
+			"Biome": ""
+		},
+		{
+			"Name": "Confusion",
+			"Biome": ""
+		},
+		{
+			"Name": "Clarity",
+			"Biome": ""
+		},
+		{
+			"Name": "Sleep",
+			"Biome": ""
+		},
+		{
+			"Name": "Alertness",
+			"Biome": ""
+		},
+		{
+			"Name": "Paralysis",
+			"Biome": ""
+		},
+		{
+			"Name": "Cure Paralysis",
+			"Biome": ""
+		},
+		{
+			"Name": "Nausea",
+			"Biome": ""
+		},
+		{
+			"Name": "Soothing",
+			"Biome": ""
+		},
+
+		{ "Name": "***** SPECIAL *****" },
+
+		{
+			"Name": "Invisibility",
+			"Biome": ""
+		},
+		{
+			"Name": "Polymorph",
+			"Biome": ""
+		},
+		{
+			"Name": "Darkvision",
+			"Biome": ""
+		},
+		{
+			"Name": "Magic Sight",
+			"Biome": ""
+		},
+		{
+			"Name": "Waterbreathing",
+			"Biome": ""
+		}
+	]
+}

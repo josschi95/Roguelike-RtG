@@ -54,6 +54,8 @@ namespace JS.SceneManagement
             EntityFactory.LoadBlueprints();
             BodyFactory.LoadBodies();
             ECS.Materials.MaterialManager.LoadMaterials();
+
+            MarkovNames.LoadModels();
         }
 
         /// <summary>

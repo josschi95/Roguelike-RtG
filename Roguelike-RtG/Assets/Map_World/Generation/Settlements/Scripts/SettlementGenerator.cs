@@ -7,7 +7,6 @@ namespace JS.WorldMap.Generation
     public class SettlementGenerator : MonoBehaviour
     {
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private MarkovChainNames markov;
         [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private BiomeHelper biomeHelper;
         [SerializeField] private WorldData worldMap;
@@ -65,12 +64,13 @@ namespace JS.WorldMap.Generation
         {
             historyReport = string.Empty;
 
-            markov.townName = true;
             var size = new Vector2(worldMap.Width, worldMap.Height);
             var points = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
 
             for (int i = 0; i < points.Count; i++)
             {
+                if (seeds.Count > 7) break; //Just for testing
+
                 var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
 
                 if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea
@@ -81,7 +81,7 @@ namespace JS.WorldMap.Generation
                 var newSeed = new CitySeed()
                 {
                     Node = node,
-                    Name = markov.GetName(),
+                    Name = MarkovNames.GetName("TownNames", true, worldGenerator.PRNG.Next(5, 10), worldGenerator.PRNG),
                     Population = startingPopulation,
                     Type = hamlet,
                 };
@@ -98,33 +98,10 @@ namespace JS.WorldMap.Generation
                 //Debug.Break();
             }
 
-            //ClaimResources();
-            /*Determine maximum sustainable population
-            On or adjacent to arable land? +1, add farm facility
-            On or adjacent to water source? +1, add fishery facility, docks
-            On or adjacent to mineral deposit? +1, add mine facility
-            On or adjacent to forest? +1, add lumber mill
 
+            //Add in a staggering for when each settlement was founded
+            //Can add onto this by marking them as a new founding or emigrants from an existing settlement
 
-            On an island? Clamp that value, probs max Village, maybe town depending on size
-
-            */
-            //All settlements start out as hamlets, then calculate the resource wealth of the surrounding area
-            //Using that, as well as a tribe's ExpansionRating, claim territory for each settlement and grow in size
-            //Settlement location also needs to be tracked on the Regional scale, 
-            //Hamlets and Villages can occupy a single Region Map, Towns should take 4? and cities 9
-            //Place satellite locations in regino tiles surrounding each settlement,
-            //Farms
-            //Mines - require presence of an Ore
-            //Quarries
-            //Hatcheries - requires presence of lake/river
-            //Ports/Docks - these can serve as travel points for crossing bodies of water
-
-            //CleanUpMinorSettlements();
-
-            //Set Area of Influence
-            //Based on settlement size
-            //Probably use flood fill again
             //GetSettlementConnections();
 
             ConvertSeedsToSettlements();
@@ -318,7 +295,7 @@ namespace JS.WorldMap.Generation
                     BadHarvest(foodMod = 0.5), RaiderAttack, MonsterAttack, etc. */
                 }
 
-                AssignWorkers(seed);
+                int availableWorkforce = AssignWorkers(seed);
 
                 CalculateFoodProduction(seed);
 
@@ -350,6 +327,8 @@ namespace JS.WorldMap.Generation
                     //Migrate to nearest settlement
                 }
 
+                TryAddNewFacility(seed, availableWorkforce);
+
                 var adjustedType = GetAdjustedType(seed);
                 if (adjustedType != seed.Type)
                 {
@@ -363,7 +342,7 @@ namespace JS.WorldMap.Generation
         /// <summary>
         /// Assigns available workforce to each facility
         /// </summary>
-        private void AssignWorkers(CitySeed seed)
+        private int AssignWorkers(CitySeed seed)
         {
             int availableWorkforce = seed.Population;
             for (int i = 0; i < seed.Facilities.Count; i++)
@@ -390,6 +369,8 @@ namespace JS.WorldMap.Generation
                         facility.AssignedWorkers + "/" + facility.RequiredWorkers);
                 }
             }
+
+            return availableWorkforce;
         }
         
         /// <summary>
@@ -445,6 +426,19 @@ namespace JS.WorldMap.Generation
             seed.Population = seed.FoodProduction;
         }
 
+        private void TryAddNewFacility(CitySeed seed, int availableWorkforce)
+        {
+            if (availableWorkforce < 5) return;
+
+            if (availableWorkforce < 10 && availableWorkforce > 5)
+            {
+                //Add new farm/fishery
+                return;
+            }
+
+            //Baker? Butcher? etc.
+        }
+
         private SettlementType GetAdjustedType(CitySeed settlement)
         {
             if (settlement.Population >= city.minPopulation) return city;
@@ -454,14 +448,11 @@ namespace JS.WorldMap.Generation
         }
 
         private void ConvertSeedsToSettlements()
-        {
-            markov.townName = true;
-            
+        {           
             foreach(var seed in seeds)
             {
-                var name = markov.GetName();
                 var tribe = GetTribeBids(seed.Node);
-                var newSettlement = new Settlement(name, settlements.Count, seed.Node, seed.Type, tribe, seed.Population);
+                var newSettlement = new Settlement(seed.Name, settlements.Count, seed.Node, seed.Type, tribe, seed.Population);
                 settlements.Add(newSettlement);
             }
         }

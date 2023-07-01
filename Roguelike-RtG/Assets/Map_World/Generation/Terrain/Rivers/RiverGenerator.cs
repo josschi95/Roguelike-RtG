@@ -85,13 +85,7 @@ namespace JS.WorldMap.Generation
             if (!riverLessMountain) return worldMap.TerrainData.Mountains[worldGenerator.PRNG.Next(0, mountains.Length)];
 
             var shuffledList = new List<MountainRange>(mountains);
-            for (int i = 0; i < shuffledList.Count; i++)
-            {
-                var temp = shuffledList[i];
-                int randomIndex = worldGenerator.PRNG.Next(i, shuffledList.Count);
-                shuffledList[i] = shuffledList[randomIndex];
-                shuffledList[randomIndex] = temp;
-            }
+            MathsUtil.ShuffleList(shuffledList, worldGenerator.PRNG);
 
             for (int i = 0; i < shuffledList.Count; i++)
             {

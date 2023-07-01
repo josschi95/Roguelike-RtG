@@ -117,6 +117,8 @@ namespace JS.WorldMap
     {
         public string Name;
         public WorldTile Node;
+        public int YearFounded;
+
         public SettlementType Type;
         public SettlementType LargestSize; //How big it was at the height of its population
 

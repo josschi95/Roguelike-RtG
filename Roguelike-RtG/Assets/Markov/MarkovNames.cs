@@ -66,7 +66,11 @@ public static class MarkovNames
     public static string GetName(string source, bool town = false, int length = 5, System.Random PRNG = null)
     {
         if (!markovModels.ContainsKey(source)) return null;
-        if (PRNG == null) PRNG = new System.Random();
+        if (PRNG == null)
+        {
+            Debug.LogWarning("Creating new Random");
+            PRNG = new System.Random();
+        }
         var markov = markovModels[source];
 
         string currentState = markov.startLetters[PRNG.Next(0, markov.startLetters.Count)];

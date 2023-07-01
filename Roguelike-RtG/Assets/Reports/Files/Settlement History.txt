@@ -1,470 +1,717 @@
+The settlement of Loneham was founded in year 0 by Vikr
+The settlement of Giltonc was founded in year 0 by Thorgilj
+The settlement of Denwordbrithorp was founded in year 0 by Braidh
+The settlement of Ellisto was founded in year 0 by Egildrey
+The settlement of Smingtoncester was founded in year 0 by Folfrioal
+The settlement of Ruseybe was founded in year 0 by Caldrekr
+The settlement of Lytonell was founded in year 0 by Aoalvdars
 
-Year 0
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
+*** Year 0 ***
 
+The settlement of Pendseysty was founded in year 0 by Halstei
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population shrank from 25 to 23
+Pendseysty lost 1 lives to the wilds.
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
-Vichampswecaster's population grew from 25 to 74
-Vichampswecaster transitioned from a Hamlet to a Village
 
+Lytonell
+Lytonell's Farm produced 49 food
+Lytonell's population grew from 25 to 49
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
-Anthamptthorp's population grew from 25 to 146
-Anthamptthorp transitioned from a Hamlet to a Village
 
+Ruseybe
+Ruseybe's Farm produced 32 food
+Ruseybe's population grew from 25 to 32
 
-Fowickehham
-Fowickehham's Farm produced 9 food
-Fowickehham's population shrank from 25 to 9
 
+Smingtoncester
+Smingtoncester's Farm produced 14 food
+Smingtoncester's population shrank from 25 to 14
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
-Nathforburgh's population grew from 25 to 91
-Nathforburgh transitioned from a Hamlet to a Village
 
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 25 to 83
+Ellisto lost 1 lives to the wilds.
+Ellisto transitioned from a Hamlet to a Village
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
-Sillingmardorf's population grew from 25 to 80
-Sillingmardorf transitioned from a Hamlet to a Village
 
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's population grew from 25 to 36
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 25 to 32
-Aikettebornview lost 2 lives to the wilds.
 
+Giltonc
+Giltonc's Farm produced 30 food
+Giltonc's population grew from 25 to 30
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 25 to 96
-Oswortocaster lost 2 lives to the wilds.
-Oswortocaster transitioned from a Hamlet to a Village
 
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 25 to 87
+Loneham lost 2 lives to the wilds.
+Loneham transitioned from a Hamlet to a Village
 
 
-Year 1
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
 
+*** Year 1 ***
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+The settlement of Systonstli was founded in year 0 by Thornbork
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 25 to 82
+Systonstli lost 4 lives to the wilds.
+Systonstli transitioned from a Hamlet to a Village
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
 
-Fowickehham
-Fowickehham's Farm produced 9 food
+Lytonell
+Lytonell's Farm produced 49 food
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
+Ruseybe
+Ruseybe's Farm produced 32 food
 
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
 
+Giltonc
+Giltonc's Farm produced 30 food
 
-Year 2
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
 
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+*** Year 2 ***
 
+The settlement of Arminghaltown was founded in year 0 by Gautstein
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 25 to 76
+Arminghaltown lost 4 lives to the wilds.
+Arminghaltown transitioned from a Hamlet to a Village
 
-Fowickehham
-Fowickehham's Farm produced 9 food
 
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
 
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
 
+Lytonell
+Lytonell's Farm produced 49 food
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
 
+Ruseybe
+Ruseybe's Farm produced 32 food
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
 
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
 
-Year 3
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+Giltonc
+Giltonc's Farm produced 30 food
 
 
-Fowickehham
-Fowickehham's Farm produced 9 food
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
 
+*** Year 3 ***
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
+The settlement of Jarrypo was founded in year 0 by Eloffe
+Jarrypo
+Jarrypo's Farm produced 32 food
+Jarrypo's population grew from 25 to 32
 
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
 
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
 
 
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
-Year 4
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
 
+Lytonell
+Lytonell's Farm produced 49 food
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
 
+Ruseybe
+Ruseybe's Farm produced 32 food
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
 
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
-Fowickehham
-Fowickehham's Farm produced 9 food
 
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
 
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
 
+Giltonc
+Giltonc's Farm produced 30 food
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
 
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
 
 
+*** Year 4 ***
 
-Year 5
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
+The settlement of Erightochucaster was founded in year 0 by Torjelbrr
+Erightochucaster
+Erightochucaster's Farm produced 34 food
+Erightochucaster's population grew from 25 to 34
 
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+Jarrypo
+Jarrypo's Farm produced 32 food
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
 
 
-Fowickehham
-Fowickehham's Farm produced 9 food
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
+Lytonell
+Lytonell's Farm produced 49 food
 
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
+Ruseybe
+Ruseybe's Farm produced 32 food
 
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
 
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
-Year 6
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
 
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
 
+Giltonc
+Giltonc's Farm produced 30 food
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
 
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
-Fowickehham
-Fowickehham's Farm produced 9 food
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
+*** Year 5 ***
 
+The settlement of Ludlisenstead was founded in year 0 by Sjurd
+Ludlisenstead
+Ludlisenstead's Farm produced 41 food
+Ludlisenstead's Hunting Lodge produced 44 food
+Ludlisenstead's population grew from 25 to 85
+Ludlisenstead lost 3 lives to the wilds.
+Ludlisenstead transitioned from a Hamlet to a Village
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
 
+Erightochucaster
+Erightochucaster's Farm produced 34 food
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
 
+Jarrypo
+Jarrypo's Farm produced 32 food
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
 
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
 
 
-Year 7
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
 
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+Lytonell
+Lytonell's Farm produced 49 food
 
 
-Fowickehham
-Fowickehham's Farm produced 9 food
+Ruseybe
+Ruseybe's Farm produced 32 food
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
+Giltonc
+Giltonc's Farm produced 30 food
 
 
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
-Year 8
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
 
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+*** Year 6 ***
 
+The settlement of Yeonmouton was founded in year 0 by Corlebjor
+Yeonmouton
+Yeonmouton's Farm produced 7 food
+Yeonmouton's population shrank from 25 to 7
+Yeonmouton lost 2 lives to the wilds.
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
 
+Ludlisenstead
+Ludlisenstead's Farm produced 41 food
+Ludlisenstead's Hunting Lodge produced 44 food
+Ludlisenstead's population grew from 82 to 85
+Ludlisenstead lost 3 lives to the wilds.
 
-Fowickehham
-Fowickehham's Farm produced 9 food
 
+Erightochucaster
+Erightochucaster's Farm produced 34 food
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
 
+Jarrypo
+Jarrypo's Farm produced 32 food
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
 
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
 
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
 
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
 
 
-Year 9
-Kirkshfiebury
-Kirkshfiebury's Farm produced 26 food
-Kirkshfiebury's population grew from 25 to 26
-Kirkshfiebury lost 1 lives to the wilds.
+Lytonell
+Lytonell's Farm produced 49 food
 
 
-Vichampswecaster
-Vichampswecaster's Farm produced 30 food
-Vichampswecaster's Docks produced 44 food
+Ruseybe
+Ruseybe's Farm produced 32 food
 
 
-Anthamptthorp
-Anthamptthorp's Farm produced 50 food
-Anthamptthorp's Docks produced 48 food
-Anthamptthorp's Hunting Lodge produced 48 food
+Smingtoncester
+Smingtoncester's Farm produced 14 food
 
 
-Fowickehham
-Fowickehham's Farm produced 9 food
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
 
 
-Nathforburgh
-Nathforburgh's Farm produced 41 food
-Nathforburgh's Hunting Lodge produced 50 food
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
 
 
-Sillingmardorf
-Sillingmardorf's Farm produced 34 food
-Sillingmardorf's Docks produced 46 food
+Giltonc
+Giltonc's Farm produced 30 food
 
 
-Aikettebornview
-Aikettebornview's Farm produced 32 food
-Aikettebornview's population grew from 30 to 32
-Aikettebornview lost 2 lives to the wilds.
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
 
-Oswortocaster
-Oswortocaster's Farm produced 50 food
-Oswortocaster's Hunting Lodge produced 46 food
-Oswortocaster's population grew from 94 to 96
-Oswortocaster lost 2 lives to the wilds.
+
+*** Year 7 ***
+
+The settlement of Calinghg was founded in year 0 by Borlioa
+Calinghg
+Calinghg's Farm produced 39 food
+Calinghg's population grew from 25 to 39
+
+
+Yeonmouton
+Yeonmouton's Farm produced 7 food
+Yeonmouton's population grew from 5 to 7
+Yeonmouton lost 2 lives to the wilds.
+
+
+Ludlisenstead
+Ludlisenstead's Farm produced 41 food
+Ludlisenstead's Hunting Lodge produced 44 food
+Ludlisenstead's population grew from 82 to 85
+Ludlisenstead lost 3 lives to the wilds.
+
+
+Erightochucaster
+Erightochucaster's Farm produced 34 food
+
+
+Jarrypo
+Jarrypo's Farm produced 32 food
+
+
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
+
+
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
+
+
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
+
+
+Lytonell
+Lytonell's Farm produced 49 food
+
+
+Ruseybe
+Ruseybe's Farm produced 32 food
+
+
+Smingtoncester
+Smingtoncester's Farm produced 14 food
+
+
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
+
+
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
+
+
+Giltonc
+Giltonc's Farm produced 30 food
+
+
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
+
+
+
+*** Year 8 ***
+
+The settlement of Uxborda was founded in year 0 by Sundreyr
+Uxborda
+Uxborda's Farm produced 34 food
+Uxborda's population grew from 25 to 34
+
+
+Calinghg
+Calinghg's Farm produced 39 food
+
+
+Yeonmouton
+Yeonmouton's Farm produced 7 food
+Yeonmouton's population grew from 5 to 7
+Yeonmouton lost 2 lives to the wilds.
+
+
+Ludlisenstead
+Ludlisenstead's Farm produced 41 food
+Ludlisenstead's Hunting Lodge produced 44 food
+Ludlisenstead's population grew from 82 to 85
+Ludlisenstead lost 3 lives to the wilds.
+
+
+Erightochucaster
+Erightochucaster's Farm produced 34 food
+
+
+Jarrypo
+Jarrypo's Farm produced 32 food
+
+
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
+
+
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
+
+
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
+
+
+Lytonell
+Lytonell's Farm produced 49 food
+
+
+Ruseybe
+Ruseybe's Farm produced 32 food
+
+
+Smingtoncester
+Smingtoncester's Farm produced 14 food
+
+
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
+
+
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
+
+
+Giltonc
+Giltonc's Farm produced 30 food
+
+
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
+
+
+
+*** Year 9 ***
+
+The settlement of Andsnor was founded in year 0 by Torstendr
+Andsnor
+Andsnor's Farm produced 10 food
+Andsnor's population shrank from 25 to 10
+Andsnor lost 1 lives to the wilds.
+
+
+Uxborda
+Uxborda's Farm produced 34 food
+
+
+Calinghg
+Calinghg's Farm produced 39 food
+
+
+Yeonmouton
+Yeonmouton's Farm produced 7 food
+Yeonmouton's population grew from 5 to 7
+Yeonmouton lost 2 lives to the wilds.
+
+
+Ludlisenstead
+Ludlisenstead's Farm produced 41 food
+Ludlisenstead's Hunting Lodge produced 44 food
+Ludlisenstead's population grew from 82 to 85
+Ludlisenstead lost 3 lives to the wilds.
+
+
+Erightochucaster
+Erightochucaster's Farm produced 34 food
+
+
+Jarrypo
+Jarrypo's Farm produced 32 food
+
+
+Arminghaltown
+Arminghaltown's Farm produced 34 food
+Arminghaltown's Hunting Lodge produced 42 food
+Arminghaltown's population grew from 72 to 76
+Arminghaltown lost 4 lives to the wilds.
+
+
+Systonstli
+Systonstli's Farm produced 40 food
+Systonstli's Hunting Lodge produced 42 food
+Systonstli's population grew from 78 to 82
+Systonstli lost 4 lives to the wilds.
+
+
+Pendseysty
+Pendseysty's Farm produced 23 food
+Pendseysty's population grew from 22 to 23
+Pendseysty lost 1 lives to the wilds.
+
+
+Lytonell
+Lytonell's Farm produced 49 food
+
+
+Ruseybe
+Ruseybe's Farm produced 32 food
+
+
+Smingtoncester
+Smingtoncester's Farm produced 14 food
+
+
+Ellisto
+Ellisto's Farm produced 35 food
+Ellisto's Hunting Lodge produced 48 food
+Ellisto's population grew from 82 to 83
+Ellisto lost 1 lives to the wilds.
+
+
+Denwordbrithorp
+Denwordbrithorp's Farm produced 36 food
+
+
+Giltonc
+Giltonc's Farm produced 30 food
+
+
+Loneham
+Loneham's Farm produced 41 food
+Loneham's Hunting Lodge produced 46 food
+Loneham's population grew from 85 to 87
+Loneham lost 2 lives to the wilds.
 
 

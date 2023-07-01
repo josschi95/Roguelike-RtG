@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+[System.Obsolete]
 [CustomEditor(typeof(MarkovChainNames))]
 public class MarkovNameEditor : Editor
 {

@@ -6,6 +6,7 @@ using JS.CommandSystem;
 using TMPro;
 using JS.Primitives;
 using System.Diagnostics;
+using JS.World.Alchemy;
 
 namespace JS.WorldMap.Generation
 {
@@ -21,6 +22,10 @@ namespace JS.WorldMap.Generation
         [Space]
             
         [SerializeField] private WorldSize worldSize;
+        [SerializeField] private int yearsOfHistory = 10;
+
+        [Space]
+
         [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private SettlementData settlementData;
@@ -34,9 +39,7 @@ namespace JS.WorldMap.Generation
         [SerializeField] private RiverGenerator riverGenerator;
         [SerializeField] private SettlementGenerator settlementGenerator;
         [SerializeField] private RoadGenerator roadGenerator;
-        //private FloraFaunaGenerator floraFaunaGenerator;
-        //private ResourceGenerator resourceGenerator;
-        //private HistoryGenerator historyGenerator
+        [SerializeField] private HistoryGenerator historyGenerator;
 
         [Space]
 
@@ -141,10 +144,14 @@ namespace JS.WorldMap.Generation
             
             SetDangerZones();
 
+            //Generate Plantlife
+            FloraGenerator.GenerateFlora(PRNG);
+
             //Generate Settlements, Roads, and Relations
             yield return StartCoroutine(HandleSettlementGeneration());
 
-            //Generate Plant and Wildlife
+            //Generate History
+            yield return StartCoroutine(historyGenerator.RunHistory(yearsOfHistory));
 
             //Generate Historical Figures, Locations, Items, and Events
 
@@ -221,7 +228,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private IEnumerator HandleSettlementGeneration()
         {
-            settlementGenerator.PlaceSettlements();
+            settlementGenerator.PlaceCivilizationSeeds();
             progressBar.fillAmount = 0.9f;
             yield return StartCoroutine(UpdateProgress("Generating Roads"));
 
@@ -312,6 +319,10 @@ namespace JS.WorldMap.Generation
             HandleTerrainRecreation(data);
             yield return new WaitForEndOfFrame();
             RecreateSettlements(data);
+
+            yield return StartCoroutine(historyGenerator.RunHistory(yearsOfHistory));
+
+
             worldGenCompleteEvent?.Invoke();
         }
 
@@ -341,7 +352,7 @@ namespace JS.WorldMap.Generation
 
         private void RecreateSettlements(WorldSaveData data)
         {
-            settlementGenerator.PlaceSettlements();
+            settlementGenerator.PlaceCivilizationSeeds();
             roadGenerator.GenerateRoads();
         }
         #endregion

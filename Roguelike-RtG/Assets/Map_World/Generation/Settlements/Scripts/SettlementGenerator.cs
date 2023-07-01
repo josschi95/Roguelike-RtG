@@ -23,6 +23,7 @@ namespace JS.WorldMap.Generation
         private int startingPopulation = 25;
         private int[] settlementCount;
 
+        private List<Vector2> seedLocations;
         private List<CitySeed> seeds;
         private List<Settlement> settlements;
         private string historyReport;
@@ -60,57 +61,31 @@ namespace JS.WorldMap.Generation
         }
 
         #region - Settlement Placement -
-        public void PlaceSettlements()
+        public void PlaceCivilizationSeeds()
         {
             historyReport = string.Empty;
 
             var size = new Vector2(worldMap.Width, worldMap.Height);
-            var points = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
+            seedLocations = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
 
-            for (int i = 0; i < points.Count; i++)
+            //Removes all invalid locations
+            for (int i = seedLocations.Count - 1; i >= 0; i--)
             {
-                if (seeds.Count > 7) break; //Just for testing
-
-                var node = worldMap.GetNode((int)points[i].x, (int)points[i].y);
-
+                var node = worldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
                 if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
-                if (node == null) continue;
-
-                //Place seed at the node
-                var newSeed = new CitySeed()
-                {
-                    Node = node,
-                    Name = MarkovNames.GetName("TownNames", true, worldGenerator.PRNG.Next(5, 10), worldGenerator.PRNG),
-                    Population = startingPopulation,
-                    Type = hamlet,
-                };
-                seeds.Add(newSeed);
+                if (node == null) seedLocations.RemoveAt(i);
             }
 
-            SetStartingValues();
+            int startingSeeds = 6;
 
-            int seedGrowthYears = 10;
-            for (int i = 0; i < seedGrowthYears; i++)
+            for (int i = 0; i < startingSeeds; i++)
             {
-                Report("\nYear " + i);
-                RunSettlementHistory();
-                //Debug.Break();
+                OnNewSeed(seedLocations[0], 0);
+                seedLocations.RemoveAt(0);
             }
-
-
-            //Add in a staggering for when each settlement was founded
-            //Can add onto this by marking them as a new founding or emigrants from an existing settlement
-
-            //GetSettlementConnections();
-
-            ConvertSeedsToSettlements();
-            //GetTerritoryReport();
-            ReportWriter.FileReport("Settlement History", historyReport);
-
-            DrawLines();
-            worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
         }
+
 
         #region - Seed Placement Adjustments -
         /// <summary>
@@ -187,103 +162,55 @@ namespace JS.WorldMap.Generation
         #endregion
 
         #region - Settlement Expansion -
-        public void SetStartingValues()
+        private void OnNewSeed(Vector2 location, int year)
         {
-            //Grant each settlement a starting farm and fishery if relevant
-            foreach (var seed in seeds)
+            var node = worldMap.GetNode((int)location.x, (int)location.y);
+
+            var newSeed = new CitySeed()
             {
-                seed.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", seed.Node.x, seed.Node.y));
+                Node = node,
+                YearFounded = year,
+                Name = MarkovNames.GetName("TownNames", true, worldGenerator.PRNG.Next(5, 10), worldGenerator.PRNG),
+                Population = startingPopulation,
+                Type = hamlet,
+            };
+            
+            string founder = MarkovNames.GetName("Forenames_Male", false, worldGenerator.PRNG.Next(5, 8), worldGenerator.PRNG);
+            Report("The settlement of " + newSeed.Name + " was founded in year " + year + " by " + founder);
+            
+            newSeed.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
-                //Settlements adjacent to water sources get docks, also provides trade
-                if (worldMap.TerrainData.Coasts[seed.Node.x, seed.Node.y] || seed.Node.Rivers.Count > 0)
-                    seed.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", seed.Node.x, seed.Node.y));
+            //Settlements adjacent to water sources get docks, also provides trade
+            if (worldMap.TerrainData.Coasts[newSeed.Node.x, newSeed.Node.y] || newSeed.Node.Rivers.Count > 0)
+                newSeed.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
-                //Settlements adjacent to forests get Hunting Lodges
-                if (biomeHelper.GetBiome(seed.Node.BiomeID).CanBeHunted)
-                    seed.Facilities.Add(new Facility("Hunting Lodge", 5, string.Empty, "Food", seed.Node.x, seed.Node.y));
+            //Settlements adjacent to forests get Hunting Lodges
+            if (biomeHelper.GetBiome(newSeed.Node.BiomeID).CanBeHunted)
+                newSeed.Facilities.Add(new Facility("Hunting Lodge", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
-                //Determine initial defensibility based on natural barriers
-                foreach (var neighbor in seed.Node.neighbors_all)
+            //Determine initial defensibility based on natural barriers
+            foreach (var neighbor in newSeed.Node.neighbors_all)
+            {
+                if (!neighbor.IsLand || neighbor.Mountain != null || neighbor.Rivers.Count > 0)
                 {
-                    if (!neighbor.IsLand || neighbor.Mountain != null || neighbor.Rivers.Count > 0)
-                    {
-                        seed.Defensibility++;
-                    }
+                    newSeed.Defensibility++;
                 }
             }
-        }
 
-        private void ClaimResources()
-        {
-            foreach(var settlement in settlements)
-            {
-                var node = worldMap.GetNode(settlement.X, settlement.Y);
-                settlement.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", node.x, node.y));
-
-                //Settlements adjacent to water sources get docks, also provides trade
-                if (worldMap.TerrainData.Coasts[node.x, node.y] || node.Rivers.Count > 0)
-                    settlement.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", node.x, node.y));
-
-
-                if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0)
-                    settlement.Facilities.Add(new Facility("Coal Mine", 5, string.Empty, "Coal", node.x, node.y));
-
-                if (worldMap.TerrainData.CopperMap[node.x, node.y] > 0)
-                    settlement.Facilities.Add(new Facility("Copper Mine", 5, string.Empty, "Copper Ore", node.x, node.y));
-
-                if (worldMap.TerrainData.IronMap[node.x, node.y] > 0)
-                {
-                    settlement.Defensibility++; //Iron weapons
-                    if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0) settlement.Defensibility++; //Steel weapons
-
-                    settlement.Facilities.Add(new Facility("Iron Mine", 5, string.Empty, "Iron Ore", node.x, node.y));
-                }
-
-                if (worldMap.TerrainData.MithrilMap[node.x, node.y] > 0)
-                {
-                    settlement.Defensibility += 4; //Mithril weapons
-                    settlement.Facilities.Add(new Facility("Mithril Mine", 5, string.Empty, "Mithril Ore", node.x, node.y));
-                }
-
-                if (worldMap.TerrainData.AdmanatineMap[node.x, node.y] > 0)
-                {
-                    settlement.Defensibility += 5; //Adamantine weapons
-                    settlement.Facilities.Add(new Facility("Adamantine Mine", 5, string.Empty, "Adamantine Ore", node.x, node.y));
-                }
-
-
-                if (worldMap.TerrainData.SilverMap[node.x, node.y] > 0)
-                    settlement.Facilities.Add(new Facility("Silver Mine", 5, string.Empty, "Silver Ore", node.x, node.y));
-
-                if (worldMap.TerrainData.GoldMap[node.x, node.y] > 0)
-                    settlement.Facilities.Add(new Facility("Gold Mine", 5, string.Empty, "Gold Ore", node.x, node.y));
-
-                if (worldMap.TerrainData.GemstoneMap[node.x, node.y] > 0)
-                    settlement.Facilities.Add(new Facility("Gem Mine", 5, string.Empty, "Gemstones", node.x, node.y));
-
-
-                var type = GetNewType(settlement);
-                int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
-                if (population < settlement.Population) population = settlement.Population;
-
-                /*Debug.Log(settlements[i].Name + " upgraded from hamlet, pop. " + settlements[i].Population +
-                    " to " + type.TypeName + ", pop. " + population);*/
-
-                settlement.AdjustSize(type, population);
-            }
-        }
-
-        private SettlementType GetNewType(Settlement settlement)
-        {
-            if (settlement.Facilities.Count > 6) return city;
-            if (settlement.Facilities.Count > 4) return town;
-            if (settlement.Facilities.Count >= 3) return village;
-            return hamlet;
+            seeds.Add(newSeed);
         }
 
         //I will likely end up moving this over to a HistoryGenerator class later on
-        private void RunSettlementHistory()
+        public void RunSettlementHistory(int year)
         {
+            Report("\n*** Year " + year + " ***\n");
+
+            if (seedLocations.Count > 0)
+            {
+                OnNewSeed(seedLocations[0], 0);
+                seedLocations.RemoveAt(0);
+            }
+
             for (int i = seeds.Count - 1; i >= 0; i--)
             {
                 var seed = seeds[i];
@@ -386,9 +313,9 @@ namespace JS.WorldMap.Generation
 
                 if (facility.Name.Equals("Crop Farm"))
                 {
-                    float p = node.precipitationValue * 100;
+                    //float p = node.precipitationValue * 100;
                     float t = -4f * (node.heatValue * node.heatValue) + 5.6f * node.heatValue - 0.96f;
-                    float farmability = (p * 1) * 0.01f;
+                    float farmability = t * node.precipitationValue;
 
                     int output = Mathf.RoundToInt(50 * farmability * manning);
 
@@ -447,16 +374,6 @@ namespace JS.WorldMap.Generation
             return hamlet;
         }
 
-        private void ConvertSeedsToSettlements()
-        {           
-            foreach(var seed in seeds)
-            {
-                var tribe = GetTribeBids(seed.Node);
-                var newSettlement = new Settlement(seed.Name, settlements.Count, seed.Node, seed.Type, tribe, seed.Population);
-                settlements.Add(newSettlement);
-            }
-        }
-
         private HumanoidTribe GetTribeBids(WorldTile node)
         {
             var biome = biomeHelper.GetBiome(node.BiomeID);
@@ -472,6 +389,26 @@ namespace JS.WorldMap.Generation
             return tribalBids[worldGenerator.PRNG.Next(0, tribalBids.Count)];
         }
         #endregion
+
+        public void FinalizeSettlements()
+        {
+            ConvertSeedsToSettlements();
+            //GetTerritoryReport();
+            ReportWriter.FileReport("Settlement History", historyReport);
+
+            DrawLines();
+            worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
+        }
+
+        private void ConvertSeedsToSettlements()
+        {
+            foreach (var seed in seeds)
+            {
+                var tribe = GetTribeBids(seed.Node);
+                var newSettlement = new Settlement(seed.Name, settlements.Count, seed.Node, seed.Type, tribe, seed.Population);
+                settlements.Add(newSettlement);
+            }
+        }
 
         //Draws a minimum spanning tree that represents where all of the roads will be formed
         private void DrawLines()
@@ -495,7 +432,6 @@ namespace JS.WorldMap.Generation
                 Debug.DrawLine(a, b, Color.green, 1000f);
             }
         }
-
         #region - Obsolete -
         private Settlement FindNearestSettlement(Settlement fromSettlement)
         {
@@ -617,6 +553,74 @@ namespace JS.WorldMap.Generation
                 if (settlements[i].OwnsTerritory(x, y)) return settlements[i];
             }
             return null;
+        }
+
+        private void ClaimResources()
+        {
+            foreach (var settlement in settlements)
+            {
+                var node = worldMap.GetNode(settlement.X, settlement.Y);
+                settlement.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", node.x, node.y));
+
+                //Settlements adjacent to water sources get docks, also provides trade
+                if (worldMap.TerrainData.Coasts[node.x, node.y] || node.Rivers.Count > 0)
+                    settlement.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", node.x, node.y));
+
+
+                if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Coal Mine", 5, string.Empty, "Coal", node.x, node.y));
+
+                if (worldMap.TerrainData.CopperMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Copper Mine", 5, string.Empty, "Copper Ore", node.x, node.y));
+
+                if (worldMap.TerrainData.IronMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility++; //Iron weapons
+                    if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0) settlement.Defensibility++; //Steel weapons
+
+                    settlement.Facilities.Add(new Facility("Iron Mine", 5, string.Empty, "Iron Ore", node.x, node.y));
+                }
+
+                if (worldMap.TerrainData.MithrilMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility += 4; //Mithril weapons
+                    settlement.Facilities.Add(new Facility("Mithril Mine", 5, string.Empty, "Mithril Ore", node.x, node.y));
+                }
+
+                if (worldMap.TerrainData.AdmanatineMap[node.x, node.y] > 0)
+                {
+                    settlement.Defensibility += 5; //Adamantine weapons
+                    settlement.Facilities.Add(new Facility("Adamantine Mine", 5, string.Empty, "Adamantine Ore", node.x, node.y));
+                }
+
+
+                if (worldMap.TerrainData.SilverMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Silver Mine", 5, string.Empty, "Silver Ore", node.x, node.y));
+
+                if (worldMap.TerrainData.GoldMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Gold Mine", 5, string.Empty, "Gold Ore", node.x, node.y));
+
+                if (worldMap.TerrainData.GemstoneMap[node.x, node.y] > 0)
+                    settlement.Facilities.Add(new Facility("Gem Mine", 5, string.Empty, "Gemstones", node.x, node.y));
+
+
+                /*var type = GetNewType(settlement);
+                int population = worldGenerator.PRNG.Next(type.minPopulation, type.maxPopulation);
+                if (population < settlement.Population) population = settlement.Population;
+
+                Debug.Log(settlements[i].Name + " upgraded from hamlet, pop. " + settlements[i].Population +
+                    " to " + type.TypeName + ", pop. " + population);
+
+                settlement.AdjustSize(type, population);*/
+            }
+        }
+
+        private SettlementType GetNewType(Settlement settlement)
+        {
+            if (settlement.Facilities.Count > 6) return city;
+            if (settlement.Facilities.Count > 4) return town;
+            if (settlement.Facilities.Count >= 3) return village;
+            return hamlet;
         }
         #endregion
     }

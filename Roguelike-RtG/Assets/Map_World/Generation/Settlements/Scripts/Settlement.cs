@@ -124,13 +124,15 @@ namespace JS.WorldMap
 
         public int Population;
         public int AvailableWorkforce;
+
+        public int FoodStores;
         public int FoodProduction;
-        public int Defensibility;
+
+        public int Offense;
+        public int Defense;
 
         public List<WorldTile> Territory = new List<WorldTile>();
         public List<Facility> Facilities = new List<Facility>();
-
-
 
         public int starvations;
         public int casualties;

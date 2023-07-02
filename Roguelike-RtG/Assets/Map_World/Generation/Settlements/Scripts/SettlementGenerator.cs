@@ -20,30 +20,21 @@ namespace JS.WorldMap.Generation
         [SerializeField] private SettlementType town;
         [SerializeField] private SettlementType village;
         [SerializeField] private SettlementType hamlet;
-        private int startingPopulation = 25;
-        private int[] settlementCount;
 
         private List<Vector2> seedLocations;
         private List<CitySeed> seeds;
         private List<Settlement> settlements;
         private string historyReport;
 
-        private int poissonRadius = 10;
-        private int adjustmentRange = 5;
+        private readonly int startingPop = 25;
+        private readonly int poissonRadius = 10;
+        private readonly int adjustmentRange = 5;
 
-        /// <summary>
-        /// Sets the initial values for Settlement Generation.
-        /// </summary>
-        public void SetInitialValues(WorldSize size)
+        private void Start()
         {
+            historyReport = string.Empty;
             settlements = new List<Settlement>();
             seeds = new List<CitySeed>();
-
-            settlementCount = mapFeatures.SettlementCount(size);
-            for (int i = 0; i < settlementCount.Length; i++)
-            {
-                settlementCount[i] *= tribes.Length;
-            }
         }
 
         private void Report(string message)
@@ -51,20 +42,9 @@ namespace JS.WorldMap.Generation
             historyReport += message + "\n";
         }
 
-        private HumanoidTribe GetTribe(int ID)
-        {
-            for (int i = 0; i < tribes.Length; i++)
-            {
-                if (tribes[i].ID == ID) return tribes[i];
-            }
-            throw new System.Exception("Tribe ID not found.");
-        }
-
         #region - Settlement Placement -
-        public void PlaceCivilizationSeeds()
+        public void PlaceSeeds()
         {
-            historyReport = string.Empty;
-
             var size = new Vector2(worldMap.Width, worldMap.Height);
             seedLocations = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
 
@@ -76,18 +56,8 @@ namespace JS.WorldMap.Generation
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) seedLocations.RemoveAt(i);
             }
-
-            int startingSeeds = 6;
-
-            for (int i = 0; i < startingSeeds; i++)
-            {
-                OnNewSeed(seedLocations[0], 0);
-                seedLocations.RemoveAt(0);
-            }
         }
 
-
-        #region - Seed Placement Adjustments -
         /// <summary>
         /// Returns the nearest WorldTile that is land, within the landCheckRadius
         /// </summary>
@@ -159,9 +129,35 @@ namespace JS.WorldMap.Generation
             return flatNode;
         }
         #endregion
-        #endregion
 
         #region - Settlement Expansion -
+        public void RunSettlementHistory(int year)
+        {
+            Report("\n*** Year " + year + " ***\n");
+
+            if (year == 0)
+            {
+                int startingSeeds = 6;
+                for (int i = 0; i < startingSeeds; i++)
+                {
+                    OnNewSeed(seedLocations[0], 0);
+                    seedLocations.RemoveAt(0);
+                }
+            }
+            else if (seedLocations.Count > 0)
+            {
+                OnNewSeed(seedLocations[0], year);
+                seedLocations.RemoveAt(0);
+            }
+
+            for (int i = seeds.Count - 1; i >= 0; i--)
+            {
+                Report(seeds[i].Name);
+                OnSeedTurn(seeds[i]);
+                Report("\n");
+            }
+        }
+
         private void OnNewSeed(Vector2 location, int year)
         {
             var node = worldMap.GetNode((int)location.x, (int)location.y);
@@ -171,13 +167,13 @@ namespace JS.WorldMap.Generation
                 Node = node,
                 YearFounded = year,
                 Name = MarkovNames.GetName("TownNames", true, worldGenerator.PRNG.Next(5, 10), worldGenerator.PRNG),
-                Population = startingPopulation,
+                Population = startingPop,
                 Type = hamlet,
             };
-            
+
             string founder = MarkovNames.GetName("Forenames_Male", false, worldGenerator.PRNG.Next(5, 8), worldGenerator.PRNG);
-            Report("The settlement of " + newSeed.Name + " was founded in year " + year + " by " + founder);
-            
+            Report("The settlement of " + newSeed.Name + " was founded in year " + year + " by " + founder + "\n");
+
             newSeed.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
             //Settlements adjacent to water sources get docks, also provides trade
@@ -193,77 +189,54 @@ namespace JS.WorldMap.Generation
             {
                 if (!neighbor.IsLand || neighbor.Mountain != null || neighbor.Rivers.Count > 0)
                 {
-                    newSeed.Defensibility++;
+                    newSeed.Defense++;
                 }
             }
 
             seeds.Add(newSeed);
         }
 
-        //I will likely end up moving this over to a HistoryGenerator class later on
-        public void RunSettlementHistory(int year)
+        private void OnSeedTurn(CitySeed seed)
         {
-            Report("\n*** Year " + year + " ***\n");
+            int availableWorkforce = AssignWorkers(seed);
 
-            if (seedLocations.Count > 0)
+            CalculateFoodProduction(seed);
+
+            AdjustToFoodAvailability(seed);
+
+            DetermineCasualties(seed);
+
+            if (seed.Population <= 0)
             {
-                OnNewSeed(seedLocations[0], 0);
-                seedLocations.RemoveAt(0);
+                OnSeedLost(seed);
+                return;
+            }
+            else if (seed.Population <= hamlet.minPopulation)
+            {
+                //Migrate to nearest settlement
             }
 
-            for (int i = seeds.Count - 1; i >= 0; i--)
+            TryAddNewFacility(seed, availableWorkforce);
+
+            var adjustedType = GetAdjustedType(seed);
+            if (adjustedType != seed.Type)
             {
-                var seed = seeds[i];
-                Report(seed.Name);
-                if (worldGenerator.PRNG.Next(0, 100) > 75)
-                {
-                    /*apply the effect of a random event
-                    Plague (0.5-.075 population), GoodHarvest(foodMod = 2)
-                    BadHarvest(foodMod = 0.5), RaiderAttack, MonsterAttack, etc. */
-                }
-
-                int availableWorkforce = AssignWorkers(seed);
-
-                CalculateFoodProduction(seed);
-
-                AdjustToFoodProduction(seed);
-
-                //Decrease population based on how dangerous the area is, minus their defenses
-                int casualties = Mathf.Clamp(seed.Node.DangerTier - seed.Defensibility, 0, seed.Population);
-                seed.Population -= casualties;
-
-                if (casualties > 0)
-                {
-                    seed.casualties += casualties;
-                    Report(seed.Name + " lost " + casualties + " lives to the wilds.");
-                }
-
-                if (seed.Population <= 0)
-                {
-                    Report(seed.Name + " was lost.");
-                    Report(seed.starvations + " members starved to death.");
-                    Report(seed.casualties + " were killed by monsters.");
-                    Report(seed.plagueDeaths + " were killed by the plague.");
-                    Report("\n");
-
-                    seeds.Remove(seed);
-                    continue;
-                }
-                else if (seed.Population <= hamlet.minPopulation)
-                {
-                    //Migrate to nearest settlement
-                }
-
-                TryAddNewFacility(seed, availableWorkforce);
-
-                var adjustedType = GetAdjustedType(seed);
-                if (adjustedType != seed.Type)
-                {
-                    Report(seed.Name + " transitioned from a " + seed.Type.TypeName + " to a " + adjustedType.TypeName);
-                }
-                seed.Type = adjustedType;
-                Report("\n");
+                Report(seed.Name + " transitioned from a " + seed.Type.TypeName + " to a " + adjustedType.TypeName);
             }
+            seed.Type = adjustedType;
+        }
+
+        private SettlementEvent GetEvent()
+        {
+            if (worldGenerator.PRNG.Next(0, 100) > 75)
+            {
+                return (SettlementEvent)worldGenerator.PRNG.Next(1, System.Enum.GetNames(typeof(SettlementEvent)).Length);
+
+                /*apply the effect of a random event
+                Plague (0.5-.075 population), GoodHarvest(foodMod = 2)
+                BadHarvest(foodMod = 0.5), RaiderAttack, MonsterAttack, etc. */
+            }
+            else return SettlementEvent.None;
         }
 
         /// <summary>
@@ -313,44 +286,71 @@ namespace JS.WorldMap.Generation
 
                 if (facility.Name.Equals("Crop Farm"))
                 {
-                    //float p = node.precipitationValue * 100;
-                    float t = -4f * (node.heatValue * node.heatValue) + 5.6f * node.heatValue - 0.96f;
-                    float farmability = t * node.precipitationValue;
+                    //crop yield is determined by precipitation and temperature, y = -4x^2 + 5.6x - 0.96 : optimal temp
+                    float farmability = (-4f * (node.heatValue * node.heatValue) + 5.6f * node.heatValue - 0.96f) * node.precipitationValue;
+                    float yieldMod = 1 + worldGenerator.PRNG.Next(-25, 25) * 0.01f; //produces +/- 25% diff each year
 
-                    int output = Mathf.RoundToInt(50 * farmability * manning);
+                    int output = Mathf.RoundToInt(50 * farmability * manning * yieldMod);
 
                     seed.FoodProduction += output;
                     Report(seed.Name + "'s Farm produced " + output + " food");
                 }
                 else if (facility.Name.Equals("Docks"))
                 {
-                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning), 0, 50);
+                    float yieldMod = 1 + worldGenerator.PRNG.Next(-25, 25) * 0.01f; //produces +/- 25% diff each year
+                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning * yieldMod), 0, 50);
                     seed.FoodProduction += output;
                     Report(seed.Name + "'s Docks produced " + output + " food");
                 }
                 else if (facility.Name.Equals("Hunting Lodge"))
                 {
-                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning), 0, 50);
+                    float yieldMod = 1 + worldGenerator.PRNG.Next(-25, 25) * 0.01f; //produces +/- 25% diff each year
+                    int output = Mathf.Clamp(Mathf.RoundToInt((50 - node.DangerTier * 2) * manning * yieldMod), 0, 50);
                     seed.FoodProduction += output;
                     Report(seed.Name + "'s Hunting Lodge produced " + output + " food");
                 }
             }
+
+            seed.FoodStores += seed.FoodProduction;
         }
 
-        private void AdjustToFoodProduction(CitySeed seed)
+        /// <summary>
+        /// Adjust population depending on surplus or deficit of food
+        /// </summary>
+        private void AdjustToFoodAvailability(CitySeed seed)
         {
-            if (seed.Population > seed.FoodProduction)
+            if (seed.FoodStores < seed.Population)
             {
-                seed.starvations += (seed.Population - seed.FoodProduction);
+                //Food stores weren't enough to provide for the whole town
+                int diff = seed.Population - seed.FoodStores;
+                seed.FoodStores = 0;
+                seed.starvations += diff;
+                seed.Population -= diff;
+                Report(seed.Name + " lost " + diff + " lives to starvation.");
+            }
+            else //Everyone was fed, make some babies
+            {
+                seed.FoodStores -= seed.Population;
 
-                Report(seed.Name + "'s population shrank from " + seed.Population + " to " + seed.FoodProduction);
+                int babies = seed.Population / 2;
+                Report(seed.Name + "'s population grew from " + seed.Population + " to " + (seed.Population + babies));
+                seed.Population += babies;
             }
-            else if (seed.Population < seed.FoodProduction)
+        }
+
+        /// <summary>
+        /// Decrease population based on how dangerous the area is, minus their defenses
+        /// </summary>
+        private void DetermineCasualties(CitySeed seed)
+        {
+            int casualties = Mathf.Clamp(seed.Node.DangerTier - seed.Defense, 0, seed.Population);
+            seed.Population -= casualties;
+
+            if (casualties > 0)
             {
-                Report(seed.Name + "'s population grew from " + seed.Population + " to " + seed.FoodProduction);
+                seed.casualties += casualties;
+                Report(seed.Name + " lost " + casualties + " lives to the wilds.");
             }
-            //Adjust population to available food supply
-            seed.Population = seed.FoodProduction;
         }
 
         private void TryAddNewFacility(CitySeed seed, int availableWorkforce)
@@ -374,6 +374,17 @@ namespace JS.WorldMap.Generation
             return hamlet;
         }
 
+        private void OnSeedLost(CitySeed seed)
+        {
+            Report(seed.Name + " was lost.");
+            Report(seed.starvations + " members starved to death.");
+            Report(seed.casualties + " were killed by monsters.");
+            Report(seed.plagueDeaths + " were killed by the plague.\n");
+            seeds.Remove(seed);
+        }
+        #endregion
+
+        #region - Finalization -
         private HumanoidTribe GetTribeBids(WorldTile node)
         {
             var biome = biomeHelper.GetBiome(node.BiomeID);
@@ -388,7 +399,6 @@ namespace JS.WorldMap.Generation
 
             return tribalBids[worldGenerator.PRNG.Next(0, tribalBids.Count)];
         }
-        #endregion
 
         public void FinalizeSettlements()
         {
@@ -432,7 +442,18 @@ namespace JS.WorldMap.Generation
                 Debug.DrawLine(a, b, Color.green, 1000f);
             }
         }
+        #endregion
+
         #region - Obsolete -
+        private HumanoidTribe GetTribe(int ID)
+        {
+            for (int i = 0; i < tribes.Length; i++)
+            {
+                if (tribes[i].ID == ID) return tribes[i];
+            }
+            throw new System.Exception("Tribe ID not found.");
+        }
+
         private Settlement FindNearestSettlement(Settlement fromSettlement)
         {
             Settlement toSettlement = null;
@@ -486,19 +507,6 @@ namespace JS.WorldMap.Generation
                 }
             }
             return null;
-        }
-
-        private SettlementType GetSettlementType()
-        {
-            for (int i = 0; i < settlementCount.Length; i++)
-            {
-                if (settlementCount[i] > 0)
-                {
-                    settlementCount[i]--;
-                    return settlementTypes[i];
-                }
-            }
-            return settlementTypes[settlementTypes.Length - 1]; //hamlets
         }
 
         private void ExpandTerritory(Settlement settlement)
@@ -624,6 +632,28 @@ namespace JS.WorldMap.Generation
         }
         #endregion
     }
+}
+
+public enum SettlementEvent
+{
+    None,
+    Feast,
+    Famine,
+    Plague,
+    Raid,
+    MonsterAttack
+}
+
+public enum SettlementAmenities
+{
+    Bakery,
+    Butcher,
+
+}
+public enum SettlementNeeds
+{
+    Food,
+
 }
 
 //So I think for the current process

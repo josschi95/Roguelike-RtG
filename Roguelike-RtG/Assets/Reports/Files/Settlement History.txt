@@ -1,717 +1,683 @@
+
+*** Year 0 ***
+
 The settlement of Loneham was founded in year 0 by Vikr
 The settlement of Giltonc was founded in year 0 by Thorgilj
 The settlement of Denwordbrithorp was founded in year 0 by Braidh
 The settlement of Ellisto was founded in year 0 by Egildrey
 The settlement of Smingtoncester was founded in year 0 by Folfrioal
 The settlement of Ruseybe was founded in year 0 by Caldrekr
-The settlement of Lytonell was founded in year 0 by Aoalvdars
-
-*** Year 0 ***
-
-The settlement of Pendseysty was founded in year 0 by Halstei
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population shrank from 25 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
-Lytonell's population grew from 25 to 49
-
-
 Ruseybe
-Ruseybe's Farm produced 32 food
-Ruseybe's population grew from 25 to 32
+Ruseybe's Farm produced 28 food
+Ruseybe's population grew from 25 to 37
 
 
 Smingtoncester
 Smingtoncester's Farm produced 14 food
-Smingtoncester's population shrank from 25 to 14
+Smingtoncester lost 11 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 25 to 83
+Ellisto's Farm produced 40 food
+Ellisto's Hunting Lodge produced 50 food
+Ellisto's population grew from 25 to 37
 Ellisto lost 1 lives to the wilds.
-Ellisto transitioned from a Hamlet to a Village
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
-Denwordbrithorp's population grew from 25 to 36
+Denwordbrithorp's Farm produced 34 food
+Denwordbrithorp's population grew from 25 to 37
 
 
 Giltonc
-Giltonc's Farm produced 30 food
-Giltonc's population grew from 25 to 30
+Giltonc's Farm produced 22 food
+Giltonc lost 3 lives to starvation.
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 25 to 87
+Loneham's Farm produced 32 food
+Loneham's Hunting Lodge produced 36 food
+Loneham's population grew from 25 to 37
 Loneham lost 2 lives to the wilds.
-Loneham transitioned from a Hamlet to a Village
 
 
 
 *** Year 1 ***
 
-The settlement of Systonstli was founded in year 0 by Thornbork
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 25 to 82
-Systonstli lost 4 lives to the wilds.
-Systonstli transitioned from a Hamlet to a Village
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+The settlement of Gelshillot was founded in year 0 by Unieriri
+Gelshillot
+Gelshillot's Farm produced 61 food
+Gelshillot's population grew from 25 to 37
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 40 food
+Ruseybe's population grew from 37 to 55
+Ruseybe transitioned from a Hamlet to a Village
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 11 food
+Smingtoncester lost 3 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
+Ellisto's Farm produced 28 food
 Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's population grew from 36 to 54
 Ellisto lost 1 lives to the wilds.
+Ellisto transitioned from a Hamlet to a Village
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 28 food
+Denwordbrithorp's population grew from 37 to 55
+Denwordbrithorp transitioned from a Hamlet to a Village
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 31 food
+Giltonc's population grew from 22 to 33
 
 
 Loneham
 Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Hunting Lodge produced 49 food
+Loneham's population grew from 35 to 52
 Loneham lost 2 lives to the wilds.
+Loneham transitioned from a Hamlet to a Village
 
 
 
 *** Year 2 ***
 
-The settlement of Arminghaltown was founded in year 0 by Gautstein
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 25 to 76
-Arminghaltown lost 4 lives to the wilds.
-Arminghaltown transitioned from a Hamlet to a Village
+The settlement of Rydonterw was founded in year 0 by Gjorbendr
+Rydonterw
+Rydonterw's Farm produced 26 food
+Rydonterw's population grew from 25 to 37
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 58 food
+Gelshillot's population grew from 37 to 55
+Gelshillot transitioned from a Hamlet to a Village
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 28 food
+Ruseybe lost 21 lives to starvation.
+Ruseybe transitioned from a Village to a Hamlet
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 15 food
+Smingtoncester's population grew from 11 to 16
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 34 food
+Ellisto's Hunting Lodge produced 50 food
+Ellisto's population grew from 53 to 79
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 29 food
+Denwordbrithorp lost 26 lives to starvation.
+Denwordbrithorp transitioned from a Village to a Hamlet
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 23 food
+Giltonc lost 1 lives to starvation.
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 44 food
+Loneham's Hunting Lodge produced 50 food
+Loneham's population grew from 50 to 75
 Loneham lost 2 lives to the wilds.
 
 
 
 *** Year 3 ***
 
-The settlement of Jarrypo was founded in year 0 by Eloffe
-Jarrypo
-Jarrypo's Farm produced 32 food
-Jarrypo's population grew from 25 to 32
+The settlement of Woordebric was founded in year 0 by Borring
+Woordebric
+Woordebric's Farm produced 32 food
+Woordebric's Hunting Lodge produced 45 food
+Woordebric's population grew from 25 to 37
+Woordebric lost 4 lives to the wilds.
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 27 food
+Rydonterw lost 8 lives to starvation.
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 47 food
+Gelshillot's population grew from 55 to 82
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 39 food
+Ruseybe's population grew from 34 to 51
+Ruseybe transitioned from a Hamlet to a Village
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 16 food
+Smingtoncester's population grew from 16 to 24
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 40 food
+Ellisto's Hunting Lodge produced 50 food
+Ellisto's population grew from 78 to 117
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 29 food
+Denwordbrithorp's population grew from 29 to 43
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 23 food
+Giltonc lost 9 lives to starvation.
 
 
 Loneham
 Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Hunting Lodge produced 45 food
+Loneham's population grew from 73 to 109
 Loneham lost 2 lives to the wilds.
 
 
 
 *** Year 4 ***
 
-The settlement of Erightochucaster was founded in year 0 by Torjelbrr
-Erightochucaster
-Erightochucaster's Farm produced 34 food
-Erightochucaster's population grew from 25 to 34
+The settlement of Flingwaithorp was founded in year 0 by Reimr
+Flingwaithorp
+Flingwaithorp's Farm produced 38 food
+Flingwaithorp's Hunting Lodge produced 39 food
+Flingwaithorp's population grew from 25 to 37
+Flingwaithorp lost 4 lives to the wilds.
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 35 food
+Woordebric's Hunting Lodge produced 38 food
+Woordebric's population grew from 33 to 49
+Woordebric lost 4 lives to the wilds.
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 25 food
+Rydonterw lost 2 lives to starvation.
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 51 food
+Gelshillot's population grew from 82 to 123
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 39 food
+Ruseybe lost 7 lives to starvation.
+Ruseybe transitioned from a Village to a Hamlet
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 11 food
+Smingtoncester lost 9 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 27 food
+Ellisto's Hunting Lodge produced 40 food
+Ellisto's population grew from 116 to 174
 Ellisto lost 1 lives to the wilds.
+Ellisto transitioned from a Village to a Town
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 44 food
+Denwordbrithorp's population grew from 43 to 64
+Denwordbrithorp transitioned from a Hamlet to a Village
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 34 food
+Giltonc's population grew from 23 to 34
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 32 food
+Loneham's Hunting Lodge produced 42 food
+Loneham's population grew from 107 to 160
 Loneham lost 2 lives to the wilds.
+Loneham transitioned from a Village to a Town
 
 
 
 *** Year 5 ***
 
-The settlement of Ludlisenstead was founded in year 0 by Sjurd
-Ludlisenstead
-Ludlisenstead's Farm produced 41 food
-Ludlisenstead's Hunting Lodge produced 44 food
-Ludlisenstead's population grew from 25 to 85
-Ludlisenstead lost 3 lives to the wilds.
-Ludlisenstead transitioned from a Hamlet to a Village
+The settlement of Odderstone was founded in year 0 by Cormoder
+Odderstone
+Odderstone's Farm produced 26 food
+Odderstone's population grew from 25 to 37
 
 
-Erightochucaster
-Erightochucaster's Farm produced 34 food
+Flingwaithorp
+Flingwaithorp's Farm produced 27 food
+Flingwaithorp's Hunting Lodge produced 47 food
+Flingwaithorp's population grew from 33 to 49
+Flingwaithorp lost 4 lives to the wilds.
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 44 food
+Woordebric's Hunting Lodge produced 35 food
+Woordebric's population grew from 45 to 67
+Woordebric lost 4 lives to the wilds.
+Woordebric transitioned from a Hamlet to a Village
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 27 food
+Rydonterw's population grew from 24 to 36
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 58 food
+Gelshillot lost 47 lives to starvation.
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 29 food
+Ruseybe lost 15 lives to starvation.
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 16 food
+Smingtoncester's population grew from 15 to 22
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 36 food
+Ellisto's Hunting Lodge produced 50 food
+Ellisto's population grew from 173 to 259
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 44 food
+Denwordbrithorp lost 19 lives to starvation.
+Denwordbrithorp transitioned from a Village to a Hamlet
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 29 food
+Giltonc's population grew from 34 to 51
+Giltonc transitioned from a Hamlet to a Village
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 40 food
+Loneham's Hunting Lodge produced 50 food
+Loneham's population grew from 158 to 237
 Loneham lost 2 lives to the wilds.
 
 
 
 *** Year 6 ***
 
-The settlement of Yeonmouton was founded in year 0 by Corlebjor
-Yeonmouton
-Yeonmouton's Farm produced 7 food
-Yeonmouton's population shrank from 25 to 7
-Yeonmouton lost 2 lives to the wilds.
+The settlement of Lanstone was founded in year 0 by Hlebjorte
+Lanstone
+Lanstone's Farm produced 33 food
+Lanstone's population grew from 25 to 37
 
 
-Ludlisenstead
-Ludlisenstead's Farm produced 41 food
-Ludlisenstead's Hunting Lodge produced 44 food
-Ludlisenstead's population grew from 82 to 85
-Ludlisenstead lost 3 lives to the wilds.
+Odderstone
+Odderstone's Farm produced 39 food
+Odderstone's population grew from 37 to 55
+Odderstone transitioned from a Hamlet to a Village
 
 
-Erightochucaster
-Erightochucaster's Farm produced 34 food
+Flingwaithorp
+Flingwaithorp's Farm produced 30 food
+Flingwaithorp's Hunting Lodge produced 50 food
+Flingwaithorp's population grew from 45 to 67
+Flingwaithorp lost 4 lives to the wilds.
+Flingwaithorp transitioned from a Hamlet to a Village
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 34 food
+Woordebric's Hunting Lodge produced 45 food
+Woordebric's population grew from 63 to 94
+Woordebric lost 4 lives to the wilds.
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 22 food
+Rydonterw lost 10 lives to starvation.
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 55 food
+Gelshillot lost 21 lives to starvation.
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 38 food
+Ruseybe's population grew from 29 to 43
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 15 food
+Smingtoncester lost 6 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 26 food
+Ellisto's Hunting Lodge produced 37 food
+Ellisto lost 183 lives to starvation.
 Ellisto lost 1 lives to the wilds.
+Ellisto transitioned from a Town to a Village
 
 
 Denwordbrithorp
 Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp lost 9 lives to starvation.
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 27 food
+Giltonc lost 18 lives to starvation.
+Giltonc transitioned from a Village to a Hamlet
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 48 food
+Loneham's Hunting Lodge produced 40 food
+Loneham lost 93 lives to starvation.
 Loneham lost 2 lives to the wilds.
+Loneham transitioned from a Town to a Village
 
 
 
 *** Year 7 ***
 
-The settlement of Calinghg was founded in year 0 by Borlioa
-Calinghg
-Calinghg's Farm produced 39 food
-Calinghg's population grew from 25 to 39
+The settlement of Tivenhowes was founded in year 0 by Iforrimd
+Tivenhowes
+Tivenhowes's Farm produced 41 food
+Tivenhowes's Hunting Lodge produced 49 food
+Tivenhowes's population grew from 25 to 37
+Tivenhowes lost 3 lives to the wilds.
 
 
-Yeonmouton
-Yeonmouton's Farm produced 7 food
-Yeonmouton's population grew from 5 to 7
-Yeonmouton lost 2 lives to the wilds.
+Lanstone
+Lanstone's Farm produced 32 food
+Lanstone's population grew from 37 to 55
+Lanstone transitioned from a Hamlet to a Village
 
 
-Ludlisenstead
-Ludlisenstead's Farm produced 41 food
-Ludlisenstead's Hunting Lodge produced 44 food
-Ludlisenstead's population grew from 82 to 85
-Ludlisenstead lost 3 lives to the wilds.
+Odderstone
+Odderstone's Farm produced 28 food
+Odderstone lost 24 lives to starvation.
+Odderstone transitioned from a Village to a Hamlet
 
 
-Erightochucaster
-Erightochucaster's Farm produced 34 food
+Flingwaithorp
+Flingwaithorp's Farm produced 33 food
+Flingwaithorp's Hunting Lodge produced 50 food
+Flingwaithorp's population grew from 63 to 94
+Flingwaithorp lost 4 lives to the wilds.
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 44 food
+Woordebric's Hunting Lodge produced 35 food
+Woordebric's population grew from 90 to 135
+Woordebric lost 4 lives to the wilds.
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 25 food
+Rydonterw's population grew from 24 to 36
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 40 food
+Gelshillot lost 15 lives to starvation.
+Gelshillot transitioned from a Village to a Hamlet
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 31 food
+Ruseybe lost 3 lives to starvation.
 
 
 Smingtoncester
-Smingtoncester's Farm produced 14 food
+Smingtoncester's Farm produced 13 food
+Smingtoncester lost 3 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 28 food
+Ellisto's Hunting Lodge produced 45 food
+Ellisto lost 1 lives to starvation.
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 29 food
+Denwordbrithorp lost 7 lives to starvation.
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 23 food
+Giltonc lost 10 lives to starvation.
 
 
 Loneham
-Loneham's Farm produced 41 food
+Loneham's Farm produced 30 food
 Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham lost 64 lives to starvation.
 Loneham lost 2 lives to the wilds.
 
 
 
 *** Year 8 ***
 
-The settlement of Uxborda was founded in year 0 by Sundreyr
-Uxborda
-Uxborda's Farm produced 34 food
-Uxborda's population grew from 25 to 34
+The settlement of Sheshambyf was founded in year 0 by Kyostavs
+Sheshambyf
+Sheshambyf's Farm produced 7 food
+Sheshambyf lost 18 lives to starvation.
+Sheshambyf lost 2 lives to the wilds.
 
 
-Calinghg
-Calinghg's Farm produced 39 food
+Tivenhowes
+Tivenhowes's Farm produced 35 food
+Tivenhowes's Hunting Lodge produced 45 food
+Tivenhowes's population grew from 34 to 51
+Tivenhowes lost 3 lives to the wilds.
 
 
-Yeonmouton
-Yeonmouton's Farm produced 7 food
-Yeonmouton's population grew from 5 to 7
-Yeonmouton lost 2 lives to the wilds.
+Lanstone
+Lanstone's Farm produced 36 food
+Lanstone lost 16 lives to starvation.
+Lanstone transitioned from a Village to a Hamlet
 
 
-Ludlisenstead
-Ludlisenstead's Farm produced 41 food
-Ludlisenstead's Hunting Lodge produced 44 food
-Ludlisenstead's population grew from 82 to 85
-Ludlisenstead lost 3 lives to the wilds.
+Odderstone
+Odderstone's Farm produced 26 food
+Odderstone lost 5 lives to starvation.
 
 
-Erightochucaster
-Erightochucaster's Farm produced 34 food
+Flingwaithorp
+Flingwaithorp's Farm produced 28 food
+Flingwaithorp's Hunting Lodge produced 49 food
+Flingwaithorp's population grew from 90 to 135
+Flingwaithorp lost 4 lives to the wilds.
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 45 food
+Woordebric's Hunting Lodge produced 45 food
+Woordebric's population grew from 131 to 196
+Woordebric lost 4 lives to the wilds.
+Woordebric transitioned from a Village to a Town
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 24 food
+Rydonterw lost 10 lives to starvation.
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 39 food
+Gelshillot lost 1 lives to starvation.
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 30 food
+Ruseybe lost 10 lives to starvation.
 
 
 Smingtoncester
 Smingtoncester's Farm produced 14 food
+Smingtoncester's population grew from 13 to 19
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 42 food
+Ellisto's Hunting Lodge produced 50 food
+Ellisto's population grew from 72 to 108
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 41 food
+Denwordbrithorp's population grew from 29 to 43
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 25 food
+Giltonc's population grew from 23 to 34
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 49 food
+Loneham's Hunting Lodge produced 42 food
+Loneham's population grew from 74 to 111
 Loneham lost 2 lives to the wilds.
 
 
 
 *** Year 9 ***
 
-The settlement of Andsnor was founded in year 0 by Torstendr
-Andsnor
-Andsnor's Farm produced 10 food
-Andsnor's population shrank from 25 to 10
-Andsnor lost 1 lives to the wilds.
+The settlement of Rentongwo was founded in year 0 by Stavarri
+Rentongwo
+Rentongwo's Farm produced 30 food
+Rentongwo's population grew from 25 to 37
 
 
-Uxborda
-Uxborda's Farm produced 34 food
+Sheshambyf
+Sheshambyf's Farm produced 5 food
+Sheshambyf's population grew from 5 to 7
+Sheshambyf lost 2 lives to the wilds.
 
 
-Calinghg
-Calinghg's Farm produced 39 food
+Tivenhowes
+Tivenhowes's Farm produced 31 food
+Tivenhowes's Hunting Lodge produced 43 food
+Tivenhowes's population grew from 48 to 72
+Tivenhowes lost 3 lives to the wilds.
+Tivenhowes transitioned from a Hamlet to a Village
 
 
-Yeonmouton
-Yeonmouton's Farm produced 7 food
-Yeonmouton's population grew from 5 to 7
-Yeonmouton lost 2 lives to the wilds.
+Lanstone
+Lanstone's Farm produced 41 food
+Lanstone's population grew from 39 to 58
+Lanstone transitioned from a Hamlet to a Village
 
 
-Ludlisenstead
-Ludlisenstead's Farm produced 41 food
-Ludlisenstead's Hunting Lodge produced 44 food
-Ludlisenstead's population grew from 82 to 85
-Ludlisenstead lost 3 lives to the wilds.
+Odderstone
+Odderstone's Farm produced 35 food
+Odderstone's population grew from 26 to 39
 
 
-Erightochucaster
-Erightochucaster's Farm produced 34 food
+Flingwaithorp
+Flingwaithorp's Farm produced 32 food
+Flingwaithorp's Hunting Lodge produced 47 food
+Flingwaithorp's population grew from 131 to 196
+Flingwaithorp lost 4 lives to the wilds.
+Flingwaithorp transitioned from a Village to a Town
 
 
-Jarrypo
-Jarrypo's Farm produced 32 food
+Woordebric
+Woordebric's Farm produced 45 food
+Woordebric's Hunting Lodge produced 49 food
+Woordebric lost 8 lives to starvation.
+Woordebric lost 4 lives to the wilds.
 
 
-Arminghaltown
-Arminghaltown's Farm produced 34 food
-Arminghaltown's Hunting Lodge produced 42 food
-Arminghaltown's population grew from 72 to 76
-Arminghaltown lost 4 lives to the wilds.
+Rydonterw
+Rydonterw's Farm produced 27 food
+Rydonterw's population grew from 24 to 36
+Rydonterw lost 1 lives to the wilds.
 
 
-Systonstli
-Systonstli's Farm produced 40 food
-Systonstli's Hunting Lodge produced 42 food
-Systonstli's population grew from 78 to 82
-Systonstli lost 4 lives to the wilds.
-
-
-Pendseysty
-Pendseysty's Farm produced 23 food
-Pendseysty's population grew from 22 to 23
-Pendseysty lost 1 lives to the wilds.
-
-
-Lytonell
-Lytonell's Farm produced 49 food
+Gelshillot
+Gelshillot's Farm produced 57 food
+Gelshillot's population grew from 39 to 58
+Gelshillot transitioned from a Hamlet to a Village
 
 
 Ruseybe
-Ruseybe's Farm produced 32 food
+Ruseybe's Farm produced 36 food
+Ruseybe's population grew from 30 to 45
 
 
 Smingtoncester
 Smingtoncester's Farm produced 14 food
+Smingtoncester lost 4 lives to starvation.
 
 
 Ellisto
-Ellisto's Farm produced 35 food
-Ellisto's Hunting Lodge produced 48 food
-Ellisto's population grew from 82 to 83
+Ellisto's Farm produced 33 food
+Ellisto's Hunting Lodge produced 37 food
+Ellisto lost 17 lives to starvation.
 Ellisto lost 1 lives to the wilds.
 
 
 Denwordbrithorp
-Denwordbrithorp's Farm produced 36 food
+Denwordbrithorp's Farm produced 29 food
+Denwordbrithorp lost 2 lives to starvation.
 
 
 Giltonc
-Giltonc's Farm produced 30 food
+Giltonc's Farm produced 34 food
+Giltonc's population grew from 34 to 51
+Giltonc transitioned from a Hamlet to a Village
 
 
 Loneham
-Loneham's Farm produced 41 food
-Loneham's Hunting Lodge produced 46 food
-Loneham's population grew from 85 to 87
+Loneham's Farm produced 43 food
+Loneham's Hunting Lodge produced 50 food
+Loneham's population grew from 109 to 163
 Loneham lost 2 lives to the wilds.
+Loneham transitioned from a Village to a Town
 
 

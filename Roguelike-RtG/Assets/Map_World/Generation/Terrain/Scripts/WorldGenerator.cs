@@ -116,8 +116,6 @@ namespace JS.WorldMap.Generation
             var size = worldMap.TerrainData.MapSize;
             worldMap.CreateWorldGrid(size, size);
 
-            settlementGenerator.SetInitialValues(worldSize);
-
             PlantSeeds();
         }
 
@@ -228,7 +226,7 @@ namespace JS.WorldMap.Generation
         /// </summary>
         private IEnumerator HandleSettlementGeneration()
         {
-            settlementGenerator.PlaceCivilizationSeeds();
+            settlementGenerator.PlaceSeeds();
             progressBar.fillAmount = 0.9f;
             yield return StartCoroutine(UpdateProgress("Generating Roads"));
 
@@ -352,7 +350,7 @@ namespace JS.WorldMap.Generation
 
         private void RecreateSettlements(WorldSaveData data)
         {
-            settlementGenerator.PlaceCivilizationSeeds();
+            settlementGenerator.PlaceSeeds();
             roadGenerator.GenerateRoads();
         }
         #endregion

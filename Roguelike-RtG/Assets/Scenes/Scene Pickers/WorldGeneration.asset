@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84d5cb1197fee034092f667366f57f65, type: 3}
-  m_Name: WorldMapGeneration
+  m_Name: WorldGeneration
   m_EditorClassIdentifier: 
   SceneFinishedLoadingEvent: {fileID: 11400000, guid: ed498afcdd2464c438b122f27f434f64, type: 2}
-  ScenePath: Assets/Scenes/Game Scenes/Gameplay/WorldMapGeneration.unity
+  ScenePath: Assets/Scenes/Game Scenes/UI/WorldGeneration.unity

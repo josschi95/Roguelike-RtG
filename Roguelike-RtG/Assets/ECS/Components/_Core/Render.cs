@@ -8,7 +8,8 @@ namespace JS.ECS
         public bool RenderOnWorldMap = false; //Render if on world map?
 
         public string Tile;
-        public bool IsComposite = false;
+        public bool IsAnimated = false;
+        //public bool IsComposite = false;
 
         protected Transform transform;
         public Transform Transform

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
+  m_Script: {fileID: 11500000, guid: d49639f9b5081604f955519755fcac12, type: 3}
   m_Name: Land_Tile_Grass
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 484470508, guid: 7b8bb6d00e09c7541bcd17e720a75d17, type: 3}
@@ -29,14 +29,14 @@ MonoBehaviour:
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
-    - {x: 0, y: -1, z: 0}
-    - {x: -1, y: 0, z: 0}
-    - {x: 0, y: 1, z: 0}
-    - {x: 1, y: 0, z: 0}
     - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
     - {x: 1, y: -1, z: 0}
+    - {x: 1, y: 0, z: 0}
     - {x: 1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
     - {x: -1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
   - m_Id: 1
     m_Sprites:
@@ -407,4 +407,8 @@ MonoBehaviour:
     - {x: 1, y: 0, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
-  siblingGroup: 0
+  alwaysConnect: 1
+  tilesToConnect:
+  - {fileID: 11400000, guid: 76fc16b81a8234343b136eb15074bba1, type: 2}
+  - {fileID: 11400000, guid: 167b25d90bf22434f9351b4a2aebc193, type: 2}
+  checkSelf: 1

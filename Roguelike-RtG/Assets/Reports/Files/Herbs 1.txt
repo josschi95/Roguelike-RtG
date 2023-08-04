@@ -1,0 +1,427 @@
+Herbs
+
+
+
+Rosilybut
+Effects: Alertness,Weaken Strength,Fortify Defense,Weaken Charisma,
+Found In: ,,,,
+
+
+Granthymeflo
+Effects: Fortify Agility,Weakness to Acid,Magic Sight,Sleep,
+Found In: ,,,,
+
+
+Cillax
+Effects: Weaken Dodge,Weaken Health Regen,Fortify Charisma,Resist Frost,
+Found In: ,,,,
+
+
+Priasiseed
+Effects: Resist Poison,Pacify,Waterbreathing,Regenerate Mana,
+Found In: ,,,,
+
+
+Acalanather
+Effects: Fortify Charisma,Resist Sonic,Degrade Health,Fortify Skill,
+Found In: ,,,,
+
+
+Gayenugrab
+Effects: Weakness to Blunt,Regenerate Stamina,Resist Blunt,Weaken Agility,
+Found In: ,,,,
+
+
+Holparyptush
+Effects: Cure Disease,Weaken Encumbrance,Resist Frost,Weakness to Blunt,
+Found In: ,,,,
+
+
+Zinkspida
+Effects: Fortify Strength,Fortify Charisma,Fortify Vitality,Damage Stamina,
+Found In: ,,,,
+
+
+Crossopsillfl
+Effects: Weakness to Lightning,Fortify Agility,Fortify Speed,Fortify Defense,
+Found In: ,,,,
+
+
+Spernemumpati
+Effects: Weakness to Frost,Weakness to Poison,Resist Positive Energy,Clarity,
+Found In: ,,,,
+
+
+Viseendyhoca
+Effects: Weakness to Pierce,Resist Positive Energy,Resist Pierce,Fortify Vitality,
+Found In: ,,,,
+
+
+Nastailbe
+Effects: Nausea,Fortify Strength,Weaken Knowledge,Resist Poison,
+Found In: ,,,,
+
+
+Mingretorylea
+Effects: Fortify Dodge,Weakness to Frost,Restore Health,Weaken Stamina Regen,
+Found In: ,,,,
+
+
+Cumperciant
+Effects: Resist Frost,Resist Slashing,Weaken Agility,Weakness to Negative Energy,
+Found In: ,,,,
+
+
+Huacevallsp
+Effects: Degrade Mana,Weaken Vitality,Weaken Strength,Resist Pierce,
+Found In: ,,,,
+
+
+Salyhermil
+Effects: Cure Poison,Nausea,Resist Sonic,Regenerate Stamina,
+Found In: ,,,,
+
+
+Beleek
+Effects: Resist Positive Energy,Weakness to Slashing,Restore Mana,Damage Mana,
+Found In: ,,,,
+
+
+Celiceviani
+Effects: Restore,Resist Lightning,Resist Negative Energy,Fortify Health Regen,
+Found In: ,,,,
+
+
+Ruemonmyrtle
+Effects: Restore Stamina,Fortify Speed,Cure Poison,Resist Slashing,
+Found In: ,,,,
+
+
+Iricelush
+Effects: Clarity,Restore,Weaken Willpower,Cure Poison,
+Found In: ,,,,
+
+
+Impatissil
+Effects: Fortify Health Regen,Weaken Dodge,Weakness to Blunt,Paralysis,
+Found In: ,,,,
+
+
+Nigonbalan
+Effects: Confusion,Fortify Dodge,Weaken Speed,Damage Health,
+Found In: ,,,,
+
+
+Caleafflow
+Effects: Magic Sight,Weakness to Sonic,Restore Stamina,Resist Fire,
+Found In: ,,,,
+
+
+Eucklyptuf
+Effects: Waterbreathing,Weakness to Fire,Invisibility,Weakness to Pierce,
+Found In: ,,,,
+
+
+Coricklex
+Effects: Sleep,Weakness to Pierce,Polymorph,Weaken Dodge,
+Found In: ,,,,
+
+
+Jasmiscushoc
+Effects: Fortify Encumberance,Cure Poison,Weakness to Pierce,Weaken Strength,
+Found In: ,,,,
+
+
+Vionflows
+Effects: Regenerate Mana,Resist Mystic,Fortify Skill,Fortify Speed,
+Found In: ,,,,
+
+
+Crosemonella
+Effects: Paralysis,Weaken Defense,Pacify,Weaken Defense,
+Found In: ,,,,
+
+
+Nutterryle
+Effects: Weakness to Sonic,Damage Mana,Fortify Health Regen,Invisibility,
+Found In: ,,,,
+
+
+Snoticepperli
+Effects: Weaken Stamina Regen,Weaken Willpower,Weaken Vitality,Resist Sonic,
+Found In: ,,,,
+
+
+Delphaisi
+Effects: Weakness to Negative Energy,Weaken Charisma,Fortify Dodge,Weaken Encumbrance,
+Found In: ,,,,
+
+
+Junisopplanol
+Effects: Fortify Mana Regen,Fortify Skill,Fortify Strength,Regenerate Health,
+Found In: ,,,,
+
+
+Lemonflower
+Effects: Resist Slashing,Weakness to Mystic,Soothing,Restore,
+Found In: ,,,,
+
+
+Sedishodr
+Effects: Invisibility,Fortify Knowledge,Fortify Agility,Fortify Strength,
+Found In: ,,,,
+
+
+Avockleav
+Effects: Weaken Accuracy,Resist Fire,Damage Stamina,Resist Mystic,
+Found In: ,,,,
+
+
+Myrterysafoe
+Effects: Weaken Health Regen,Weakness to Positive Energy,Cure Paralysis,Weaken Knowledge,
+Found In: ,,,,
+
+
+Limegalm
+Effects: Restore Mana,Degrade Health,Degrade Mana,Weakness to Lightning,
+Found In: ,,,,
+
+
+Glanefloweedm
+Effects: Resist Mystic,Paralysis,Weakness to Slashing,Darkvision,
+Found In: ,,,,
+
+
+Spicorrandu
+Effects: Weakness to Acid,Invisibility,Regenerate Health,Fortify Willpower,
+Found In: ,,,,
+
+
+Soramingatt
+Effects: Regenerate Stamina,Weaken Knowledge,Fortify Knowledge,Fortify Stamina Regen,
+Found In: ,,,,
+
+
+Imperiandyh
+Effects: Weakness to Poison,Waterbreathing,Resist Acid,Degrade Mana,
+Found In: ,,,,
+
+
+Avoranintro
+Effects: Degrade Stamina,Restore Health,Weakness to Frost,Confusion,
+Found In: ,,,,
+
+
+Popperamo
+Effects: Fortify Knowledge,Resist Frost,Confusion,Fortify Agility,
+Found In: ,,,,
+
+
+Myrterander
+Effects: Weaken Knowledge,Fear,Weaken Defense,Weaken Speed,
+Found In: ,,,,
+
+
+Mushoomisyt
+Effects: Fortify Accuracy,Weaken Accuracy,Enrage,Nausea,
+Found In: ,,,,
+
+
+Jasmiumpe
+Effects: Resist Lightning,Restore Mana,Cure Disease,Restore Health,
+Found In: ,,,,
+
+
+Stanianperige
+Effects: Cure Paralysis,Cure Paralysis,Weakness to Negative Energy,Resist Lightning,
+Found In: ,,,,
+
+
+Azallseeds
+Effects: Damage Health,Degrade Mana,Weakness to Positive Energy,Weakness to Fire,
+Found In: ,,,,
+
+
+Cheryssop
+Effects: Polymorph,Resist Poison,Weakness to Mystic,Weakness to Poison,
+Found In: ,,,,
+
+
+Woodililenne
+Effects: Weaken Encumbrance,Fortify Willpower,Weaken Mana Regen,Weakness to Acid,
+Found In: ,,,,
+
+
+Boluemomis
+Effects: Resist Negative Energy,Regenerate Health,Fortify Willpower,Calm,
+Found In: ,,,,
+
+
+Beleedseetu
+Effects: Weakness to Slashing,Enrage,Nausea,Fortify Encumberance,
+Found In: ,,,,
+
+
+Rhododronipe
+Effects: Weaken Defense,Regenerate Mana,Weakness to Sonic,Magic Sight,
+Found In: ,,,,
+
+
+Trubromseedil
+Effects: Pacify,Polymorph,Darkvision,Weakness to Mystic,
+Found In: ,,,,
+
+
+Bormwoode
+Effects: Resist Pierce,Weakness to Lightning,Restore,Weaken Vitality,
+Found In: ,,,,
+
+
+Orcustardsee
+Effects: Damage Mana,Cure Disease,Resist Slashing,Cure Paralysis,
+Found In: ,,,,
+
+
+Cleaffroweres
+Effects: Resist Acid,Resist Acid,Clarity,Alertness,
+Found In: ,,,,
+
+
+Basianiro
+Effects: Calm,Alertness,Fortify Stamina Regen,Fortify Knowledge,
+Found In: ,,,,
+
+
+Oliandran
+Effects: Soothing,Weaken Stamina Regen,Weaken Stamina Regen,Fortify Dodge,
+Found In: ,,,,
+
+
+Jonilaning
+Effects: Weaken Willpower,Weakness to Blunt,Regenerate Mana,Fortify Charisma,
+Found In: ,,,,
+
+
+Gintreek
+Effects: Weaken Speed,Fortify Stamina Regen,Paralysis,Fortify Accuracy,
+Found In: ,,,,
+
+
+Cormwoonbalm
+Effects: Enrage,Confusion,Regenerate Stamina,Degrade Health,
+Found In: ,,,,
+
+
+Anintanketmel
+Effects: Weaken Vitality,Fortify Vitality,Fear,Weaken Willpower,
+Found In: ,,,,
+
+
+Ambrowernaram
+Effects: Fortify Speed,Fortify Mana Regen,Weaken Encumbrance,Weakness to Sonic,
+Found In: ,,,,
+
+
+Lemongander
+Effects: Resist Fire,Weaken Mana Regen,Sleep,Waterbreathing,
+Found In: ,,,,
+
+
+Kokantherb
+Effects: Weakness to Fire,Degrade Stamina,Fortify Accuracy,Cure Disease,
+Found In: ,,,,
+
+
+Rueminganderu
+Effects: Degrade Health,Fortify Encumberance,Fortify Encumberance,Enrage,
+Found In: ,,,,
+
+
+Filyhocklenfl
+Effects: Fortify Skill,Damage Health,Damage Health,Soothing,
+Found In: ,,,,
+
+
+Tuliperchiu
+Effects: Restore Health,Fortify Defense,Alertness,Restore Mana,
+Found In: ,,,,
+
+
+Minghergr
+Effects: Weakness to Positive Energy,Damage Stamina,Calm,Weakness to Slashing,
+Found In: ,,,,
+
+
+Oleek
+Effects: Weaken Strength,Resist Blunt,Weaken Accuracy,Resist Negative Energy,
+Found In: ,,,,
+
+
+Stoetleafo
+Effects: Fortify Stamina Regen,Magic Sight,Weakness to Lightning,Weaken Health Regen,
+Found In: ,,,,
+
+
+Olessopsisian
+Effects: Resist Blunt,Weaken Agility,Weaken Dodge,Degrade Stamina,
+Found In: ,,,,
+
+
+Hibaleaff
+Effects: Weaken Agility,Fortify Health Regen,Weakness to Acid,Weakness to Positive Energy,
+Found In: ,,,,
+
+
+Eucaliano
+Effects: Fortify Willpower,Soothing,Resist Mystic,Fear,
+Found In: ,,,,
+
+
+Gintrossop
+Effects: Darkvision,Restore Stamina,Weaken Charisma,Fortify Mana Regen,
+Found In: ,,,,
+
+
+Avocupicep
+Effects: Fortify Defense,Resist Negative Energy,Weakness to Fire,Polymorph,
+Found In: ,,,,
+
+
+Eldodelexa
+Effects: Fortify Vitality,Clarity,Weakness to Poison,Weakness to Frost,
+Found In: ,,,,
+
+
+Turmwoomse
+Effects: Weakness to Mystic,Weaken Speed,Damage Mana,Restore Stamina,
+Found In: ,,,,
+
+
+Aveseryllsee
+Effects: Weaken Mana Regen,Darkvision,Resist Fire,Resist Acid,
+Found In: ,,,,
+
+
+Nuttoetro
+Effects: Resist Sonic,Resist Pierce,Degrade Stamina,Weaken Mana Regen,
+Found In: ,,,,
+
+
+Muskmachium
+Effects: Regenerate Health,Weakness to Negative Energy,Weaken Health Regen,Resist Blunt,
+Found In: ,,,,
+
+
+Oragergre
+Effects: Fear,Sleep,Resist Lightning,Weaken Accuracy,
+Found In: ,,,,
+
+
+Petuskmar
+Effects: Weaken Charisma,Fortify Accuracy,Fortify Mana Regen,Resist Positive Energy,
+Found In: ,,,,
+
+
+Dilliceppep
+Effects: Damage Stamina,Calm,Resist Poison,Pacify,
+Found In: ,,,,

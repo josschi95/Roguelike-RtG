@@ -209,8 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de387b4c47f50a64782bafad44352bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  single: {fileID: 994623004767753156, guid: bb886fe1ba62ad04d8ef2b97aec21968, type: 3}
-  compound: {fileID: 8335762976867246004, guid: 603ae19ce87e44242b7928501a8bfb47, type: 3}
+  staticSprite: {fileID: 2689567875884823240, guid: bb886fe1ba62ad04d8ef2b97aec21968, type: 3}
+  animatedSprite: {fileID: 4086988067364462850, guid: 965c222f08bfa0e4e87daa1ecc2542ac, type: 3}
   flashMaterial: {fileID: 2100000, guid: c52e1a718d18f3f4d8b3a7bcb15e7332, type: 2}
 --- !u!114 &607149222
 MonoBehaviour:

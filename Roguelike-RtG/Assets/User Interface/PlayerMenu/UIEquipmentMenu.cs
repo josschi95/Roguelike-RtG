@@ -7,13 +7,15 @@ public class UIEquipmentMenu : MonoBehaviour
     [SerializeField] private RectTransform elementParent;
     [SerializeField] private UIEquipSlotElement element;
 
-    private void OnEnable() => PopulateList();
+    [SerializeField] private UIEquipSlotElement[] equipSlots;
+
+    private void OnEnable() => PopulateList_Old();
     private void OnDisable() => ClearList();
 
     public void RefreshDisplay()
     {
         ClearList();
-        PopulateList();
+        PopulateList_Old();
     }
 
     private void ClearList()
@@ -25,7 +27,16 @@ public class UIEquipmentMenu : MonoBehaviour
     }
 
     //Selecting a slot will either unequip an equipped item or bringup a menu of items which can be equipped there
-    private void PopulateList()
+
+    private void PopulateEquipment()
+    {
+        EntityManager.TryGetComponent<Body>(EntityManager.Player, out var body);
+
+
+
+    }
+
+    private void PopulateList_Old()
     {
         EntityManager.TryGetComponent<Body>(EntityManager.Player, out var body);
 

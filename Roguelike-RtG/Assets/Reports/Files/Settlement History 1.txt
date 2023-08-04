@@ -1,0 +1,490 @@
+
+*** Year 0 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population shrank from 25 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+Redaleybroville's population grew from 25 to 117
+Redaleybroville transitioned from a Hamlet to a Village
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+Ingdontin's population grew from 25 to 142
+Ingdontin transitioned from a Hamlet to a Village
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+Kabanderth's population shrank from 25 to 15
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 25 to 91
+Exmustongw lost 1 lives to the wilds.
+Exmustongw transitioned from a Hamlet to a Village
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+Darneweswat's population grew from 25 to 78
+Darneweswat transitioned from a Hamlet to a Village
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+Cumdingrcester's population grew from 25 to 33
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 25 to 96
+Uckhaltho lost 2 lives to the wilds.
+Uckhaltho transitioned from a Hamlet to a Village
+
+
+
+*** Year 1 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 2 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 3 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 4 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 5 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 6 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 7 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 8 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+
+
+*** Year 9 ***
+
+Padersan
+Padersan's Farm produced 24 food
+Padersan's population grew from 23 to 24
+Padersan lost 1 lives to the wilds.
+
+
+Redaleybroville
+Redaleybroville's Farm produced 33 food
+Redaleybroville's Docks produced 42 food
+Redaleybroville's Hunting Lodge produced 42 food
+
+
+Ingdontin
+Ingdontin's Farm produced 50 food
+Ingdontin's Docks produced 46 food
+Ingdontin's Hunting Lodge produced 46 food
+
+
+Kabanderth
+Kabanderth's Farm produced 15 food
+
+
+Exmustongw
+Exmustongw's Farm produced 43 food
+Exmustongw's Hunting Lodge produced 48 food
+Exmustongw's population grew from 90 to 91
+Exmustongw lost 1 lives to the wilds.
+
+
+Darneweswat
+Darneweswat's Farm produced 34 food
+Darneweswat's Docks produced 44 food
+
+
+Cumdingrcester
+Cumdingrcester's Farm produced 33 food
+
+
+Uckhaltho
+Uckhaltho's Farm produced 50 food
+Uckhaltho's Hunting Lodge produced 46 food
+Uckhaltho's population grew from 94 to 96
+Uckhaltho lost 2 lives to the wilds.
+
+

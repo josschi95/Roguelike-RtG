@@ -10,7 +10,7 @@
                 },
                 {
                     "Name": "Render",
-                    "Parameters": [ "Tile=Creatures/humanoid_base,humanoid_blank", "IsComposite=true" ]
+                    "Parameters": [ "Tile=human_00", "IsAnimated=true" ]
                 },
                 { "Name": "TimedActor" },
                 {
@@ -121,8 +121,8 @@
             "Inherits": "BaseCreature",
             "Components": [
                 {
-                    "Name": "Render", 
-                    "Parameters": [ "Tile=Creatures/humanoid_base,orc_male", "Layer=Creature" ]
+                    "Name": "Render",
+                    "Parameters": [ "Tile=orc_00", "Layer=Creature" ]
                 }
             ]
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
   m_Name: Bridge_Vertical
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 47581007, guid: 31a08e4b98e804844a9c46f105387e8f, type: 3}
+  m_DefaultSprite: {fileID: 1564787749, guid: 8a7f72a2433516844aee6bd3db2efa51, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules: []

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
   m_Name: Road_T_East
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 1434830774, guid: 17ceb8593a3ccda4192e0ca2f9735994, type: 3}
+  m_DefaultSprite: {fileID: 534519540, guid: 026335cb424fe8341999ab87b238114f, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules: []

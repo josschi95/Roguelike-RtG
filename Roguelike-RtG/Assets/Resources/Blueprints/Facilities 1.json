@@ -1,0 +1,200 @@
+{
+    "Facilities": [
+        {
+            "Name": "House",
+            "Workers": "5"
+        },
+
+
+
+
+
+        {
+            "Name": "Wheat Field",
+            "Workers": "5",
+            "Output": "Wheat"
+        },
+        {
+            "Name": "Corn Field",
+            "Workers": "5",
+            "Output": "Corn"
+        },
+        {
+            "Name": "Rice Field",
+            "Workers": "5",
+            "Output": "Rice"
+        },
+        {
+            "Name": "Cabbage Field",
+            "Workers": "5",
+            "Output": "Cabbage"
+        },
+        {
+            "Name": "Bean Field",
+            "Workers": "5",
+            "Output": "Beans"
+        },
+        {
+            "Name": "Apple Orchard",
+            "Workers": "5",
+            "Output": "Apples"
+        },
+        {
+            "Name": "Citrus Orchard",
+            "Workers": "5",
+            "Output": "Citrus"
+        },
+        {
+            "Name": "Vineyard",
+            "Workers": "5",
+            "Output": "Grapes"
+        },
+        {
+            "Name": "Sugarcane Farm",
+            "Workers": "5",
+            "Output": "Sugar"
+        },
+        {
+            "Name": "Palm Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Sunflower Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Olive Farm",
+            "Workers": "5",
+            "Output": "Oil"
+        },
+        {
+            "Name": "Tea Field",
+            "Workers": "5",
+            "Output": "Tea"
+        },
+        {
+            "Name": "Coffee Field",
+            "Workers": "5",
+            "Output": "Coffee"
+        },
+        {
+            "Name": "Narcotics Farm",
+            "Workers": "5",
+            "Output": "Narcotics"
+        },
+        {
+            "Name": "Chicken Farm",
+            "Workers": "5",
+            "Output": "Eggs,Meat"
+        },
+        {
+            "Name": "Pig Farm",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+        {
+            "Name": "Cow Farm",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+        {
+            "Name": "Dairy Farm",
+            "Workers": "5",
+            "Output": "Milk,Cheese,Butter"
+        },
+        {
+            "Name": "Sheep Farm",
+            "Workers": "5",
+            "Output": "Wool"
+        },
+        {
+            "Name": "Fishery",
+            "Workers": "5",
+            "Output": "Fish"
+        },
+        {
+            "Name": "Apiary",
+            "Workers": "5",
+            "Output": "Honey"
+        },
+        {
+            "Name": "Hunting Lodge",
+            "Workers": "5",
+            "Output": "Meat,Hide"
+        },
+
+
+
+
+
+        {
+            "Name": "Coal Mine",
+            "Workers": "5",
+            "Output": "Coal"
+        },
+        {
+            "Name": "Copper Mine",
+            "Workers": "5",
+            "Output": "Copper Ore"
+        },
+        {
+            "Name": "Iron Mine",
+            "Workers": "5",
+            "Output": "Iron Ore"
+        },
+        {
+            "Name": "Silver Mine",
+            "Workers": "5",
+            "Output": "Silver Ore"
+        },
+        {
+            "Name": "Gold Mine",
+            "Workers": "5",
+            "Output": "Gold Ore"
+        },
+        {
+            "Name": "Mithril Mine",
+            "Workers": "5",
+            "Output": "Mithril Ore"
+        },
+        {
+            "Name": "Adamantine Mine",
+            "Workers": "5",
+            "Output": "Adamantine Ore"
+        },
+        {
+            "Name": "Gemstone Mine",
+            "Workers": "5",
+            "Output": "Gems"
+        },
+        {
+            "Name": "Quarry",
+            "Workers": "5",
+            "Output": "Stone"
+        },
+        {
+            "Name": "Saltern",
+            "Workers": "5",
+            "Output": "Salt"
+        },
+
+
+
+
+
+        {
+            "Name": "Bakery",
+            "Workers": "2",
+            "Input": "Wheat",
+            "Output": "Bread"
+        },
+        {
+            "Name": "Brewery",
+            "Workers": "2",
+            "Input": "Wheat",
+            "Output": "Bread"
+        }
+    ]
+}

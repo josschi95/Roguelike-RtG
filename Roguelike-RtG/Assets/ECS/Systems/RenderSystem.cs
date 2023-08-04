@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 /************ Sorting Layers ************
@@ -18,24 +18,20 @@ namespace JS.ECS
 {
     public class RenderSystem : SystemBase<Render>
     {
-        //So another option rather than having single and compound renderers is to just render each thing separateley
-        //this would of course also mean tracking them all separately, and I'm not sure how that would work for 
-        //the bob/idle sways, as well as the other anims when I add those in... I could still parent them... w/ reference to parent
-
         private static RenderSystem instance;
 
-        //Later these should be changed to pools
-        [SerializeField] private SingleRenderer single;
-        [SerializeField] private CompoundRenderer compound;
+        //These should be made into pools later on
+        [SerializeField] private SpriteRenderer staticSprite;
+        [SerializeField] private Animator animatedSprite;
 
         [Space]
 
         [SerializeField] private Material flashMaterial;
         
-        private Dictionary<Render, SingleRenderer> activeSingleRenders;
-        private Dictionary<Render, CompoundRenderer> activeCompoundRenders;
+        private Dictionary<Render, SpriteRenderer> activeSpriteRenderers;
 
-        private bool skipAnimations = false; //When set to true, all animations end and objects are set to their end positions
+        //When set to true, all sliding animations end and objects are set to their end positions
+        private bool skipAnimations = false; 
 
         private void Awake()
         {
@@ -45,8 +41,8 @@ namespace JS.ECS
                 return;
             }
             instance = this;
-            activeSingleRenders = new Dictionary<Render, SingleRenderer>();
-            activeCompoundRenders = new Dictionary<Render, CompoundRenderer>();
+
+            activeSpriteRenderers = new Dictionary<Render, SpriteRenderer>();
         }
 
         /// <summary>
@@ -97,7 +93,44 @@ namespace JS.ECS
                 return;
             }
 
-            if (render.IsComposite)
+            if (!activeSpriteRenderers.ContainsKey(render) || activeSpriteRenderers[render] == null) StartRendering(render);
+
+
+            if(GridManager.WorldMapActive)
+            {
+                //Moved Right
+                if(render.Transform.WorldPosition.x > activeSpriteRenderers[render].transform.position.x)
+                {
+                    activeSpriteRenderers[render].flipX = true; //all sprites face left by default
+                }
+                //Moved Left
+                else if (render.Transform.WorldPosition.x < activeSpriteRenderers[render].transform.position.x)
+                {
+                    activeSpriteRenderers[render].flipX = false;
+                }
+
+                if (smooth) StartCoroutine(SlideWorld(render));
+                else activeSpriteRenderers[render].transform.position = render.Transform.WorldPosition;
+            }
+            else
+            {
+                //Moved Right
+                if (render.Transform.LocalPosition.x > activeSpriteRenderers[render].transform.position.x)
+                {
+                    activeSpriteRenderers[render].flipX = true;
+                }
+                //Moved Left
+                else if (render.Transform.LocalPosition.x < activeSpriteRenderers[render].transform.position.x)
+                {
+                    activeSpriteRenderers[render].flipX = false;
+                }
+
+                if (smooth) StartCoroutine(SlideLocal(render));
+                else activeSpriteRenderers[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
+            }
+
+
+            /*if (render.IsAnimated)
             {
                 if (!activeCompoundRenders.ContainsKey(render) || activeCompoundRenders[render] == null) StartRendering(render);
 
@@ -126,7 +159,7 @@ namespace JS.ECS
                     if (smooth) StartCoroutine(SlideLocal(render));
                     else activeSingleRenders[render].transform.position = (Vector3Int)render.Transform.LocalPosition;
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -134,28 +167,25 @@ namespace JS.ECS
         /// </summary>
         private void StartRendering(Render render)
         {
-            if (render.IsComposite)
+            if (render.IsAnimated)
             {
-                var go = Instantiate(instance.compound);
-                instance.activeCompoundRenders[render] = go;
+                var go = Instantiate(instance.animatedSprite);
+
+                instance.activeSpriteRenderers[render] = go.GetComponent<SpriteRenderer>();
+
                 go.transform.position = (Vector3Int)render.Transform.LocalPosition;
-
-                go.Base.sprite = GetSprite(render.Tile);
-
-                /*for (int i = 0; i < compound.sprites.Length; i++)
-                {
-                    go.Renderers[i].sprite = compound.sprites[i];
-                }*/
+                go.runtimeAnimatorController = GetAnimator(render.Tile);
             }
             else
             {
-                var go = Instantiate(instance.single);
-                instance.activeSingleRenders[render] = go;
+                var go = Instantiate(instance.staticSprite);
+
+                instance.activeSpriteRenderers[render] = go;
                 go.transform.position = (Vector3Int)render.Transform.LocalPosition;
 
-                go.Renderer.sprite = GetSprite(render.Tile);
-                go.Renderer.sortingLayerName = render.Layer;
-                go.Renderer.sortingOrder = render.Order;
+                go.sprite = GetSprite(render.Tile);
+                go.sortingLayerName = render.Layer;
+                go.sortingOrder = render.Order;
             }
         }
         
@@ -164,7 +194,15 @@ namespace JS.ECS
         /// </summary>
         private void StopRendering(Render render)
         {
-            if (render.IsComposite && activeCompoundRenders.ContainsKey(render))
+            if (activeSpriteRenderers.ContainsKey(render))
+            {
+                if (activeSpriteRenderers[render] != null)
+                    Destroy(activeSpriteRenderers[render].gameObject);
+
+                activeSpriteRenderers.Remove(render);
+            }
+
+            /*if (render.IsAnimated && activeCompoundRenders.ContainsKey(render))
             {
                 if (activeCompoundRenders[render] != null)
                     Destroy(activeCompoundRenders[render].gameObject);
@@ -177,7 +215,7 @@ namespace JS.ECS
                     Destroy(activeSingleRenders[render].gameObject);
 
                 activeSingleRenders.Remove(render);
-            }
+            }*/
         }
 
         /// <summary>
@@ -197,7 +235,7 @@ namespace JS.ECS
         private Sprite GetSprite(string name)
         {
             var path = name.Split(",");
-            var sprites = Resources.LoadAll<Sprite>("Sprites/" + path[0]);
+            var sprites = Resources.LoadAll<Sprite>($"Sprites/{path[0]}");
             foreach (var sprite in sprites)
             {
                 if (!sprite.name.Equals(path[1])) continue;
@@ -206,15 +244,16 @@ namespace JS.ECS
             return null;
         }
 
+        private AnimatorController GetAnimator(string name)
+        {
+            return Resources.Load<AnimatorController>($"Sprites/Animations/{name}");
+        }
+
         public static GameObject GetGameObject(Entity entity)
         {
             if (entity == null) return null;
 
-            foreach(var pair in instance.activeCompoundRenders)
-            {
-                if (pair.Key.entity == entity) return pair.Value.gameObject;
-            }
-            foreach (var pair in instance.activeSingleRenders)
+            foreach (var pair in instance.activeSpriteRenderers)
             {
                 if (pair.Key.entity == entity) return pair.Value.gameObject;
             }
@@ -224,13 +263,9 @@ namespace JS.ECS
         #region - Animations -
         private IEnumerator SlideLocal(Render render)
         {
-            UnityEngine.Transform transform;
+            if (!activeSpriteRenderers.ContainsKey(render)) yield break;
 
-            if (activeSingleRenders.ContainsKey(render)) 
-                transform = activeSingleRenders[render].transform;
-            else if (activeCompoundRenders.ContainsKey(render)) 
-                transform = activeCompoundRenders[render].transform;
-            else yield break;
+            UnityEngine.Transform transform = activeSpriteRenderers[render].transform;
 
             var start = transform.position;
             var end = (Vector3Int)render.Transform.LocalPosition;
@@ -246,13 +281,9 @@ namespace JS.ECS
 
         private IEnumerator SlideWorld(Render render)
         {
-            UnityEngine.Transform transform;
+            if (!activeSpriteRenderers.ContainsKey(render)) yield break;
 
-            if (activeSingleRenders.ContainsKey(render))
-                transform = activeSingleRenders[render].transform;
-            else if (activeCompoundRenders.ContainsKey(render))
-                transform = activeCompoundRenders[render].transform;
-            else yield break;
+            UnityEngine.Transform transform = activeSpriteRenderers[render].transform;
 
             var start = transform.position;
             var end = render.Transform.WorldPosition;
@@ -268,13 +299,9 @@ namespace JS.ECS
 
         private IEnumerator Jab(Render render, Vector3 direction)
         {
-            UnityEngine.Transform transform;
+            if (!activeSpriteRenderers.ContainsKey(render)) yield break;
 
-            if (activeSingleRenders.ContainsKey(render))
-                transform = activeSingleRenders[render].transform;
-            else if (activeCompoundRenders.ContainsKey(render))
-                transform = activeCompoundRenders[render].transform;
-            else yield break;
+            UnityEngine.Transform transform = activeSpriteRenderers[render].transform;
 
             var start = transform.position;
             var mid = start + (direction * 0.5f);
@@ -316,67 +343,21 @@ namespace JS.ECS
         public static void FlashSprite(Render render)
         {
             instance.Flash(render);
-
-            /*if (render is RenderSingle single)
-                instance.StartCoroutine(instance.Flash(single));
-            else if (render is RenderCompound compound)
-                instance.StartCoroutine(instance.Flash(compound));*/
         }
 
         private void Flash(Render render)
         {
-            if (render.IsComposite) StartCoroutine(FlashComposite(activeCompoundRenders[render]));
-            else StartCoroutine(FlashSingle(activeSingleRenders[render]));
+            StartCoroutine(FlashSingle(activeSpriteRenderers[render]));
         }
 
-        private IEnumerator FlashSingle(SingleRenderer single)
+        private IEnumerator FlashSingle(SpriteRenderer sprite)
         {
-            var mat = single.Renderer.material;
-            single.Renderer.material = flashMaterial;
+            var mat = sprite.material;
+            sprite.material = flashMaterial;
             yield return new WaitForSeconds(0.1f);
 
-            single.Renderer.material = mat;
+            sprite.material = mat;
         }
-
-        private IEnumerator FlashComposite(CompoundRenderer compound)
-        {
-            var mats = new Material[10];
-            for (int i = 0; i < mats.Length; i++)
-            {
-                mats[i] = compound.Renderers[i].material;
-                compound.Renderers[i].material = flashMaterial;
-            }
-            yield return new WaitForSeconds(0.1f);
-
-            for (int i = 0; i < mats.Length; i++)
-            {
-                compound.Renderers[i].material = mats[i];
-            }
-        }
-
-        /*private IEnumerator Flash(RenderSingle render)
-        {
-            var mat = instance.activeSingleRenders[render].Renderer.material;
-            instance.activeSingleRenders[render].Renderer.material = flashMaterial;
-            yield return new WaitForSeconds(0.1f);
-
-            instance.activeSingleRenders[render].Renderer.material = mat;
-        }
-        private IEnumerator Flash(RenderCompound compound)
-        {
-            var mats = new Material[10];
-            for (int i = 0; i < mats.Length; i++)
-            {
-                mats[i] = instance.activeCompoundRenders[compound].Renderers[i].material;
-                instance.activeCompoundRenders[compound].Renderers[i].material = flashMaterial;
-            }
-            yield return new WaitForSeconds(0.1f);
-
-            for (int i = 0; i < mats.Length; i++)
-            {
-                instance.activeCompoundRenders[compound].Renderers[i].material = mats[i];
-            }
-        }*/
         #endregion
     }
 }

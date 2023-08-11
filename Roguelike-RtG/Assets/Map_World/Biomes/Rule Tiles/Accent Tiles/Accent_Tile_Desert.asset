@@ -12,25 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
   m_Name: Accent_Tile_Desert
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 545698230, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
+  m_DefaultSprite: {fileID: 973479086, guid: 0ce7fca4455430e41b0a482c55e06489, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 836722757, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 830414057, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 26490134, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 545698230, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: -1885166969, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: -32976237, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 973479086, guid: 0ce7fca4455430e41b0a482c55e06489, type: 3}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}

@@ -14,22 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 2
   <BiomeName>k__BackingField: Lake
-  <WorldBase>k__BackingField: {fileID: 11400000, guid: 99a6fe2b6829c55438585c28273bac19, type: 2}
+  <WorldBase>k__BackingField: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
   <WorldAccent>k__BackingField: {fileID: 0}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 0
   <isDifficultTerrain>k__BackingField: 0
+  <CanBeHunted>k__BackingField: 0
+  <DangerModifier>k__BackingField: 0
   minAvgAnnualTemperature: 0
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0
   maxAnnualPrecipitation: 1000
-  treeDensity: 0
-  shrubDensity: 0
-  grassDensity: 0
-  foodAvailability: 1
-  waterAvailability: 1
-  lumberAvailability: 0
-  vegetation: []
-  animals: []
-  monsters: []
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: 

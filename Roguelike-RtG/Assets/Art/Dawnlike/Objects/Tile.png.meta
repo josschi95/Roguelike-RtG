@@ -138,7 +138,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile_1
+      name: water_00
       rect:
         serializedVersion: 2
         x: 16
@@ -159,7 +159,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile_2
+      name: water_01
       rect:
         serializedVersion: 2
         x: 32
@@ -800,7 +800,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Tile_0: 1897393595
-      Tile_1: 455367865
       Tile_10: 457848856
       Tile_11: 860040336
       Tile_12: -880861027
@@ -811,7 +810,6 @@ TextureImporter:
       Tile_17: -482010456
       Tile_18: 2133533128
       Tile_19: 1413167757
-      Tile_2: 1255279708
       Tile_20: 1927849474
       Tile_21: 1190795586
       Tile_22: 105216920
@@ -831,6 +829,8 @@ TextureImporter:
       Tile_9: -1319222542
       bridge_horizontal: -1318662162
       bridge_vertical: 1564787749
+      water_00: 455367865
+      water_01: 1255279708
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

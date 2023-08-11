@@ -850,7 +850,7 @@ MonoBehaviour:
   lowTile: {fileID: 11400000, guid: 05093612ddfa2ec4a9efcd5d9ec5bc31, type: 2}
   highTile: {fileID: 11400000, guid: 767bc281021de684193cc8a11e61e2f4, type: 2}
   treeTile: {fileID: 11400000, guid: 33ef3924964dfcf48a92c88df140e281, type: 2}
-  waterTile: {fileID: 11400000, guid: 99a6fe2b6829c55438585c28273bac19, type: 2}
+  waterTile: {fileID: 11400000, guid: 0400b9fd61895194abc59c5d9e40ad78, type: 2}
 --- !u!1 &1002168318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1191,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 248588071
-  m_SortingLayer: 9
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1334,7 +1334,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 248588071
-  m_SortingLayer: 9
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

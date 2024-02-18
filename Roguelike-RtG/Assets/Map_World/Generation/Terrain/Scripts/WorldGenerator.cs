@@ -120,7 +120,7 @@ namespace JS.WorldMap.Generation
         }
 
         /// <summary>
-        /// Assigns a random seed to each World Tile
+        /// Assigns a random seed to each World Tile.
         /// </summary>
         private void PlantSeeds()
         {
@@ -290,15 +290,15 @@ namespace JS.WorldMap.Generation
             int index = PRNG.Next(0, settlementData.Settlements.Length);
             var settlement = settlementData.Settlements[index];
 
-            playerData.World.x = settlement.X;
-            playerData.World.y = settlement.Y;
-            playerData.World.z = 0;
+            playerData.World = new Vector3Int(settlement.x, settlement.y, 0);
 
-            playerData.Region.x = Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f);
-            playerData.Region.y = Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f);
+            var region_x = Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f);
+            var region_y = Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f);
+            playerData.Region = new Vector2Int(region_x, region_y);
 
-            playerData.Local.x = Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f);
-            playerData.Local.y = Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f);
+            var local_x = Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f);
+            var local_y = Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f);
+            playerData.Local = new Vector2Int(local_x, local_y);
         }
 
         #region - World Recreation -

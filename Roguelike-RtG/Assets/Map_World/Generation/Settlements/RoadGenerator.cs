@@ -2,6 +2,7 @@ using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
 using DelaunayVoronoi;
+using System.Linq;
 
 namespace JS.WorldMap.Generation
 {
@@ -20,6 +21,10 @@ namespace JS.WorldMap.Generation
             ConstructRoads();
         }
 
+        /// <summary>
+        /// Sets the movement costs for constructing roads.
+        /// Adds additional costs to coasts, difficult terrain, river bends, and mountains.
+        /// </summary>
         private void SetMovementPenalties()
         {
             for (int x = 0; x < worldMap.Width; x++)
@@ -59,9 +64,10 @@ namespace JS.WorldMap.Generation
             bridges = new List<Bridge>();
             var points = new List<Point>();
 
+            print(worldMap.SettlementData.Settlements.Length);
             foreach(var settlement in worldMap.SettlementData.Settlements)
             {
-                points.Add(new Point(settlement.X, settlement.Y));
+                points.Add(new Point(settlement.Coordinates));
             }
 
             var triangles = BowyerWatson.Triangulate(points);
@@ -70,18 +76,23 @@ namespace JS.WorldMap.Generation
                 graph.UnionWith(triangle.edges);
 
             var tree = Kruskal.MinimumSpanningTree(graph);
+            DrawLines(tree);
 
             foreach(var edge in tree)
             {
                 var a = worldMap.GetNode((int)edge.Point1.X, (int)edge.Point1.Y);
                 var b = worldMap.GetNode((int)edge.Point2.X, (int)edge.Point2.Y);
 
-                var newRoad = new Road();
-                newRoad.pointA = Find(a).ID;
-                newRoad.pointB = Find(b).ID;
+                if (TryGetSettlementId(a, out int pointA) == false) continue;
+                if (TryGetSettlementId(b, out int pointB) == false) continue;
+                var newRoad = new Road(pointA, pointB);
 
                 var path = worldMap.FindNodePath(a.x, a.y, b.x, b.y);
-                if (path == null) continue;
+                if (path == null)
+                {
+                    Debug.LogWarning($"Cannot find path from {a.x},{a.y} to {b.x},{b.y}.");
+                    continue;
+                }
 
                 BuildRoad(newRoad, path);
                 roads.Add(newRoad);
@@ -90,13 +101,24 @@ namespace JS.WorldMap.Generation
             worldMap.TerrainData.Bridges = bridges.ToArray();
         }
 
-        private Settlement Find(WorldTile tile)
+        private bool TryGetSettlementId(WorldTile tile, out int id)
         {
+            id = -1;
+            if (tile == null)
+            {
+                Debug.LogWarning("Tile is null.");
+                return false;
+            }
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
-                if (tile.x == settlement.X && tile.y == settlement.Y) return settlement;
+                if (tile.x == settlement.Coordinates.x && tile.y == settlement.Coordinates.y)
+                {
+                    id = settlement.ID;
+                    return true;
+                }
             }
-            return null;
+            Debug.LogWarning($"Settlement not found at {tile.x},{tile.y}.");
+            return false;
         }
 
         private void BuildRoad(Road road, List<WorldTile> list)
@@ -132,7 +154,19 @@ namespace JS.WorldMap.Generation
             }
         }
 
+        //Draws a minimum spanning tree that represents where all of the roads will be formed
+        private void DrawLines(List<Edge> tree)
+        {
+            foreach (var edge in tree)
+            {
+                var a = new Vector3((float)edge.Point1.X, (float)edge.Point1.Y);
+                var b = new Vector3((float)edge.Point2.X, (float)edge.Point2.Y);
+                Debug.DrawLine(a, b, Color.green, 1000f);
+            }
+        }
+
         #region - Obsolete -
+        /*
         private void FindPaths_Old()
         {
             roads = new List<Road>();
@@ -202,6 +236,7 @@ namespace JS.WorldMap.Generation
             }
             return false;
         }
+        */
         #endregion
     }
 }
@@ -212,6 +247,12 @@ public class Road
     public int pointA;
     public int pointB;
     public RiverNode[] Nodes;
+
+    public Road(int pointA, int pointB)
+    {
+        this.pointA = pointA;
+        this.pointB = pointB;
+    }
 }
 
 [System.Serializable]

@@ -6,10 +6,11 @@ namespace JS.WorldMap
     [System.Serializable]
     public class Settlement
     {
-        [SerializeField] private int x;
-        [SerializeField] private int y;
-        public int X => x;
-        public int Y => y;
+        [SerializeField] private Vector2Int _coordinates;
+        public Vector2Int Coordinates => _coordinates;
+
+        public int x => _coordinates.x;
+        public int y => _coordinates.y;
 
         [SerializeField] private string _name;
         public string Name => _name;
@@ -39,8 +40,7 @@ namespace JS.WorldMap
         {
             _name = name;
             id = ID;
-            x = node.x;
-            y = node.y;
+            _coordinates = new Vector2Int(node.x, node.y);
 
             //Set to a seafaring settlement if placed on an island
             //isSeaFaring = node.Island != null;
@@ -57,8 +57,9 @@ namespace JS.WorldMap
 
         public void Relocate(WorldTile node)
         {
-            x = node.x;
-            y = node.y;
+            _coordinates = new Vector2Int(node.x, node.y);
+            //x = node.x;
+            //y = node.y;
         }
 
         public void AdjustSize(SettlementType type, int newPopulation)

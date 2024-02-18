@@ -55,7 +55,7 @@ namespace JS.WorldMap
             if (settlement == null) return;
             displayText.text += "\n \n";
 
-            displayText.text += settlement.Name;
+            displayText.text += $"{settlement.Name} {settlement.Coordinates}\n";
             displayText.text += "\nTribe: " + worldData.SettlementData.Tribes[settlement.TribeID].name + "\n";
             displayText.text += worldData.SettlementData.Types[settlement.TypeID].TypeName;
 

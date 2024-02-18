@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace DelaunayVoronoi
 {
@@ -23,6 +24,12 @@ namespace DelaunayVoronoi
         {
             X = x;
             Y = y;
+        }
+
+        public Point(Vector2Int coordinates)
+        {
+            X = coordinates.x;
+            Y = coordinates.y;
         }
 
         public override string ToString()

@@ -135,7 +135,7 @@ namespace JS.WorldMap
 
             foreach (var settlement in worldMap.SettlementData.Settlements)
             {
-                var tilePos = new Vector3Int(settlement.X, settlement.Y);
+                var tilePos = new Vector3Int(settlement.x, settlement.y);
                 settlementMap.SetTile(tilePos, worldMap.SettlementData.Types[settlement.TypeID].settlementTile);
             }
         }

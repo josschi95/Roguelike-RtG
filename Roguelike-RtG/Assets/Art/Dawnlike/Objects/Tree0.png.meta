@@ -516,7 +516,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_19
+      name: broadleaf_single
       rect:
         serializedVersion: 2
         x: 48
@@ -1986,7 +1986,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_89
+      name: shrub_snow_single
       rect:
         serializedVersion: 2
         x: 144
@@ -4548,7 +4548,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_211
+      name: conifer_snow_single
       rect:
         serializedVersion: 2
         x: 48
@@ -4674,7 +4674,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_217
+      name: conifer_snow_small_single
       rect:
         serializedVersion: 2
         x: 144
@@ -5976,7 +5976,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_281
+      name: palm_single
       rect:
         serializedVersion: 2
         x: 144
@@ -7110,7 +7110,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_339
+      name: willow_single
       rect:
         serializedVersion: 2
         x: 48
@@ -7236,7 +7236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tree0_345
+      name: willow_dark_single
       rect:
         serializedVersion: 2
         x: 144
@@ -7830,7 +7830,6 @@ TextureImporter:
       Tree0_187: 733773917
       Tree0_188: 142848801
       Tree0_189: 1105315045
-      Tree0_19: 1864147102
       Tree0_190: 1500643767
       Tree0_191: 838834
       Tree0_192: -1644675714
@@ -7855,13 +7854,11 @@ TextureImporter:
       Tree0_209: -1591715987
       Tree0_21: -2025387158
       Tree0_210: -2075575778
-      Tree0_211: 1591311839
       Tree0_212: 1284530954
       Tree0_213: 2041942501
       Tree0_214: 1041941455
       Tree0_215: -237817412
       Tree0_216: -1452486906
-      Tree0_217: 112058539
       Tree0_218: 1367982963
       Tree0_219: -2112223405
       Tree0_22: 359203764
@@ -7928,7 +7925,6 @@ TextureImporter:
       Tree0_279: -1258700313
       Tree0_28: 1734249535
       Tree0_280: -2051933645
-      Tree0_281: -1297306670
       Tree0_282: 1178956546
       Tree0_283: 215828208
       Tree0_285: 1364145977
@@ -7987,14 +7983,12 @@ TextureImporter:
       Tree0_336: -1326801539
       Tree0_337: 1278411788
       Tree0_338: -939235255
-      Tree0_339: -562235534
       Tree0_34: 1595162035
       Tree0_340: -1567094215
       Tree0_341: -345954798
       Tree0_342: -1260714189
       Tree0_343: -646787803
       Tree0_344: -202753485
-      Tree0_345: -1260691128
       Tree0_346: -721266648
       Tree0_347: 950361781
       Tree0_348: 1057791848
@@ -8076,7 +8070,6 @@ TextureImporter:
       Tree0_86: -186613953
       Tree0_87: -2122513219
       Tree0_88: -32239901
-      Tree0_89: -1961519898
       Tree0_9: -2068182078
       Tree0_90: -1700572252
       Tree0_91: -1313345146
@@ -8088,6 +8081,7 @@ TextureImporter:
       Tree0_97: -876246736
       Tree0_98: 1747394871
       Tree0_99: 396819804
+      broadleaf_single: 1864147102
       cactus_E: 427108134
       cactus_N: -124816851
       cactus_NE: 2081826502
@@ -8097,6 +8091,12 @@ TextureImporter:
       cactus_SW: -2036088269
       cactus_W: -1389678041
       cactus_single: 973479086
+      conifer_snow_single: 1591311839
+      conifer_snow_small_single: 112058539
+      palm_single: -1297306670
+      shrub_snow_single: -1961519898
+      willow_dark_single: -1260691128
+      willow_single: -562235534
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

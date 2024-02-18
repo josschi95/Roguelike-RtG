@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
   m_Name: Accent_Tile_Savanna
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -1190028217, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
+  m_DefaultSprite: {fileID: 1346242318, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: -1190028217, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: -1190028217, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 126189674, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
+    - {fileID: 731123355, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: 547081894, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: 1346242318, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -155479835, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -1913884288, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: 0}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1

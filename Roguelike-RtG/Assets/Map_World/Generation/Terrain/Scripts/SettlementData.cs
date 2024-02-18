@@ -30,7 +30,7 @@ public class SettlementData : ScriptableObject
 
         for (int i = 0; i < settlements.Length; i++)
         {
-            if (settlements[i].X == x && settlements[i].Y == y)
+            if (settlements[i].x == x && settlements[i].y == y)
             {
                 return settlements[i];
             }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DelaunayVoronoi;
 
 namespace JS.WorldMap.Generation
 {
@@ -42,7 +41,7 @@ namespace JS.WorldMap.Generation
             historyReport += message + "\n";
         }
 
-        #region - Settlement Placement -
+        #region - Seed Placement -
         public void PlaceSeeds()
         {
             var size = new Vector2(worldMap.Width, worldMap.Height);
@@ -52,7 +51,7 @@ namespace JS.WorldMap.Generation
             for (int i = seedLocations.Count - 1; i >= 0; i--)
             {
                 var node = worldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
-                if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea
+                if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea yet
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) seedLocations.RemoveAt(i);
             }
@@ -406,7 +405,6 @@ namespace JS.WorldMap.Generation
             //GetTerritoryReport();
             ReportWriter.FileReport("Settlement History", historyReport);
 
-            DrawLines();
             worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
         }
 
@@ -417,29 +415,6 @@ namespace JS.WorldMap.Generation
                 var tribe = GetTribeBids(seed.Node);
                 var newSettlement = new Settlement(seed.Name, settlements.Count, seed.Node, seed.Type, tribe, seed.Population);
                 settlements.Add(newSettlement);
-            }
-        }
-
-        //Draws a minimum spanning tree that represents where all of the roads will be formed
-        private void DrawLines()
-        {
-            var test = new List<Point>();
-            for (int i = 0; i < settlements.Count; i++)
-            {
-                test.Add(new Point(settlements[i].X, settlements[i].Y));
-            }
-
-            var triangles = BowyerWatson.Triangulate(test);
-            var graph = new HashSet<Edge>();
-            foreach (var triangle in triangles)
-                graph.UnionWith(triangle.edges);
-
-            var tree = Kruskal.MinimumSpanningTree(graph);
-            foreach (var edge in tree)
-            {
-                var a = new Vector3((float)edge.Point1.X, (float)edge.Point1.Y);
-                var b = new Vector3((float)edge.Point2.X, (float)edge.Point2.Y);
-                Debug.DrawLine(a, b, Color.green, 1000f);
             }
         }
         #endregion
@@ -461,7 +436,7 @@ namespace JS.WorldMap.Generation
             for (int i = 0; i < settlements.Count; i++)
             {
                 if (settlements[i] == fromSettlement) continue;
-                var newDist = GridMath.GetStraightDist(fromSettlement.X, fromSettlement.Y, settlements[i].X, settlements[i].Y);
+                var newDist = GridMath.GetStraightDist(fromSettlement.Coordinates, settlements[i].Coordinates);
 
                 if (newDist < dist)
                 {
@@ -476,7 +451,7 @@ namespace JS.WorldMap.Generation
         {
             foreach (Settlement settlement in settlements)
             {
-                var node = worldMap.GetNode(settlement.X, settlement.Y);
+                var node = worldMap.GetNode(settlement.x, settlement.y);
                 int range = (settlement.TypeID + 1) * 2;
                 var area = worldMap.GetNodesInRange_Circle(node, range);
                 foreach(var areaNode in area)
@@ -488,9 +463,9 @@ namespace JS.WorldMap.Generation
 
                     settlement.AddNewRelation(newSettlement, disposition);
                     newSettlement.AddNewRelation(settlement, disposition);
-                    Debug.Log(GetTribe(settlement.TribeID) + " (" + settlement.TypeID + ") at " + settlement.X + "," + settlement.Y +
+                    Debug.Log(GetTribe(settlement.TribeID) + " (" + settlement.TypeID + ") at " + settlement.x + "," + settlement.y +
                         " has encountered a " + GetTribe(newSettlement.TribeID) + " (" + newSettlement.TypeID + ") at " +
-                        newSettlement.X + "," + newSettlement.Y + ". They have a disposition of " + disposition);
+                        newSettlement.x + "," + newSettlement.y + ". They have a disposition of " + disposition);
                 }
             }
         }
@@ -501,7 +476,7 @@ namespace JS.WorldMap.Generation
 
             for (int i = 0; i < settlements.Count; i++)
             {
-                if (settlements[i].X == x && settlements[i].Y == y)
+                if (settlements[i].x == x && settlements[i].y == y)
                 {
                     return settlements[i];
                 }
@@ -515,7 +490,7 @@ namespace JS.WorldMap.Generation
 
             int[,] mapFlags = new int[worldMap.Width, worldMap.Height];
             Queue<WorldTile> queue = new Queue<WorldTile>();
-            queue.Enqueue(worldMap.GetNode(settlement.X, settlement.Y));
+            queue.Enqueue(worldMap.GetNode(settlement.x, settlement.y));
 
             //So this is going to repeat the same territory every single time, which seems a waste
             while (queue.Count > 0)// && territoryToAdd > 0)
@@ -545,7 +520,7 @@ namespace JS.WorldMap.Generation
                     //The distance in node path count from the settlement to the new territory
                     //Also need to take into account going around mountains instead of through them
                     //if (worldMap.GetPathCount(settlement.Node, neighbor, settlement) > 50 + Random.Range(-10, 5)) continue;
-                    if (GridMath.GetStraightDist(settlement.X, settlement.Y, neighbor.x, neighbor.y) > 50 + Random.Range(-10, 5)) continue;
+                    if (GridMath.GetStraightDist(settlement.x, settlement.y, neighbor.x, neighbor.y) > 50 + Random.Range(-10, 5)) continue;
 
                     queue.Enqueue(neighbor);
                 }
@@ -567,7 +542,7 @@ namespace JS.WorldMap.Generation
         {
             foreach (var settlement in settlements)
             {
-                var node = worldMap.GetNode(settlement.X, settlement.Y);
+                var node = worldMap.GetNode(settlement.x, settlement.y);
                 settlement.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", node.x, node.y));
 
                 //Settlements adjacent to water sources get docks, also provides trade

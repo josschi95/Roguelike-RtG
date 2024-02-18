@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664e4681b791e7542915f1c0dc422247, type: 3}
   m_Name: Accent_Tile_Shrubland
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -1310256368, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
+  m_DefaultSprite: {fileID: -847416653, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 1661543024, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 2099773974, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: -1310256368, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: -561963219, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
-    - {fileID: 725137061, guid: 35f8fb3d38052e84fa6f31148d1f7cab, type: 3}
+    - {fileID: 307211460, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -50255981, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -847416653, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -847416653, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
+    - {fileID: -847416653, guid: 2d717b7b4e079c144879cbf620b1962f, type: 3}
     - {fileID: 0}
     - {fileID: 0}
     m_GameObject: {fileID: 0}

@@ -1,5 +1,5 @@
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 using JS.DomainSystem;
 
 namespace JS.CharacterSystem.Creation

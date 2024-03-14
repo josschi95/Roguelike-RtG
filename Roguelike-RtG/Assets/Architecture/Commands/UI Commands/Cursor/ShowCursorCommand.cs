@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     /// <summary>
     /// A general command that triggers events but doesn't have specific functionality of its own.

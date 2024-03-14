@@ -1,5 +1,5 @@
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 using JS.ECS;
 
 [CreateAssetMenu(menuName = "Player/Game Settings")]

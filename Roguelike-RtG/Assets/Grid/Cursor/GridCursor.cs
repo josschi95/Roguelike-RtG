@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using JS.WorldMap;
+using JS.World.Map;
 
 public class GridCursor : MonoBehaviour
 {

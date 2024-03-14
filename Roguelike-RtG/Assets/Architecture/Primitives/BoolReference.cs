@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-namespace JS.Primitives
+namespace JS.Architecture.Primitives
 {
     [Serializable]
     public class BoolReference

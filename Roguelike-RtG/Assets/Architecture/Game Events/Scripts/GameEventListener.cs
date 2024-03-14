@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace JS.EventSystem
+namespace JS.Architecture.EventSystem
 {
     public class GameEventListener : MonoBehaviour
     {

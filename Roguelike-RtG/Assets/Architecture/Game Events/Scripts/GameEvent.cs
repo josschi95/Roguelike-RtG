@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.EventSystem
+namespace JS.Architecture.EventSystem
 {
     /// <summary>
     /// Designer-friendly game event that can be used in the Unity Editor.

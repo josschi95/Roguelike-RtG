@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
     [CreateAssetMenu(fileName = "Terrain Data", menuName = "World Generation/Terrain/Terrain Data")]
     public class TerrainData : ScriptableObject

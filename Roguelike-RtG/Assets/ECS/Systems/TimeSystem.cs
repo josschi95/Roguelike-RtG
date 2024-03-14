@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 
 namespace JS.ECS
 {

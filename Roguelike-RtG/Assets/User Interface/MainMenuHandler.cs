@@ -1,8 +1,8 @@
-using JS.CommandSystem;
-using JS.EventSystem;
-using JS.WorldMap;
 using UnityEngine;
 using UnityEngine.UI;
+using JS.Architecture.EventSystem;
+using JS.Architecture.CommandSystem;
+using JS.World.Map;
 
 /// <summary>
 /// Handles button press events in the MainMenu scene. Temporary.

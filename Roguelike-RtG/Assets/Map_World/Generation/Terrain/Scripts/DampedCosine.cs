@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.Math
 {
     public static class DampedCosine
     {

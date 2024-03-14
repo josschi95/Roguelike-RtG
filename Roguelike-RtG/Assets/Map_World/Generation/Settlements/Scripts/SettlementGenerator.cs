@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     public class SettlementGenerator : MonoBehaviour
     {

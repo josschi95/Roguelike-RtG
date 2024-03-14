@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     [CreateAssetMenu(menuName = "Scriptable Objects/World Data")]
     public class WorldData : ScriptableObject
@@ -28,7 +28,7 @@ namespace JS.WorldMap
             set => seed = value;
         }
 
-        [field: SerializeField] public TerrainData TerrainData { get; private set; }
+        [field: SerializeField] public Features.TerrainData TerrainData { get; private set; }
         [field: SerializeField] public SettlementData SettlementData { get; private set; }
         private Grid<WorldTile> worldMap;
 

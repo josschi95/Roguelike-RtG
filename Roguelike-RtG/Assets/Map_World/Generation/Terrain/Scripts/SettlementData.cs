@@ -1,5 +1,5 @@
 using UnityEngine;
-using JS.WorldMap;
+using JS.World.Map;
 
 [CreateAssetMenu(fileName = "Settlement Data", menuName = "World Generation/Settlements/Settlement Data")]
 public class SettlementData : ScriptableObject

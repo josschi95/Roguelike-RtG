@@ -1,6 +1,7 @@
-using JS.ECS.Tags;
-using JS.WorldMap;
 using UnityEngine;
+using JS.ECS.Tags;
+using JS.World.Map;
+using JS.World.Map.Generation;
 
 namespace JS.ECS
 {

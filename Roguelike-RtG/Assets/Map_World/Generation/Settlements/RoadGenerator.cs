@@ -1,10 +1,10 @@
-using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
 using DelaunayVoronoi;
 using System.Linq;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     public class RoadGenerator : MonoBehaviour
     {

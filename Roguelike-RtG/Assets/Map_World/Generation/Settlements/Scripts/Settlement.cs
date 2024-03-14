@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     [System.Serializable]
     public class Settlement

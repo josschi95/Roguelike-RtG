@@ -1,6 +1,6 @@
-using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
+using JS.World.Map;
 
 public class Pathfinding : MonoBehaviour
 {

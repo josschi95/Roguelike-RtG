@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     public class RiverGenerator : MonoBehaviour
     {
         [SerializeField] private WorldData worldMap;
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private TerrainData terrainData;
+        [SerializeField] private Features.TerrainData terrainData;
         [SerializeField] private BiomeHelper biomeHelper;
 
         [SerializeField] private float MinRiverHeight = 0.6f;

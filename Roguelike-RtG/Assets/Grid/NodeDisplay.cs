@@ -1,7 +1,9 @@
 using UnityEngine;
 using TMPro;
+using JS.World.Map.Generation;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     public class NodeDisplay : MonoBehaviour
     {

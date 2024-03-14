@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 
 namespace JS.CharacterSystem.Creation
 {

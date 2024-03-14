@@ -1,7 +1,9 @@
-using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using JS.World.Map;
+using JS.World.Map.Features;
+using JS.World.Map.Generation;
 
 public class LocalMapDisplay : MonoBehaviour
 {

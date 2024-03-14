@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
     [System.Serializable]
     public class MountainRange

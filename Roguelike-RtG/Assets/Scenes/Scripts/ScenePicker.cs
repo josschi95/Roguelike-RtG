@@ -1,7 +1,7 @@
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 
-namespace JS.SceneManagement
+namespace JS.Architecture.SceneManagement
 {
     [CreateAssetMenu(menuName = "Scene Management/Scene Picker")]
     public class ScenePicker : ScriptableObject

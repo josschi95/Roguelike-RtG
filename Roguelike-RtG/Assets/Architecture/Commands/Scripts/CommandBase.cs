@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     public abstract class CommandBase : ScriptableObject
     {

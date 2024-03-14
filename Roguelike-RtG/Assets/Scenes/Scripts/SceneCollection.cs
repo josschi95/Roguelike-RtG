@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JS.SceneManagement
+namespace JS.Architecture.SceneManagement
 {
     [CreateAssetMenu(menuName = "Scene Management/Scene Collection")]
     public class SceneCollection : ScriptableObject

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using JS.World.Map.Generation;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     public class MapDisplay : MonoBehaviour
     {

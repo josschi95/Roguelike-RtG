@@ -1,9 +1,9 @@
-using JS.EventSystem;
-using JS.Primitives;
-using JS.WorldMap;
+using JS.Architecture.EventSystem;
+using JS.Architecture.Primitives;
+using JS.World.Map;
 using UnityEngine;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     /// <summary>
     /// Checks if the world map file has been loaded with save data and loads world map or world gen as appropriate

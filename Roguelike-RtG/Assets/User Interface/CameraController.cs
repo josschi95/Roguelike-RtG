@@ -1,9 +1,9 @@
-using JS.ECS;
-using JS.WorldMap;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.U2D;
+using JS.World.Map;
+using JS.ECS;
 
 public class CameraController : MonoBehaviour
 {

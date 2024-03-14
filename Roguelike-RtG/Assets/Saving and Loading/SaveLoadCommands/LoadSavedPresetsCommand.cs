@@ -2,7 +2,7 @@ using System.IO;
 using UnityEngine;
 using JS.CharacterSystem.Creation;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     /// <summary>
     /// A command that loads in saved presets to a scriptable object

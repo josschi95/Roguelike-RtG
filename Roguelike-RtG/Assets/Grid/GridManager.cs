@@ -1,9 +1,9 @@
-using JS.ECS;
-using JS.EventSystem;
-using JS.Primitives;
-using JS.WorldMap;
 using System.Collections.Generic;
 using UnityEngine;
+using JS.ECS;
+using JS.Architecture.EventSystem;
+using JS.Architecture.Primitives;
+using JS.World.Map.Generation;
 
 public class GridManager : MonoBehaviour
 {

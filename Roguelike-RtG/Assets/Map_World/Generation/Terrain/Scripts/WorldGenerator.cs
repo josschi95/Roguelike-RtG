@@ -1,14 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using JS.EventSystem;
-using JS.CommandSystem;
-using TMPro;
-using JS.Primitives;
 using System.Diagnostics;
+using UnityEngine.UI;
+using TMPro;
+using JS.Architecture.EventSystem;
+using JS.Architecture.CommandSystem;
+using JS.Architecture.Primitives;
+using JS.World.Map.Features;
 using JS.World.Alchemy;
+using JS.World.Time;
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {

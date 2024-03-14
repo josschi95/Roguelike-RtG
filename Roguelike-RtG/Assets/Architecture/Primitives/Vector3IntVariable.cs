@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using JS.AssetOrganization;
 
-namespace JS.Primitives
+namespace JS.Architecture.Primitives
 {
     [CreateAssetMenu(menuName = AssetMenuSortOrders.PrimitivesPath + "Vector3Int", fileName = "Vector3Int", order = AssetMenuSortOrders.PrimitivesOrder + 7)]
     public class Vector3IntVariable : ScriptableObject

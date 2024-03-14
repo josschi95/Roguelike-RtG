@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
     public static class TemperatureData
     {

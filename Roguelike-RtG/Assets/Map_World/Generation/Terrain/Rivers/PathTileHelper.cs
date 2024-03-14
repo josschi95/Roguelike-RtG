@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     [CreateAssetMenu(fileName = "River Tile Helper", menuName = "World Generation/Terrain/River Tile Helper")]
     public class PathTileHelper : ScriptableObject

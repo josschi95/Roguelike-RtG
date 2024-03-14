@@ -1,7 +1,10 @@
-using DelaunayVoronoi;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DelaunayVoronoi;
+using JS.World.Map.Features;
+using JS.World.Map.Climate;
+using JS.Math;
 
 //Special thaks to http://entropicparticles.com/6-days-of-creation
 
@@ -10,7 +13,7 @@ using UnityEngine;
 //      Ocean Currents
 //
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     /// <summary>
     /// Generates world altitude, climate, and biomes
@@ -26,7 +29,7 @@ namespace JS.WorldMap.Generation
         [Space]
 
         [SerializeField] private WorldGenerationParameters worldGenParams;
-        [SerializeField] private TerrainData terrainData;
+        [SerializeField] private Features.TerrainData terrainData;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private BiomeHelper biomeHelper;
 

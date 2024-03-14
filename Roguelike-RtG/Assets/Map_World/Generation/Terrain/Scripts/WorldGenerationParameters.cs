@@ -1,6 +1,7 @@
 using UnityEngine;
+using JS.World.Map.Climate;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Generation
 {
     [CreateAssetMenu(fileName = "Map Features", menuName = "World Generation/Terrain/Map Features")]
     public class WorldGenerationParameters : ScriptableObject

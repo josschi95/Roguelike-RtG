@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     public class CommandLogger : MonoBehaviour
     {

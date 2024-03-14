@@ -1,7 +1,7 @@
-using JS.WorldMap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JS.World.Map;
 
 //https://github.com/RafaelKuebler/DelaunayVoronoi/tree/master/DelaunayVoronoi
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.UI
+namespace JS.World.Time
 {
     [CreateAssetMenu(menuName = "UI/Moon Phases")]
     public class MoonPhaseHelper : ScriptableObject

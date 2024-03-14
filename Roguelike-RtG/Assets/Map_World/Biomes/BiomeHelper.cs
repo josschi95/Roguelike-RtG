@@ -1,6 +1,7 @@
 using UnityEngine;
+using JS.World.Map.Generation;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
     [CreateAssetMenu(fileName = "Biome Helper", menuName = "World Generation/Terrain/Biome Helper")]
     public class BiomeHelper : ScriptableObject

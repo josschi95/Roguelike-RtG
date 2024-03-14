@@ -1,8 +1,10 @@
-using JS.Primitives;
 using System.Collections.Generic;
 using UnityEngine;
+using JS.Architecture.Primitives;
+using JS.World.Map.Features;
+using JS.Math;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Generation
 {
     public class LocalMapGenerator : MonoBehaviour
     {

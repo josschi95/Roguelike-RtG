@@ -1,8 +1,9 @@
 using System.IO;
 using UnityEngine;
-using JS.WorldMap;
+using JS.World.Map;
+using JS.World.Time;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     /// <summary>
     /// A command that checks for and loads the saved world data

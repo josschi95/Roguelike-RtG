@@ -1,9 +1,9 @@
 using UnityEngine;
-using JS.CharacterSystem.Creation;
 using System.IO;
+using JS.CharacterSystem.Creation;
 using System.Collections.Generic;
 
-namespace JS.CommandSystem
+namespace JS.Architecture.CommandSystem
 {
     /// <summary>
     /// A command that saves the currently made character from the CharacterCreation scene to a file

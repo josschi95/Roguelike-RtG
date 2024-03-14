@@ -3,7 +3,7 @@ using UnityEngine;
 //Courtesy of Sebastian Lague
 //https://www.youtube.com/watch?v=eaXk97ujbPQ
 
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Generation
 {
     public class Erosion : MonoBehaviour
     {

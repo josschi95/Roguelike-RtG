@@ -1,8 +1,8 @@
-using JS.EventSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using JS.Architecture.EventSystem;
 
 //So another possible option would be to separate Menu Input, World Map Input, and Local Map Input into 3 separate
 //InputActionAssets and also into separate scripts

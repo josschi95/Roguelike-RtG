@@ -1,4 +1,6 @@
-namespace JS.WorldMap
+using JS.World.Map.Features;
+
+namespace JS.World.Map
 {
     public class WorldSaveData
     {

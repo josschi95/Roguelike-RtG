@@ -1,10 +1,9 @@
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using JS.AssetOrganization;
 
-namespace JS.Primitives
+namespace JS.Architecture.Primitives
 {
     [CreateAssetMenu(menuName = AssetMenuSortOrders.PrimitivesPath + "Bool", order = AssetMenuSortOrders.PrimitivesOrder + 1)]
     public class BoolVariable : ScriptableObject

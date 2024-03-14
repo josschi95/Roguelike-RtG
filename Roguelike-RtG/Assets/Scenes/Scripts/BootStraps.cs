@@ -4,11 +4,11 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using JS.EventSystem;
-using JS.WorldMap;
+using JS.Architecture.EventSystem;
+using JS.World.Map;
 using JS.ECS;
 
-namespace JS.SceneManagement
+namespace JS.Architecture.SceneManagement
 {
     /// <summary>
     /// Loads individual scenes asynchronously and compiles them into active gameplay

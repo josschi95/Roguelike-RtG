@@ -1,5 +1,5 @@
-using JS.EventSystem;
 using UnityEngine;
+using JS.Architecture.EventSystem;
 
 [CreateAssetMenu(menuName ="Scriptable Objects/Message Log")]
 public class MessageLog : ScriptableObject

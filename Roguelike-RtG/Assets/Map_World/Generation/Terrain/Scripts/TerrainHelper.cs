@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace JS.WorldMap.Generation
+namespace JS.World.Map.Features
 {
     public static class TerrainHelper
     {

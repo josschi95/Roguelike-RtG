@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.EventSystem
+namespace JS.Architecture.EventSystem
 {
     /// <summary>
     /// Logs all events to the console.

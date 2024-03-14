@@ -1,8 +1,8 @@
-using JS.WorldMap.Generation;
 using System.Collections.Generic;
 using UnityEngine;
+using JS.World.Map.Features;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     //Do Not Serialize this class, results in a recursive serialization issue
     public class WorldTile : IHeapItem<WorldTile>

@@ -2,7 +2,7 @@ using UnityEngine;
 using JS.ECS;
 using JS.ECS.Tags;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     public class PlayerSpawner : MonoBehaviour
     {

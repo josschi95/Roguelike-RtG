@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.Primitives
+namespace JS.Architecture.Primitives
 {
     public class Vector3IntReference : MonoBehaviour
     {

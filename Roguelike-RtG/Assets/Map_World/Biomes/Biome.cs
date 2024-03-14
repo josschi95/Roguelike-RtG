@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
     [CreateAssetMenu(fileName = "New Biome", menuName = "World Generation/Terrain/Biome")]
     public class Biome : ScriptableObject

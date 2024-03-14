@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace JS.WorldMap
+namespace JS.World.Map.Climate
 {
     [CreateAssetMenu(fileName = "New Precipitation Zone", menuName = "World Generation/Terrain/Precipitation Zone")]
     public class PrecipitationZone : ScriptableObject

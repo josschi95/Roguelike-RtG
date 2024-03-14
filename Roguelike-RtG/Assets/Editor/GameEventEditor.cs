@@ -7,7 +7,7 @@
 
 using UnityEditor;
 using UnityEngine;
-using JS.EventSystem;
+using JS.Architecture.EventSystem;
 
 namespace RoboRyanTron.Unite2017.Events
 {

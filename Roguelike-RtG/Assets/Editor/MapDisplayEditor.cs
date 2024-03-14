@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace JS.WorldMap
+namespace JS.World.Map
 {
     [CustomEditor(typeof(MapDisplay))]
     public class MapDisplayEditor : Editor

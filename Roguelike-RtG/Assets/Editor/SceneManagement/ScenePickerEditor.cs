@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace JS.SceneManagement
+namespace JS.Architecture.SceneManagement
 {
     /// <summary>
     /// Displays ScenePicker file path as a Unity Scene object.

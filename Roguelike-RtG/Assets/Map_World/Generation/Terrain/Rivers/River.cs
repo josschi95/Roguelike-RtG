@@ -1,4 +1,4 @@
-namespace JS.WorldMap
+namespace JS.World.Map.Features
 {
 	[System.Serializable]
 	public class River

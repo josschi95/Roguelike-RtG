@@ -17,7 +17,6 @@ namespace JS.World.Map.Generation
         [SerializeField] private WorldData worldData;
 
         [SerializeField] private BiomeHelper biomeHelper;
-        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private SettlementData settlementData;
         //private System.Random PRNG;
         private int seed;
@@ -57,8 +56,10 @@ namespace JS.World.Map.Generation
 
             LocalMapInfo info = new LocalMapInfo();
             info.x = worldX; info.y = worldY;
-            info.PerlinMap = PerlinNoise.GenerateHeightMap(worldGenParams.LocalDimensions.x, seed, noiseScale, octaves, persistence, lacunarity, offset);
-            info.featurePoints = Poisson.GeneratePoints(seed, 10, worldGenParams.LocalDimensions);
+            info.PerlinMap = PerlinNoise.GenerateHeightMap(WorldParameters.LOCAL_WIDTH, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            
+            var sampleRegion = new Vector2(WorldParameters.LOCAL_WIDTH, WorldParameters.LOCAL_HEIGHT);
+            info.featurePoints = Poisson.GeneratePoints(seed, 10, sampleRegion);
 
             HandleRivers(worldX, worldY);
 
@@ -83,11 +84,11 @@ namespace JS.World.Map.Generation
             //Debug.Log("Region End: " + endOffset);
 
             float diff = endOffset - startOffset;
-            var step = Mathf.RoundToInt(diff / worldGenParams.RegionDimensions.x); //the points between the two
+            var step = Mathf.RoundToInt(diff / WorldParameters.REGION_WIDTH); //the points between the two
                                                                                    //Debug.Log("Step: " + step);
 
             startOffset += regionIndex * step; //Increase by 1 step for each region tile the river has traveled
-            if (regionIndex < worldGenParams.RegionDimensions.x - 1) endOffset = startOffset + step;
+            if (regionIndex < WorldParameters.REGION_WIDTH - 1) endOffset = startOffset + step;
 
             var riverWidth = Mathf.RoundToInt(river.Nodes[index].Size * 0.5f);
             DigRiver(direction, riverWidth, startOffset, endOffset);
@@ -106,28 +107,28 @@ namespace JS.World.Map.Generation
                 case Compass.North:
                     {
                         if (river.Flow == Compass.North) regionIndex = regionPos.y;
-                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.y - 1;
+                        else regionIndex = WorldParameters.REGION_HEIGHT - regionPos.y - 1;
 
                         return regionPos.x == 1;
                     }
                 case Compass.South:
                     {
                         if (river.Flow == Compass.North) regionIndex = regionPos.y;
-                        else regionIndex = worldGenParams.RegionDimensions.y - regionPos.y - 1;
+                        else regionIndex = WorldParameters.REGION_HEIGHT - regionPos.y - 1;
 
                         return regionPos.x == 1;
                     }
                 case Compass.East:
                     {
                         if (river.Flow == Compass.East) regionIndex = regionPos.x;
-                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.x - 1;
+                        else regionIndex = WorldParameters.REGION_WIDTH - regionPos.x - 1;
                         
                         return regionPos.y == 1;
                     }
                 case Compass.West:
                     {
                         if (river.Flow == Compass.East) regionIndex = regionPos.x;
-                        else regionIndex = worldGenParams.RegionDimensions.x - regionPos.x - 1;
+                        else regionIndex = WorldParameters.REGION_WIDTH - regionPos.x - 1;
 
                         return regionPos.y == 1;
                     }
@@ -218,15 +219,15 @@ namespace JS.World.Map.Generation
             var grid = GridManager.ActiveGrid.Grid;
             var centerLine = new List<GridNode>();
 
-            var width = worldGenParams.LocalDimensions.x;
-            var height = worldGenParams.LocalDimensions.y;
+            var width = WorldParameters.LOCAL_WIDTH;
+            var height = WorldParameters.LOCAL_HEIGHT;
             int middleY = Mathf.RoundToInt(width / 2);
             int middleX = Mathf.RoundToInt(height / 2);
             
             //So the new way that I'm going to do this is to lay down a perlin map and then make the river
             //find its way through that. This should hopefully resutl in a more windy river
 
-            var perlin = PerlinNoise.GenerateHeightMap(worldGenParams.LocalDimensions.x, seed, noiseScale, octaves, persistence, lacunarity, offset);
+            var perlin = PerlinNoise.GenerateHeightMap(WorldParameters.LOCAL_WIDTH, seed, noiseScale, octaves, persistence, lacunarity, offset);
             var previousCosts = new int[perlin.GetLength(0), perlin.GetLength(1)];
 
             for (int x = 0; x < perlin.GetLength(0); x++)

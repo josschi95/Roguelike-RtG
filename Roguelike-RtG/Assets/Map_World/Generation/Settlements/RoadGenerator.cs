@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DelaunayVoronoi;
-using System.Linq;
 using JS.World.Map.Features;
 
 namespace JS.World.Map.Generation
@@ -9,7 +8,6 @@ namespace JS.World.Map.Generation
     public class RoadGenerator : MonoBehaviour
     {
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private BiomeHelper biomeHelper;
         private List<Bridge> bridges;
@@ -64,7 +62,6 @@ namespace JS.World.Map.Generation
             bridges = new List<Bridge>();
             var points = new List<Point>();
 
-            print(worldMap.SettlementData.Settlements.Length);
             foreach(var settlement in worldMap.SettlementData.Settlements)
             {
                 points.Add(new Point(settlement.Coordinates));

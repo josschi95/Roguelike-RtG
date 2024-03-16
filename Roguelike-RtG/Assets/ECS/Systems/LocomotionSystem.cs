@@ -1,7 +1,6 @@
 using UnityEngine;
 using JS.ECS.Tags;
 using JS.World.Map;
-using JS.World.Map.Generation;
 
 namespace JS.ECS
 {
@@ -11,7 +10,6 @@ namespace JS.ECS
 
         public const float movementDividend = 100000;
 
-        [SerializeField] private WorldGenerationParameters worldMapParams;
         [SerializeField] private WorldData worldMap;
 
         private Vector3Int worldTracer = Vector3Int.zero;
@@ -115,38 +113,38 @@ namespace JS.ECS
         {
             if (localTracer.x < 0) return false;
             if (localTracer.y < 0) return false;
-            if (localTracer.x > worldMapParams.LocalDimensions.x - 1) return false;
-            if (localTracer.y > worldMapParams.LocalDimensions.y - 1) return false;
+            if (localTracer.x > WorldParameters.LOCAL_WIDTH - 1) return false;
+            if (localTracer.y > WorldParameters.LOCAL_HEIGHT - 1) return false;
             return true;
         }
 
         private void WrapLocal()
         {
             //Wrap X
-            if (localTracer.x < 0) localTracer.x = worldMapParams.LocalDimensions.x - 1;
-            else if (localTracer.x > worldMapParams.LocalDimensions.x - 1) localTracer.x = 0;
+            if (localTracer.x < 0) localTracer.x = WorldParameters.LOCAL_WIDTH - 1;
+            else if (localTracer.x > WorldParameters.LOCAL_WIDTH - 1) localTracer.x = 0;
             //Wrap Y
-            if (localTracer.y < 0) localTracer.y = worldMapParams.LocalDimensions.y - 1;
-            else if (localTracer.y > worldMapParams.LocalDimensions.y - 1) localTracer.y = 0;
+            if (localTracer.y < 0) localTracer.y = WorldParameters.LOCAL_HEIGHT - 1;
+            else if (localTracer.y > WorldParameters.LOCAL_HEIGHT - 1) localTracer.y = 0;
         }
 
         private bool WithinRegionMap()
         {
             if (regionTracer.x < 0) return false;
             if (regionTracer.y < 0) return false;
-            if (regionTracer.x > worldMapParams.RegionDimensions.x - 1) return false;
-            if (regionTracer.y > worldMapParams.RegionDimensions.y - 1) return false;
+            if (regionTracer.x > WorldParameters.REGION_WIDTH - 1) return false;
+            if (regionTracer.y > WorldParameters.REGION_HEIGHT - 1) return false;
             return true;
         }
 
         private void WrapRegion()
         {
             //Wrap X
-            if (regionTracer.x < 0) regionTracer.x = worldMapParams.RegionDimensions.x - 1;
-            else if (regionTracer.x > worldMapParams.RegionDimensions.x - 1) regionTracer.x = 0;
+            if (regionTracer.x < 0) regionTracer.x = WorldParameters.REGION_WIDTH - 1;
+            else if (regionTracer.x > WorldParameters.REGION_WIDTH - 1) regionTracer.x = 0;
             //Wrap Y
-            if (regionTracer.y < 0) regionTracer.y = worldMapParams.RegionDimensions.y - 1;
-            else if (regionTracer.y > worldMapParams.RegionDimensions.y - 1) regionTracer.y = 0;
+            if (regionTracer.y < 0) regionTracer.y = WorldParameters.REGION_HEIGHT - 1;
+            else if (regionTracer.y > WorldParameters.REGION_HEIGHT - 1) regionTracer.y = 0;
         }
 
         private bool WithinWorldMap()

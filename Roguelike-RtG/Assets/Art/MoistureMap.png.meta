@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b8697818861a54141ae0073a5623529a
+guid: 396b2a88e2b03814cbf5f5a6885df54b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grass_0
+      name: Dryest
       rect:
         serializedVersion: 2
         x: 0
@@ -125,20 +125,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 713ba90804ac4f141961d9e779d99e38
-      internalID: 670668401
+      spriteID: fa455978e787e9c49afe5e3d3b495a0c
+      internalID: -1847872349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_1
+      name: Dryer
       rect:
         serializedVersion: 2
         x: 16
@@ -146,20 +146,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cf2d950ec747654f873b76f147b0599
-      internalID: -56357480
+      spriteID: 162f47d705ac72f4c82773c1f5f49cdf
+      internalID: -2095045170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_2
+      name: Dry
       rect:
         serializedVersion: 2
         x: 32
@@ -167,20 +167,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0bfe20dd45880c4da5b43b0c4e3f5eb
-      internalID: 176691132
+      spriteID: b474358f37bb8184581123f428b69120
+      internalID: 1896402935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_3
+      name: Wet
       rect:
         serializedVersion: 2
         x: 48
@@ -188,20 +188,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 073c62974f604c84098776d23f99298c
-      internalID: 331385191
+      spriteID: 5c5e6f9775cb0234b9b5b41efba0aa73
+      internalID: -1717610562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_4
+      name: Wetter
       rect:
         serializedVersion: 2
         x: 64
@@ -209,14 +209,35 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a9e38f5751cbe4469d5524b0f253ea4
-      internalID: 1865237540
+      spriteID: 72d90a62fc92a434ba6acb31a469f1e8
+      internalID: -580179831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wettest
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00449c348e00058499ba6f9a9bf69838
+      internalID: -115494364
       vertices: []
       indices: 
       edges: []
@@ -232,11 +253,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Grass_0: 670668401
-      Grass_1: -56357480
-      Grass_2: 176691132
-      Grass_3: 331385191
-      Grass_4: 1865237540
+      Dry: 1896402935
+      Dryer: -2095045170
+      Dryest: -1847872349
+      Wet: -1717610562
+      Wetter: -580179831
+      Wettest: -115494364
+      Winter_6: 475376543
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

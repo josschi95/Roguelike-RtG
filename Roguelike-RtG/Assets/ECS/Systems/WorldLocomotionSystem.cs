@@ -1,6 +1,5 @@
 using UnityEngine;
 using JS.World.Map;
-using JS.World.Map.Generation;
 
 namespace JS.ECS
 {
@@ -9,7 +8,6 @@ namespace JS.ECS
         private static WorldLocomotionSystem instance;
 
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private WorldGenerationParameters worldGenParams;
 
         private Vector2Int regionCenter;
         private Vector2Int localCenter;
@@ -23,10 +21,10 @@ namespace JS.ECS
             }
             instance = this;
 
-            regionCenter = new Vector2Int(Mathf.FloorToInt(worldGenParams.RegionDimensions.x * 0.5f),
-                Mathf.FloorToInt(worldGenParams.RegionDimensions.y * 0.5f));
-            localCenter = new Vector2Int(Mathf.FloorToInt(worldGenParams.LocalDimensions.x * 0.5f),
-                Mathf.FloorToInt(worldGenParams.LocalDimensions.y * 0.5f));
+            regionCenter = new Vector2Int(Mathf.FloorToInt(WorldParameters.REGION_WIDTH * 0.5f),
+                Mathf.FloorToInt(WorldParameters.REGION_HEIGHT * 0.5f));
+            localCenter = new Vector2Int(Mathf.FloorToInt(WorldParameters.LOCAL_WIDTH * 0.5f),
+                Mathf.FloorToInt(WorldParameters.LOCAL_HEIGHT * 0.5f));
         }
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace JS.World.Map
 
         #region - Temperature -
         public float heatValue { get; private set; }
-        public int TempZoneID { get; private set; }
+        public int TemperatureIndex { get; private set; }
         #endregion
 
         #region - Precipitation -
@@ -159,10 +159,10 @@ namespace JS.World.Map
             IsLand = isLand;
         }
 
-        public void SetTemperatureValues(float value, int zoneID)
+        public void SetTemperatureValues(float value, int index)
         {
             heatValue = value;
-            TempZoneID = zoneID;
+            TemperatureIndex = index;
         }
 
         public void SetPrecipitationValues(float value, int zoneID)

@@ -3,13 +3,12 @@ using UnityEngine;
 using JS.ECS;
 using JS.Architecture.EventSystem;
 using JS.Architecture.Primitives;
-using JS.World.Map.Generation;
+using JS.World.Map;
 
 public class GridManager : MonoBehaviour
 {
     private static GridManager instance;
 
-    [SerializeField] private WorldGenerationParameters worldGenParams;
     [SerializeField] private Vector3IntVariable activeMapWorldPosition;
 
     private bool worldMapActive;
@@ -101,9 +100,7 @@ public class GridManager : MonoBehaviour
     /// </summary>
     private void NewLocalMap(Vector3Int world, Vector2Int region)
     {
-        var width = worldGenParams.LocalDimensions.x;
-        var height = worldGenParams.LocalDimensions.y;
-        var newGrid = new GameGrid(world, region, width, height);
+        var newGrid = new GameGrid(world, region, WorldParameters.LOCAL_WIDTH, WorldParameters.LOCAL_HEIGHT);
         
         localGrids.Add(newGrid);
         SpawnMonsters(newGrid);

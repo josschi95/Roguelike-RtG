@@ -15,7 +15,6 @@ namespace JS.World.Map.Generation
         }
 
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private WorldGenerationParameters worldGenParams;
 
         [Range(2, 8)]
         [SerializeField] private int erosionRadius = 3;
@@ -100,7 +99,7 @@ namespace JS.World.Map.Generation
                     float cellOffsetY = posY - nodeY;
 
                     //If the droplet reaches sea level, drop all of its sediment
-                    if (map[dropletIndex] < worldGenParams.SeaLevel)
+                    if (map[dropletIndex] < WorldParameters.SEA_LEVEL)
                     {
                         //ranToWater++;
                         //sediment /= 4;

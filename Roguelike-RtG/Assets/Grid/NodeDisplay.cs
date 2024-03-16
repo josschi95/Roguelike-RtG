@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using JS.World.Map.Generation;
 using JS.World.Map.Features;
 
 namespace JS.World.Map
@@ -8,7 +7,6 @@ namespace JS.World.Map
     public class NodeDisplay : MonoBehaviour
     {
         [SerializeField] private WorldData worldData;
-        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private BiomeHelper biomeHelper;
 
         [Space]

@@ -1,12 +1,10 @@
 using UnityEngine;
-using JS.World.Map.Generation;
 
 namespace JS.World.Map.Features
 {
     [CreateAssetMenu(fileName = "Biome Helper", menuName = "World Generation/Terrain/Biome Helper")]
     public class BiomeHelper : ScriptableObject
     {
-        [SerializeField] private WorldGenerationParameters worldParams;
         [SerializeField] private Biome[] biomes;
         public Biome[] Biomes => biomes;
 
@@ -35,7 +33,7 @@ namespace JS.World.Map.Features
 
         public Biome GetWhittakerTableBiome(WorldTile node)
         {
-            int temperatureIndex = node.TempZoneID;
+            int temperatureIndex = node.TemperatureIndex;
             int precipitationIndex = node.PrecipitationZoneID;
 
             switch (temperatureIndex)
@@ -71,7 +69,7 @@ namespace JS.World.Map.Features
 
         public Biome GetOceanBiome(WorldTile tile)
         {
-            if (tile.Altitude >= worldParams.SeaLevel * 0.5f) return oceanSurface;
+            if (tile.Altitude >= WorldParameters.SEA_LEVEL * 0.5f) return oceanSurface;
             else return oceanDeep;
         }
 

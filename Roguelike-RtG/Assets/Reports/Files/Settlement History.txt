@@ -1,719 +1,765 @@
 
 *** Year 0 ***
 
-The settlement of Lisburyh was founded in year 0 by Hugeminne
+The settlement of Eskdalstadt was founded in year 0 by Korgeioir
 
-The settlement of Appingdaleport was founded in year 0 by Asboral
+The settlement of Oxentonesbyborough was founded in year 0 by Vigsteir
 
-The settlement of Swichil was founded in year 0 by Osztava
+The settlement of Siltoncastadt was founded in year 0 by Tyggimd
 
-The settlement of Amburybrom was founded in year 0 by Rellebj
+The settlement of Highillsda was founded in year 0 by Dustendur
 
-The settlement of Greendo was founded in year 0 by Hroorri
+The settlement of Farmookes was founded in year 0 by Barlendu
 
-The settlement of Glantongtoby was founded in year 0 by Starrik
+The settlement of Uttomerskewych was founded in year 0 by Felbjof
 
-Glantongtoby
-Glantongtoby's Farm produced 59 food
-Glantongtoby's Hunting Lodge produced 50 food
-Glantongtoby's population grew from 25 to 37
-Glantongtoby lost 1 lives to the wilds.
-
-
-Greendo
-Greendo's Farm produced 17 food
-Greendo lost 8 lives to starvation.
+Uttomerskewych
+Uttomerskewych's Farm produced 22 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych's population grew from 25 to 37
 
 
-Amburybrom
-Amburybrom's Farm produced 27 food
-Amburybrom's population grew from 25 to 37
+Farmookes
+Farmookes's Farm produced 29 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 25 to 37
+Farmookes lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 26 food
-Swichil's population grew from 25 to 37
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 43 food
+Highillsda's Hunting Lodge produced 41 food
+Highillsda's population grew from 25 to 37
+Highillsda lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 44 food
-Appingdaleport's Hunting Lodge produced 49 food
-Appingdaleport's population grew from 25 to 37
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 37 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt's population grew from 25 to 37
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Lisburyh
-Lisburyh's Farm produced 42 food
-Lisburyh's Hunting Lodge produced 50 food
-Lisburyh's population grew from 25 to 37
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 55 food
+Oxentonesbyborough's Hunting Lodge produced 38 food
+Oxentonesbyborough's population grew from 25 to 37
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 53 food
+Eskdalstadt's Hunting Lodge produced 50 food
+Eskdalstadt's population grew from 25 to 37
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 1 ***
 
-The settlement of Aylentoview was founded in year 1 by Trygote
+The settlement of Trowsbymo was founded in year 1 by Siggvendr
 
-Aylentoview
-Aylentoview's Farm produced 26 food
-Aylentoview's population grew from 25 to 37
-Aylentoview lost 1 lives to the wilds.
-
-
-Glantongtoby
-Glantongtoby's Farm produced 46 food
-Glantongtoby's Hunting Lodge produced 38 food
-Glantongtoby's population grew from 36 to 54
-Glantongtoby lost 1 lives to the wilds.
-Glantongtoby transitioned from a Hamlet to a Village
+Trowsbymo
+Trowsbymo's Farm produced 13 food
+Trowsbymo lost 12 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 18 food
-Greendo's population grew from 17 to 25
+Uttomerskewych
+Uttomerskewych's Farm produced 26 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych's population grew from 37 to 55
+Uttomerskewych transitioned from a Hamlet to a Village
 
 
-Amburybrom
-Amburybrom's Farm produced 45 food
-Amburybrom's population grew from 37 to 55
-Amburybrom transitioned from a Hamlet to a Village
+Farmookes
+Farmookes's Farm produced 32 food
+Farmookes's Hunting Lodge produced 36 food
+Farmookes's population grew from 36 to 54
+Farmookes lost 1 lives to the wilds.
+Farmookes transitioned from a Hamlet to a Village
 
 
-Swichil
-Swichil's Farm produced 30 food
-Swichil lost 4 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 41 food
+Highillsda's Hunting Lodge produced 48 food
+Highillsda's population grew from 36 to 54
+Highillsda lost 1 lives to the wilds.
+Highillsda transitioned from a Hamlet to a Village
 
 
-Appingdaleport
-Appingdaleport's Farm produced 34 food
-Appingdaleport's Hunting Lodge produced 38 food
-Appingdaleport's population grew from 35 to 52
-Appingdaleport lost 2 lives to the wilds.
-Appingdaleport transitioned from a Hamlet to a Village
+Siltoncastadt
+Siltoncastadt's Farm produced 41 food
+Siltoncastadt's Hunting Lodge produced 47 food
+Siltoncastadt's population grew from 36 to 54
+Siltoncastadt lost 1 lives to the wilds.
+Siltoncastadt transitioned from a Hamlet to a Village
 
 
-Lisburyh
-Lisburyh's Farm produced 45 food
-Lisburyh's Hunting Lodge produced 41 food
-Lisburyh's population grew from 37 to 55
-Lisburyh transitioned from a Hamlet to a Village
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 39 food
+Oxentonesbyborough's Hunting Lodge produced 50 food
+Oxentonesbyborough's population grew from 35 to 52
+Oxentonesbyborough lost 2 lives to the wilds.
+Oxentonesbyborough transitioned from a Hamlet to a Village
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 36 food
+Eskdalstadt's Hunting Lodge produced 50 food
+Eskdalstadt's population grew from 36 to 54
+Eskdalstadt lost 1 lives to the wilds.
+Eskdalstadt transitioned from a Hamlet to a Village
 
 
 
 *** Year 2 ***
 
-The settlement of Wrandstostadt was founded in year 2 by Kjetrliw
+The settlement of Boldendse was founded in year 2 by Roureik
 
-Wrandstostadt
-Wrandstostadt's Farm produced 45 food
-Wrandstostadt's Hunting Lodge produced 50 food
-Wrandstostadt's population grew from 25 to 37
-Wrandstostadt lost 1 lives to the wilds.
-
-
-Aylentoview
-Aylentoview's Farm produced 26 food
-Aylentoview lost 9 lives to starvation.
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 25 food
+Boldendse's Hunting Lodge produced 50 food
+Boldendse's population grew from 25 to 37
+Boldendse lost 1 lives to the wilds.
 
 
-Glantongtoby
-Glantongtoby's Farm produced 58 food
-Glantongtoby's Hunting Lodge produced 50 food
-Glantongtoby's population grew from 53 to 79
-Glantongtoby lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 12 food
+Trowsbymo lost 1 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 19 food
-Greendo lost 5 lives to starvation.
+Uttomerskewych
+Uttomerskewych's Farm produced 32 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych's population grew from 55 to 82
 
 
-Amburybrom
-Amburybrom's Farm produced 31 food
-Amburybrom lost 14 lives to starvation.
-Amburybrom transitioned from a Village to a Hamlet
+Farmookes
+Farmookes's Farm produced 32 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 53 to 79
+Farmookes lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 23 food
-Swichil lost 6 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 37 food
+Highillsda's Hunting Lodge produced 45 food
+Highillsda's population grew from 53 to 79
+Highillsda lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 44 food
-Appingdaleport's Hunting Lodge produced 50 food
-Appingdaleport's population grew from 50 to 75
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 36 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt's population grew from 53 to 79
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Lisburyh
-Lisburyh's Farm produced 38 food
-Lisburyh's Hunting Lodge produced 48 food
-Lisburyh's population grew from 55 to 82
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 47 food
+Oxentonesbyborough's Hunting Lodge produced 37 food
+Oxentonesbyborough's population grew from 50 to 75
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 52 food
+Eskdalstadt's Hunting Lodge produced 44 food
+Eskdalstadt's population grew from 53 to 79
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 3 ***
 
-The settlement of Ennewst was founded in year 3 by Amhaidalb
+The settlement of Drosburyp was founded in year 3 by Tuurd
 
-Ennewst
-Ennewst's Farm produced 33 food
-Ennewst's population grew from 25 to 37
-
-
-Wrandstostadt
-Wrandstostadt's Farm produced 50 food
-Wrandstostadt's Hunting Lodge produced 50 food
-Wrandstostadt's population grew from 36 to 54
-Wrandstostadt lost 1 lives to the wilds.
-Wrandstostadt transitioned from a Hamlet to a Village
+Drosburyp
+Drosburyp's Farm produced 39 food
+Drosburyp's Hunting Lodge produced 48 food
+Drosburyp's population grew from 25 to 37
+Drosburyp lost 2 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 28 food
-Aylentoview's population grew from 26 to 39
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 25 food
+Boldendse's Hunting Lodge produced 50 food
+Boldendse's population grew from 36 to 54
+Boldendse lost 1 lives to the wilds.
+Boldendse transitioned from a Hamlet to a Village
 
 
-Glantongtoby
-Glantongtoby's Farm produced 48 food
-Glantongtoby's Hunting Lodge produced 47 food
-Glantongtoby's population grew from 78 to 117
-Glantongtoby lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 13 food
+Trowsbymo's population grew from 12 to 18
 
 
-Greendo
-Greendo's Farm produced 12 food
-Greendo lost 8 lives to starvation.
+Uttomerskewych
+Uttomerskewych's Farm produced 31 food
+Uttomerskewych's Docks produced 37 food
+Uttomerskewych's population grew from 82 to 123
 
 
-Amburybrom
-Amburybrom's Farm produced 44 food
-Amburybrom's population grew from 41 to 61
-Amburybrom transitioned from a Hamlet to a Village
+Farmookes
+Farmookes's Farm produced 40 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 78 to 117
+Farmookes lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 27 food
-Swichil's population grew from 21 to 31
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 43 food
+Highillsda's Hunting Lodge produced 50 food
+Highillsda's population grew from 78 to 117
+Highillsda lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 34 food
-Appingdaleport's Hunting Lodge produced 42 food
-Appingdaleport's population grew from 73 to 109
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 48 food
+Siltoncastadt's Hunting Lodge produced 48 food
+Siltoncastadt's population grew from 78 to 117
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Lisburyh
-Lisburyh's Farm produced 37 food
-Lisburyh's Hunting Lodge produced 38 food
-Lisburyh's population grew from 82 to 123
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 35 food
+Oxentonesbyborough's Hunting Lodge produced 50 food
+Oxentonesbyborough's population grew from 73 to 109
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 35 food
+Eskdalstadt's Hunting Lodge produced 50 food
+Eskdalstadt's population grew from 78 to 117
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 4 ***
 
-The settlement of Lymongdaville was founded in year 4 by Hroorfa
+The settlement of Oddleighhe was founded in year 4 by Hoorben
 
-Lymongdaville
-Lymongdaville's Farm produced 26 food
-Lymongdaville's population grew from 25 to 37
-Lymongdaville lost 3 lives to the wilds.
-
-
-Ennewst
-Ennewst's Farm produced 38 food
-Ennewst's population grew from 37 to 55
-Ennewst transitioned from a Hamlet to a Village
+Oddleighhe
+Oddleighhe's Farm produced 4 food
+Oddleighhe lost 21 lives to starvation.
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 42 food
-Wrandstostadt's Hunting Lodge produced 41 food
-Wrandstostadt's population grew from 53 to 79
-Wrandstostadt lost 1 lives to the wilds.
+Drosburyp
+Drosburyp's Farm produced 46 food
+Drosburyp's Hunting Lodge produced 38 food
+Drosburyp's population grew from 35 to 52
+Drosburyp lost 2 lives to the wilds.
+Drosburyp transitioned from a Hamlet to a Village
 
 
-Aylentoview
-Aylentoview's Farm produced 29 food
-Aylentoview lost 7 lives to starvation.
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 35 food
+Boldendse's Hunting Lodge produced 48 food
+Boldendse's population grew from 53 to 79
+Boldendse lost 1 lives to the wilds.
 
 
-Glantongtoby
-Glantongtoby's Farm produced 60 food
-Glantongtoby's Hunting Lodge produced 49 food
-Glantongtoby's population grew from 116 to 174
-Glantongtoby lost 1 lives to the wilds.
-Glantongtoby transitioned from a Village to a Town
+Trowsbymo
+Trowsbymo's Farm produced 16 food
+Trowsbymo lost 1 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 12 food
-Greendo's population grew from 12 to 18
+Uttomerskewych
+Uttomerskewych's Farm produced 24 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych's population grew from 123 to 184
+Uttomerskewych transitioned from a Village to a Town
 
 
-Amburybrom
-Amburybrom's Farm produced 37 food
-Amburybrom lost 21 lives to starvation.
-Amburybrom transitioned from a Village to a Hamlet
+Farmookes
+Farmookes's Farm produced 26 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 116 to 174
+Farmookes lost 1 lives to the wilds.
+Farmookes transitioned from a Village to a Town
 
 
-Swichil
-Swichil's Farm produced 30 food
-Swichil's population grew from 29 to 43
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 37 food
+Highillsda's Hunting Lodge produced 50 food
+Highillsda's population grew from 116 to 174
+Highillsda lost 1 lives to the wilds.
+Highillsda transitioned from a Village to a Town
 
 
-Appingdaleport
-Appingdaleport's Farm produced 49 food
-Appingdaleport's Hunting Lodge produced 50 food
-Appingdaleport's population grew from 107 to 160
-Appingdaleport lost 2 lives to the wilds.
-Appingdaleport transitioned from a Village to a Town
+Siltoncastadt
+Siltoncastadt's Farm produced 36 food
+Siltoncastadt's Hunting Lodge produced 48 food
+Siltoncastadt's population grew from 116 to 174
+Siltoncastadt lost 1 lives to the wilds.
+Siltoncastadt transitioned from a Village to a Town
 
 
-Lisburyh
-Lisburyh's Farm produced 32 food
-Lisburyh's Hunting Lodge produced 50 food
-Lisburyh's population grew from 123 to 184
-Lisburyh transitioned from a Village to a Town
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 46 food
+Oxentonesbyborough's Hunting Lodge produced 50 food
+Oxentonesbyborough's population grew from 107 to 160
+Oxentonesbyborough lost 2 lives to the wilds.
+Oxentonesbyborough transitioned from a Village to a Town
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 36 food
+Eskdalstadt's Hunting Lodge produced 50 food
+Eskdalstadt's population grew from 116 to 174
+Eskdalstadt lost 1 lives to the wilds.
+Eskdalstadt transitioned from a Village to a Town
 
 
 
 *** Year 5 ***
 
-The settlement of Ilmeanwor was founded in year 5 by Sky
+The settlement of Folemoughyby was founded in year 5 by Danerkil
 
-Ilmeanwor
-Ilmeanwor's Farm produced 51 food
-Ilmeanwor's population grew from 25 to 37
-
-
-Lymongdaville
-Lymongdaville's Farm produced 30 food
-Lymongdaville lost 3 lives to starvation.
-Lymongdaville lost 3 lives to the wilds.
+Folemoughyby
+Folemoughyby's Farm produced 15 food
+Folemoughyby lost 10 lives to starvation.
+Folemoughyby lost 1 lives to the wilds.
 
 
-Ennewst
-Ennewst's Farm produced 46 food
-Ennewst's population grew from 55 to 82
+Oddleighhe
+Oddleighhe's Crop Farm is undermanned: 4/5
+Oddleighhe's Farm produced 3 food
+Oddleighhe lost 1 lives to starvation.
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 49 food
-Wrandstostadt's Hunting Lodge produced 50 food
-Wrandstostadt's population grew from 78 to 117
-Wrandstostadt lost 1 lives to the wilds.
+Drosburyp
+Drosburyp's Farm produced 43 food
+Drosburyp's Hunting Lodge produced 37 food
+Drosburyp's population grew from 50 to 75
+Drosburyp lost 2 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 27 food
-Aylentoview lost 3 lives to starvation.
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 36 food
+Boldendse's Hunting Lodge produced 50 food
+Boldendse's population grew from 78 to 117
+Boldendse lost 1 lives to the wilds.
 
 
-Glantongtoby
-Glantongtoby's Farm produced 47 food
-Glantongtoby's Hunting Lodge produced 48 food
-Glantongtoby's population grew from 173 to 259
-Glantongtoby lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 19 food
+Trowsbymo's population grew from 17 to 25
 
 
-Greendo
-Greendo's Farm produced 19 food
-Greendo's population grew from 18 to 27
+Uttomerskewych
+Uttomerskewych's Farm produced 21 food
+Uttomerskewych's Docks produced 44 food
+Uttomerskewych lost 69 lives to starvation.
+Uttomerskewych transitioned from a Town to a Village
 
 
-Amburybrom
-Amburybrom's Farm produced 44 food
-Amburybrom's population grew from 40 to 60
-Amburybrom transitioned from a Hamlet to a Village
+Farmookes
+Farmookes's Farm produced 38 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 173 to 259
+Farmookes lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 31 food
-Swichil lost 3 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 37 food
+Highillsda's Hunting Lodge produced 43 food
+Highillsda's population grew from 173 to 259
+Highillsda lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 51 food
-Appingdaleport's Hunting Lodge produced 47 food
-Appingdaleport's population grew from 158 to 237
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 40 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt's population grew from 173 to 259
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Lisburyh
-Lisburyh's Farm produced 44 food
-Lisburyh's Hunting Lodge produced 50 food
-Lisburyh's population grew from 184 to 276
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 36 food
+Oxentonesbyborough's Hunting Lodge produced 50 food
+Oxentonesbyborough's population grew from 158 to 237
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 37 food
+Eskdalstadt's Hunting Lodge produced 43 food
+Eskdalstadt's population grew from 173 to 259
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 6 ***
 
-The settlement of Ingillicaster was founded in year 6 by Rofrimr
+The settlement of Cindsbor was founded in year 6 by Yngeroor
 
-Ingillicaster
-Ingillicaster's Farm produced 41 food
-Ingillicaster's Hunting Lodge produced 50 food
-Ingillicaster's population grew from 25 to 37
-Ingillicaster lost 1 lives to the wilds.
-
-
-Ilmeanwor
-Ilmeanwor's Farm produced 56 food
-Ilmeanwor's population grew from 37 to 55
-Ilmeanwor transitioned from a Hamlet to a Village
+Cindsbor
+Cindsbor's Farm produced 32 food
+Cindsbor's population grew from 25 to 37
+Cindsbor lost 2 lives to the wilds.
 
 
-Lymongdaville
-Lymongdaville's Farm produced 29 food
-Lymongdaville's population grew from 28 to 42
-Lymongdaville lost 3 lives to the wilds.
+Folemoughyby
+Folemoughyby's Farm produced 14 food
+Folemoughyby's population grew from 14 to 21
+Folemoughyby lost 1 lives to the wilds.
 
 
-Ennewst
-Ennewst's Farm produced 34 food
-Ennewst lost 48 lives to starvation.
-Ennewst transitioned from a Village to a Hamlet
+Oddleighhe
+Oddleighhe's Crop Farm is undermanned: 3/5
+Oddleighhe's Farm produced 3 food
+Oddleighhe's population grew from 3 to 4
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 48 food
-Wrandstostadt's Hunting Lodge produced 50 food
-Wrandstostadt's population grew from 116 to 174
-Wrandstostadt lost 1 lives to the wilds.
-Wrandstostadt transitioned from a Village to a Town
+Drosburyp
+Drosburyp's Farm produced 39 food
+Drosburyp's Hunting Lodge produced 44 food
+Drosburyp's population grew from 73 to 109
+Drosburyp lost 2 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 24 food
-Aylentoview lost 2 lives to starvation.
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 27 food
+Boldendse's Hunting Lodge produced 50 food
+Boldendse's population grew from 116 to 174
+Boldendse lost 1 lives to the wilds.
+Boldendse transitioned from a Village to a Town
 
 
-Glantongtoby
-Glantongtoby's Farm produced 47 food
-Glantongtoby's Hunting Lodge produced 50 food
-Glantongtoby lost 42 lives to starvation.
-Glantongtoby lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 18 food
+Trowsbymo lost 5 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 15 food
-Greendo lost 11 lives to starvation.
+Uttomerskewych
+Uttomerskewych's Farm produced 24 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych lost 41 lives to starvation.
 
 
-Amburybrom
-Amburybrom's Farm produced 35 food
-Amburybrom lost 21 lives to starvation.
-Amburybrom transitioned from a Village to a Hamlet
+Farmookes
+Farmookes's Farm produced 34 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes lost 172 lives to starvation.
+Farmookes lost 1 lives to the wilds.
+Farmookes transitioned from a Town to a Village
 
 
-Swichil
-Swichil's Farm produced 27 food
-Swichil lost 9 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 34 food
+Highillsda's Hunting Lodge produced 50 food
+Highillsda lost 140 lives to starvation.
+Highillsda lost 1 lives to the wilds.
+Highillsda transitioned from a Town to a Village
 
 
-Appingdaleport
-Appingdaleport's Farm produced 34 food
-Appingdaleport's Hunting Lodge produced 50 food
-Appingdaleport lost 67 lives to starvation.
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 42 food
+Siltoncastadt's Hunting Lodge produced 47 food
+Siltoncastadt lost 119 lives to starvation.
+Siltoncastadt lost 1 lives to the wilds.
+Siltoncastadt transitioned from a Town to a Village
 
 
-Lisburyh
-Lisburyh's Farm produced 34 food
-Lisburyh's Hunting Lodge produced 47 food
-Lisburyh lost 186 lives to starvation.
-Lisburyh transitioned from a Town to a Village
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 37 food
+Oxentonesbyborough's Hunting Lodge produced 49 food
+Oxentonesbyborough lost 64 lives to starvation.
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 41 food
+Eskdalstadt's Hunting Lodge produced 38 food
+Eskdalstadt lost 124 lives to starvation.
+Eskdalstadt lost 1 lives to the wilds.
+Eskdalstadt transitioned from a Town to a Village
 
 
 
 *** Year 7 ***
 
-The settlement of Etondrav was founded in year 7 by Valbjoerr
+The settlement of Salfelswicester was founded in year 7 by Auobrrimi
 
-Etondrav
-Etondrav's Farm produced 41 food
-Etondrav's Hunting Lodge produced 49 food
-Etondrav's population grew from 25 to 37
-Etondrav lost 1 lives to the wilds.
+Salfelswicester
+Salfelswicester's Farm produced 21 food
+Salfelswicester lost 4 lives to starvation.
 
 
-Ingillicaster
-Ingillicaster's Farm produced 25 food
-Ingillicaster's Hunting Lodge produced 50 food
-Ingillicaster's population grew from 36 to 54
-Ingillicaster lost 1 lives to the wilds.
-Ingillicaster transitioned from a Hamlet to a Village
+Cindsbor
+Cindsbor's Farm produced 25 food
+Cindsbor lost 3 lives to starvation.
+Cindsbor lost 2 lives to the wilds.
 
 
-Ilmeanwor
-Ilmeanwor's Farm produced 43 food
-Ilmeanwor's population grew from 55 to 82
+Folemoughyby
+Folemoughyby's Farm produced 12 food
+Folemoughyby lost 8 lives to starvation.
+Folemoughyby lost 1 lives to the wilds.
 
 
-Lymongdaville
-Lymongdaville's Farm produced 24 food
-Lymongdaville lost 14 lives to starvation.
-Lymongdaville lost 3 lives to the wilds.
+Oddleighhe
+Oddleighhe's Crop Farm is undermanned: 4/5
+Oddleighhe's Farm produced 4 food
+Oddleighhe's population grew from 4 to 6
 
 
-Ennewst
-Ennewst's Farm produced 49 food
-Ennewst's population grew from 34 to 51
-Ennewst transitioned from a Hamlet to a Village
+Drosburyp
+Drosburyp's Farm produced 37 food
+Drosburyp's Hunting Lodge produced 43 food
+Drosburyp's population grew from 107 to 160
+Drosburyp lost 2 lives to the wilds.
+Drosburyp transitioned from a Village to a Town
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 43 food
-Wrandstostadt's Hunting Lodge produced 44 food
-Wrandstostadt's population grew from 173 to 259
-Wrandstostadt lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 35 food
+Boldendse's Hunting Lodge produced 44 food
+Boldendse lost 6 lives to starvation.
+Boldendse lost 1 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 33 food
-Aylentoview's population grew from 23 to 34
-Aylentoview lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 16 food
+Trowsbymo lost 4 lives to starvation.
 
 
-Glantongtoby
-Glantongtoby's Farm produced 48 food
-Glantongtoby's Hunting Lodge produced 50 food
-Glantongtoby lost 117 lives to starvation.
-Glantongtoby lost 1 lives to the wilds.
-Glantongtoby transitioned from a Town to a Village
+Uttomerskewych
+Uttomerskewych's Farm produced 21 food
+Uttomerskewych's Docks produced 47 food
+Uttomerskewych lost 6 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 17 food
-Greendo's population grew from 16 to 24
+Farmookes
+Farmookes's Farm produced 40 food
+Farmookes's Hunting Lodge produced 47 food
+Farmookes's population grew from 85 to 127
+Farmookes lost 1 lives to the wilds.
 
 
-Amburybrom
-Amburybrom's Farm produced 27 food
-Amburybrom lost 12 lives to starvation.
+Highillsda
+Highillsda's Farm produced 33 food
+Highillsda's Hunting Lodge produced 38 food
+Highillsda lost 46 lives to starvation.
+Highillsda lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 22 food
-Swichil lost 3 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 31 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt lost 57 lives to starvation.
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 53 food
-Appingdaleport's Hunting Lodge produced 50 food
-Appingdaleport lost 63 lives to starvation.
-Appingdaleport lost 2 lives to the wilds.
-Appingdaleport transitioned from a Town to a Village
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 45 food
+Oxentonesbyborough's Hunting Lodge produced 36 food
+Oxentonesbyborough lost 88 lives to starvation.
+Oxentonesbyborough lost 2 lives to the wilds.
+Oxentonesbyborough transitioned from a Town to a Village
 
 
-Lisburyh
-Lisburyh's Farm produced 45 food
-Lisburyh's Hunting Lodge produced 50 food
-Lisburyh's population grew from 90 to 135
+Eskdalstadt
+Eskdalstadt's Farm produced 47 food
+Eskdalstadt's Hunting Lodge produced 50 food
+Eskdalstadt lost 36 lives to starvation.
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 8 ***
 
-The settlement of Sourthwarromouth was founded in year 8 by Danriti
+The settlement of Wrazeston was founded in year 8 by Kyostav
 
-Sourthwarromouth
-Sourthwarromouth's Farm produced 38 food
-Sourthwarromouth's population grew from 25 to 37
-
-
-Etondrav
-Etondrav's Farm produced 36 food
-Etondrav's Hunting Lodge produced 50 food
-Etondrav's population grew from 36 to 54
-Etondrav lost 1 lives to the wilds.
-Etondrav transitioned from a Hamlet to a Village
+Wrazeston
+Wrazeston's Farm produced 7 food
+Wrazeston lost 18 lives to starvation.
+Wrazeston lost 1 lives to the wilds.
 
 
-Ingillicaster
-Ingillicaster's Farm produced 30 food
-Ingillicaster's Hunting Lodge produced 39 food
-Ingillicaster's population grew from 53 to 79
-Ingillicaster lost 1 lives to the wilds.
+Salfelswicester
+Salfelswicester's Farm produced 19 food
+Salfelswicester lost 2 lives to starvation.
 
 
-Ilmeanwor
-Ilmeanwor's Farm produced 44 food
-Ilmeanwor lost 5 lives to starvation.
+Cindsbor
+Cindsbor's Farm produced 35 food
+Cindsbor's population grew from 30 to 45
+Cindsbor lost 2 lives to the wilds.
 
 
-Lymongdaville
-Lymongdaville's Farm produced 21 food
-Lymongdaville lost 1 lives to starvation.
-Lymongdaville lost 3 lives to the wilds.
+Folemoughyby
+Folemoughyby's Farm produced 19 food
+Folemoughyby's population grew from 11 to 16
+Folemoughyby lost 1 lives to the wilds.
 
 
-Ennewst
-Ennewst's Farm produced 34 food
-Ennewst lost 2 lives to starvation.
-Ennewst transitioned from a Village to a Hamlet
+Oddleighhe
+Oddleighhe's Farm produced 5 food
+Oddleighhe lost 1 lives to starvation.
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 51 food
-Wrandstostadt's Hunting Lodge produced 50 food
-Wrandstostadt lost 76 lives to starvation.
-Wrandstostadt lost 1 lives to the wilds.
+Drosburyp
+Drosburyp's Farm produced 42 food
+Drosburyp's Hunting Lodge produced 42 food
+Drosburyp's population grew from 158 to 237
+Drosburyp lost 2 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 23 food
-Aylentoview's population grew from 33 to 49
-Aylentoview lost 1 lives to the wilds.
+Boldendse
+Boldendse's Farm produced 36 food
+Boldendse's Hunting Lodge produced 42 food
+Boldendse lost 88 lives to starvation.
+Boldendse lost 1 lives to the wilds.
+Boldendse transitioned from a Town to a Village
 
 
-Glantongtoby
-Glantongtoby's Farm produced 49 food
-Glantongtoby's Hunting Lodge produced 47 food
-Glantongtoby lost 1 lives to starvation.
-Glantongtoby lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 16 food
+Trowsbymo's population grew from 16 to 24
 
 
-Greendo
-Greendo's Farm produced 14 food
-Greendo lost 9 lives to starvation.
+Uttomerskewych
+Uttomerskewych's Farm produced 32 food
+Uttomerskewych's Docks produced 42 food
+Uttomerskewych's population grew from 68 to 102
 
 
-Amburybrom
-Amburybrom's Farm produced 34 food
-Amburybrom's population grew from 27 to 40
+Farmookes
+Farmookes's Farm produced 32 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes lost 42 lives to starvation.
+Farmookes lost 1 lives to the wilds.
 
 
-Swichil
-Swichil's Farm produced 21 food
-Swichil's population grew from 20 to 30
-Swichil lost 2 lives to the wilds.
+Highillsda
+Highillsda's Farm produced 42 food
+Highillsda's Hunting Lodge produced 50 food
+Highillsda's population grew from 70 to 105
+Highillsda lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 39 food
-Appingdaleport's Hunting Lodge produced 44 food
-Appingdaleport lost 18 lives to starvation.
-Appingdaleport lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 35 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt's population grew from 80 to 120
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Lisburyh
-Lisburyh's Farm produced 30 food
-Lisburyh's Hunting Lodge produced 44 food
-Lisburyh lost 56 lives to starvation.
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 54 food
+Oxentonesbyborough's Hunting Lodge produced 44 food
+Oxentonesbyborough's population grew from 79 to 118
+Oxentonesbyborough lost 2 lives to the wilds.
+
+
+Eskdalstadt
+Eskdalstadt's Farm produced 47 food
+Eskdalstadt's Hunting Lodge produced 41 food
+Eskdalstadt lost 8 lives to starvation.
+Eskdalstadt lost 1 lives to the wilds.
 
 
 
 *** Year 9 ***
 
-The settlement of Newornsha was founded in year 9 by Keindrio
+The settlement of Farwick was founded in year 9 by Gjursteif
 
-Newornsha
-Newornsha's Farm produced 18 food
-Newornsha's Hunting Lodge produced 47 food
-Newornsha's population grew from 25 to 37
-Newornsha lost 1 lives to the wilds.
+Farwick
+Farwick's Farm produced 40 food
+Farwick's population grew from 25 to 37
 
 
-Sourthwarromouth
-Sourthwarromouth's Farm produced 30 food
-Sourthwarromouth's population grew from 37 to 55
-Sourthwarromouth transitioned from a Hamlet to a Village
+Wrazeston
+Wrazeston's Farm produced 10 food
+Wrazeston's population grew from 6 to 9
+Wrazeston lost 1 lives to the wilds.
 
 
-Etondrav
-Etondrav's Farm produced 53 food
-Etondrav's Hunting Lodge produced 36 food
-Etondrav's population grew from 53 to 79
-Etondrav lost 1 lives to the wilds.
+Salfelswicester
+Salfelswicester's Farm produced 19 food
+Salfelswicester's population grew from 19 to 28
 
 
-Ingillicaster
-Ingillicaster's Farm produced 25 food
-Ingillicaster's Hunting Lodge produced 47 food
-Ingillicaster's population grew from 78 to 117
-Ingillicaster lost 1 lives to the wilds.
+Cindsbor
+Cindsbor's Farm produced 23 food
+Cindsbor lost 15 lives to starvation.
+Cindsbor lost 2 lives to the wilds.
 
 
-Ilmeanwor
-Ilmeanwor's Farm produced 56 food
-Ilmeanwor lost 21 lives to starvation.
+Folemoughyby
+Folemoughyby's Farm produced 15 food
+Folemoughyby's population grew from 15 to 22
+Folemoughyby lost 1 lives to the wilds.
 
 
-Lymongdaville
-Lymongdaville's Farm produced 26 food
-Lymongdaville's population grew from 18 to 27
-Lymongdaville lost 3 lives to the wilds.
+Oddleighhe
+Oddleighhe's Farm produced 4 food
+Oddleighhe lost 1 lives to starvation.
 
 
-Ennewst
-Ennewst's Farm produced 31 food
-Ennewst lost 18 lives to starvation.
+Drosburyp
+Drosburyp's Farm produced 38 food
+Drosburyp's Hunting Lodge produced 50 food
+Drosburyp lost 97 lives to starvation.
+Drosburyp lost 2 lives to the wilds.
+Drosburyp transitioned from a Town to a Village
 
 
-Wrandstostadt
-Wrandstostadt's Farm produced 51 food
-Wrandstostadt's Hunting Lodge produced 38 food
-Wrandstostadt lost 92 lives to starvation.
-Wrandstostadt lost 1 lives to the wilds.
-Wrandstostadt transitioned from a Town to a Village
+Boldendse
+Boldendse's Farm produced 25 food
+Boldendse's Hunting Lodge produced 45 food
+Boldendse lost 7 lives to starvation.
+Boldendse lost 1 lives to the wilds.
 
 
-Aylentoview
-Aylentoview's Farm produced 28 food
-Aylentoview lost 20 lives to starvation.
-Aylentoview lost 1 lives to the wilds.
+Trowsbymo
+Trowsbymo's Farm produced 18 food
+Trowsbymo lost 6 lives to starvation.
 
 
-Glantongtoby
-Glantongtoby's Farm produced 46 food
-Glantongtoby's Hunting Lodge produced 42 food
-Glantongtoby lost 7 lives to starvation.
-Glantongtoby lost 1 lives to the wilds.
+Uttomerskewych
+Uttomerskewych's Farm produced 22 food
+Uttomerskewych's Docks produced 50 food
+Uttomerskewych lost 24 lives to starvation.
 
 
-Greendo
-Greendo's Farm produced 15 food
-Greendo's population grew from 15 to 22
+Farmookes
+Farmookes's Farm produced 40 food
+Farmookes's Hunting Lodge produced 50 food
+Farmookes's population grew from 83 to 124
+Farmookes lost 1 lives to the wilds.
 
 
-Amburybrom
-Amburybrom's Farm produced 34 food
-Amburybrom's population grew from 40 to 60
-Amburybrom transitioned from a Hamlet to a Village
+Highillsda
+Highillsda's Farm produced 39 food
+Highillsda's Hunting Lodge produced 50 food
+Highillsda's population grew from 104 to 156
+Highillsda lost 1 lives to the wilds.
+Highillsda transitioned from a Village to a Town
 
 
-Swichil
-Swichil's Farm produced 21 food
-Swichil lost 6 lives to starvation.
-Swichil lost 2 lives to the wilds.
+Siltoncastadt
+Siltoncastadt's Farm produced 38 food
+Siltoncastadt's Hunting Lodge produced 50 food
+Siltoncastadt lost 26 lives to starvation.
+Siltoncastadt lost 1 lives to the wilds.
 
 
-Appingdaleport
-Appingdaleport's Farm produced 35 food
-Appingdaleport's Hunting Lodge produced 46 food
-Appingdaleport's population grew from 81 to 121
-Appingdaleport lost 2 lives to the wilds.
+Oxentonesbyborough
+Oxentonesbyborough's Farm produced 47 food
+Oxentonesbyborough's Hunting Lodge produced 50 food
+Oxentonesbyborough's population grew from 116 to 174
+Oxentonesbyborough lost 2 lives to the wilds.
+Oxentonesbyborough transitioned from a Village to a Town
 
 
-Lisburyh
-Lisburyh's Farm produced 37 food
-Lisburyh's Hunting Lodge produced 50 food
-Lisburyh's population grew from 79 to 118
+Eskdalstadt
+Eskdalstadt's Farm produced 48 food
+Eskdalstadt's Hunting Lodge produced 42 food
+Eskdalstadt's population grew from 87 to 130
+Eskdalstadt lost 1 lives to the wilds.
 
 

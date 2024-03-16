@@ -3,14 +3,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using JS.World.Map;
 using JS.World.Map.Features;
-using JS.World.Map.Generation;
 
 public class LocalMapDisplay : MonoBehaviour
 {
     [SerializeField] private WorldData worldData;
 
     [SerializeField] private BiomeHelper biomeHelper;
-    [SerializeField] private WorldGenerationParameters worldGenParams;
 
     [SerializeField] private SettlementData settlementData;
     [SerializeField] private PathTileHelper riverTiles;
@@ -97,8 +95,8 @@ public class LocalMapDisplay : MonoBehaviour
 
     private void PlaceOutline()
     {
-        var width = worldGenParams.LocalDimensions.x;
-        var height = worldGenParams.LocalDimensions.y;
+        var width = WorldParameters.LOCAL_WIDTH;
+        var height = WorldParameters.LOCAL_HEIGHT;
 
         for (int x = 0; x < width; x++)
         {

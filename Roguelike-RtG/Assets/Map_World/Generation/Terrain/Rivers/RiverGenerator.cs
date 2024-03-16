@@ -23,9 +23,9 @@ namespace JS.World.Map.Generation
         private int localMapDimensions;
         private float headWaterHeight;
 
-        public void GenerateRivers(int localSize, int riverCount)
+        public void GenerateRivers(int riverCount)
         {
-            localMapDimensions = localSize;
+            localMapDimensions = WorldParameters.LOCAL_WIDTH;
             int attempts = 0;
             rivers = new List<River>();
 

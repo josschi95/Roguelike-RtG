@@ -1,0 +1,31 @@
+{
+    "REGION_WIDTH": 3,
+    "REGION_HEIGHT": 3,
+
+    "LOCAL_WIDTH": 100,
+    "LOCAL_HEIGHT": 100,
+
+    "SEA_LEVEL": 0.4,
+    "MOUNTAIN_HEIGHT": 0.9,
+
+    "WORLD_SIZE_PARAMS": {
+        "WORLD_WIDTH": [200, 300, 400, 500, 600],
+        "WORLD_HEIGHT": [200, 300, 400, 500, 600],
+        "PLATE_COUNT":  [4, 6, 8, 14, 16],
+        "PLATE_MIN_SIZE": [35, 55, 75, 95, 115],
+        "PLATE_MAX_SIZE": [55, 75, 96, 115, 135],
+        "EROSION": [40000, 80000, 160000, 320000, 640000],
+        "RIVERS": [25, 40, 55, 70, 85]
+    },
+    
+    "MINERAL_PREVALENCE":{
+        "COAL": [0.3, 0.35, 0.4, 0.45, 0.5],
+        "COPPER": [0.25, 0.3, 0.35, 0.4, 0.45],
+        "IRON": [0.2, 0.25, 0.3, 0.35, 0.4],
+        "SILVER": [0.15, 0.2, 0.25, 0.3, 0.35],
+        "GOLD": [0.1, 0.15, 0.2, 0.25, 0.3],
+        "GEMSTONE": [0.05, 0.1, 0.15, 0.2, 0.25],
+        "MITHRIL": [0.01, 0.05, 0.1, 0.15, 0.2],
+        "ADAMANTINE": [0.005, 0.01, 0.05, 0.1, 0.15]
+    }
+}

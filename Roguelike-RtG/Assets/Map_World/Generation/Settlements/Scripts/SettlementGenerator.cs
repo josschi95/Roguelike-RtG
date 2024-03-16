@@ -7,7 +7,6 @@ namespace JS.World.Map.Generation
     public class SettlementGenerator : MonoBehaviour
     {
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private WorldGenerationParameters mapFeatures;
         [SerializeField] private BiomeHelper biomeHelper;
         [SerializeField] private WorldData worldMap;
         [SerializeField] private TribalRelation tribeRelations;
@@ -47,22 +46,28 @@ namespace JS.World.Map.Generation
         {
             var size = new Vector2(worldMap.Width, worldMap.Height);
             seedLocations = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
-
+            Debug.Log($"Initial Settlement Seeds: {seedLocations.Count}");
             //Removes all invalid locations
             for (int i = seedLocations.Count - 1; i >= 0; i--)
             {
                 var node = worldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
+
                 if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea yet
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) seedLocations.RemoveAt(i);
             }
+            Debug.Log($"Number of Nodes not land: {nodeNotLand}");
+            Debug.Log($"Number of Nodes in Mountain: {nodeInMountain}");
+            Debug.Log($"Culled Settlement Seeds: {seedLocations.Count}");
         }
-
+        int nodeNotLand = 0;
+        int nodeInMountain = 0;
         /// <summary>
         /// Returns the nearest WorldTile that is land, within the landCheckRadius
         /// </summary>
         private WorldTile TryFindLand(WorldTile tile)
         {
+            nodeNotLand++;
             WorldTile landNode = null;
             float dist = int.MaxValue;
 
@@ -85,6 +90,7 @@ namespace JS.World.Map.Generation
         /// </summary>
         private WorldTile TryFindPlains(WorldTile tile)
         {
+            nodeInMountain++;
             WorldTile flatNode = null;
             float dist = int.MaxValue;
             var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);

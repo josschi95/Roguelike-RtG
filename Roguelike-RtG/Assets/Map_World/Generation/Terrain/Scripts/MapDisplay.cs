@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using JS.World.Map.Generation;
 using JS.World.Map.Features;
 
 namespace JS.World.Map
@@ -9,7 +8,6 @@ namespace JS.World.Map
     public class MapDisplay : MonoBehaviour
     {
         [SerializeField] private WorldData worldMap;
-        [SerializeField] private WorldGenerationParameters worldGenParams;
         [SerializeField] private PathTileHelper riverTiles;
         [SerializeField] private PathTileHelper roadTiles;
         public BiomeHelper biomeHelper;
@@ -36,6 +34,27 @@ namespace JS.World.Map
         public Ores resourceToHighlight { get; set; }
 
         private Color red = new Color(255f, 0f, 0f, 100f);
+
+        private Color[] _heatColors =
+        {
+            new Color(0.0f, 1.0f, 1.0f), // Coldest #00FFFF
+            new Color(0.666f, 1.0f, 1.0f), // Colder #AAFFFF
+            new Color(0.0f, 0.91f, 0.53f), // Cold #00E786
+            new Color(1.0f, 1.0f, 0.39f), // Warm #FFFF63
+            new Color(1.0f, 0.4f, 0.0f), // Warmer #FF6500
+            new Color(1.0f, 0.0f, 0.0f), // Warmest #FF0000
+        };
+
+        private Color[] _wetColors =
+        {
+            new Color(1.0f, 0.55f, 0.066f), // Dryest #FF8B11
+            new Color(0.96f, 0.96f, 0.09f), // Dryer #F5F517
+            new Color(0.31f, 1.0f, 0.0f), // Dry #50FF00
+
+            new Color(0.333f, 1.0f, 1.0f), // Wet #55FFFF
+            new Color(0.078f, 0.28f, 1.0f), // Wetter #1446FF
+            new Color(0.0f, 0.0f, 0.39f), // Wettest #000064
+        };
 
 
         //Called on scene load from GameEventListener
@@ -166,8 +185,7 @@ namespace JS.World.Map
                 {
                     var tilePos = new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-                    var zone = worldGenParams.TemperatureZones[node.TempZoneID];
-                    infoMap.SetColor(tilePos, zone.HighlightColor);
+                    infoMap.SetColor(tilePos, _heatColors[node.TemperatureIndex]);
 
                 }
             }
@@ -183,8 +201,7 @@ namespace JS.World.Map
                 {
                     var tilePos = new Vector3Int(x, y);
                     var node = worldMap.GetNode(x, y);
-                    var zone = worldGenParams.PrecipitationZones[node.PrecipitationZoneID];
-                    infoMap.SetColor(tilePos, zone.HighlightColor);
+                    infoMap.SetColor(tilePos, _wetColors[node.PrecipitationZoneID]);
                 }
             }
         }

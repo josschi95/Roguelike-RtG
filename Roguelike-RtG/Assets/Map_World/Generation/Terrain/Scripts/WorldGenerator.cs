@@ -23,10 +23,10 @@ namespace JS.World.Map.Generation
         [SerializeField] private BoolVariable AutoGenSavedWorld;
         [SerializeField] private GameObject generationPanel;
         [Space]
-            
-        [SerializeField] private WorldSize worldSize;
-        [SerializeField] private int yearsOfHistory = 10;
+        
         private WorldGenParameters _worldGenParams;
+        private WorldSize worldSize;
+        private WorldAge worldAge;
 
         [Space]
 
@@ -77,11 +77,18 @@ namespace JS.World.Map.Generation
             }
         }
 
+        #region - World Settings -
         //Set from the World Generation Settings Menu
         public void SetSize(int size)
         {
             worldSize = (WorldSize)size;
         }
+
+        public void SetWorldAge(int index)
+        {
+            worldAge = (WorldAge)index;
+        }
+        #endregion
 
         #region - Seed -
         //Called from World Generation Settings Menu
@@ -129,14 +136,8 @@ namespace JS.World.Map.Generation
             WorldParameters.SEA_LEVEL = _worldGenParams.SEA_LEVEL;
             WorldParameters.MOUNTAIN_HEIGHT = _worldGenParams.MOUNTAIN_HEIGHT;
 
-            var climateParamText = Resources.Load("ClimateParameters") as TextAsset;
-            reader = new StringReader(climateParamText.text);
-            string climateJSON = reader.ReadToEnd();
-
-            ClimateParameters climate = JsonUtility.FromJson<ClimateParameters>(climateJSON);
-
-            ClimateMath.TemperatureZones = climate.TEMPERATURE_ZONES;
-            ClimateMath.PrecipitationZones = climate.PRECIPITATION_ZONES;
+            ClimateMath.TemperatureZones = _worldGenParams.TEMPERATURE_ZONES;
+            ClimateMath.PrecipitationZones = _worldGenParams.PRECIPITATION_ZONES;
         }
 
         private void SetWorldValues()
@@ -181,8 +182,7 @@ namespace JS.World.Map.Generation
             yield return StartCoroutine(HandleSettlementGeneration());
 
             //Generate History
-            UnityEngine.Debug.LogWarning("Skipping History.");
-            //yield return StartCoroutine(historyGenerator.RunHistory(yearsOfHistory));
+            yield return StartCoroutine(historyGenerator.RunHistory(_worldGenParams.YEARS_OF_HISTORY[(int)worldAge]));
 
             //Generate Historical Figures, Locations, Items, and Events
 
@@ -359,7 +359,7 @@ namespace JS.World.Map.Generation
             yield return new WaitForEndOfFrame();
             RecreateSettlements(data);
 
-            yield return StartCoroutine(historyGenerator.RunHistory(yearsOfHistory));
+            yield return StartCoroutine(historyGenerator.RunHistory(_worldGenParams.YEARS_OF_HISTORY[(int)worldAge]));
 
 
             worldGenCompleteEvent?.Invoke();
@@ -409,6 +409,24 @@ namespace JS.World.Map.Generation
         #endregion
     }
 
+    public enum WorldSize
+    { 
+        Tiny, 
+        Small, 
+        Medium, 
+        Large, 
+        Huge 
+    }
+
+    public enum WorldAge
+    {
+        Infant,
+        Young,
+        Mature,
+        Old,
+        Ancient,
+    }
+
     #region - JSON -
     // These classes are need to convert the JSON files
     [System.Serializable]
@@ -423,7 +441,13 @@ namespace JS.World.Map.Generation
         public float SEA_LEVEL;
         public float MOUNTAIN_HEIGHT;
 
+        public float[] TEMPERATURE_ZONES;
+        public float[] PRECIPITATION_ZONES;
+
         public WorldSizeParams WORLD_SIZE_PARAMS;
+
+        public int[] YEARS_OF_HISTORY;
+
         public MineralPrevalence MINERAL_PREVALENCE;
     }
 
@@ -450,13 +474,6 @@ namespace JS.World.Map.Generation
         public float[] GEMSTONE;
         public float[] MITHRIL;
         public float[] ADAMANTINE;
-    }
-
-    [System.Serializable]
-    public class ClimateParameters
-    {
-        public float[] TEMPERATURE_ZONES;
-        public float[] PRECIPITATION_ZONES;
     }
     #endregion
 }

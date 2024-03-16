@@ -633,6 +633,5 @@ namespace JS.World.Map.Generation
     }
 }
 
-public enum WorldSize { Tiny, Small, Medium, Large, Huge }
 
 public enum Compass { North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest }

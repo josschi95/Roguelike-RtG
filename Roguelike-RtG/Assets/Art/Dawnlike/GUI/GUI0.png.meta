@@ -285,7 +285,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: panel_red_empty_small
+      name: panel_red_empty
       rect:
         serializedVersion: 2
         x: 0
@@ -558,7 +558,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI0_155
+      name: panel_green_empty
       rect:
         serializedVersion: 2
         x: 0
@@ -567,7 +567,7 @@ TextureImporter:
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 5, z: 5, w: 5}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -840,7 +840,6 @@ TextureImporter:
       GUI0_152: -355913572
       GUI0_153: 1223657117
       GUI0_154: -1427740623
-      GUI0_155: -1039485142
       GUI0_156: -1866127630
       GUI0_157: -1603897279
       GUI0_158: -272540422
@@ -1006,8 +1005,9 @@ TextureImporter:
       bar_mana: 26382272
       bar_stamina: -932393719
       bar_yellow: -1710446027
+      panel_green_empty: -1039485142
+      panel_red_empty: -90010641
       panel_red_empty_large: 1768015291
-      panel_red_empty_small: -90010641
       panel_red_full_large: 759769920
       panel_red_full_small: 1120057866
   spritePackingTag: 

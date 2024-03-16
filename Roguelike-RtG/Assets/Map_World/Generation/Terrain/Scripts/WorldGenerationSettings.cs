@@ -8,10 +8,13 @@ namespace JS.World.Map.Generation
     {
         [SerializeField] private WorldGenerator worldGenerator;
 
-        [Space]
-        [Space]
-
+        [Header("World Size")]
         [SerializeField] private Button[] worldSizeButtons;
+        private Image[] worldSizeButtonGraphics;
+
+        [Header("World Age")]
+        [SerializeField] private Button[] worldAgeButtons;
+        private Image[] worldAgeButtonGraphics;
 
         [Space]
 
@@ -22,25 +25,62 @@ namespace JS.World.Map.Generation
 
         [SerializeField] private Button generateWorldButton;
 
-        private void OnEnable() => AssignUIElementEvents();
-        private void OnDisable() => ClearUIElementEvents();
+        [Space]
 
+        [SerializeField] private Sprite _selectedImage;
+        [SerializeField] private Sprite _disabledImage;
+
+        private void OnEnable()
+        {
+            AssignUIElementEvents();
+            SetDefaultValues();
+        }
+
+        private void OnDisable() => ClearUIElementEvents();
 
         private void AssignUIElementEvents()
         {
+            // World Size
+            worldSizeButtonGraphics = new Image[worldSizeButtons.Length];
             for (int i = 0; i < worldSizeButtons.Length; i++)
             {
                 int size = i;
-                worldSizeButtons[size].onClick.AddListener(delegate { worldGenerator.SetSize(size); });
+                worldSizeButtonGraphics[size] = worldSizeButtons[size].GetComponent<Image>();
+
+                worldSizeButtons[size].onClick.AddListener(delegate 
+                {
+                    OnSetWorldSize(size); 
+                });
             }
 
-            RandomizeSeed();
+            worldAgeButtonGraphics = new Image[worldAgeButtons.Length];
+            for (int i = 0; i < worldAgeButtons.Length; i++)
+            {
+                int age = i;
+                worldAgeButtonGraphics[age] = worldAgeButtons[age].GetComponent<Image>();
+
+                worldAgeButtons[age].onClick.AddListener(delegate
+                {
+                    OnSetWorldAge(age);
+                });
+            }
+
 
             randomizeSeedButton.onClick.AddListener(RandomizeSeed);
             seedInputField.onSubmit.AddListener(delegate
             {
                 OnSetSeed(seedInputField.text);
             });
+        }
+
+        private void SetDefaultValues()
+        {
+            RandomizeSeed();
+
+            //OnSetWorldSize(2);
+            //OnSetWorldAge(2);
+            OnSetWorldSize(0);
+            OnSetWorldAge(0);
         }
 
         private void ClearUIElementEvents()
@@ -50,6 +90,11 @@ namespace JS.World.Map.Generation
             for (int i = 0; i < worldSizeButtons.Length; i++)
             {
                 worldSizeButtons[i].onClick.RemoveAllListeners();
+            }
+
+            for (int i = 0; i < worldAgeButtons.Length; i++)
+            {
+                worldAgeButtons[i].onClick.RemoveAllListeners();
             }
         }
 
@@ -73,6 +118,26 @@ namespace JS.World.Map.Generation
         private void OnSeedChanged()
         {
             seedInputField.text = worldGenerator.Seed.ToString();
+        }
+
+        private void OnSetWorldSize(int size)
+        {
+            for (int i = 0;i < worldSizeButtonGraphics.Length; i++)
+            {
+                if (i == size) worldSizeButtonGraphics[i].sprite = _selectedImage;
+                else worldSizeButtonGraphics[i].sprite = _disabledImage;
+            }
+            worldGenerator.SetSize(size);
+        }
+
+        private void OnSetWorldAge(int age)
+        {
+            for (int i = 0; i < worldAgeButtonGraphics.Length; i++)
+            {
+                if (i == age) worldAgeButtonGraphics[i].sprite = _selectedImage;
+                else worldAgeButtonGraphics[i].sprite = _disabledImage;
+            }
+            worldGenerator.SetWorldAge(age);
         }
     }
 }

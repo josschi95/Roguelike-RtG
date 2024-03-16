@@ -8,6 +8,10 @@
     "SEA_LEVEL": 0.4,
     "MOUNTAIN_HEIGHT": 0.9,
 
+    "TEMPERATURE_ZONES":[0.05, 0.18, 0.4, 0.6, 0.8, 1.0],
+
+    "PRECIPITATION_ZONES": [0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
+
     "WORLD_SIZE_PARAMS": {
         "WORLD_WIDTH": [200, 300, 400, 500, 600],
         "WORLD_HEIGHT": [200, 300, 400, 500, 600],
@@ -17,6 +21,8 @@
         "EROSION": [40000, 80000, 160000, 320000, 640000],
         "RIVERS": [25, 40, 55, 70, 85]
     },
+
+    "YEARS_OF_HISTORY": [5, 50, 100, 250, 500],
     
     "MINERAL_PREVALENCE":{
         "COAL": [0.3, 0.35, 0.4, 0.45, 0.5],

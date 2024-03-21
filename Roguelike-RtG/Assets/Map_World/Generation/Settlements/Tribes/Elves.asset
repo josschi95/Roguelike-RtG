@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Elves
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 1
+  <Name>k__BackingField: Elves
   <preferredBiomes>k__BackingField:
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
   - {fileID: 11400000, guid: 0008d2b95d08e5047afc80a1bda38618, type: 2}

@@ -7,8 +7,6 @@ namespace JS.ECS
     {
         private static WorldLocomotionSystem instance;
 
-        [SerializeField] private WorldData worldMap;
-
         private Vector2Int regionCenter;
         private Vector2Int localCenter;
 
@@ -55,8 +53,8 @@ namespace JS.ECS
         {
             if (projectedPosition.x < 0) return false;
             if (projectedPosition.y < 0) return false;
-            if (projectedPosition.x > worldMap.Width - 1) return false;
-            if (projectedPosition.y > worldMap.Height - 1) return false;
+            if (projectedPosition.x > WorldMap.Width - 1) return false;
+            if (projectedPosition.y > WorldMap.Height - 1) return false;
             return true;
         }
 

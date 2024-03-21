@@ -13,7 +13,6 @@ namespace JS.Architecture.CommandSystem
     {
         [Space]
         [Space]
-        [SerializeField] private WorldData _worldMapData;
         [SerializeField] private TimeKeeper timeData;
 
         protected override bool ExecuteCommand()
@@ -27,8 +26,8 @@ namespace JS.Architecture.CommandSystem
             string[] saves = Directory.GetFiles(Application.persistentDataPath);
             if (saves.Length == 0)
             {
-                _worldMapData.SaveExists = false;
-                _worldMapData.IsLoaded = false;
+                WorldMap.SaveExists = false;
+                WorldMap.IsLoaded = false;
                 return null;
             }
 
@@ -39,8 +38,8 @@ namespace JS.Architecture.CommandSystem
                     return ProcessSaveFile(save);
                 }
             }
-            _worldMapData.SaveExists = false;
-            _worldMapData.IsLoaded = false;
+            WorldMap.SaveExists = false;
+            WorldMap.IsLoaded = false;
             return null;
         }
 
@@ -68,8 +67,8 @@ namespace JS.Architecture.CommandSystem
             string[] saves = Directory.GetFiles(Application.persistentDataPath);
             if (saves.Length == 0)
             {
-                _worldMapData.SaveExists = false;
-                _worldMapData.IsLoaded = false;
+                WorldMap.SaveExists = false;
+                WorldMap.IsLoaded = false;
                 return false;
             }
             
@@ -78,12 +77,12 @@ namespace JS.Architecture.CommandSystem
                 if (save.Contains("WorldData"))
                 {
                     //LoadSavedWorld(save);
-                    _worldMapData.SaveExists = true;
+                    WorldMap.SaveExists = true;
                     return true;
                 }
             }
-            _worldMapData.SaveExists = false;
-            _worldMapData.IsLoaded = false;
+            WorldMap.SaveExists = false;
+            WorldMap.IsLoaded = false;
             return false;
         }
 

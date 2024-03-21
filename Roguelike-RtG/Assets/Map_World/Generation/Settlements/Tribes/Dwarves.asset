@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a562b3256664f5f43a324daea36ab9d4, type: 3}
   m_Name: Dwarves
   m_EditorClassIdentifier: 
-  mountainPreference: 0.5
-  islandPreference: 0.5
+  <ID>k__BackingField: 0
+  <Name>k__BackingField: Dwarves
   <preferredBiomes>k__BackingField: []
   <opposedBiomes>k__BackingField: []
+  <PrefersMountains>k__BackingField: 0
+  <PrefersIslands>k__BackingField: 0

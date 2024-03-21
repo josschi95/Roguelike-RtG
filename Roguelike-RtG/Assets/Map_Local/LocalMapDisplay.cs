@@ -6,11 +6,7 @@ using JS.World.Map.Features;
 
 public class LocalMapDisplay : MonoBehaviour
 {
-    [SerializeField] private WorldData worldData;
-
     [SerializeField] private BiomeHelper biomeHelper;
-
-    [SerializeField] private SettlementData settlementData;
     [SerializeField] private PathTileHelper riverTiles;
     [SerializeField] private DirectionTiles directionTiles;
 

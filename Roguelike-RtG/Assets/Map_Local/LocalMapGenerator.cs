@@ -14,10 +14,7 @@ namespace JS.World.Map.Generation
         [Space]
 
         [SerializeField] private LocalMapDisplay localMapDisplay;
-        [SerializeField] private WorldData worldData;
-
         [SerializeField] private BiomeHelper biomeHelper;
-        [SerializeField] private SettlementData settlementData;
         //private System.Random PRNG;
         private int seed;
 
@@ -47,7 +44,7 @@ namespace JS.World.Map.Generation
             //var node = worldData.GetNode(worldX, worldY);
 
             //Seed is equal to the world tile + the regional x + y
-            seed = worldData.TerrainData.SeedMap[worldX, worldY] + regionPos.x + regionPos.y;
+            seed = Features.TerrainData.SeedMap[worldX, worldY] + regionPos.x + regionPos.y;
             //PRNG = new System.Random(seed);
 
             //var biome = biomeHelper.GetBiome(node.BiomeID);
@@ -69,7 +66,7 @@ namespace JS.World.Map.Generation
         #region - Rivers -
         private void HandleRivers(int worldX, int worldY)
         {
-            var river = worldData.TerrainData.FindRiverAt(worldX, worldY, out var index); 
+            var river = Features.TerrainData.FindRiverAt(worldX, worldY, out var index); 
             if (river == null) return; //There is no river
             //The river doesn't pass through this tile
             if (!RiverIsInMap(river.Nodes[index], out int regionIndex)) return;

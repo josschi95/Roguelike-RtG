@@ -7,20 +7,26 @@ namespace JS.World.Map
     public class Settlement
     {
         [SerializeField] private Vector2Int _coordinates;
-        public Vector2Int Coordinates => _coordinates;
+        [SerializeField] private int id;
+        [SerializeField] private string _name;
+        [SerializeField] private SettlementCategory _category;
+        [SerializeField] private string _race;
 
+        [SerializeField] private int typeID;
+        [SerializeField] private int tribeID;
+
+        public Vector2Int Coordinates => _coordinates; // I don't need both of these
         public int x => _coordinates.x;
         public int y => _coordinates.y;
 
-        [SerializeField] private string _name;
-        public string Name => _name;
-
-        [SerializeField] private int id;
         public int ID => id;
-        [SerializeField] private int typeID;
+        public string Name => _name;
+        public SettlementCategory Category => _category;
+        public string Race => _race;
+
         public int TypeID => typeID;
-        [SerializeField] private int tribeID;
         public int TribeID => tribeID;
+
 
         public int Population;
 
@@ -44,6 +50,9 @@ namespace JS.World.Map
 
             //Set to a seafaring settlement if placed on an island
             //isSeaFaring = node.Island != null;
+
+            _category = (SettlementCategory)type.ID;
+            _race = humanoids.Name;
 
             typeID = type.ID;
             tribeID = humanoids.ID;
@@ -112,6 +121,14 @@ namespace JS.World.Map
             Territory.Clear();
             foreignRelations.Clear();
         }
+    }
+
+    public enum SettlementCategory
+    {
+        Hamlet,
+        Village,
+        Town,
+        City
     }
 
     public class CitySeed

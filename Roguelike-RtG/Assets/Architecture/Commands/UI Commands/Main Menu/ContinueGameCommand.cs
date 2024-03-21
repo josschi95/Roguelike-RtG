@@ -13,7 +13,6 @@ namespace JS.Architecture.CommandSystem
     {
         [Space] [Space]
 
-        [SerializeField] private WorldData worldData;
         [SerializeField] private GameEvent loadPlayerSavedSceneCommand; //placeholder, for now this will just load in world map, //but obviously later it will take in player's grid coordinates and load appropriate scene/map
         [SerializeField] private GameEvent loadWorldGenScene; //placeholder, for now this will just load in world map, //but obviously later it will take in player's grid coordinates and load appropriate scene/map
 
@@ -28,9 +27,9 @@ namespace JS.Architecture.CommandSystem
 
         private bool CheckForWorldLoaded()
         {
-            if (!worldData.SaveExists) return false;
+            if (!WorldMap.SaveExists) return false;
 
-            if (worldData.IsLoaded)
+            if (WorldMap.IsLoaded)
             {
                 //Debug.Log("IsLoaded");
                 //All save data is already loaded in, can go directly to next scene

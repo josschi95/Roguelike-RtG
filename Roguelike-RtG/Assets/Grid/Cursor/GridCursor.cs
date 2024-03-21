@@ -5,7 +5,6 @@ using JS.World.Map;
 public class GridCursor : MonoBehaviour
 {
     [SerializeField] private InputActionProperty mousePosition;
-    [SerializeField] private WorldData worldMap;
     [SerializeField] private NodeDisplay nodeDisplay;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Camera cam;
@@ -64,7 +63,7 @@ public class GridCursor : MonoBehaviour
 
     private void CheckNode()
     {
-        var node = worldMap.GetNode(transform.position);
+        var node = WorldMap.GetNode(transform.position);
         spriteRenderer.enabled = node != null;
         nodeDisplay.DisplayNodeValues(node);
 

@@ -162,13 +162,13 @@ TextureImporter:
       name: bar_health
       rect:
         serializedVersion: 2
-        x: 96
+        x: 97
         y: 276
-        width: 16
+        width: 14
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 4, z: 2, w: 3}
+      border: {x: 0, y: 3, z: 0, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -756,13 +756,34 @@ TextureImporter:
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 4, y: 4, z: 4, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 1551b3bfc963d1244bdefcef8185f2bd
       internalID: 610247805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bar_fancy2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 289
+        width: 48
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 7, z: 8, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6076546f2a08a48498b8d6e17f4d28a9
+      internalID: 458277766
       vertices: []
       indices: 
       edges: []
@@ -1000,6 +1021,7 @@ TextureImporter:
       GUI0_98: 1999941057
       GUI0_99: -821860634
       bar_fancy: -817398878
+      bar_fancy2: 458277766
       bar_gray: 1303183083
       bar_health: -2016004354
       bar_mana: 26382272

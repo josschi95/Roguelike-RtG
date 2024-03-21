@@ -1,263 +1,289 @@
 
 *** Year 0 ***
 
-The settlement of Fearkentown was founded in year 0 by Folfreyr
+The settlement of Nankleb was founded in year 0 by Aartjar
 
-The settlement of Thottlan was founded in year 0 by Folfdanso
+The settlement of Ottever was founded in year 0 by Ketinarle
 
-The settlement of Goddingatebrough was founded in year 0 by Wisl
+The settlement of Swatlewh was founded in year 0 by Ottavarne
 
-The settlement of Trosbotley was founded in year 0 by Hakonnr
+The settlement of Jarnrizels was founded in year 0 by Builgotei
 
-The settlement of Nundalstadt was founded in year 0 by Ankarns
+The settlement of Jerravesto was founded in year 0 by Vetigma
 
-The settlement of Otlenordsto was founded in year 0 by Wisderr
+The settlement of Vickera was founded in year 0 by Selleiri
 
-Otlenordsto
-Otlenordsto's Farm produced 48 food
-Otlenordsto's Hunting Lodge produced 50 food
-Otlenordsto's population grew from 25 to 37
-Otlenordsto lost 1 lives to the wilds.
+Vickera
+Vickera's Farm produced 32 food
+Vickera's population grew from 25 to 37
 
 
-Nundalstadt
-Nundalstadt's Farm produced 36 food
-Nundalstadt's population grew from 25 to 37
+Jerravesto
+Jerravesto's Farm produced 40 food
+Jerravesto's population grew from 25 to 37
 
 
-Trosbotley
-Trosbotley's Farm produced 25 food
-Trosbotley's population grew from 25 to 37
+Jarnrizels
+Jarnrizels's Farm produced 39 food
+Jarnrizels's population grew from 25 to 37
 
 
-Goddingatebrough
-Goddingatebrough's Farm produced 30 food
-Goddingatebrough's population grew from 25 to 37
+Swatlewh
+Swatlewh's Farm produced 49 food
+Swatlewh's Hunting Lodge produced 39 food
+Swatlewh's population grew from 25 to 37
+Swatlewh lost 2 lives to the wilds.
 
 
-Thottlan
-Thottlan's Farm produced 32 food
-Thottlan's population grew from 25 to 37
+Ottever
+Ottever's Farm produced 23 food
+Ottever's Hunting Lodge produced 44 food
+Ottever's population grew from 25 to 37
+Ottever lost 1 lives to the wilds.
 
 
-Fearkentown
-Fearkentown's Farm produced 35 food
-Fearkentown's population grew from 25 to 37
+Nankleb
+Nankleb's Farm produced 42 food
+Nankleb's Hunting Lodge produced 44 food
+Nankleb's population grew from 25 to 37
+Nankleb lost 2 lives to the wilds.
 
 
 
 *** Year 1 ***
 
-The settlement of Enneyworville was founded in year 1 by Vegstarle
+The settlement of Albeckc was founded in year 1 by Uffe
 
-Enneyworville
-Enneyworville's Farm produced 23 food
-Enneyworville lost 2 lives to starvation.
-
-
-Otlenordsto
-Otlenordsto's Farm produced 43 food
-Otlenordsto's Hunting Lodge produced 50 food
-Otlenordsto's population grew from 36 to 54
-Otlenordsto lost 1 lives to the wilds.
-Otlenordsto transitioned from a Hamlet to a Village
+Albeckc
+Albeckc's Farm produced 39 food
+Albeckc's Hunting Lodge produced 50 food
+Albeckc's population grew from 25 to 37
 
 
-Nundalstadt
-Nundalstadt's Farm produced 38 food
-Nundalstadt's population grew from 37 to 55
-Nundalstadt transitioned from a Hamlet to a Village
+Vickera
+Vickera's Farm produced 37 food
+Vickera's population grew from 37 to 55
+Vickera transitioned from a Hamlet to a Village
 
 
-Trosbotley
-Trosbotley's Farm produced 30 food
-Trosbotley lost 7 lives to starvation.
+Jerravesto
+Jerravesto's Farm produced 39 food
+Jerravesto's population grew from 37 to 55
+Jerravesto transitioned from a Hamlet to a Village
 
 
-Goddingatebrough
-Goddingatebrough's Farm produced 38 food
-Goddingatebrough's population grew from 37 to 55
-Goddingatebrough transitioned from a Hamlet to a Village
+Jarnrizels
+Jarnrizels's Farm produced 36 food
+Jarnrizels's population grew from 37 to 55
+Jarnrizels transitioned from a Hamlet to a Village
 
 
-Thottlan
-Thottlan's Farm produced 38 food
-Thottlan's population grew from 37 to 55
-Thottlan transitioned from a Hamlet to a Village
+Swatlewh
+Swatlewh's Farm produced 45 food
+Swatlewh's Hunting Lodge produced 39 food
+Swatlewh's population grew from 35 to 52
+Swatlewh lost 2 lives to the wilds.
+Swatlewh transitioned from a Hamlet to a Village
 
 
-Fearkentown
-Fearkentown's Farm produced 26 food
-Fearkentown lost 1 lives to starvation.
+Ottever
+Ottever's Farm produced 26 food
+Ottever's Hunting Lodge produced 50 food
+Ottever's population grew from 36 to 54
+Ottever lost 1 lives to the wilds.
+Ottever transitioned from a Hamlet to a Village
+
+
+Nankleb
+Nankleb's Farm produced 43 food
+Nankleb's Hunting Lodge produced 50 food
+Nankleb's population grew from 35 to 52
+Nankleb lost 2 lives to the wilds.
+Nankleb transitioned from a Hamlet to a Village
 
 
 
 *** Year 2 ***
 
-The settlement of Oldockent was founded in year 2 by Balstein
+The settlement of Puddiackleford was founded in year 2 by Holeinnri
 
-Oldockent
-Oldockent's Farm produced 24 food
-Oldockent lost 1 lives to starvation.
-
-
-Enneyworville
-Enneyworville's Farm produced 20 food
-Enneyworville lost 3 lives to starvation.
+Puddiackleford
+Puddiackleford's Farm produced 10 food
+Puddiackleford lost 15 lives to starvation.
+Puddiackleford lost 3 lives to the wilds.
 
 
-Otlenordsto
-Otlenordsto's Farm produced 45 food
-Otlenordsto's Hunting Lodge produced 36 food
-Otlenordsto's population grew from 53 to 79
-Otlenordsto lost 1 lives to the wilds.
+Albeckc
+Albeckc's Farm produced 39 food
+Albeckc's Hunting Lodge produced 41 food
+Albeckc's population grew from 37 to 55
+Albeckc transitioned from a Hamlet to a Village
 
 
-Nundalstadt
-Nundalstadt's Farm produced 27 food
-Nundalstadt lost 16 lives to starvation.
-Nundalstadt transitioned from a Village to a Hamlet
+Vickera
+Vickera's Farm produced 28 food
+Vickera lost 20 lives to starvation.
+Vickera transitioned from a Village to a Hamlet
 
 
-Trosbotley
-Trosbotley's Farm produced 35 food
-Trosbotley's population grew from 30 to 45
+Jerravesto
+Jerravesto's Farm produced 35 food
+Jerravesto lost 3 lives to starvation.
 
 
-Goddingatebrough
-Goddingatebrough's Farm produced 29 food
-Goddingatebrough lost 20 lives to starvation.
-Goddingatebrough transitioned from a Village to a Hamlet
+Jarnrizels
+Jarnrizels's Farm produced 28 food
+Jarnrizels lost 14 lives to starvation.
+Jarnrizels transitioned from a Village to a Hamlet
 
 
-Thottlan
-Thottlan's Farm produced 30 food
-Thottlan lost 17 lives to starvation.
-Thottlan transitioned from a Village to a Hamlet
+Swatlewh
+Swatlewh's Farm produced 40 food
+Swatlewh's Hunting Lodge produced 50 food
+Swatlewh's population grew from 50 to 75
+Swatlewh lost 2 lives to the wilds.
 
 
-Fearkentown
-Fearkentown's Farm produced 36 food
-Fearkentown's population grew from 36 to 54
-Fearkentown transitioned from a Hamlet to a Village
+Ottever
+Ottever's Farm produced 20 food
+Ottever's Hunting Lodge produced 50 food
+Ottever's population grew from 53 to 79
+Ottever lost 1 lives to the wilds.
+
+
+Nankleb
+Nankleb's Farm produced 46 food
+Nankleb's Hunting Lodge produced 48 food
+Nankleb's population grew from 50 to 75
+Nankleb lost 2 lives to the wilds.
 
 
 
 *** Year 3 ***
 
-The settlement of Leybeckew was founded in year 3 by Vegsteir
+The settlement of Spatertham was founded in year 3 by Unierrida
 
-Leybeckew
-Leybeckew's Farm produced 27 food
-Leybeckew's Docks produced 50 food
-Leybeckew's population grew from 25 to 37
-
-
-Oldockent
-Oldockent's Farm produced 18 food
-Oldockent lost 6 lives to starvation.
+Spatertham
+Spatertham's Farm produced 25 food
+Spatertham's population grew from 25 to 37
+Spatertham lost 2 lives to the wilds.
 
 
-Enneyworville
-Enneyworville's Farm produced 27 food
-Enneyworville's population grew from 20 to 30
+Puddiackleford
+Puddiackleford's Farm produced 12 food
+Puddiackleford's population grew from 7 to 10
+Puddiackleford lost 3 lives to the wilds.
 
 
-Otlenordsto
-Otlenordsto's Farm produced 40 food
-Otlenordsto's Hunting Lodge produced 42 food
-Otlenordsto's population grew from 78 to 117
-Otlenordsto lost 1 lives to the wilds.
+Albeckc
+Albeckc's Farm produced 39 food
+Albeckc's Hunting Lodge produced 50 food
+Albeckc's population grew from 55 to 82
 
 
-Nundalstadt
-Nundalstadt's Farm produced 39 food
-Nundalstadt's population grew from 39 to 58
-Nundalstadt transitioned from a Hamlet to a Village
+Vickera
+Vickera's Farm produced 35 food
+Vickera's population grew from 35 to 52
+Vickera transitioned from a Hamlet to a Village
 
 
-Trosbotley
-Trosbotley's Farm produced 26 food
-Trosbotley lost 14 lives to starvation.
+Jerravesto
+Jerravesto's Farm produced 33 food
+Jerravesto lost 19 lives to starvation.
+Jerravesto transitioned from a Village to a Hamlet
 
 
-Goddingatebrough
-Goddingatebrough's Farm produced 32 food
-Goddingatebrough lost 3 lives to starvation.
+Jarnrizels
+Jarnrizels's Farm produced 37 food
+Jarnrizels lost 4 lives to starvation.
 
 
-Thottlan
-Thottlan's Farm produced 42 food
-Thottlan's population grew from 38 to 57
-Thottlan transitioned from a Hamlet to a Village
+Swatlewh
+Swatlewh's Farm produced 41 food
+Swatlewh's Hunting Lodge produced 40 food
+Swatlewh's population grew from 73 to 109
+Swatlewh lost 2 lives to the wilds.
 
 
-Fearkentown
-Fearkentown's Farm produced 33 food
-Fearkentown lost 21 lives to starvation.
-Fearkentown transitioned from a Village to a Hamlet
+Ottever
+Ottever's Farm produced 27 food
+Ottever's Hunting Lodge produced 50 food
+Ottever's population grew from 78 to 117
+Ottever lost 1 lives to the wilds.
+
+
+Nankleb
+Nankleb's Farm produced 42 food
+Nankleb's Hunting Lodge produced 42 food
+Nankleb's population grew from 73 to 109
+Nankleb lost 2 lives to the wilds.
 
 
 
 *** Year 4 ***
 
-The settlement of Scunstwor was founded in year 4 by Endreorn
+The settlement of Pudbridef was founded in year 4 by Ankarrim
 
-Scunstwor
-Scunstwor's Farm produced 19 food
-Scunstwor lost 6 lives to starvation.
-Scunstwor lost 1 lives to the wilds.
-
-
-Leybeckew
-Leybeckew's Farm produced 24 food
-Leybeckew's Docks produced 46 food
-Leybeckew's population grew from 37 to 55
-Leybeckew transitioned from a Hamlet to a Village
+Pudbridef
+Pudbridef's Farm produced 32 food
+Pudbridef's population grew from 25 to 37
 
 
-Oldockent
-Oldockent's Farm produced 22 food
-Oldockent's population grew from 18 to 27
+Spatertham
+Spatertham's Farm produced 20 food
+Spatertham lost 15 lives to starvation.
+Spatertham lost 2 lives to the wilds.
 
 
-Enneyworville
-Enneyworville's Farm produced 24 food
-Enneyworville's population grew from 30 to 45
+Puddiackleford
+Puddiackleford's Farm produced 10 food
+Puddiackleford's population grew from 7 to 10
+Puddiackleford lost 3 lives to the wilds.
 
 
-Otlenordsto
-Otlenordsto's Farm produced 50 food
-Otlenordsto's Hunting Lodge produced 42 food
-Otlenordsto's population grew from 116 to 174
-Otlenordsto lost 1 lives to the wilds.
-Otlenordsto transitioned from a Village to a Town
+Albeckc
+Albeckc's Farm produced 55 food
+Albeckc's Hunting Lodge produced 42 food
+Albeckc's population grew from 82 to 123
 
 
-Nundalstadt
-Nundalstadt's Farm produced 39 food
-Nundalstadt lost 19 lives to starvation.
-Nundalstadt transitioned from a Village to a Hamlet
+Vickera
+Vickera's Farm produced 28 food
+Vickera lost 24 lives to starvation.
+Vickera transitioned from a Village to a Hamlet
 
 
-Trosbotley
-Trosbotley's Farm produced 34 food
-Trosbotley's population grew from 31 to 46
+Jerravesto
+Jerravesto's Farm produced 46 food
+Jerravesto's population grew from 33 to 49
 
 
-Goddingatebrough
-Goddingatebrough's Farm produced 31 food
-Goddingatebrough lost 1 lives to starvation.
+Jarnrizels
+Jarnrizels's Farm produced 35 food
+Jarnrizels lost 2 lives to starvation.
 
 
-Thottlan
-Thottlan's Farm produced 34 food
-Thottlan lost 19 lives to starvation.
-Thottlan transitioned from a Village to a Hamlet
+Swatlewh
+Swatlewh's Farm produced 47 food
+Swatlewh's Hunting Lodge produced 49 food
+Swatlewh's population grew from 107 to 160
+Swatlewh lost 2 lives to the wilds.
+Swatlewh transitioned from a Village to a Town
 
 
-Fearkentown
-Fearkentown's Farm produced 35 food
-Fearkentown's population grew from 33 to 49
+Ottever
+Ottever's Farm produced 23 food
+Ottever's Hunting Lodge produced 50 food
+Ottever's population grew from 116 to 174
+Ottever lost 1 lives to the wilds.
+Ottever transitioned from a Village to a Town
+
+
+Nankleb
+Nankleb's Farm produced 44 food
+Nankleb's Hunting Lodge produced 44 food
+Nankleb's population grew from 107 to 160
+Nankleb lost 2 lives to the wilds.
+Nankleb transitioned from a Village to a Town
 
 

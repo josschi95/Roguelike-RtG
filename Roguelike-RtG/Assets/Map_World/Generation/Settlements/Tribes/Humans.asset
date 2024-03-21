@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Humans
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 3
+  <Name>k__BackingField: Humans
   <preferredBiomes>k__BackingField: []
   <opposedBiomes>k__BackingField: []
   <PrefersMountains>k__BackingField: 0

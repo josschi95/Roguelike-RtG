@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Orcs
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 4
+  <Name>k__BackingField: Orcs
   <preferredBiomes>k__BackingField:
   - {fileID: 11400000, guid: e163535b3353dec46b940251e940132f, type: 2}
   - {fileID: 11400000, guid: a4adc6d5adbc43d41ac0c2bd613ff194, type: 2}

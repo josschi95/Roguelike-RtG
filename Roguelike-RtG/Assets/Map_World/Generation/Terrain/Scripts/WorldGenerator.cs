@@ -30,8 +30,6 @@ namespace JS.World.Map.Generation
 
         [Space]
 
-        [SerializeField] private WorldData worldMap;
-        [SerializeField] private SettlementData settlementData;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private TimeKeeper timeKeeper;
         [SerializeField] private BiomeHelper biomeHelper;
@@ -100,7 +98,7 @@ namespace JS.World.Map.Generation
         public void SetSeed(int value)
         {
             Seed = value;
-            worldMap.Seed = Seed;
+            WorldMap.Seed = Seed;
         }
         #endregion
 
@@ -146,8 +144,8 @@ namespace JS.World.Map.Generation
 
             terrainGenerator.SetInitialValues(_worldGenParams.WORLD_SIZE_PARAMS.WORLD_WIDTH[(int)worldSize]);
 
-            var size = worldMap.TerrainData.MapSize;
-            worldMap.CreateWorldGrid(size, size);
+            var size = Features.TerrainData.MapSize;
+            WorldMap.CreateWorldGrid(size, size);
 
             PlantSeeds();
         }
@@ -157,15 +155,15 @@ namespace JS.World.Map.Generation
         /// </summary>
         private void PlantSeeds()
         {
-            var seedMap = new int[worldMap.Width, worldMap.Height];
-            for (int x = 0; x < worldMap.Width; x++)
+            var seedMap = new int[WorldMap.Width, WorldMap.Height];
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     seedMap[x, y] = PRNG.Next();
                 }
             }
-            worldMap.TerrainData.SeedMap = seedMap;
+            Features.TerrainData.SeedMap = seedMap;
         }
 
         private IEnumerator GenerateWorld()
@@ -289,7 +287,7 @@ namespace JS.World.Map.Generation
             LandMass continent = null;
             int size = terrainGenerator.mapSize;
             // Selects the largest continent
-            foreach(var mass in worldMap.TerrainData.LandMasses)
+            foreach(var mass in Features.TerrainData.LandMasses)
             {
                 if (mass.GridNodes == null) UnityEngine.Debug.LogWarning("Nodes are null!");
                 if (mass.Size != LandSize.Continent) continue;
@@ -307,7 +305,7 @@ namespace JS.World.Map.Generation
                 {
                     var dist = GridMath.GetStraightDist(center.x, center.y, x, y) / size;
                     var dt = Mathf.RoundToInt(dist * 10);
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     dt = Mathf.Clamp(dt + biomeHelper.GetBiome(node.BiomeID).DangerModifier, 0, 9);
                     node.DangerTier = dt;
                 }
@@ -319,7 +317,7 @@ namespace JS.World.Map.Generation
         /// </summary>
         private void PlacePlayerAtStart()
         {
-            if (settlementData.Settlements == null || settlementData.Settlements.Length == 0)
+            if (SettlementData.Settlements == null || SettlementData.Settlements.Length == 0)
             {
                 playerData.World = Vector3Int.zero;
                 playerData.Region = Vector2Int.zero;
@@ -327,8 +325,8 @@ namespace JS.World.Map.Generation
                 return;
 
             }
-            int index = PRNG.Next(0, settlementData.Settlements.Length);
-            var settlement = settlementData.Settlements[index];
+            int index = PRNG.Next(0, SettlementData.Settlements.Length);
+            var settlement = SettlementData.Settlements[index];
 
             playerData.World = new Vector3Int(settlement.x, settlement.y, 0);
 
@@ -381,8 +379,8 @@ namespace JS.World.Map.Generation
 
             terrainGenerator.IdentifyCoasts();
             terrainGenerator.IdentifyMountains();
-            worldMap.TerrainData.Lakes = data.Lakes;
-            worldMap.TerrainData.LandMasses = data.Land;
+            Features.TerrainData.Lakes = data.Lakes;
+            Features.TerrainData.LandMasses = data.Land;
 
             riverGenerator.GenerateRivers(_worldGenParams.WORLD_SIZE_PARAMS.RIVERS[(int)worldSize]);
             terrainGenerator.GenerateHeatMap();

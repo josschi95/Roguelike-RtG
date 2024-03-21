@@ -7,6 +7,8 @@ public class HumanoidTribe : ScriptableObject
 {
     [field: SerializeField] public int ID { get; private set; }
 
+    [field: SerializeField] public string Name { get; private set; }
+
     [field: SerializeField] public List<Biome> preferredBiomes { get; private set; } = new List<Biome>();
     [field: SerializeField] public List<Biome> opposedBiomes { get; private set; } = new List<Biome>();
 

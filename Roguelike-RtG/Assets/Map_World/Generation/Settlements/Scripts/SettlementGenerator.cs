@@ -8,7 +8,6 @@ namespace JS.World.Map.Generation
     {
         [SerializeField] private WorldGenerator worldGenerator;
         [SerializeField] private BiomeHelper biomeHelper;
-        [SerializeField] private WorldData worldMap;
         [SerializeField] private TribalRelation tribeRelations;
 
         [Space]
@@ -44,13 +43,13 @@ namespace JS.World.Map.Generation
         #region - Seed Placement -
         public void PlaceSeeds()
         {
-            var size = new Vector2(worldMap.Width, worldMap.Height);
-            seedLocations = Poisson.GeneratePoints(worldMap.Seed, poissonRadius, size);
+            var size = new Vector2(WorldMap.Width, WorldMap.Height);
+            seedLocations = Poisson.GeneratePoints(WorldMap.Seed, poissonRadius, size);
             Debug.Log($"Initial Settlement Seeds: {seedLocations.Count}");
             //Removes all invalid locations
             for (int i = seedLocations.Count - 1; i >= 0; i--)
             {
-                var node = worldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
+                var node = WorldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
 
                 if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea yet
                 if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
@@ -71,7 +70,7 @@ namespace JS.World.Map.Generation
             WorldTile landNode = null;
             float dist = int.MaxValue;
 
-            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
+            var nodes = WorldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue;
@@ -93,7 +92,7 @@ namespace JS.World.Map.Generation
             nodeInMountain++;
             WorldTile flatNode = null;
             float dist = int.MaxValue;
-            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
+            var nodes = WorldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue; //no water
@@ -117,12 +116,12 @@ namespace JS.World.Map.Generation
         {
             WorldTile flatNode = null;
             float dist = int.MaxValue;
-            var nodes = worldMap.GetNodesInRange_Square(tile, adjustmentRange);
+            var nodes = WorldMap.GetNodesInRange_Square(tile, adjustmentRange);
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (!nodes[i].IsLand) continue; //no water
                 if (nodes[i].Mountain != null) continue; //no mountains
-                if (!worldMap.TerrainData.Coasts[nodes[i].x, nodes[i].y] && nodes[i].Rivers.Count == 0) continue;
+                if (!Features.TerrainData.Coasts[nodes[i].x, nodes[i].y] && nodes[i].Rivers.Count == 0) continue;
 
                 var newDist = GridMath.GetStraightDist(tile.x, tile.y, nodes[i].x, nodes[i].y);
                 if (newDist < dist)
@@ -166,7 +165,7 @@ namespace JS.World.Map.Generation
 
         private void OnNewSeed(Vector2 location, int year)
         {
-            var node = worldMap.GetNode((int)location.x, (int)location.y);
+            var node = WorldMap.GetNode((int)location.x, (int)location.y);
 
             var newSeed = new CitySeed()
             {
@@ -183,7 +182,7 @@ namespace JS.World.Map.Generation
             newSeed.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
             //Settlements adjacent to water sources get docks, also provides trade
-            if (worldMap.TerrainData.Coasts[newSeed.Node.x, newSeed.Node.y] || newSeed.Node.Rivers.Count > 0)
+            if (Features.TerrainData.Coasts[newSeed.Node.x, newSeed.Node.y] || newSeed.Node.Rivers.Count > 0)
                 newSeed.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", newSeed.Node.x, newSeed.Node.y));
 
             //Settlements adjacent to forests get Hunting Lodges
@@ -287,7 +286,7 @@ namespace JS.World.Map.Generation
             seed.FoodProduction = 0;
             foreach (var facility in seed.Facilities)
             {
-                var node = worldMap.GetNode(facility.X, facility.Y);
+                var node = WorldMap.GetNode(facility.X, facility.Y);
                 float manning = (float)facility.AssignedWorkers / facility.RequiredWorkers;
 
                 if (facility.Name.Equals("Crop Farm"))
@@ -412,7 +411,7 @@ namespace JS.World.Map.Generation
             //GetTerritoryReport();
             ReportWriter.FileReport("Settlement History", historyReport);
 
-            worldMap.SettlementData.PlaceSettlements(settlements.ToArray());
+            SettlementData.PlaceSettlements(settlements.ToArray());
         }
 
         private void ConvertSeedsToSettlements()
@@ -458,9 +457,9 @@ namespace JS.World.Map.Generation
         {
             foreach (Settlement settlement in settlements)
             {
-                var node = worldMap.GetNode(settlement.x, settlement.y);
+                var node = WorldMap.GetNode(settlement.x, settlement.y);
                 int range = (settlement.TypeID + 1) * 2;
-                var area = worldMap.GetNodesInRange_Circle(node, range);
+                var area = WorldMap.GetNodesInRange_Circle(node, range);
                 foreach(var areaNode in area)
                 {
                     var newSettlement = FindSettlement(areaNode.x, areaNode.y);
@@ -495,9 +494,9 @@ namespace JS.World.Map.Generation
         {
             //clamp max size based on settlement size
 
-            int[,] mapFlags = new int[worldMap.Width, worldMap.Height];
+            int[,] mapFlags = new int[WorldMap.Width, WorldMap.Height];
             Queue<WorldTile> queue = new Queue<WorldTile>();
-            queue.Enqueue(worldMap.GetNode(settlement.x, settlement.y));
+            queue.Enqueue(WorldMap.GetNode(settlement.x, settlement.y));
 
             //So this is going to repeat the same territory every single time, which seems a waste
             while (queue.Count > 0)// && territoryToAdd > 0)
@@ -549,48 +548,48 @@ namespace JS.World.Map.Generation
         {
             foreach (var settlement in settlements)
             {
-                var node = worldMap.GetNode(settlement.x, settlement.y);
+                var node = WorldMap.GetNode(settlement.x, settlement.y);
                 settlement.Facilities.Add(new Facility("Crop Farm", 5, string.Empty, "Food", node.x, node.y));
 
                 //Settlements adjacent to water sources get docks, also provides trade
-                if (worldMap.TerrainData.Coasts[node.x, node.y] || node.Rivers.Count > 0)
+                if (Features.TerrainData.Coasts[node.x, node.y] || node.Rivers.Count > 0)
                     settlement.Facilities.Add(new Facility("Docks", 5, string.Empty, "Food", node.x, node.y));
 
 
-                if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0)
+                if (Features.TerrainData.CoalMap[node.x, node.y] > 0)
                     settlement.Facilities.Add(new Facility("Coal Mine", 5, string.Empty, "Coal", node.x, node.y));
 
-                if (worldMap.TerrainData.CopperMap[node.x, node.y] > 0)
+                if (Features.TerrainData.CopperMap[node.x, node.y] > 0)
                     settlement.Facilities.Add(new Facility("Copper Mine", 5, string.Empty, "Copper Ore", node.x, node.y));
 
-                if (worldMap.TerrainData.IronMap[node.x, node.y] > 0)
+                if (Features.TerrainData.IronMap[node.x, node.y] > 0)
                 {
                     settlement.Defensibility++; //Iron weapons
-                    if (worldMap.TerrainData.CoalMap[node.x, node.y] > 0) settlement.Defensibility++; //Steel weapons
+                    if (Features.TerrainData.CoalMap[node.x, node.y] > 0) settlement.Defensibility++; //Steel weapons
 
                     settlement.Facilities.Add(new Facility("Iron Mine", 5, string.Empty, "Iron Ore", node.x, node.y));
                 }
 
-                if (worldMap.TerrainData.MithrilMap[node.x, node.y] > 0)
+                if (Features.TerrainData.MithrilMap[node.x, node.y] > 0)
                 {
                     settlement.Defensibility += 4; //Mithril weapons
                     settlement.Facilities.Add(new Facility("Mithril Mine", 5, string.Empty, "Mithril Ore", node.x, node.y));
                 }
 
-                if (worldMap.TerrainData.AdmanatineMap[node.x, node.y] > 0)
+                if (Features.TerrainData.AdmanatineMap[node.x, node.y] > 0)
                 {
                     settlement.Defensibility += 5; //Adamantine weapons
                     settlement.Facilities.Add(new Facility("Adamantine Mine", 5, string.Empty, "Adamantine Ore", node.x, node.y));
                 }
 
 
-                if (worldMap.TerrainData.SilverMap[node.x, node.y] > 0)
+                if (Features.TerrainData.SilverMap[node.x, node.y] > 0)
                     settlement.Facilities.Add(new Facility("Silver Mine", 5, string.Empty, "Silver Ore", node.x, node.y));
 
-                if (worldMap.TerrainData.GoldMap[node.x, node.y] > 0)
+                if (Features.TerrainData.GoldMap[node.x, node.y] > 0)
                     settlement.Facilities.Add(new Facility("Gold Mine", 5, string.Empty, "Gold Ore", node.x, node.y));
 
-                if (worldMap.TerrainData.GemstoneMap[node.x, node.y] > 0)
+                if (Features.TerrainData.GemstoneMap[node.x, node.y] > 0)
                     settlement.Facilities.Add(new Facility("Gem Mine", 5, string.Empty, "Gemstones", node.x, node.y));
 
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Goblins
   m_EditorClassIdentifier: 
   <ID>k__BackingField: 2
+  <Name>k__BackingField: Goblins
   <preferredBiomes>k__BackingField:
   - {fileID: 11400000, guid: 38d4361dc1cae45418bb7204ff5be578, type: 2}
   - {fileID: 11400000, guid: 0d0f9d0a3af71264fa031f573fe3ab29, type: 2}

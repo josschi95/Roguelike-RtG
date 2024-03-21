@@ -14,8 +14,6 @@ namespace JS.World.Map.Generation
             public float gradientY;
         }
 
-        [SerializeField] private WorldData worldMap;
-
         [Range(2, 8)]
         [SerializeField] private int erosionRadius = 3;
         [Range(0, 1)]
@@ -434,7 +432,7 @@ namespace JS.World.Map.Generation
                     if (posX < 0 || posX >= heightMap.GetLength(0) - 1 || posY < 0 || posY >= heightMap.GetLength(1) - 1) break;
 
                     // Stop simulating droplet if it has reach a body of water
-                    if (!worldMap.GetNode(nodeX, nodeY).IsLand) break;
+                    if (!WorldMap.GetNode(nodeX, nodeY).IsLand) break;
 
                     // Find the droplet's new height and calculate the deltaHeight
                     float newHeight = CalculateHeightAndGradient(heightMap, posX, posY).height;

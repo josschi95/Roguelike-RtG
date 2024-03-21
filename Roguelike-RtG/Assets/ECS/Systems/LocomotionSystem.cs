@@ -10,8 +10,6 @@ namespace JS.ECS
 
         public const float movementDividend = 100000;
 
-        [SerializeField] private WorldData worldMap;
-
         private Vector3Int worldTracer = Vector3Int.zero;
         private Vector2Int regionTracer = Vector2Int.zero;
         private Vector2Int localTracer = Vector2Int.zero;
@@ -151,8 +149,8 @@ namespace JS.ECS
         {
             if (worldTracer.x < 0) return false;
             if (worldTracer.y < 0) return false;
-            if (worldTracer.x > worldMap.Width - 1) return false;
-            if (worldTracer.y > worldMap.Height - 1) return false;
+            if (worldTracer.x > WorldMap.Width - 1) return false;
+            if (worldTracer.y > WorldMap.Height - 1) return false;
             return true;
         }
     }

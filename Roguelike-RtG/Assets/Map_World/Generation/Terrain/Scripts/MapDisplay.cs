@@ -7,7 +7,6 @@ namespace JS.World.Map
 {
     public class MapDisplay : MonoBehaviour
     {
-        [SerializeField] private WorldData worldMap;
         [SerializeField] private PathTileHelper riverTiles;
         [SerializeField] private PathTileHelper roadTiles;
         public BiomeHelper biomeHelper;
@@ -29,6 +28,8 @@ namespace JS.World.Map
         [SerializeField] private TileBase coastalWaterTile;
         [SerializeField] private RuleTile bridgeVertical, bridgeHorizontal;
         [SerializeField] private Color[] dangerColors;
+
+        [SerializeField] private RuleTile[] settlementTiles;
 
         public Biome biomeToHighlight { get; set; }
         public Ores resourceToHighlight { get; set; }
@@ -71,12 +72,12 @@ namespace JS.World.Map
 
         private void DisplayBiomes()
         {
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos =new Vector3Int(x, y);
-                    var biome = biomeHelper.GetBiome(worldMap.TerrainData.BiomeMap[x,y]);
+                    var biome = biomeHelper.GetBiome(Features.TerrainData.BiomeMap[x,y]);
 
                     if (biome.isLand)
                     {
@@ -86,7 +87,7 @@ namespace JS.World.Map
                     }
                     else oceanMap.SetTile(tilePos, biome.WorldBase);
 
-                    if (worldMap.TerrainData.Coasts[x, y])
+                    if (Features.TerrainData.Coasts[x, y])
                     {
                         oceanMap.SetTile(tilePos, coastalWaterTile);
                         terrainFeatureMap.SetTile(tilePos, null);
@@ -99,7 +100,7 @@ namespace JS.World.Map
         {
             riverMap.ClearAllTiles();
 
-            foreach (var river in worldMap.TerrainData.Rivers)
+            foreach (var river in Features.TerrainData.Rivers)
             {
                 for (int i = 0; i < river.Nodes.Length; i++)
                 {
@@ -123,7 +124,7 @@ namespace JS.World.Map
         {
             roadMap.ClearAllTiles();
 
-            foreach (var road in worldMap.TerrainData.Roads)
+            foreach (var road in Features.TerrainData.Roads)
             {
                 for (int i = 0; i < road.Nodes.Length; i++)
                 {
@@ -142,7 +143,7 @@ namespace JS.World.Map
                 }
             }
 
-            foreach(var bridge in worldMap.TerrainData.Bridges)
+            foreach(var bridge in Features.TerrainData.Bridges)
             {
                 var tilePos = new Vector3Int(bridge.x, bridge.y);
                 if (bridge.isVertical) roadMap.SetTile(tilePos, bridgeVertical);
@@ -154,18 +155,18 @@ namespace JS.World.Map
         {
             settlementMap.ClearAllTiles();
 
-            foreach (var settlement in worldMap.SettlementData.Settlements)
+            foreach (var settlement in SettlementData.Settlements)
             {
                 var tilePos = new Vector3Int(settlement.x, settlement.y);
-                settlementMap.SetTile(tilePos, worldMap.SettlementData.Types[settlement.TypeID].settlementTile);
+                settlementMap.SetTile(tilePos, settlementTiles[(int)settlement.Category]);
             }
         }
 
         public void ResetInfoMap()
         {
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
                     infoMap.SetTile(tilePos, highlightTile);
@@ -179,12 +180,12 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     infoMap.SetColor(tilePos, _heatColors[node.TemperatureIndex]);
 
                 }
@@ -195,12 +196,12 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     infoMap.SetColor(tilePos, _wetColors[node.PrecipitationZoneID]);
                 }
             }
@@ -210,12 +211,12 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     infoMap.SetTile(tilePos, directionTiles.GetTile(node.windDirection));
                 }
             }
@@ -226,12 +227,12 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     infoMap.SetColor(tilePos, dangerColors[node.DangerTier]);
                 }
             }
@@ -242,11 +243,11 @@ namespace JS.World.Map
         {
             var list = new List<WorldTile>();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
-                    var node = worldMap.GetNode(x, y);
+                    var node = WorldMap.GetNode(x, y);
                     if (node.isTectonicPoint) list.Add(node);
                 }
             }
@@ -259,7 +260,7 @@ namespace JS.World.Map
                 }
             }
 
-            foreach(var point in worldMap.TerrainData.PlateBorders)
+            foreach(var point in Features.TerrainData.PlateBorders)
             {
                 var tilePos = new Vector3Int(point.x, point.y);
                 infoMap.SetColor(tilePos, Color.red);
@@ -270,7 +271,7 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            foreach (var biome in worldMap.TerrainData.BiomeGroups)
+            foreach (var biome in Features.TerrainData.BiomeGroups)
             {
                 if (biome.BiomeID != biomeToHighlight.ID) continue;
                 for (int i = 0; i < biome.Nodes.Count; i++)
@@ -285,7 +286,7 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            foreach (var mountain in worldMap.TerrainData.Mountains)
+            foreach (var mountain in Features.TerrainData.Mountains)
             {
                 for (int i = 0; i < mountain.Nodes.Count; i++)
                 {
@@ -299,7 +300,7 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            foreach (var landMass in worldMap.TerrainData.LandMasses)
+            foreach (var landMass in Features.TerrainData.LandMasses)
             {
                 if (landMass.Size == LandSize.Continent) continue;
 
@@ -315,7 +316,7 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            foreach (var lake in worldMap.TerrainData.Lakes)
+            foreach (var lake in Features.TerrainData.Lakes)
             {
                 for (int i = 0; i < lake.GridNodes.Length; i++)
                 {
@@ -329,7 +330,7 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            foreach (var settlement in worldMap.SettlementData.Settlements)
+            foreach (var settlement in SettlementData.Settlements)
             {
                 for (int i = 0; i < settlement.Territory.Count; i++)
                 {
@@ -343,12 +344,12 @@ namespace JS.World.Map
         {
             ResetInfoMap();
 
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
-                    if (worldMap.TerrainData.Coasts[x, y])
+                    if (Features.TerrainData.Coasts[x, y])
                     {
                         infoMap.SetColor(tilePos, Color.red);
                     }
@@ -360,65 +361,65 @@ namespace JS.World.Map
         {
             ResetInfoMap();
             int totalCount = 0;
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var tilePos = new Vector3Int(x, y);
 
                     switch (resourceToHighlight)
                     {
                         case Ores.Coal:
-                            if (worldMap.TerrainData.CoalMap[x,y] > 0)
+                            if (Features.TerrainData.CoalMap[x,y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Copper:
-                            if (worldMap.TerrainData.CopperMap[x, y] > 0)
+                            if (Features.TerrainData.CopperMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Iron:
-                            if (worldMap.TerrainData.IronMap[x, y] > 0)
+                            if (Features.TerrainData.IronMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Silver:
-                            if (worldMap.TerrainData.SilverMap[x, y] > 0)
+                            if (Features.TerrainData.SilverMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Gold:
-                            if (worldMap.TerrainData.GoldMap[x, y] > 0)
+                            if (Features.TerrainData.GoldMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Gemstones:
-                            if (worldMap.TerrainData.GemstoneMap[x, y] > 0)
+                            if (Features.TerrainData.GemstoneMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Mithril:
-                            if (worldMap.TerrainData.MithrilMap[x, y] > 0)
+                            if (Features.TerrainData.MithrilMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
                             }
                             break;
                         case Ores.Adamantine:
-                            if (worldMap.TerrainData.AdmanatineMap[x, y] > 0)
+                            if (Features.TerrainData.AdmanatineMap[x, y] > 0)
                             {
                                 infoMap.SetColor(tilePos, Color.red);
                                 totalCount++;
@@ -437,14 +438,14 @@ namespace JS.World.Map
             ResetInfoMap();
             //var worldMap = WorldMap.instance;
 
-            var settlement = worldMap.SettlementData.FindSettlement(node.x, node.y);
+            var settlement = SettlementData.FindSettlement(node.x, node.y);
             if (settlement != null)
             {
                 HighlightSettlement(settlement);
                 return;
             }
 
-            var pos = worldMap.GetWorldPosition(node.x, node.y);
+            var pos = WorldMap.GetWorldPosition(node.x, node.y);
             Vector3Int tilePos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
             infoMap.SetColor(tilePos, Color.red);
         }
@@ -455,7 +456,7 @@ namespace JS.World.Map
 
             for (int i = 0; i < settlement.Territory.Count; i++)
             {
-                var pos = worldMap.GetWorldPosition(settlement.Territory[i].x, settlement.Territory[i].y);
+                var pos = WorldMap.GetWorldPosition(settlement.Territory[i].x, settlement.Territory[i].y);
                 Vector3Int tilePos = new Vector3Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
                 infoMap.SetColor(tilePos, Color.red);
             }

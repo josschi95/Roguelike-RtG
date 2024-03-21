@@ -14,7 +14,6 @@ namespace JS.Architecture.CommandSystem
         [Space]
         [Space]
 
-        [SerializeField] private WorldData worldData;
         [SerializeField] private TimeKeeper timeData;
 
         protected override bool ExecuteCommand()
@@ -26,7 +25,7 @@ namespace JS.Architecture.CommandSystem
         private void SaveWorldData()
         {
             var data = new WorldSaveData();
-            data.seed = worldData.Seed;
+            data.seed = WorldMap.Seed;
             //data.seedMap = ArrayHelper.Convert2DIntArrayTo1D(worldData.TerrainData.SeedMap);
 
             //Time
@@ -38,41 +37,21 @@ namespace JS.Architecture.CommandSystem
             data.years = timeData.Year;
 
             //Terrain
-            var terrain = worldData.TerrainData;
-            data.mapWidth = terrain.MapSize;
-            data.mapHeight = terrain.MapSize;
-            /*
-            data.heightMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeightMap);
-            data.heatMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.HeatMap);
-            data.moistureMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.MoistureMap);
-            data.biomeMap = ArrayHelper.Convert2DIntArrayTo1D(terrain.BiomeMap);
-            data.coasts = ArrayHelper.Convert2DBoolArrayTo1D(terrain.Coasts);
-            data.CoalMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.CoalMap);
-            data.CopperMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.CopperMap);
-            data.IronMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.IronMap);
-            data.SilverMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.SilverMap);
-            data.GoldMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.GoldMap);
-            data.MithrilMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.MithrilMap);
-            data.AdmanatineMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.AdmanatineMap);
-            data.GemstoneMap = ArrayHelper.Convert2DFloatArrayTo1D(terrain.GemstoneMap);
+            data.mapWidth = World.Map.Features.TerrainData.MapSize;
+            data.mapHeight = World.Map.Features.TerrainData.MapSize;
 
-            data.BiomeGroups = terrain.BiomeGroups;
-            data.Mountains = terrain.Mountains;
-            data.Rivers = terrain.Rivers;
-            */
-            data.Lakes = terrain.Lakes;
-            data.Land = terrain.LandMasses;
+            data.Lakes = World.Map.Features.TerrainData.Lakes;
+            data.Land = World.Map.Features.TerrainData.LandMasses;
 
             //Settlements
-            var settlements = worldData.SettlementData;
-            data.Settlements = settlements.Settlements;
-            data.Roads = terrain.Roads;
-            data.Bridges = terrain.Bridges;
+            data.Settlements = SettlementData.Settlements;
+            data.Roads = World.Map.Features.TerrainData.Roads;
+            data.Bridges = World.Map.Features.TerrainData.Bridges;
 
 
             SaveToJSON(data);
-            worldData.SaveExists = true;
-            worldData.IsLoaded = true;
+            WorldMap.SaveExists = true;
+            WorldMap.IsLoaded = true;
         }
 
         private void SaveToJSON(WorldSaveData data)

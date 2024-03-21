@@ -6,9 +6,7 @@ namespace JS.World.Map.Generation
 {
     public class RiverGenerator : MonoBehaviour
     {
-        [SerializeField] private WorldData worldMap;
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private Features.TerrainData terrainData;
         [SerializeField] private BiomeHelper biomeHelper;
 
         [SerializeField] private float MinRiverHeight = 0.6f;
@@ -43,7 +41,7 @@ namespace JS.World.Map.Generation
             DigRiverGroups();
             DigRemainingRivers();
 
-            terrainData.Rivers = rivers.ToArray();
+            Features.TerrainData.Rivers = rivers.ToArray();
         }
 
         private bool TryGenerateRiver(bool findEmptyMountain, out River river, out List<WorldTile> tiles)
@@ -54,9 +52,9 @@ namespace JS.World.Map.Generation
             WorldTile node;
 
             if (mountain != null) node = mountain.Nodes[worldGenerator.PRNG.Next(0, mountain.Nodes.Count)];
-            else node = worldMap.GetNode(worldGenerator.PRNG.Next(0, worldMap.Width - 1), worldGenerator.PRNG.Next(0, worldMap.Height - 1));
+            else node = WorldMap.GetNode(worldGenerator.PRNG.Next(0, WorldMap.Width - 1), worldGenerator.PRNG.Next(0, WorldMap.Height - 1));
 
-            if (terrainData.HeightMap[node.x, node.y] < MinRiverHeight) return false;
+            if (Features.TerrainData.HeightMap[node.x, node.y] < MinRiverHeight) return false;
 
             //Find river initial direction
             river.CurrentDirection = node.NeighborDirection_Adjacent(FindLowestNeighborNode(node));
@@ -81,9 +79,9 @@ namespace JS.World.Map.Generation
 
         private MountainRange FindRiverSource(bool riverLessMountain)
         {
-            var mountains = worldMap.TerrainData.Mountains;
+            var mountains = Features.TerrainData.Mountains;
             if (mountains.Length == 0) return null;
-            if (!riverLessMountain) return worldMap.TerrainData.Mountains[worldGenerator.PRNG.Next(0, mountains.Length)];
+            if (!riverLessMountain) return Features.TerrainData.Mountains[worldGenerator.PRNG.Next(0, mountains.Length)];
 
             var shuffledList = new List<MountainRange>(mountains);
             MathsUtil.ShuffleList(shuffledList, worldGenerator.PRNG);
@@ -101,7 +99,7 @@ namespace JS.World.Map.Generation
             var lowestNeighbor = node.neighbors_adj[0];
             for (int i = 0; i < node.neighbors_adj.Count; i++)
             {
-                if (terrainData.HeightMap[node.neighbors_adj[i].x, node.neighbors_adj[i].y] < terrainData.HeightMap[lowestNeighbor.x, lowestNeighbor.y])
+                if (Features.TerrainData.HeightMap[node.neighbors_adj[i].x, node.neighbors_adj[i].y] < Features.TerrainData.HeightMap[lowestNeighbor.x, lowestNeighbor.y])
                 {
                     lowestNeighbor = node.neighbors_adj[i];
                 }
@@ -144,13 +142,13 @@ namespace JS.World.Map.Generation
 
             if (node.Rivers.Count > 0) return;
 
-            if (node.x == 0 || node.y == 0 || node.x == worldMap.Width - 1 || node.y == worldMap.Height - 1) return;
+            if (node.x == 0 || node.y == 0 || node.x == WorldMap.Width - 1 || node.y == WorldMap.Height - 1) return;
 
             // get neighbors
-            WorldTile north = worldMap.GetNode(node.x, node.y + 1);
-            WorldTile south = worldMap.GetNode(node.x, node.y - 1);
-            WorldTile east = worldMap.GetNode(node.x + 1, node.y);
-            WorldTile west = worldMap.GetNode(node.x - 1, node.y);
+            WorldTile north = WorldMap.GetNode(node.x, node.y + 1);
+            WorldTile south = WorldMap.GetNode(node.x, node.y - 1);
+            WorldTile east = WorldMap.GetNode(node.x + 1, node.y);
+            WorldTile west = WorldMap.GetNode(node.x - 1, node.y);
 
             float northValue = GetNodeValue(north, river, tiles);
             float southValue = GetNodeValue(south, river, tiles);
@@ -239,7 +237,7 @@ namespace JS.World.Map.Generation
             // query height values of neighbor
             if (GetNeighborRiverCount(node, river) < 2 && !tiles.Contains(node))
             {
-                value = terrainData.HeightMap[node.x, node.y];
+                value = Features.TerrainData.HeightMap[node.x, node.y];
             }
 
             // if neighbor is existing river that is not this one, flow into it
@@ -266,11 +264,11 @@ namespace JS.World.Map.Generation
             riverGroups = new List<RiverGroup>();
 
             //loop each tile, checking if it belongs to multiple rivers
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
-                    WorldTile node = worldMap.GetNode(x, y);
+                    WorldTile node = WorldMap.GetNode(x, y);
 
                     //node only has one or no river(s) running through it
                     if (node.Rivers.Count <= 1) continue;
@@ -440,7 +438,7 @@ namespace JS.World.Map.Generation
             river.Length = river.Nodes.Length;
             for (int i = river.Nodes.Length - 1; i >= 0; i--)
             {
-                WorldTile node = worldMap.GetNode(river.Nodes[i].x, river.Nodes[i].y);
+                WorldTile node = WorldMap.GetNode(river.Nodes[i].x, river.Nodes[i].y);
                 node.AddRiver(river);
             }
             river.hasBeenDug = true;

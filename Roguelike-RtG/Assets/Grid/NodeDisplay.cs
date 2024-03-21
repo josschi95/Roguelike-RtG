@@ -6,7 +6,6 @@ namespace JS.World.Map
 {
     public class NodeDisplay : MonoBehaviour
     {
-        [SerializeField] private WorldData worldData;
         [SerializeField] private BiomeHelper biomeHelper;
 
         [Space]
@@ -24,14 +23,14 @@ namespace JS.World.Map
             if (node == null) return;           
 
             displayText.text = "[X,Y] = " + node.x + "," + node.y;
-            displayText.text += "\nElevation = " + worldData.TerrainData.HeightMap[node.x, node.y];
+            displayText.text += "\nElevation = " + Features.TerrainData.HeightMap[node.x, node.y];
 
             displayText.text += "\nBiome: " + biomeHelper.GetBiome(node.BiomeID).BiomeName;
 
-            displayText.text += "\nAvg. Temperature: " + (Temperature.FloatToCelsius(worldData.TerrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
-            displayText.text += "\nAnnual Rainfall: " + (worldData.TerrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
+            displayText.text += "\nAvg. Temperature: " + (Temperature.FloatToCelsius(Features.TerrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
+            displayText.text += "\nAnnual Rainfall: " + (Features.TerrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
 
-            var river = worldData.TerrainData.FindRiverAt(node.x, node.y, out var index);
+            var river = Features.TerrainData.FindRiverAt(node.x, node.y, out var index);
             if (river != null)
             {
                 displayText.text += "\nRiver: " + river.ID;
@@ -51,13 +50,13 @@ namespace JS.World.Map
 
         private void DisplaySettlementInfo(WorldTile node)
         {
-            var settlement = worldData.SettlementData.FindSettlement(node.x, node.y);
+            var settlement = SettlementData.FindSettlement(node.x, node.y);
             if (settlement == null) return;
             displayText.text += "\n \n";
 
             displayText.text += $"{settlement.Name} {settlement.Coordinates}\n";
-            displayText.text += "\nTribe: " + worldData.SettlementData.Tribes[settlement.TribeID].name + "\n";
-            displayText.text += worldData.SettlementData.Types[settlement.TypeID].TypeName;
+            displayText.text += $"\nTribe: {settlement.Race}\n";
+            displayText.text += $"{settlement.Category}";
 
             displayText.text += "\nPopulation: " + settlement.Population.ToString();
             displayText.text += "\nTerritory Size: " + settlement.Territory.Count;

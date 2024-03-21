@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   displayText: {fileID: 526793102}
 --- !u!222 &44221398
@@ -633,8 +632,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 460, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &526793102
 MonoBehaviour:
@@ -1140,7 +1139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
-  worldGenParams: {fileID: 11400000, guid: 29cf75fbfc32e4f428ea8acc4ca7698f, type: 2}
   riverTiles: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
   roadTiles: {fileID: 11400000, guid: 4d51d9e667f1f064d9e0d8e1d21aa139, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
@@ -1167,6 +1165,11 @@ MonoBehaviour:
   - {r: 1, g: 0.454902, b: 0.14509805, a: 1}
   - {r: 0.8980393, g: 0.16078432, b: 0.21568629, a: 1}
   - {r: 0.6698113, g: 0.0473923, b: 0.13799772, a: 1}
+  settlementTiles:
+  - {fileID: 11400000, guid: d39adf422c25e074cb9af183508b5d71, type: 2}
+  - {fileID: 11400000, guid: 1ba1ff15983f3a14bbcec5d0e085c636, type: 2}
+  - {fileID: 11400000, guid: 26a3821890128aa41be2619088720276, type: 2}
+  - {fileID: 11400000, guid: 5ad9173f4b2cc2a408000972614434d1, type: 2}
 --- !u!156049354 &713516212
 Grid:
   m_ObjectHideFlags: 0

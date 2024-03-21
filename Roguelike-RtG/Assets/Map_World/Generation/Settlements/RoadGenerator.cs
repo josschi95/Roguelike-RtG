@@ -8,7 +8,6 @@ namespace JS.World.Map.Generation
     public class RoadGenerator : MonoBehaviour
     {
         [SerializeField] private WorldGenerator worldGenerator;
-        [SerializeField] private WorldData worldMap;
         [SerializeField] private BiomeHelper biomeHelper;
         private List<Bridge> bridges;
         private List<Road> roads;
@@ -25,18 +24,18 @@ namespace JS.World.Map.Generation
         /// </summary>
         private void SetMovementPenalties()
         {
-            for (int x = 0; x < worldMap.Width; x++)
+            for (int x = 0; x < WorldMap.Width; x++)
             {
-                for (int y = 0; y < worldMap.Height; y++)
+                for (int y = 0; y < WorldMap.Height; y++)
                 {
                     var cost = 3;
-                    var node = worldMap.GetNode(x, y);
-                    if (worldMap.TerrainData.Coasts[x, y]) cost = 5;
+                    var node = WorldMap.GetNode(x, y);
+                    if (Features.TerrainData.Coasts[x, y]) cost = 5;
 
                     var biome = biomeHelper.GetBiome(node.BiomeID);
                     if (biome.isDifficultTerrain) cost = 7;
 
-                    var river = worldMap.TerrainData.FindRiverAt(x, y, out var index);
+                    var river = Features.TerrainData.FindRiverAt(x, y, out var index);
                     if (river != null)
                     {
                         cost = 15;
@@ -62,7 +61,7 @@ namespace JS.World.Map.Generation
             bridges = new List<Bridge>();
             var points = new List<Point>();
 
-            foreach(var settlement in worldMap.SettlementData.Settlements)
+            foreach(var settlement in SettlementData.Settlements)
             {
                 points.Add(new Point(settlement.Coordinates));
             }
@@ -77,14 +76,14 @@ namespace JS.World.Map.Generation
 
             foreach(var edge in tree)
             {
-                var a = worldMap.GetNode((int)edge.Point1.X, (int)edge.Point1.Y);
-                var b = worldMap.GetNode((int)edge.Point2.X, (int)edge.Point2.Y);
+                var a = WorldMap.GetNode((int)edge.Point1.X, (int)edge.Point1.Y);
+                var b = WorldMap.GetNode((int)edge.Point2.X, (int)edge.Point2.Y);
 
                 if (TryGetSettlementId(a, out int pointA) == false) continue;
                 if (TryGetSettlementId(b, out int pointB) == false) continue;
                 var newRoad = new Road(pointA, pointB);
 
-                var path = worldMap.FindNodePath(a.x, a.y, b.x, b.y);
+                var path = WorldMap.FindNodePath(a.x, a.y, b.x, b.y);
                 if (path == null)
                 {
                     Debug.LogWarning($"Cannot find path from {a.x},{a.y} to {b.x},{b.y}.");
@@ -94,8 +93,8 @@ namespace JS.World.Map.Generation
                 BuildRoad(newRoad, path);
                 roads.Add(newRoad);
             }
-            worldMap.TerrainData.Roads = roads.ToArray();
-            worldMap.TerrainData.Bridges = bridges.ToArray();
+            Features.TerrainData.Roads = roads.ToArray();
+            Features.TerrainData.Bridges = bridges.ToArray();
         }
 
         private bool TryGetSettlementId(WorldTile tile, out int id)
@@ -106,7 +105,7 @@ namespace JS.World.Map.Generation
                 Debug.LogWarning("Tile is null.");
                 return false;
             }
-            foreach (var settlement in worldMap.SettlementData.Settlements)
+            foreach (var settlement in SettlementData.Settlements)
             {
                 if (tile.x == settlement.Coordinates.x && tile.y == settlement.Coordinates.y)
                 {

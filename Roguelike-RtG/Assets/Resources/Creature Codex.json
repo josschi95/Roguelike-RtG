@@ -1,0 +1,469 @@
+{
+    "CREATURE_SIZES":{
+        "TINY":{
+            "Hit Die": 4,
+            "Size Modifier": -4
+        },
+        "SMALL":{
+            "Hit Die": 6,
+            "Size Modifier": -2
+        },
+        "MEDIUM":{
+            "Hit Die": 8,
+            "Size Modifier": 0
+        },
+        "LARGE":{
+            "Hit Die": 10,
+            "Size Modifier": 2
+        },
+        "HUGE":{
+            "Hit Die": 12,
+            "Size Modifier": 4
+        },
+        "GARGANTUAN":{
+            "Hit Die": 20,
+            "Size Modifier": 6
+        }
+    },
+
+    "LIFE_EXPECTANCIES":{
+        "AGELESS":{
+            "Ages": false,
+            "Lifespan": "-1"
+        },
+        "EXTREMELY_SHORT_LIVED":{
+            "Ages": true,
+            "Lifespan": "4d6+10"
+        },
+        "VERY_SHORT_LIVED":{
+            "Ages": true,
+            "Lifespan": "6d6+20"
+        },
+        "SHORT_LIVED":{
+            "Ages": true,
+            "Lifespan": "8d6+30"
+        },
+        "AVERAGE_LIVED":{
+            "Ages": true,
+            "Lifespan": "10d8+40"
+        },
+        "LONG_LIVED":{
+            "Ages": true,
+            "Lifespan": "10d10+60"
+        },
+        "VERY_LONG_LIVED":{
+            "Ages": true,
+            "Lifespan": "12d10+70"
+        },
+        "EXTREMELY_LONG_LIVED":{
+            "Ages": true,
+            "Lifespan": "14d12+80"
+        }
+    },
+
+    "AGE_GROUPS":{
+        "Child":{
+            "Description": "1/2 Young Adult",
+            "Stat Modifiers":{
+                "Strength": 0,
+                "Agility": 0,
+                "Vitality": 0,
+                "Knowledge": 0,
+                "Willpower": 0,
+                "Charisma": 0
+            }
+        },
+        "Adolescent":{
+            "Description": "3/4 Young Adult",
+            "Stat Modifiers":{
+                "Strength": 0,
+                "Agility": 0,
+                "Vitality": 0,
+                "Knowledge": 0,
+                "Willpower": 0,
+                "Charisma": 0
+            }
+        },
+        "Young Adult":{
+            "Description": "1/2 Middle Age",
+            "Stat Modifiers":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": -5,
+                "Willpower": -5,
+                "Charisma": -5
+            }
+        },
+        "Middle Age":{
+            "Description": "1/2 Venerable Age",
+            "Stat Modifiers":{
+                "Strength": -5,
+                "Agility": -5,
+                "Vitality": -5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            }
+        },
+        "Elder":{
+            "Description": "3/4 Venerable",
+            "Stat Modifiers":{
+                "Strength": -10,
+                "Agility": -10,
+                "Vitality": -10,
+                "Knowledge": 10,
+                "Willpower": 10,
+                "Charisma": 10
+            }
+        },
+        "Venerable":{
+            "Description": "3/4 Max Lifespan",
+            "Stat Modifiers":{
+                "Strength": -15,
+                "Agility": -15,
+                "Vitality": -15,
+                "Knowledge": 15,
+                "Willpower": 15,
+                "Charisma": 15
+            }
+        }
+    },
+
+    "Birthday Messages":{
+        "Child": ["Dear little one, you're like a sprouting seed, filled with boundless energy and ",
+        "curiosity. Each day brings new wonders to explore and lessons to learn. Embrace this time of ",
+        "innocence and joy, for it lays the foundation for the adventures yet to come."],
+        
+        "Adolescent": ["Ah, young adventurer, you stand at the threshold of discovery, caught between ",
+        "the worlds of childhood and adulthood. Your body surges with vitality, your mind thirsts for ",
+        "knowledge, and your heart yearns for freedom. Embrace the challenges ahead, for they shall ",
+        "forge you into the hero you're destined to become."],
+        
+        "Young Adult": ["Brave soul, you tread the path of independence and ambition, your spirit ",
+        "ablaze with passion and purpose. Every decision you make shapes your destiny, every experience ",
+        "molds your character. Embrace the journey, for it is yours to shape and conquer."],
+        
+        "Middle Age": ["Wise traveler, you've journeyed through the peaks and valleys of life, ",
+        "weathering storms and basking in moments of calm. Your strength lies not only in your physical ",
+        "prowess but also in the depth of your wisdom. Embrace the balance between duty and desire, for ",
+        "it is the hallmark of a seasoned adventurer."],
+        
+        "Elder": ["Seasoned sage, you've witnessed the passing of seasons and the turning of tides, ", 
+        "your spirit tempered by the trials of time. Your legacy echoes in the hearts of those you've ",
+        "touched, your counsel sought by the young and old alike. Embrace the tranquility of reflection, ",
+        "for it unveils the true richness of your journey."],
+        
+        "Venerable": ["Ancient one, you stand as a beacon of wisdom and resilience, your spirit endures ", 
+        "like the roots of an ancient tree. While your body is not as spry as it once was, each of your ",
+        "wrinkles tells a story, and each scar a testament to your indomitable spirit. Embrace the ", 
+        "tranquility of the twilight years, for it is a time of profound introspection and the sharing ",
+        "of your timeless wisdom."]
+    },
+
+    "CREATURE_TYPES":{
+        "Aberration":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Beast":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Celestial":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR"]
+        },
+        "Construct":{
+            "CAN_BE_UNDEAD": false,
+            "NEEDS": []
+        },
+        "Demihuman":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Dragon":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Elemental":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR"]
+        },
+        "Fae":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Fiend":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR"]
+        },
+        "Humanoid":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Magical Beast":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Monstrosity":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Ooze":{
+            "CAN_BE_UNDEAD": false,
+            "NEEDS": ["FOOD"]
+        },
+        "Plant":{
+            "CAN_BE_UNDEAD": false,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        },
+        "Undead":{
+            "CAN_BE_UNDEAD": false,
+            "NEEDS": []
+        },
+        "Vermin":{
+            "CAN_BE_UNDEAD": true,
+            "NEEDS": ["AIR", "FOOD", "SLEEP"]
+        }
+    },
+
+    "CREATURE_SUBTYPES":[
+        "Angel",
+        "Aquatic",
+        "Centauroids",
+        "Demon",
+        "Dwarf",
+        "Elf",
+        "Faerie",
+        "Giant",
+        "Gnome",
+        "Goblinoid",
+        "Halfling",
+        "Human",
+        "Orc",
+        "Reptilian",
+        "Shapeshifter"
+    ],
+
+    "Races":{
+        "Mountain Dwarf":{
+            "Type": "Humanoid",
+            "Subtypes": ["Dwarf"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "VERY_LONG_LIVED",
+            "Genders": ["MALE"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Sea Dwarf":{
+            "Type": "Humanoid",
+            "Subtypes": ["Dwarf"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "VERY_LONG_LIVED",
+            "Genders": ["MALE"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Dark Elf":{
+            "Type": "Humanoid",
+            "Subtypes": ["Elf"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "EXTREMELY_LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "High Elf":{
+            "Type": "Humanoid",
+            "Subtypes": ["Elf"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "EXTREMELY_LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Wood Elf":{
+            "Type": "Humanoid",
+            "Subtypes": ["Elf"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "EXTREMELY_LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Gnome":{
+            "Type": "Humanoid",
+            "Subtypes": ["Gnome"],
+            "Size": "SMALL",
+            "Life Expectancy": "VERY_LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Goliath":{
+            "Type": "Humanoid",
+            "Subtypes": ["Giant"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Halfling":{
+            "Type": "Humanoid",
+            "Subtypes": ["Halfling"],
+            "Size": "SMALL",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Human":{
+            "Type": "Humanoid",
+            "Subtypes": ["Human"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        }
+
+
+    }
+}

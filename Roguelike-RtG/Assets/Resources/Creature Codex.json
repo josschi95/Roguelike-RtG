@@ -85,7 +85,7 @@
             }
         },
         "Young Adult":{
-            "Description": "1/2 Middle Age",
+            "Description": "0.1625 / Max, 1/2 Middle Age",
             "Stat Modifiers":{
                 "Strength": 5,
                 "Agility": 5,
@@ -96,7 +96,7 @@
             }
         },
         "Middle Age":{
-            "Description": "1/2 Venerable Age",
+            "Description": "0.325 / Max, 1/2 Venerable Age",
             "Stat Modifiers":{
                 "Strength": -5,
                 "Agility": -5,
@@ -107,7 +107,7 @@
             }
         },
         "Elder":{
-            "Description": "3/4 Venerable",
+            "Description": "1/2 Max Lifespan, 3/4 Venerable Age",
             "Stat Modifiers":{
                 "Strength": -10,
                 "Agility": -10,
@@ -178,7 +178,7 @@
             "CAN_BE_UNDEAD": false,
             "NEEDS": []
         },
-        "Demihuman":{
+        "DemiHUMAN":{
             "CAN_BE_UNDEAD": true,
             "NEEDS": ["AIR", "FOOD", "SLEEP"]
         },
@@ -198,7 +198,7 @@
             "CAN_BE_UNDEAD": true,
             "NEEDS": ["AIR"]
         },
-        "Humanoid":{
+        "HUMANOID":{
             "CAN_BE_UNDEAD": true,
             "NEEDS": ["AIR", "FOOD", "SLEEP"]
         },
@@ -229,27 +229,27 @@
     },
 
     "CREATURE_SUBTYPES":[
-        "Angel",
-        "Aquatic",
-        "Centauroids",
-        "Demon",
-        "Dwarf",
-        "Elf",
-        "Faerie",
-        "Giant",
-        "Gnome",
-        "Goblinoid",
-        "Halfling",
-        "Human",
-        "Orc",
-        "Reptilian",
-        "Shapeshifter"
+        "ANGEL",
+        "AQUATIC",
+        "CENTAUROID",
+        "DEMON",
+        "DWARF",
+        "ELF",
+        "FAERIE",
+        "GIANT",
+        "GNOME",
+        "GOBLINOID",
+        "HALFLING",
+        "HUMAN",
+        "ORC",
+        "REPTILLIAN",
+        "SHAPESHIFTER"
     ],
 
     "Races":{
-        "Mountain Dwarf":{
-            "Type": "Humanoid",
-            "Subtypes": ["Dwarf"],
+        "Mountain DWARF":{
+            "Type": "HUMANOID",
+            "Subtypes": ["DWARF"],
             "Size": "MEDIUM",
             "Life Expectancy": "VERY_LONG_LIVED",
             "Genders": ["MALE"],
@@ -271,9 +271,9 @@
                 "Charisma": 50
             }
         },
-        "Sea Dwarf":{
-            "Type": "Humanoid",
-            "Subtypes": ["Dwarf"],
+        "Sea DWARF":{
+            "Type": "HUMANOID",
+            "Subtypes": ["DWARF"],
             "Size": "MEDIUM",
             "Life Expectancy": "VERY_LONG_LIVED",
             "Genders": ["MALE"],
@@ -295,9 +295,9 @@
                 "Charisma": 50
             }
         },
-        "Dark Elf":{
-            "Type": "Humanoid",
-            "Subtypes": ["Elf"],
+        "Dark ELF":{
+            "Type": "HUMANOID",
+            "Subtypes": ["ELF"],
             "Size": "MEDIUM",
             "Life Expectancy": "EXTREMELY_LONG_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -319,9 +319,9 @@
                 "Charisma": 50
             }
         },
-        "High Elf":{
-            "Type": "Humanoid",
-            "Subtypes": ["Elf"],
+        "High ELF":{
+            "Type": "HUMANOID",
+            "Subtypes": ["ELF"],
             "Size": "MEDIUM",
             "Life Expectancy": "EXTREMELY_LONG_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -343,9 +343,9 @@
                 "Charisma": 50
             }
         },
-        "Wood Elf":{
-            "Type": "Humanoid",
-            "Subtypes": ["Elf"],
+        "Wood ELF":{
+            "Type": "HUMANOID",
+            "Subtypes": ["ELF"],
             "Size": "MEDIUM",
             "Life Expectancy": "EXTREMELY_LONG_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -367,9 +367,9 @@
                 "Charisma": 50
             }
         },
-        "Gnome":{
-            "Type": "Humanoid",
-            "Subtypes": ["Gnome"],
+        "GNOME":{
+            "Type": "HUMANOID",
+            "Subtypes": ["GNOME"],
             "Size": "SMALL",
             "Life Expectancy": "VERY_LONG_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -392,8 +392,8 @@
             }
         },
         "Goliath":{
-            "Type": "Humanoid",
-            "Subtypes": ["Giant"],
+            "Type": "HUMANOID",
+            "Subtypes": ["GIANT"],
             "Size": "MEDIUM",
             "Life Expectancy": "AVERAGE_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -415,9 +415,9 @@
                 "Charisma": 50
             }
         },
-        "Halfling":{
-            "Type": "Humanoid",
-            "Subtypes": ["Halfling"],
+        "HALFLING":{
+            "Type": "HUMANOID",
+            "Subtypes": ["HALFLING"],
             "Size": "SMALL",
             "Life Expectancy": "AVERAGE_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -439,9 +439,9 @@
                 "Charisma": 50
             }
         },
-        "Human":{
-            "Type": "Humanoid",
-            "Subtypes": ["Human"],
+        "HUMAN":{
+            "Type": "HUMANOID",
+            "Subtypes": ["HUMAN"],
             "Size": "MEDIUM",
             "Life Expectancy": "AVERAGE_LIVED",
             "Genders": ["FEMALE", "MALE", "OTHER"],
@@ -462,8 +462,417 @@
                 "Willpower": 50,
                 "Charisma": 50
             }
+        },
+
+        "Boggard":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["AQUATIC"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Cecaelia":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["AQUATIC", "CENTAUROID"],
+            "Size": "LARGE",
+            "Life Expectancy": "VERY_LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Centaur":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["CENTAUROID"],
+            "Size": "LARGE",
+            "Life Expectancy": "LONG_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Draconid":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["REPTILLIAN"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Drider":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["CENTAUROID"],
+            "Size": "LARGE",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Girtablu":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["CENTAUROID"],
+            "Size": "LARGE",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Bugbear":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["GOBLINOID"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Goblin":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["GOBLINOID"],
+            "Size": "SMALL",
+            "Life Expectancy": "EXTREMELY_SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Hobgoblin":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["GOBLINOID"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Kobold":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["REPTILLIAN"],
+            "Size": "SMALL",
+            "Life Expectancy": "VERY_SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Lizardfolk":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["AQUATIC", "REPTILLIAN"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Merfolk":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["AQUATIC"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "AVERAGE_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Minotaur":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["CENTAUROID"],
+            "Size": "LARGE",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Naga":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["REPTILLIAN"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Ogre":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["GIANT"],
+            "Size": "LARGE",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Orc":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["ORC"],
+            "Size": "MEDIUM",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
+        },
+        "Troll":{
+            "Type": "DEMIHUMAN",
+            "Subtypes": ["GIANT"],
+            "Size": "LARGE",
+            "Life Expectancy": "SHORT_LIVED",
+            "Genders": ["FEMALE", "MALE", "OTHER"],
+
+            "Base Attributes":{
+                "Strength": 5,
+                "Agility": 5,
+                "Vitality": 5,
+                "Knowledge": 5,
+                "Willpower": 5,
+                "Charisma": 5
+            },
+            "Attribute Potentials":{
+                "Strength": 50,
+                "Agility": 50,
+                "Vitality": 50,
+                "Knowledge": 50,
+                "Willpower": 50,
+                "Charisma": 50
+            }
         }
 
-
+        
     }
 }

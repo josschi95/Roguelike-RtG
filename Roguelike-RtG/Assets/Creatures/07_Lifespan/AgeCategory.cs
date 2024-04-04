@@ -7,8 +7,6 @@ namespace JS.CharacterSystem
     {
         [SerializeField] private int lifeStage;
         [SerializeField] private string _name;
-        [TextArea(3, 5)]
-        [SerializeField] private string message;
 
         [Space]
 
@@ -16,7 +14,6 @@ namespace JS.CharacterSystem
 
         public int LifeStage => lifeStage;
         public string Name => _name;
-        public string Message => message;
         public AttributeReference[] AgeModifiers => ageModifiers;
 
 

@@ -51,8 +51,8 @@ namespace JS.World.Map.Generation
             {
                 var node = WorldMap.GetNode((int)seedLocations[i].x, (int)seedLocations[i].y);
 
-                if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea yet
-                if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
+                //if (!node.IsLand) node = TryFindLand(node); //No settlements in the sea yet
+                //if (node != null && node.Mountain != null) node = TryFindPlains(node); //No settlements in the mountains
                 if (node == null) seedLocations.RemoveAt(i);
             }
             Debug.Log($"Number of Nodes not land: {nodeNotLand}");

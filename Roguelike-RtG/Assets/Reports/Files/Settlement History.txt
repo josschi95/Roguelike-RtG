@@ -1,289 +1,273 @@
 
 *** Year 0 ***
 
-The settlement of Nankleb was founded in year 0 by Aartjar
+The settlement of Uttonbury was founded in year 0 by Hrortur
 
-The settlement of Ottever was founded in year 0 by Ketinarle
+The settlement of Filesterdorf was founded in year 0 by Uiscaldor
 
-The settlement of Swatlewh was founded in year 0 by Ottavarne
+The settlement of Sethamp was founded in year 0 by Stafroe
 
-The settlement of Jarnrizels was founded in year 0 by Builgotei
+The settlement of Swattonworport was founded in year 0 by Oysteio
 
-The settlement of Jerravesto was founded in year 0 by Vetigma
+The settlement of Gootleyn was founded in year 0 by Oystalmge
 
-The settlement of Vickera was founded in year 0 by Selleiri
+The settlement of Ayleybrinc was founded in year 0 by Eritill
 
-Vickera
-Vickera's Farm produced 32 food
-Vickera's population grew from 25 to 37
-
-
-Jerravesto
-Jerravesto's Farm produced 40 food
-Jerravesto's population grew from 25 to 37
+Ayleybrinc
+Ayleybrinc's Farm produced 40 food
+Ayleybrinc's Hunting Lodge produced 41 food
+Ayleybrinc's population grew from 25 to 37
+Ayleybrinc lost 2 lives to the wilds.
 
 
-Jarnrizels
-Jarnrizels's Farm produced 39 food
-Jarnrizels's population grew from 25 to 37
+Gootleyn
+Gootleyn's Farm produced 38 food
+Gootleyn's population grew from 25 to 37
 
 
-Swatlewh
-Swatlewh's Farm produced 49 food
-Swatlewh's Hunting Lodge produced 39 food
-Swatlewh's population grew from 25 to 37
-Swatlewh lost 2 lives to the wilds.
+Swattonworport
+Swattonworport's Farm produced 24 food
+Swattonworport lost 1 lives to starvation.
+Swattonworport lost 3 lives to the wilds.
 
 
-Ottever
-Ottever's Farm produced 23 food
-Ottever's Hunting Lodge produced 44 food
-Ottever's population grew from 25 to 37
-Ottever lost 1 lives to the wilds.
+Sethamp
+Sethamp's Farm produced 26 food
+Sethamp's population grew from 25 to 37
 
 
-Nankleb
-Nankleb's Farm produced 42 food
-Nankleb's Hunting Lodge produced 44 food
-Nankleb's population grew from 25 to 37
-Nankleb lost 2 lives to the wilds.
+Filesterdorf
+Filesterdorf's Farm produced 29 food
+Filesterdorf's population grew from 25 to 37
+
+
+Uttonbury
+Uttonbury's Farm produced 41 food
+Uttonbury's Hunting Lodge produced 45 food
+Uttonbury's population grew from 25 to 37
+Uttonbury lost 4 lives to the wilds.
 
 
 
 *** Year 1 ***
 
-The settlement of Albeckc was founded in year 1 by Uffe
+The settlement of Fingtonburncester was founded in year 1 by Heinnvar
 
-Albeckc
-Albeckc's Farm produced 39 food
-Albeckc's Hunting Lodge produced 50 food
-Albeckc's population grew from 25 to 37
-
-
-Vickera
-Vickera's Farm produced 37 food
-Vickera's population grew from 37 to 55
-Vickera transitioned from a Hamlet to a Village
+Fingtonburncester
+Fingtonburncester's Farm produced 9 food
+Fingtonburncester lost 16 lives to starvation.
+Fingtonburncester lost 2 lives to the wilds.
 
 
-Jerravesto
-Jerravesto's Farm produced 39 food
-Jerravesto's population grew from 37 to 55
-Jerravesto transitioned from a Hamlet to a Village
+Ayleybrinc
+Ayleybrinc's Farm produced 41 food
+Ayleybrinc's Hunting Lodge produced 50 food
+Ayleybrinc's population grew from 35 to 52
+Ayleybrinc lost 2 lives to the wilds.
+Ayleybrinc transitioned from a Hamlet to a Village
 
 
-Jarnrizels
-Jarnrizels's Farm produced 36 food
-Jarnrizels's population grew from 37 to 55
-Jarnrizels transitioned from a Hamlet to a Village
+Gootleyn
+Gootleyn's Farm produced 39 food
+Gootleyn's population grew from 37 to 55
+Gootleyn transitioned from a Hamlet to a Village
 
 
-Swatlewh
-Swatlewh's Farm produced 45 food
-Swatlewh's Hunting Lodge produced 39 food
-Swatlewh's population grew from 35 to 52
-Swatlewh lost 2 lives to the wilds.
-Swatlewh transitioned from a Hamlet to a Village
+Swattonworport
+Swattonworport's Farm produced 24 food
+Swattonworport's population grew from 21 to 31
+Swattonworport lost 3 lives to the wilds.
 
 
-Ottever
-Ottever's Farm produced 26 food
-Ottever's Hunting Lodge produced 50 food
-Ottever's population grew from 36 to 54
-Ottever lost 1 lives to the wilds.
-Ottever transitioned from a Hamlet to a Village
+Sethamp
+Sethamp's Farm produced 36 food
+Sethamp's population grew from 37 to 55
+Sethamp transitioned from a Hamlet to a Village
 
 
-Nankleb
-Nankleb's Farm produced 43 food
-Nankleb's Hunting Lodge produced 50 food
-Nankleb's population grew from 35 to 52
-Nankleb lost 2 lives to the wilds.
-Nankleb transitioned from a Hamlet to a Village
+Filesterdorf
+Filesterdorf's Farm produced 30 food
+Filesterdorf lost 3 lives to starvation.
+
+
+Uttonbury
+Uttonbury's Farm produced 39 food
+Uttonbury's Hunting Lodge produced 39 food
+Uttonbury's population grew from 33 to 49
+Uttonbury lost 4 lives to the wilds.
 
 
 
 *** Year 2 ***
 
-The settlement of Puddiackleford was founded in year 2 by Holeinnri
+The settlement of Dalkelkettl was founded in year 2 by Erleimr
 
-Puddiackleford
-Puddiackleford's Farm produced 10 food
-Puddiackleford lost 15 lives to starvation.
-Puddiackleford lost 3 lives to the wilds.
-
-
-Albeckc
-Albeckc's Farm produced 39 food
-Albeckc's Hunting Lodge produced 41 food
-Albeckc's population grew from 37 to 55
-Albeckc transitioned from a Hamlet to a Village
+Dalkelkettl
+Dalkelkettl's Farm produced 37 food
+Dalkelkettl's population grew from 25 to 37
 
 
-Vickera
-Vickera's Farm produced 28 food
-Vickera lost 20 lives to starvation.
-Vickera transitioned from a Village to a Hamlet
+Fingtonburncester
+Fingtonburncester's Farm produced 14 food
+Fingtonburncester's population grew from 7 to 10
+Fingtonburncester lost 2 lives to the wilds.
 
 
-Jerravesto
-Jerravesto's Farm produced 35 food
-Jerravesto lost 3 lives to starvation.
+Ayleybrinc
+Ayleybrinc's Farm produced 27 food
+Ayleybrinc's Hunting Lodge produced 44 food
+Ayleybrinc's population grew from 50 to 75
+Ayleybrinc lost 2 lives to the wilds.
 
 
-Jarnrizels
-Jarnrizels's Farm produced 28 food
-Jarnrizels lost 14 lives to starvation.
-Jarnrizels transitioned from a Village to a Hamlet
+Gootleyn
+Gootleyn's Farm produced 40 food
+Gootleyn's population grew from 55 to 82
 
 
-Swatlewh
-Swatlewh's Farm produced 40 food
-Swatlewh's Hunting Lodge produced 50 food
-Swatlewh's population grew from 50 to 75
-Swatlewh lost 2 lives to the wilds.
+Swattonworport
+Swattonworport's Farm produced 34 food
+Swattonworport's population grew from 28 to 42
+Swattonworport lost 3 lives to the wilds.
 
 
-Ottever
-Ottever's Farm produced 20 food
-Ottever's Hunting Lodge produced 50 food
-Ottever's population grew from 53 to 79
-Ottever lost 1 lives to the wilds.
+Sethamp
+Sethamp's Farm produced 38 food
+Sethamp lost 17 lives to starvation.
+Sethamp transitioned from a Village to a Hamlet
 
 
-Nankleb
-Nankleb's Farm produced 46 food
-Nankleb's Hunting Lodge produced 48 food
-Nankleb's population grew from 50 to 75
-Nankleb lost 2 lives to the wilds.
+Filesterdorf
+Filesterdorf's Farm produced 33 food
+Filesterdorf lost 1 lives to starvation.
+
+
+Uttonbury
+Uttonbury's Farm produced 51 food
+Uttonbury's Hunting Lodge produced 37 food
+Uttonbury's population grew from 45 to 67
+Uttonbury lost 4 lives to the wilds.
+Uttonbury transitioned from a Hamlet to a Village
 
 
 
 *** Year 3 ***
 
-The settlement of Spatertham was founded in year 3 by Unierrida
+The settlement of Eskirst was founded in year 3 by Iomhlaval
 
-Spatertham
-Spatertham's Farm produced 25 food
-Spatertham's population grew from 25 to 37
-Spatertham lost 2 lives to the wilds.
-
-
-Puddiackleford
-Puddiackleford's Farm produced 12 food
-Puddiackleford's population grew from 7 to 10
-Puddiackleford lost 3 lives to the wilds.
+Eskirst
+Eskirst's Farm produced 33 food
+Eskirst's population grew from 25 to 37
 
 
-Albeckc
-Albeckc's Farm produced 39 food
-Albeckc's Hunting Lodge produced 50 food
-Albeckc's population grew from 55 to 82
+Dalkelkettl
+Dalkelkettl's Farm produced 36 food
+Dalkelkettl's population grew from 37 to 55
+Dalkelkettl transitioned from a Hamlet to a Village
 
 
-Vickera
-Vickera's Farm produced 35 food
-Vickera's population grew from 35 to 52
-Vickera transitioned from a Hamlet to a Village
+Fingtonburncester
+Fingtonburncester's Farm produced 9 food
+Fingtonburncester's population grew from 8 to 12
+Fingtonburncester lost 2 lives to the wilds.
 
 
-Jerravesto
-Jerravesto's Farm produced 33 food
-Jerravesto lost 19 lives to starvation.
-Jerravesto transitioned from a Village to a Hamlet
+Ayleybrinc
+Ayleybrinc's Farm produced 39 food
+Ayleybrinc's Hunting Lodge produced 50 food
+Ayleybrinc's population grew from 73 to 109
+Ayleybrinc lost 2 lives to the wilds.
 
 
-Jarnrizels
-Jarnrizels's Farm produced 37 food
-Jarnrizels lost 4 lives to starvation.
+Gootleyn
+Gootleyn's Farm produced 32 food
+Gootleyn lost 50 lives to starvation.
+Gootleyn transitioned from a Village to a Hamlet
 
 
-Swatlewh
-Swatlewh's Farm produced 41 food
-Swatlewh's Hunting Lodge produced 40 food
-Swatlewh's population grew from 73 to 109
-Swatlewh lost 2 lives to the wilds.
+Swattonworport
+Swattonworport's Farm produced 26 food
+Swattonworport lost 4 lives to starvation.
+Swattonworport lost 3 lives to the wilds.
 
 
-Ottever
-Ottever's Farm produced 27 food
-Ottever's Hunting Lodge produced 50 food
-Ottever's population grew from 78 to 117
-Ottever lost 1 lives to the wilds.
+Sethamp
+Sethamp's Farm produced 33 food
+Sethamp lost 5 lives to starvation.
 
 
-Nankleb
-Nankleb's Farm produced 42 food
-Nankleb's Hunting Lodge produced 42 food
-Nankleb's population grew from 73 to 109
-Nankleb lost 2 lives to the wilds.
+Filesterdorf
+Filesterdorf's Farm produced 34 food
+Filesterdorf's population grew from 33 to 49
+
+
+Uttonbury
+Uttonbury's Farm produced 52 food
+Uttonbury's Hunting Lodge produced 47 food
+Uttonbury's population grew from 63 to 94
+Uttonbury lost 4 lives to the wilds.
 
 
 
 *** Year 4 ***
 
-The settlement of Pudbridef was founded in year 4 by Ankarrim
+The settlement of Meldingdalc was founded in year 4 by Korquille
 
-Pudbridef
-Pudbridef's Farm produced 32 food
-Pudbridef's population grew from 25 to 37
-
-
-Spatertham
-Spatertham's Farm produced 20 food
-Spatertham lost 15 lives to starvation.
-Spatertham lost 2 lives to the wilds.
+Meldingdalc
+Meldingdalc's Farm produced 34 food
+Meldingdalc's population grew from 25 to 37
 
 
-Puddiackleford
-Puddiackleford's Farm produced 10 food
-Puddiackleford's population grew from 7 to 10
-Puddiackleford lost 3 lives to the wilds.
+Eskirst
+Eskirst's Farm produced 34 food
+Eskirst's population grew from 37 to 55
+Eskirst transitioned from a Hamlet to a Village
 
 
-Albeckc
-Albeckc's Farm produced 55 food
-Albeckc's Hunting Lodge produced 42 food
-Albeckc's population grew from 82 to 123
+Dalkelkettl
+Dalkelkettl's Farm produced 40 food
+Dalkelkettl lost 4 lives to starvation.
 
 
-Vickera
-Vickera's Farm produced 28 food
-Vickera lost 24 lives to starvation.
-Vickera transitioned from a Village to a Hamlet
+Fingtonburncester
+Fingtonburncester's Farm produced 13 food
+Fingtonburncester's population grew from 10 to 15
+Fingtonburncester lost 2 lives to the wilds.
 
 
-Jerravesto
-Jerravesto's Farm produced 46 food
-Jerravesto's population grew from 33 to 49
+Ayleybrinc
+Ayleybrinc's Farm produced 38 food
+Ayleybrinc's Hunting Lodge produced 46 food
+Ayleybrinc's population grew from 107 to 160
+Ayleybrinc lost 2 lives to the wilds.
+Ayleybrinc transitioned from a Village to a Town
 
 
-Jarnrizels
-Jarnrizels's Farm produced 35 food
-Jarnrizels lost 2 lives to starvation.
+Gootleyn
+Gootleyn's Farm produced 31 food
+Gootleyn lost 1 lives to starvation.
 
 
-Swatlewh
-Swatlewh's Farm produced 47 food
-Swatlewh's Hunting Lodge produced 49 food
-Swatlewh's population grew from 107 to 160
-Swatlewh lost 2 lives to the wilds.
-Swatlewh transitioned from a Village to a Town
+Swattonworport
+Swattonworport's Farm produced 27 food
+Swattonworport lost 5 lives to starvation.
+Swattonworport lost 3 lives to the wilds.
 
 
-Ottever
-Ottever's Farm produced 23 food
-Ottever's Hunting Lodge produced 50 food
-Ottever's population grew from 116 to 174
-Ottever lost 1 lives to the wilds.
-Ottever transitioned from a Village to a Town
+Sethamp
+Sethamp's Farm produced 37 food
+Sethamp's population grew from 33 to 49
 
 
-Nankleb
-Nankleb's Farm produced 44 food
-Nankleb's Hunting Lodge produced 44 food
-Nankleb's population grew from 107 to 160
-Nankleb lost 2 lives to the wilds.
-Nankleb transitioned from a Village to a Town
+Filesterdorf
+Filesterdorf's Farm produced 38 food
+Filesterdorf lost 10 lives to starvation.
+
+
+Uttonbury
+Uttonbury's Farm produced 42 food
+Uttonbury's Hunting Lodge produced 44 food
+Uttonbury's population grew from 90 to 135
+Uttonbury lost 4 lives to the wilds.
 
 

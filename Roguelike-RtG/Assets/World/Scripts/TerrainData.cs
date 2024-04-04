@@ -16,14 +16,26 @@ namespace JS.World.Map.Features
             set => mapSize = value;
         }
 
+        private static int northLatitude;
+        private static int southLatitude;
+
+        public static int NorthLatitude
+        {
+            get => northLatitude;
+            set => northLatitude = value;
+        }
+        public static int SouthLatitude
+        {
+            get => southLatitude;
+            set => southLatitude = value;
+        }
+
+
         private static int[,] seedMap;
         public static int[,] SeedMap
         {
             get => seedMap;
-            set
-            {
-                seedMap = value;
-            }
+            set => seedMap = value;
         }
 
         private static HashSet<WorldTile> plateBorders;

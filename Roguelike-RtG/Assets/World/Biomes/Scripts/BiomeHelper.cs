@@ -38,28 +38,28 @@ namespace JS.World.Map.Features
 
             switch (temperatureIndex)
             {
-                case 0:
+                case 0: // Coldest
                     if (precipitationIndex == 5) return taiga;
                     return tundra;
-                case 1:
+                case 1: // Colder
                     if (precipitationIndex >= 3) return taiga;
                     return tundra;
-                case 2:
+                case 2: // Cold
                     if (precipitationIndex >= 3) return deciduousForest;
                     if (precipitationIndex == 2) return shrubland;
                     return temperateGrassland;
-                case 3:
+                case 3: // Warm
                     if (precipitationIndex == 0) return desert;
                     if (precipitationIndex == 1) return temperateGrassland;
                     if (precipitationIndex == 4) return deciduousForest;
                     if (precipitationIndex == 5) return tropicalSeasonalForest;
                     return shrubland;
-                case 4:
+                case 4: // Warmer
                     if (precipitationIndex < 2) return desert;
                     if (precipitationIndex == 2) return savanna;
                     if (precipitationIndex == 3) return tropicalSeasonalForest;
                     return jungle;
-                case 5:
+                case 5: // Warmest
                     if (precipitationIndex <= 1) return desert;
                     if (precipitationIndex <= 3) return savanna;
                     return jungle;

@@ -10,6 +10,8 @@ public static class SettlementData
 
     public static void PlaceSettlements(Settlement[] settlements)
     {
+        UnityEngine.Debug.Log("Setting Settlements.");
+
         _settlements = settlements;
     }
 

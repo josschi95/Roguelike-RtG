@@ -365,7 +365,7 @@ namespace JS.World.Map.Generation
         }
         #endregion
 
-        public void GenerateHeatMap()
+        public void GenerateHeatMap(int northLatitude, int southLatitude)
         {
             //Create Heat Map
             float[,] heatMap = ClimateMath.GenerateHeatMap(Features.TerrainData.HeightMap, worldGenerator.PRNG);

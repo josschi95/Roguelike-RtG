@@ -39,6 +39,8 @@ namespace JS.Architecture.CommandSystem
             //Terrain
             data.mapWidth = World.Map.Features.TerrainData.MapSize;
             data.mapHeight = World.Map.Features.TerrainData.MapSize;
+            data.northLatitude = World.Map.Features.TerrainData.NorthLatitude;
+            data.southLatitude = World.Map.Features.TerrainData.SouthLatitude;
 
             data.Lakes = World.Map.Features.TerrainData.Lakes;
             data.Land = World.Map.Features.TerrainData.LandMasses;

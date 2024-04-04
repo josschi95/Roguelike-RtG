@@ -16,6 +16,11 @@ namespace JS.World.Map.Generation
         [SerializeField] private Button[] worldAgeButtons;
         private Image[] worldAgeButtonGraphics;
 
+        [Header("Latitude")]
+        [SerializeField] private TMP_Text _latitudeText;
+        [SerializeField] private Slider _southLatitudeSlider;
+        [SerializeField] private Slider _northLatitudeSlider;
+
         [Space]
 
         [SerializeField] private Button randomizeSeedButton;
@@ -40,6 +45,15 @@ namespace JS.World.Map.Generation
 
         private void AssignUIElementEvents()
         {
+            generateWorldButton.onClick.AddListener(BeginWorldGeneration);
+
+            // Seed
+            randomizeSeedButton.onClick.AddListener(RandomizeSeed);
+            seedInputField.onSubmit.AddListener(delegate
+            {
+                OnSetSeed(seedInputField.text);
+            });
+
             // World Size
             worldSizeButtonGraphics = new Image[worldSizeButtons.Length];
             for (int i = 0; i < worldSizeButtons.Length; i++)
@@ -53,6 +67,7 @@ namespace JS.World.Map.Generation
                 });
             }
 
+            // World Age
             worldAgeButtonGraphics = new Image[worldAgeButtons.Length];
             for (int i = 0; i < worldAgeButtons.Length; i++)
             {
@@ -65,12 +80,16 @@ namespace JS.World.Map.Generation
                 });
             }
 
+            // Latitude
+            _southLatitudeSlider.onValueChanged.AddListener(OnSouthernLatitudeChange);
+            _northLatitudeSlider.onValueChanged.AddListener(OnNorthernLatitudeChange);
 
-            randomizeSeedButton.onClick.AddListener(RandomizeSeed);
-            seedInputField.onSubmit.AddListener(delegate
-            {
-                OnSetSeed(seedInputField.text);
-            });
+            _southLatitudeSlider.minValue = -90;
+            _southLatitudeSlider.maxValue = 90;
+            _southLatitudeSlider.value = -90;
+            _northLatitudeSlider.minValue = -90;
+            _northLatitudeSlider.maxValue = 90;
+            _northLatitudeSlider.value = 90;
         }
 
         private void SetDefaultValues()
@@ -81,11 +100,16 @@ namespace JS.World.Map.Generation
             //OnSetWorldAge(2);
             OnSetWorldSize(0);
             OnSetWorldAge(0);
+            OnLatitudeChange();
+
+            worldGenerator.SetNorthLatitude(_northLatitudeSlider.value);
+            worldGenerator.SetSouthLatitude(_southLatitudeSlider.value);
         }
 
         private void ClearUIElementEvents()
         {
-            randomizeSeedButton.onClick.RemoveListener(RandomizeSeed);
+            generateWorldButton.onClick.RemoveAllListeners();
+            randomizeSeedButton.onClick.RemoveAllListeners();
 
             for (int i = 0; i < worldSizeButtons.Length; i++)
             {
@@ -96,6 +120,9 @@ namespace JS.World.Map.Generation
             {
                 worldAgeButtons[i].onClick.RemoveAllListeners();
             }
+
+            _southLatitudeSlider.onValueChanged.RemoveAllListeners();
+            _northLatitudeSlider.onValueChanged.RemoveAllListeners();
         }
 
         private void OnSetSeed(string value)
@@ -138,6 +165,44 @@ namespace JS.World.Map.Generation
                 else worldAgeButtonGraphics[i].sprite = _disabledImage;
             }
             worldGenerator.SetWorldAge(age);
+        }
+
+        private void OnSouthernLatitudeChange(float value)
+        {
+            if (_southLatitudeSlider.value > _northLatitudeSlider.value)
+            {
+                _southLatitudeSlider.value = _northLatitudeSlider.value;
+            }
+            worldGenerator.SetSouthLatitude(_southLatitudeSlider.value);
+            OnLatitudeChange();
+        }
+
+        private void OnNorthernLatitudeChange(float value)
+        {
+            if (_northLatitudeSlider.value < _southLatitudeSlider.value)
+            {
+                _northLatitudeSlider.value = _southLatitudeSlider.value;
+            }
+            worldGenerator.SetNorthLatitude(_northLatitudeSlider.value);
+            OnLatitudeChange();
+        }
+
+        private void OnLatitudeChange()
+        {
+            string south = string.Empty;
+            string north = string.Empty;
+
+            if (_southLatitudeSlider.value < 0) south = "S";
+            else if (_southLatitudeSlider.value > 0) south = "N";
+            if (_northLatitudeSlider.value < 0) north = "S";
+            else if (_northLatitudeSlider.value > 0) north = "N";
+
+            _latitudeText.text = $"{_southLatitudeSlider.value}\u00B0{south} / {_northLatitudeSlider.value}\u00B0{north}";
+        }
+
+        private void BeginWorldGeneration()
+        {
+            worldGenerator.OnBeginWorldGeneration();
         }
     }
 }

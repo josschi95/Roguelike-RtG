@@ -86,6 +86,16 @@ namespace JS.World.Map.Generation
         {
             worldAge = (WorldAge)index;
         }
+
+        public void SetNorthLatitude(float value)
+        {
+            Features.TerrainData.NorthLatitude = Mathf.RoundToInt(value);
+        }
+
+        public void SetSouthLatitude(float value)
+        {
+            Features.TerrainData.SouthLatitude = Mathf.RoundToInt(value);
+        }
         #endregion
 
         #region - Seed -
@@ -229,7 +239,7 @@ namespace JS.World.Map.Generation
             riverGenerator.GenerateRivers(_worldGenParams.WORLD_SIZE_PARAMS.RIVERS[(int)worldSize]);
             yield return StartCoroutine(UpdateProgress("Generating Heat Map", 0.5f));
 
-            terrainGenerator.GenerateHeatMap();
+            terrainGenerator.GenerateHeatMap(Features.TerrainData.NorthLatitude, Features.TerrainData.SouthLatitude);
             yield return StartCoroutine(UpdateProgress("Generating Precipitation Map", 0.6f));
 
             terrainGenerator.GeneratePrecipitationMap();
@@ -383,7 +393,7 @@ namespace JS.World.Map.Generation
             Features.TerrainData.LandMasses = data.Land;
 
             riverGenerator.GenerateRivers(_worldGenParams.WORLD_SIZE_PARAMS.RIVERS[(int)worldSize]);
-            terrainGenerator.GenerateHeatMap();
+            terrainGenerator.GenerateHeatMap(data.northLatitude, data.southLatitude);
             terrainGenerator.GeneratePrecipitationMap();
             terrainGenerator.GenerateBiomes();
             terrainGenerator.GenerateOreDeposits(

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JS.World.Map.Features
@@ -18,14 +17,31 @@ namespace JS.World.Map.Features
 
             float equator = heatMap.GetLength(1) / 2f;
 
+            // The difference in latitude between the northern edge of the map and the southern edge
+            int latitudeDiff = Mathf.Abs(TerrainData.NorthLatitude - TerrainData.SouthLatitude);
+
+            /*for (int y = 0; y < heightMap.GetLength(1); y++)
+            {
+                float relativeLatitude = (float)y / heightMap.GetLength(1); // Always a value between 0 and 1
+                float netLatitude = TerrainData.SouthLatitude + (relativeLatitude * latitudeDiff);
+
+                Debug.Log($"Net Latitude {y}: {netLatitude}");
+            }*/
+
             for (int x = 0; x < heightMap.GetLength(0); x++)
             {
                 for (int y = 0; y < heightMap.GetLength(1); y++)
                 {
-                    float distanceFromEquator = Mathf.Abs(equator - y) / equator; // I could swap x and y so I only need to calculate this once per column
-                    
+                    float relativeLatitude = (float)y / heightMap.GetLength(1);
+                    float netLatitude = TerrainData.SouthLatitude + (relativeLatitude * latitudeDiff);
+                    float distanceFromEquator = Mathf.Abs(netLatitude) / 90.0f;
+                    //Debug.Log($"Net Latitude {y}: {netLatitude}");
+
+                    //Debug.LogWarning("Pick up from here.");
+                    //distanceFromEquator = Mathf.Abs(equator - y) / equator; // I could swap x and y so I only need to calculate this once per column
+
                     // Initial value is flipped parabola to replicate temperature dropoff in temp as dist from equator increases
-                    var heatValue = 1 - Mathf.Pow(distanceFromEquator, 2);
+                    var heatValue = 1 - Mathf.Pow(distanceFromEquator, 2); // However this is not very accurate to the real-life gradient
 
                     // Heat value is then decreased by the difference between sea level and height, as temperature decreases with higher altitudes
                     if (heightMap[x, y] > WorldParameters.SEA_LEVEL) heatValue -= Mathf.Abs(heightMap[x, y] - WorldParameters.SEA_LEVEL);

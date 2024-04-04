@@ -61,6 +61,11 @@ namespace JS.World.Map.Generation
             bridges = new List<Bridge>();
             var points = new List<Point>();
 
+            if (SettlementData.Settlements == null)
+            {
+                Debug.LogWarning("Settlements are null");
+                return;
+            }
             foreach(var settlement in SettlementData.Settlements)
             {
                 points.Add(new Point(settlement.Coordinates));

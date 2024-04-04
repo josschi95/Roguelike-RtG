@@ -22,6 +22,7 @@ namespace JS.World.Map
 
         //Terrain Data
         public int mapWidth, mapHeight; //this needs to be saved if I have variable map sizes
+        public int northLatitude, southLatitude;
         /*
         public float[] heightMap; //No need to save
         public float[] heatMap; //No need to save

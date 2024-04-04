@@ -124,6 +124,8 @@ namespace JS.World.Map
         {
             roadMap.ClearAllTiles();
 
+            if (Features.TerrainData.Roads == null) return;
+
             foreach (var road in Features.TerrainData.Roads)
             {
                 for (int i = 0; i < road.Nodes.Length; i++)
@@ -154,6 +156,8 @@ namespace JS.World.Map
         private void DisplaySettlements()
         {
             settlementMap.ClearAllTiles();
+
+            if (SettlementData.Settlements == null) return;
 
             foreach (var settlement in SettlementData.Settlements)
             {

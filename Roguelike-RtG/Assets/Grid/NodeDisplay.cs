@@ -30,6 +30,9 @@ namespace JS.World.Map
             displayText.text += "\nAvg. Temperature: " + (Temperature.FloatToCelsius(Features.TerrainData.HeatMap[node.x, node.y])).ToString("00") + "\u00B0" + "C";
             displayText.text += "\nAnnual Rainfall: " + (Features.TerrainData.MoistureMap[node.x, node.y] * 400).ToString("00");
 
+            displayText.text += $"\nAir Pressure: {node.airPressure}";
+            displayText.text += $"\nWater Capacity: {node.WaterCapacity}";
+
             var river = Features.TerrainData.FindRiverAt(node.x, node.y, out var index);
             if (river != null)
             {

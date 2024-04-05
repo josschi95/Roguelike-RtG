@@ -15,18 +15,10 @@ namespace JS.World.Map.Features
         {
             float[,] heatMap = new float[heightMap.GetLength(0), heightMap.GetLength(1)];
 
-            float equator = heatMap.GetLength(1) / 2f;
+            //float equator = heatMap.GetLength(1) / 2f;
 
             // The difference in latitude between the northern edge of the map and the southern edge
             int latitudeDiff = Mathf.Abs(TerrainData.NorthLatitude - TerrainData.SouthLatitude);
-
-            /*for (int y = 0; y < heightMap.GetLength(1); y++)
-            {
-                float relativeLatitude = (float)y / heightMap.GetLength(1); // Always a value between 0 and 1
-                float netLatitude = TerrainData.SouthLatitude + (relativeLatitude * latitudeDiff);
-
-                Debug.Log($"Net Latitude {y}: {netLatitude}");
-            }*/
 
             for (int x = 0; x < heightMap.GetLength(0); x++)
             {
@@ -35,10 +27,6 @@ namespace JS.World.Map.Features
                     float relativeLatitude = (float)y / heightMap.GetLength(1);
                     float netLatitude = TerrainData.SouthLatitude + (relativeLatitude * latitudeDiff);
                     float distanceFromEquator = Mathf.Abs(netLatitude) / 90.0f;
-                    //Debug.Log($"Net Latitude {y}: {netLatitude}");
-
-                    //Debug.LogWarning("Pick up from here.");
-                    //distanceFromEquator = Mathf.Abs(equator - y) / equator; // I could swap x and y so I only need to calculate this once per column
 
                     // Initial value is flipped parabola to replicate temperature dropoff in temp as dist from equator increases
                     var heatValue = 1 - Mathf.Pow(distanceFromEquator, 2); // However this is not very accurate to the real-life gradient
@@ -53,6 +41,87 @@ namespace JS.World.Map.Features
                 }
             }
             return heatMap;
+        }
+
+        public static float[,] GetAirPressureMap(float[,] heightMap)
+        {
+            int width = heightMap.GetLength(0);
+            int height = heightMap.GetLength(1);
+            float[,] pressureMap = new float[width, height];
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    float altitude = Mathf.Clamp(heightMap[x, y], WorldParameters.SEA_LEVEL, 1);
+                    pressureMap[x, y] = 1 - Mathf.Sqrt(0.25f * altitude);
+                }
+            }
+            return pressureMap;
+        }
+
+        public static Compass[,] GenerateWindMap(float[,] map)
+        {
+            Debug.Log("Not accounting for the doldrums.");
+
+            int width = map.GetLength(0);
+            int height = map.GetLength(1);
+            //var equator = height / 2f;
+            //float windZoneLength = equator / 3f;
+            Compass[,] windMap = new Compass[width, height];
+
+            // The difference in latitude between the northern edge of the map and the southern edge
+            int latitudeDiff = Mathf.Abs(TerrainData.NorthLatitude - TerrainData.SouthLatitude);
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    float relativeLatitude = (float)y / map.GetLength(1);
+                    float netLatitude = TerrainData.SouthLatitude + (relativeLatitude * latitudeDiff);
+
+                    switch (netLatitude)
+                    {
+                        case < -60: // Polar Easterlies
+                            windMap[x, y] = Compass.NorthEast;
+                            break;
+                        case < -30: // Prevailing Westerlies
+                            windMap[x, y] = Compass.SouthWest;
+                            break;
+                        case <= 0: // Tropical Easterlies / Southeast Trade Winds
+                            windMap[x, y] = Compass.NorthEast;
+                            break;
+
+                        // The doldrums at 0 
+
+                        case < 30: // Tropical Easterlies / Northeast Trade Winds
+                            windMap[x, y] = Compass.SouthEast;
+                            break;
+                        case < 60: // Prevailing Westerlies
+                            windMap[x, y] = Compass.NorthWest;
+                            break;
+                        default: // Polar Easterlies
+                            windMap[x, y] = Compass.SouthEast;
+                            break;
+                    }
+
+                    /*float distanceFromEquator = Mathf.Abs(equator - y);
+                    int windZone = Mathf.Clamp(Mathf.FloorToInt(distanceFromEquator / windZoneLength), 0, 2);
+
+                    if (windZone == 1) //Secondary Direction is East
+                    {
+                        if (y > equator) windMap[x, y] = Compass.NorthEast;
+                        else windMap[x, y] = Compass.SouthEast;
+                    }
+                    else //Secondary direction is West
+                    {
+                        if (y > equator) windMap[x, y] = Compass.SouthWest;
+                        else windMap[x, y] = Compass.NorthWest;
+                    }*/
+                }
+            }
+
+            return windMap;
         }
 
         public static int GetHeatIndex(float heatValue)

@@ -1,273 +1,309 @@
 
 *** Year 0 ***
 
-The settlement of Uttonbury was founded in year 0 by Hrortur
+The settlement of Ilforrostadt was founded in year 0 by Ballbor
 
-The settlement of Filesterdorf was founded in year 0 by Uiscaldor
+The settlement of Naiterby was founded in year 0 by Reirrekr
 
-The settlement of Sethamp was founded in year 0 by Stafroe
+The settlement of Oulston was founded in year 0 by Thurnorri
 
-The settlement of Swattonworport was founded in year 0 by Oysteio
+The settlement of Iseanaleyton was founded in year 0 by Unierreyr
 
-The settlement of Gootleyn was founded in year 0 by Oystalmge
+The settlement of Rickryhiby was founded in year 0 by Snornfin
 
-The settlement of Ayleybrinc was founded in year 0 by Eritill
+The settlement of Axmookite was founded in year 0 by Aivarke
 
-Ayleybrinc
-Ayleybrinc's Farm produced 40 food
-Ayleybrinc's Hunting Lodge produced 41 food
-Ayleybrinc's population grew from 25 to 37
-Ayleybrinc lost 2 lives to the wilds.
-
-
-Gootleyn
-Gootleyn's Farm produced 38 food
-Gootleyn's population grew from 25 to 37
+Axmookite
+Axmookite's Farm produced 52 food
+Axmookite's Hunting Lodge produced 34 food
+Axmookite's population grew from 25 to 37
+Axmookite lost 4 lives to the wilds.
 
 
-Swattonworport
-Swattonworport's Farm produced 24 food
-Swattonworport lost 1 lives to starvation.
-Swattonworport lost 3 lives to the wilds.
+Rickryhiby
+Rickryhiby's Farm produced 19 food
+Rickryhiby lost 6 lives to starvation.
+Rickryhiby lost 3 lives to the wilds.
 
 
-Sethamp
-Sethamp's Farm produced 26 food
-Sethamp's population grew from 25 to 37
+Iseanaleyton
+Iseanaleyton's Farm produced 48 food
+Iseanaleyton's Hunting Lodge produced 45 food
+Iseanaleyton's population grew from 25 to 37
+Iseanaleyton lost 4 lives to the wilds.
 
 
-Filesterdorf
-Filesterdorf's Farm produced 29 food
-Filesterdorf's population grew from 25 to 37
+Oulston
+Oulston's Farm produced 50 food
+Oulston's Hunting Lodge produced 33 food
+Oulston's population grew from 25 to 37
+Oulston lost 4 lives to the wilds.
 
 
-Uttonbury
-Uttonbury's Farm produced 41 food
-Uttonbury's Hunting Lodge produced 45 food
-Uttonbury's population grew from 25 to 37
-Uttonbury lost 4 lives to the wilds.
+Naiterby
+Naiterby's Farm produced 17 food
+Naiterby lost 8 lives to starvation.
+Naiterby lost 3 lives to the wilds.
+
+
+Ilforrostadt
+Ilforrostadt's Farm produced 44 food
+Ilforrostadt's Hunting Lodge produced 45 food
+Ilforrostadt's population grew from 25 to 37
+Ilforrostadt lost 4 lives to the wilds.
 
 
 
 *** Year 1 ***
 
-The settlement of Fingtonburncester was founded in year 1 by Heinnvar
+The settlement of Ruslape was founded in year 1 by Ivalfreo
 
-Fingtonburncester
-Fingtonburncester's Farm produced 9 food
-Fingtonburncester lost 16 lives to starvation.
-Fingtonburncester lost 2 lives to the wilds.
-
-
-Ayleybrinc
-Ayleybrinc's Farm produced 41 food
-Ayleybrinc's Hunting Lodge produced 50 food
-Ayleybrinc's population grew from 35 to 52
-Ayleybrinc lost 2 lives to the wilds.
-Ayleybrinc transitioned from a Hamlet to a Village
+Ruslape
+Ruslape's Farm produced 29 food
+Ruslape's Hunting Lodge produced 43 food
+Ruslape's population grew from 25 to 37
+Ruslape lost 5 lives to the wilds.
 
 
-Gootleyn
-Gootleyn's Farm produced 39 food
-Gootleyn's population grew from 37 to 55
-Gootleyn transitioned from a Hamlet to a Village
+Axmookite
+Axmookite's Farm produced 33 food
+Axmookite's Hunting Lodge produced 34 food
+Axmookite's population grew from 33 to 49
+Axmookite lost 4 lives to the wilds.
 
 
-Swattonworport
-Swattonworport's Farm produced 24 food
-Swattonworport's population grew from 21 to 31
-Swattonworport lost 3 lives to the wilds.
+Rickryhiby
+Rickryhiby's Farm produced 23 food
+Rickryhiby's population grew from 16 to 24
+Rickryhiby lost 3 lives to the wilds.
 
 
-Sethamp
-Sethamp's Farm produced 36 food
-Sethamp's population grew from 37 to 55
-Sethamp transitioned from a Hamlet to a Village
+Iseanaleyton
+Iseanaleyton's Farm produced 52 food
+Iseanaleyton's Hunting Lodge produced 50 food
+Iseanaleyton's population grew from 33 to 49
+Iseanaleyton lost 4 lives to the wilds.
 
 
-Filesterdorf
-Filesterdorf's Farm produced 30 food
-Filesterdorf lost 3 lives to starvation.
+Oulston
+Oulston's Farm produced 47 food
+Oulston's Hunting Lodge produced 34 food
+Oulston's population grew from 33 to 49
+Oulston lost 4 lives to the wilds.
 
 
-Uttonbury
-Uttonbury's Farm produced 39 food
-Uttonbury's Hunting Lodge produced 39 food
-Uttonbury's population grew from 33 to 49
-Uttonbury lost 4 lives to the wilds.
+Naiterby
+Naiterby's Farm produced 12 food
+Naiterby lost 2 lives to starvation.
+Naiterby lost 3 lives to the wilds.
+
+
+Ilforrostadt
+Ilforrostadt's Farm produced 51 food
+Ilforrostadt's Hunting Lodge produced 32 food
+Ilforrostadt's population grew from 33 to 49
+Ilforrostadt lost 4 lives to the wilds.
 
 
 
 *** Year 2 ***
 
-The settlement of Dalkelkettl was founded in year 2 by Erleimr
+The settlement of Oakeadleywa was founded in year 2 by Egirrikil
 
-Dalkelkettl
-Dalkelkettl's Farm produced 37 food
-Dalkelkettl's population grew from 25 to 37
-
-
-Fingtonburncester
-Fingtonburncester's Farm produced 14 food
-Fingtonburncester's population grew from 7 to 10
-Fingtonburncester lost 2 lives to the wilds.
+Oakeadleywa
+Oakeadleywa's Farm produced 18 food
+Oakeadleywa lost 7 lives to starvation.
+Oakeadleywa lost 5 lives to the wilds.
 
 
-Ayleybrinc
-Ayleybrinc's Farm produced 27 food
-Ayleybrinc's Hunting Lodge produced 44 food
-Ayleybrinc's population grew from 50 to 75
-Ayleybrinc lost 2 lives to the wilds.
+Ruslape
+Ruslape's Farm produced 37 food
+Ruslape's Hunting Lodge produced 38 food
+Ruslape's population grew from 32 to 48
+Ruslape lost 5 lives to the wilds.
 
 
-Gootleyn
-Gootleyn's Farm produced 40 food
-Gootleyn's population grew from 55 to 82
+Axmookite
+Axmookite's Farm produced 49 food
+Axmookite's Hunting Lodge produced 42 food
+Axmookite's population grew from 45 to 67
+Axmookite lost 4 lives to the wilds.
+Axmookite transitioned from a Hamlet to a Village
 
 
-Swattonworport
-Swattonworport's Farm produced 34 food
-Swattonworport's population grew from 28 to 42
-Swattonworport lost 3 lives to the wilds.
+Rickryhiby
+Rickryhiby's Farm produced 24 food
+Rickryhiby's population grew from 21 to 31
+Rickryhiby lost 3 lives to the wilds.
 
 
-Sethamp
-Sethamp's Farm produced 38 food
-Sethamp lost 17 lives to starvation.
-Sethamp transitioned from a Village to a Hamlet
+Iseanaleyton
+Iseanaleyton's Farm produced 50 food
+Iseanaleyton's Hunting Lodge produced 47 food
+Iseanaleyton's population grew from 45 to 67
+Iseanaleyton lost 4 lives to the wilds.
+Iseanaleyton transitioned from a Hamlet to a Village
 
 
-Filesterdorf
-Filesterdorf's Farm produced 33 food
-Filesterdorf lost 1 lives to starvation.
+Oulston
+Oulston's Farm produced 49 food
+Oulston's Hunting Lodge produced 47 food
+Oulston's population grew from 45 to 67
+Oulston lost 4 lives to the wilds.
+Oulston transitioned from a Hamlet to a Village
 
 
-Uttonbury
-Uttonbury's Farm produced 51 food
-Uttonbury's Hunting Lodge produced 37 food
-Uttonbury's population grew from 45 to 67
-Uttonbury lost 4 lives to the wilds.
-Uttonbury transitioned from a Hamlet to a Village
+Naiterby
+Naiterby's Farm produced 15 food
+Naiterby's population grew from 9 to 13
+Naiterby lost 3 lives to the wilds.
+
+
+Ilforrostadt
+Ilforrostadt's Farm produced 42 food
+Ilforrostadt's Hunting Lodge produced 34 food
+Ilforrostadt's population grew from 45 to 67
+Ilforrostadt lost 4 lives to the wilds.
+Ilforrostadt transitioned from a Hamlet to a Village
 
 
 
 *** Year 3 ***
 
-The settlement of Eskirst was founded in year 3 by Iomhlaval
+The settlement of Yeombothbor was founded in year 3 by Ovenrik
 
-Eskirst
-Eskirst's Farm produced 33 food
-Eskirst's population grew from 25 to 37
-
-
-Dalkelkettl
-Dalkelkettl's Farm produced 36 food
-Dalkelkettl's population grew from 37 to 55
-Dalkelkettl transitioned from a Hamlet to a Village
+Yeombothbor
+Yeombothbor's Farm produced 24 food
+Yeombothbor's Docks produced 43 food
+Yeombothbor's Hunting Lodge produced 37 food
+Yeombothbor's population grew from 25 to 37
+Yeombothbor lost 1 lives to the wilds.
 
 
-Fingtonburncester
-Fingtonburncester's Farm produced 9 food
-Fingtonburncester's population grew from 8 to 12
-Fingtonburncester lost 2 lives to the wilds.
+Oakeadleywa
+Oakeadleywa's Farm produced 13 food
+Oakeadleywa's population grew from 13 to 19
+Oakeadleywa lost 5 lives to the wilds.
 
 
-Ayleybrinc
-Ayleybrinc's Farm produced 39 food
-Ayleybrinc's Hunting Lodge produced 50 food
-Ayleybrinc's population grew from 73 to 109
-Ayleybrinc lost 2 lives to the wilds.
+Ruslape
+Ruslape's Farm produced 34 food
+Ruslape's Hunting Lodge produced 46 food
+Ruslape's population grew from 43 to 64
+Ruslape lost 5 lives to the wilds.
+Ruslape transitioned from a Hamlet to a Village
 
 
-Gootleyn
-Gootleyn's Farm produced 32 food
-Gootleyn lost 50 lives to starvation.
-Gootleyn transitioned from a Village to a Hamlet
+Axmookite
+Axmookite's Farm produced 49 food
+Axmookite's Hunting Lodge produced 46 food
+Axmookite's population grew from 63 to 94
+Axmookite lost 4 lives to the wilds.
 
 
-Swattonworport
-Swattonworport's Farm produced 26 food
-Swattonworport lost 4 lives to starvation.
-Swattonworport lost 3 lives to the wilds.
+Rickryhiby
+Rickryhiby's Farm produced 29 food
+Rickryhiby's population grew from 28 to 42
+Rickryhiby lost 3 lives to the wilds.
 
 
-Sethamp
-Sethamp's Farm produced 33 food
-Sethamp lost 5 lives to starvation.
+Iseanaleyton
+Iseanaleyton's Farm produced 48 food
+Iseanaleyton's Hunting Lodge produced 45 food
+Iseanaleyton's population grew from 63 to 94
+Iseanaleyton lost 4 lives to the wilds.
 
 
-Filesterdorf
-Filesterdorf's Farm produced 34 food
-Filesterdorf's population grew from 33 to 49
+Oulston
+Oulston's Farm produced 44 food
+Oulston's Hunting Lodge produced 34 food
+Oulston's population grew from 63 to 94
+Oulston lost 4 lives to the wilds.
 
 
-Uttonbury
-Uttonbury's Farm produced 52 food
-Uttonbury's Hunting Lodge produced 47 food
-Uttonbury's population grew from 63 to 94
-Uttonbury lost 4 lives to the wilds.
+Naiterby
+Naiterby's Farm produced 12 food
+Naiterby's population grew from 10 to 15
+Naiterby lost 3 lives to the wilds.
+
+
+Ilforrostadt
+Ilforrostadt's Farm produced 46 food
+Ilforrostadt's Hunting Lodge produced 40 food
+Ilforrostadt's population grew from 63 to 94
+Ilforrostadt lost 4 lives to the wilds.
 
 
 
 *** Year 4 ***
 
-The settlement of Meldingdalc was founded in year 4 by Korquille
+The settlement of Tadingmastley was founded in year 4 by Vrallstig
 
-Meldingdalc
-Meldingdalc's Farm produced 34 food
-Meldingdalc's population grew from 25 to 37
-
-
-Eskirst
-Eskirst's Farm produced 34 food
-Eskirst's population grew from 37 to 55
-Eskirst transitioned from a Hamlet to a Village
+Tadingmastley
+Tadingmastley's Farm produced 19 food
+Tadingmastley's Docks produced 47 food
+Tadingmastley's population grew from 25 to 37
 
 
-Dalkelkettl
-Dalkelkettl's Farm produced 40 food
-Dalkelkettl lost 4 lives to starvation.
+Yeombothbor
+Yeombothbor's Farm produced 35 food
+Yeombothbor's Docks produced 42 food
+Yeombothbor's Hunting Lodge produced 36 food
+Yeombothbor's population grew from 36 to 54
+Yeombothbor lost 1 lives to the wilds.
+Yeombothbor transitioned from a Hamlet to a Village
 
 
-Fingtonburncester
-Fingtonburncester's Farm produced 13 food
-Fingtonburncester's population grew from 10 to 15
-Fingtonburncester lost 2 lives to the wilds.
+Oakeadleywa
+Oakeadleywa's Farm produced 14 food
+Oakeadleywa's population grew from 14 to 21
+Oakeadleywa lost 5 lives to the wilds.
 
 
-Ayleybrinc
-Ayleybrinc's Farm produced 38 food
-Ayleybrinc's Hunting Lodge produced 46 food
-Ayleybrinc's population grew from 107 to 160
-Ayleybrinc lost 2 lives to the wilds.
-Ayleybrinc transitioned from a Village to a Town
+Ruslape
+Ruslape's Farm produced 31 food
+Ruslape's Hunting Lodge produced 45 food
+Ruslape's population grew from 59 to 88
+Ruslape lost 5 lives to the wilds.
 
 
-Gootleyn
-Gootleyn's Farm produced 31 food
-Gootleyn lost 1 lives to starvation.
+Axmookite
+Axmookite's Farm produced 33 food
+Axmookite's Hunting Lodge produced 40 food
+Axmookite's population grew from 90 to 135
+Axmookite lost 4 lives to the wilds.
 
 
-Swattonworport
-Swattonworport's Farm produced 27 food
-Swattonworport lost 5 lives to starvation.
-Swattonworport lost 3 lives to the wilds.
+Rickryhiby
+Rickryhiby's Farm produced 26 food
+Rickryhiby lost 2 lives to starvation.
+Rickryhiby lost 3 lives to the wilds.
 
 
-Sethamp
-Sethamp's Farm produced 37 food
-Sethamp's population grew from 33 to 49
+Iseanaleyton
+Iseanaleyton's Farm produced 52 food
+Iseanaleyton's Hunting Lodge produced 50 food
+Iseanaleyton's population grew from 90 to 135
+Iseanaleyton lost 4 lives to the wilds.
 
 
-Filesterdorf
-Filesterdorf's Farm produced 38 food
-Filesterdorf lost 10 lives to starvation.
+Oulston
+Oulston's Farm produced 38 food
+Oulston's Hunting Lodge produced 41 food
+Oulston's population grew from 90 to 135
+Oulston lost 4 lives to the wilds.
 
 
-Uttonbury
-Uttonbury's Farm produced 42 food
-Uttonbury's Hunting Lodge produced 44 food
-Uttonbury's population grew from 90 to 135
-Uttonbury lost 4 lives to the wilds.
+Naiterby
+Naiterby's Farm produced 15 food
+Naiterby's population grew from 12 to 18
+Naiterby lost 3 lives to the wilds.
+
+
+Ilforrostadt
+Ilforrostadt's Farm produced 36 food
+Ilforrostadt's Hunting Lodge produced 36 food
+Ilforrostadt's population grew from 90 to 135
+Ilforrostadt lost 4 lives to the wilds.
 
 

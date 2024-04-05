@@ -16,20 +16,17 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Savanna
   <WorldBase>k__BackingField: {fileID: 11400000, guid: 76fc16b81a8234343b136eb15074bba1, type: 2}
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: a4fdc191f8710d541b8984735b9edf7f, type: 2}
+  <HillTile>k__BackingField: {fileID: 11400000, guid: 4201fdfb7a6bc6b4f965aebc34beefe1, type: 2}
+  <MountainTile>k__BackingField: {fileID: 11400000, guid: a91837a4cfba82b41ae9596125135c65, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 0
+  <CanBeHunted>k__BackingField: 0
+  <DangerModifier>k__BackingField: 0
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 75
   maxAnnualPrecipitation: 125
-  treeDensity: 0.25
-  shrubDensity: 0.5
-  grassDensity: 1
-  foodAvailability: 0
-  waterAvailability: 0
-  lumberAvailability: 0
-  vegetation: []
-  animals: []
-  monsters: []
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: 

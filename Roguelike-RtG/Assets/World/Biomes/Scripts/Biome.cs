@@ -7,9 +7,14 @@ namespace JS.World.Map.Features
     {
         [field: SerializeField] public int ID { get; private set; }
         [field: SerializeField] public string BiomeName { get; private set; }
+
         [field: SerializeField] public RuleTile WorldBase { get; private set; }
         [field: SerializeField] public RuleTile WorldAccent { get; private set; }
+        [field: SerializeField] public RuleTile HillTile { get; private set; }
+        [field: SerializeField] public RuleTile MountainTile { get; private set; }
         [field: SerializeField] public RuleTile LocalTile { get; private set; }
+
+
         [field: SerializeField] public bool isLand { get; private set; } = true;
         //True for forested biomes and mountains
         [field: SerializeField] public bool isDifficultTerrain { get; private set; }

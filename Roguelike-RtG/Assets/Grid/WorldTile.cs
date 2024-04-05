@@ -91,6 +91,8 @@ namespace JS.World.Map
         #endregion
 
         public int DangerTier;
+        public float WaterCapacity;
+        public int PlateID = -1;
 
         public WorldTile(Grid<WorldTile> grid, int x, int y)
         {

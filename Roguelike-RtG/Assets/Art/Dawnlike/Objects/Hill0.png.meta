@@ -600,7 +600,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mountain_center
+      name: mountain_C
       rect:
         serializedVersion: 2
         x: 144
@@ -663,7 +663,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hill_center
+      name: hill_C
       rect:
         serializedVersion: 2
         x: 208
@@ -1503,7 +1503,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dune_center
+      name: dune_C
       rect:
         serializedVersion: 2
         x: 208
@@ -1965,7 +1965,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_88
+      name: mountain_snow_NW
       rect:
         serializedVersion: 2
         x: 128
@@ -1986,7 +1986,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_89
+      name: mountain_snow_N
       rect:
         serializedVersion: 2
         x: 144
@@ -2007,7 +2007,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_90
+      name: mountain_snow_NE
       rect:
         serializedVersion: 2
         x: 160
@@ -2028,7 +2028,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_91
+      name: mountain_snow_
       rect:
         serializedVersion: 2
         x: 176
@@ -2217,7 +2217,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_100
+      name: mountain_snow_W
       rect:
         serializedVersion: 2
         x: 128
@@ -2238,7 +2238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_101
+      name: mountain_snow_C
       rect:
         serializedVersion: 2
         x: 144
@@ -2259,7 +2259,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_102
+      name: mountain_snow_E
       rect:
         serializedVersion: 2
         x: 160
@@ -2406,7 +2406,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_109
+      name: mountain_snow_SW
       rect:
         serializedVersion: 2
         x: 128
@@ -2427,7 +2427,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_110
+      name: mountain_snow_S
       rect:
         serializedVersion: 2
         x: 144
@@ -2448,7 +2448,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hill0_111
+      name: mountain_snow_SE
       rect:
         serializedVersion: 2
         x: 160
@@ -4497,18 +4497,12 @@ TextureImporter:
     nameFileIdTable:
       Hill0_0: -870418574
       Hill0_1: -379372478
-      Hill0_100: 14164643
-      Hill0_101: -1758481046
-      Hill0_102: 893188212
       Hill0_103: 626555097
       Hill0_104: 80153132
       Hill0_105: -614862627
       Hill0_106: -513966264
       Hill0_107: 1978121310
       Hill0_108: -895232332
-      Hill0_109: -335080845
-      Hill0_110: 413789337
-      Hill0_111: -1678544550
       Hill0_112: 565224788
       Hill0_113: 1405688335
       Hill0_114: -1417536211
@@ -4661,10 +4655,6 @@ TextureImporter:
       Hill0_85: -1984669187
       Hill0_86: -485505632
       Hill0_87: -1597601509
-      Hill0_88: -227040118
-      Hill0_89: -2004782565
-      Hill0_90: -347997218
-      Hill0_91: -1811024400
       Hill0_92: -1855127724
       Hill0_93: 2070298279
       Hill0_94: 1282718773
@@ -4673,6 +4663,7 @@ TextureImporter:
       Hill0_97: -1047271168
       Hill0_98: -2143839133
       Hill0_99: -1562209265
+      dune_C: -1629326704
       dune_E: -1641946596
       dune_N: 165975008
       dune_NE: -1651204412
@@ -4681,8 +4672,8 @@ TextureImporter:
       dune_SE: 577671220
       dune_SW: -1319724387
       dune_W: -826171639
-      dune_center: -1629326704
       dune_single: -645820401
+      hill_C: -1333480999
       hill_E: 782603433
       hill_N: 1474761955
       hill_NE: 1480391724
@@ -4691,8 +4682,8 @@ TextureImporter:
       hill_SE: -1266536269
       hill_SW: -1987013990
       hill_W: 963354327
-      hill_center: -1333480999
       hill_single: 1277037315
+      mountain_C: -1894778402
       mountain_E: -243252963
       mountain_N: 1242904319
       mountain_NE: 1128751795
@@ -4701,8 +4692,17 @@ TextureImporter:
       mountain_SE: -860957972
       mountain_SW: -1689352040
       mountain_W: 898478595
-      mountain_center: -1894778402
       mountain_single: 1165880480
+      mountain_snow_: -1811024400
+      mountain_snow_C: -1758481046
+      mountain_snow_E: 893188212
+      mountain_snow_N: -2004782565
+      mountain_snow_NE: -347997218
+      mountain_snow_NW: -227040118
+      mountain_snow_S: 413789337
+      mountain_snow_SE: -1678544550
+      mountain_snow_SW: -335080845
+      mountain_snow_W: 14164643
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

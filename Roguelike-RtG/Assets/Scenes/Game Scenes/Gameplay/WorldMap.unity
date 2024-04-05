@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fba203434c75b4ba3346ac4adef731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
   displayText: {fileID: 526793102}
 --- !u!222 &44221398
@@ -559,7 +558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa527162b80434e44b22af2cdca0da6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldData: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   mousePosition:
     m_UseReference: 1
     m_Action:
@@ -1138,7 +1136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae2ed5ea9a334b46824d6b908c8406a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   riverTiles: {fileID: 11400000, guid: 520ab40497fa4c1408d271953b517318, type: 2}
   roadTiles: {fileID: 11400000, guid: 4d51d9e667f1f064d9e0d8e1d21aa139, type: 2}
   biomeHelper: {fileID: 11400000, guid: 4f7081c559b579e4cbeb9efb4ef72bfc, type: 2}
@@ -1807,7 +1804,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 6981269014432102153, guid: d124d2641bbd1bf4f998cc72ab10dfdc, type: 3}
-  worldMap: {fileID: 11400000, guid: 54cc2c7f306f4db418c65181d39a3ff3, type: 2}
   nodeDisplay: {fileID: 44221396}
   spriteRenderer: {fileID: 1505976272}
   cam: {fileID: 519420031}

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace JS.World.Map.Climate
 {
+    [System.Obsolete]
     public static class AirPressureData
     {
         //So for air pressure, I also need to take into account sea level, so if max altitude is 1 and min is 0.4
@@ -23,6 +24,7 @@ namespace JS.World.Map.Climate
             return pressureMap;
         }
 
+        [System.Obsolete]
         public static Compass[,] GetWindMap(float[,] map)
         {
             int width = map.GetLength(0);

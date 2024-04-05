@@ -16,20 +16,17 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Desert
   <WorldBase>k__BackingField: {fileID: 11400000, guid: 76fc16b81a8234343b136eb15074bba1, type: 2}
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: 5dee8ce209d21fe4298129f4298afb83, type: 2}
+  <HillTile>k__BackingField: {fileID: 11400000, guid: 4201fdfb7a6bc6b4f965aebc34beefe1, type: 2}
+  <MountainTile>k__BackingField: {fileID: 11400000, guid: a91837a4cfba82b41ae9596125135c65, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 0
+  <CanBeHunted>k__BackingField: 0
+  <DangerModifier>k__BackingField: 0
   minAvgAnnualTemperature: 20
   maxAvgAnnualTemperature: 100
   minAnnualPrecipitation: 0
   maxAnnualPrecipitation: 75
-  treeDensity: 0
-  shrubDensity: 0
-  grassDensity: 0
-  foodAvailability: 0
-  waterAvailability: 0
-  lumberAvailability: 0
-  vegetation: []
-  animals: []
-  monsters: []
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: 

@@ -16,6 +16,8 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Boreal
   <WorldBase>k__BackingField: {fileID: 11400000, guid: 167b25d90bf22434f9351b4a2aebc193, type: 2}
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: fae1f13cf4da2914fa2602daaefa6768, type: 2}
+  <HillTile>k__BackingField: {fileID: 11400000, guid: 04cd7ab5ecf52d848b3585ed349da141, type: 2}
+  <MountainTile>k__BackingField: {fileID: 11400000, guid: 04cd7ab5ecf52d848b3585ed349da141, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 1

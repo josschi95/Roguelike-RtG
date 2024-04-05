@@ -283,7 +283,7 @@ namespace JS.World.Map.Generation
             if (stopWatch.ElapsedMilliseconds > 1000) //only debug message if greater than a second
                 UnityEngine.Debug.Log(progressText.text + ": " + (stopWatch.ElapsedMilliseconds + "ms"));
 
-            progressText.text = message;
+            progressText.text = $"{message}\n{progressText.text}";
             yield return new WaitForEndOfFrame();
             stopWatch.Restart();
         }

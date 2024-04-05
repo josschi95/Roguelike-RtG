@@ -16,40 +16,17 @@ MonoBehaviour:
   <BiomeName>k__BackingField: Tundra
   <WorldBase>k__BackingField: {fileID: 11400000, guid: 167b25d90bf22434f9351b4a2aebc193, type: 2}
   <WorldAccent>k__BackingField: {fileID: 11400000, guid: a7c13b6100b63e04ab0aefd48ba08fbe, type: 2}
+  <HillTile>k__BackingField: {fileID: 11400000, guid: 04cd7ab5ecf52d848b3585ed349da141, type: 2}
+  <MountainTile>k__BackingField: {fileID: 11400000, guid: 04cd7ab5ecf52d848b3585ed349da141, type: 2}
   <LocalTile>k__BackingField: {fileID: 0}
   <isLand>k__BackingField: 1
   <isDifficultTerrain>k__BackingField: 0
+  <CanBeHunted>k__BackingField: 0
+  <DangerModifier>k__BackingField: 0
   minAvgAnnualTemperature: -100
   maxAvgAnnualTemperature: 0
   minAnnualPrecipitation: 0
   maxAnnualPrecipitation: 1000
-  treeDensity: 0
-  shrubDensity: 0
-  grassDensity: 0
-  foodAvailability: 0
-  waterAvailability: 0
-  lumberAvailability: 0
-  vegetation:
-  - lichens
-  - mosses
-  - grasses
-  - seasonal forbs
-  animals:
-  - Arctic Fox
-  - arctic wolf
-  - grizzly bear
-  - polar bear
-  - caribou
-  - musk ox
-  - snowshoe hare
-  - snowy owl
-  monsters:
-  - frost worm
-  - glacier toad
-  - frost giant
-  - wereboar
-  - wooly rhinoceros
-  - winter wolf
-  - mammoth
-  - glacial ooze
+  agricultureRating: 0
+  lumberRating: 0
   developerNotes: "Dominant Vegetation: lichens, mosses, grasses, \nseasonal forbs\n"

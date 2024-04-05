@@ -57,6 +57,19 @@ namespace JS.World.Map
             new Color(0.0f, 0.0f, 0.39f), // Wettest #000064
         };
 
+        private Color[] plateColors =
+        {
+            Color.blue,
+            Color.green,
+            Color.red,
+            Color.yellow,
+            Color.cyan,
+            Color.magenta,
+            Color.gray,
+            Color.white,
+            Color.black,
+        };
+
 
         //Called on scene load from GameEventListener
         public void DisplayWorldMap()
@@ -78,11 +91,16 @@ namespace JS.World.Map
                 {
                     var tilePos =new Vector3Int(x, y);
                     var biome = biomeHelper.GetBiome(Features.TerrainData.BiomeMap[x,y]);
+                    var node = WorldMap.GetNode(x, y);
 
                     if (biome.isLand)
                     {
                         landMap.SetTile(tilePos, biome.WorldBase);
-                        if (biome.WorldAccent != null)
+                        if (node.Altitude >= WorldParameters.MOUNTAIN_HEIGHT)
+                            terrainFeatureMap.SetTile(tilePos, biome.MountainTile);
+                        else if (node.Altitude >= WorldParameters.MOUNTAIN_HEIGHT * 0.92f)
+                            terrainFeatureMap.SetTile(tilePos, biome.HillTile);
+                        else if (biome.WorldAccent != null)
                             terrainFeatureMap.SetTile(tilePos, biome.WorldAccent);
                     }
                     else oceanMap.SetTile(tilePos, biome.WorldBase);
@@ -264,10 +282,27 @@ namespace JS.World.Map
                 }
             }
 
+            Debug.Log(Features.TerrainData.PlateBorders.Count);
             foreach(var point in Features.TerrainData.PlateBorders)
             {
                 var tilePos = new Vector3Int(point.x, point.y);
                 infoMap.SetColor(tilePos, Color.red);
+            }
+
+
+            for (int x = 0; x < WorldMap.Width; x++)
+            {
+                for (int y = 0; y < WorldMap.Height; y++)
+                {
+                    var tilePos = new Vector3Int(x, y);
+                    var node = WorldMap.GetNode(x, y);
+
+                    int id = node.PlateID;
+                    if (id == -1) continue;
+                    while (id >= plateColors.Length) id -= plateColors.Length - 1;
+
+                    infoMap.SetColor(tilePos, plateColors[id]);
+                }
             }
         }
 

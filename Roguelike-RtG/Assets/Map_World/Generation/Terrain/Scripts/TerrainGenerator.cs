@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DelaunayVoronoi;
 using JS.World.Map.Features;
-using JS.World.Map.Climate;
 using JS.Math;
+using Unity.VisualScripting;
 
 //Special thaks to http://entropicparticles.com/6-days-of-creation
 
@@ -58,6 +58,9 @@ namespace JS.World.Map.Generation
         /// </summary>
         public void PlaceTectonicPlates(int plateCount, int minPlateSize, int maxPlateSize)
         {
+            PlateTectonicsNew(maxPlateSize);
+
+
             //place n tectonic points and increase the altitude of surrounding nodes within range r by  a flat-top gaussian
             //tectonic points will also result in mountains, volcanoes? Fault lines?
             //place fault lines using Voronoi polygons, this is where volcanoes and mountains will be added
@@ -108,6 +111,165 @@ namespace JS.World.Map.Generation
             Features.TerrainData.HeightMap = heightMap;
         }
 
+        private int poissonRadius = 50;
+
+        List<Vector2Int> allowed_movements = new List<Vector2Int>
+        {
+            Vector2Int.left,
+            Vector2Int.up,
+            Vector2Int.right,
+            Vector2Int.down,
+            new Vector2Int(-1, 1),
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1),
+            new Vector2Int(1, 1),
+        };
+
+        public void PlateTectonicsNew(int maxPlateSize)
+        {
+            // nah this is shit
+            // another method would be to do this but take 10 steps at a time, or like 5-15 steps using bresenham
+            // also add some check so it doesn't immediately double back on itself
+            int iterations = 100;
+            for (int i = 0; i < iterations; i++)
+            {
+                int x = 0;
+                int y = 0;
+                if (Random.value < 0.5f)
+                {
+                    if (Random.value < 0.5) y = mapSize - 1;
+
+                    x = Random.Range(0, mapSize);
+                }
+                else
+                {
+                    if (Random.value < 0.5) x = mapSize - 1;
+
+                    y = Random.Range(0, mapSize);
+                }
+
+                while (true)
+                {
+                    var direction = allowed_movements[Random.Range(0, allowed_movements.Count)];
+
+                    x += direction.x;
+                    y += direction.y;
+
+                    var node = WorldMap.GetNode(x, y);
+                    if (node == null) break;
+                    if (node.PlateID == 0) break;
+
+                    node.PlateID = 0;
+                }
+            }
+            return;
+
+            // Randomly place down points - poisson
+            var size = new Vector2(WorldMap.Width, WorldMap.Height);
+            var poissonPoints = Poisson.GeneratePoints(WorldMap.Seed, poissonRadius, size);
+            List<WorldTile> tiles = new List<WorldTile>();
+            foreach(var tile in poissonPoints)
+            {
+                var node = WorldMap.GetNode(tile);
+                if (node != null) tiles.Add(node);
+            }
+
+            MathsUtil.ShuffleList(tiles, worldGenerator.PRNG);
+            int toRemove = Mathf.RoundToInt(tiles.Count / 4);
+
+            for (int i = toRemove - 1; i >= 0; i--) tiles.RemoveAt(i);
+
+            // generate voronoi diagram
+            var plateBorders = new HashSet<WorldTile>();
+            var delaunay = new DelaunayTriangulator();
+            var voronoi = new Voronoi();
+
+            Debug.Assert(delaunay != null, "Delaunay is null!");
+
+            var points = delaunay.ConvertToPoints(tiles, mapSize); // This has caused an error x4
+            var triangulation = delaunay.BowyerWatson(points);
+            var voronoiEdges = voronoi.GenerateEdgesFromDelaunay(triangulation);
+
+            foreach (var edge in voronoiEdges)
+            {
+                var x0 = Mathf.RoundToInt(Mathf.Clamp((float)edge.Point1.X, 0, mapSize));
+                var y0 = Mathf.RoundToInt(Mathf.Clamp((float)edge.Point1.Y, 0, mapSize));
+                var x1 = Mathf.RoundToInt(Mathf.Clamp((float)edge.Point2.X, 0, mapSize));
+                var y1 = Mathf.RoundToInt(Mathf.Clamp((float)edge.Point2.Y, 0, mapSize));
+
+                var bresenham = Bresenham.PlotLine(x0, y0, x1, y1);
+                foreach (var p in bresenham)
+                {
+                    int x = p.x;
+                    int y = p.y;
+                    while (x < 0) x++;
+                    while (y < 0) y++;
+                    while (x >= mapSize) x--;
+                    while(y >= mapSize) y--;
+
+                    var newNode = WorldMap.GetNode(x, y);
+                    if (newNode != null && !plateBorders.Contains(newNode))
+                    {
+                        plateBorders.Add(newNode);
+                        newNode.PlateID = 0;
+                    }
+                }
+            }
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                FloodFillPlate(i+1, tiles[i], maxPlateSize);
+            }
+            
+            // each area becomes a plate, allow a few to fuse to form larger plates
+
+            // allow the points to grow, stopping when they contact a 'claimed' node
+
+            // give each plate a direction
+            // plates pushing against each other create mountains and volcanoes
+            // plates pulling away from each other create rifts
+            // plates moving past each other create strike-slip faults
+
+            // the amount of landmass assigned to each plate is directly relational to its size
+            // the locaction and shape of that landmass should roughly resemble the shape of the plate
+            // it's location within the plate should be dependent on the movement direction of the plate
+
+
+        }
+
+        private List<WorldTile> FloodFillPlate(int id, WorldTile startNode, int maxSize)
+        {
+            var tiles = new List<WorldTile>();
+            int[,] mapFlags = new int[mapSize, mapSize];
+
+            Queue<WorldTile> queue = new Queue<WorldTile>();
+            queue.Enqueue(startNode);
+
+            while (queue.Count > 0)// && tiles.Count <= 750)
+            {
+                var node = queue.Dequeue();
+                tiles.Add(node);
+                node.PlateID = id;
+
+                for (int i = 0; i < node.neighbors_adj.Count; i++)
+                {
+                    var neighbor = node.neighbors_adj[i];
+
+                    // Chance to steal a node
+                    if (neighbor.PlateID == 0) continue;
+
+                    if (neighbor.PlateID >= 0 && worldGenerator.PRNG.Next(0, 100) > 25) continue;
+
+                    if (mapFlags[neighbor.x, neighbor.y] == 0)
+                    {
+                        mapFlags[neighbor.x, neighbor.y] = 1;
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+            return tiles;
+        }
+
         /// <summary>
         /// Creates a Voronoi diagram given the tectonic points and calculates plate boundaries.
         /// </summary>
@@ -131,7 +293,14 @@ namespace JS.World.Map.Generation
                 var bresenham = Bresenham.PlotLine(x0, y0, x1, y1);
                 foreach(var p in bresenham)
                 {
-                    var newNode = WorldMap.GetNode(p.x, p.y);
+                    int x = p.x;
+                    int y = p.y;
+                    while (x < 0) x++;
+                    while (y < 0) y++;
+                    while (x >= mapSize) x--;
+                    while (y >= mapSize) y--;
+
+                    var newNode = WorldMap.GetNode(x, y);
                     if (newNode != null && !plateBorders.Contains(newNode))
                         plateBorders.Add(newNode);
                 }
@@ -209,7 +378,7 @@ namespace JS.World.Map.Generation
         }
         #endregion
 
-        #region - Terrain Features -
+        #region - Terrain Feature Identification -
         /// <summary>
         /// Identifies and registers Lakes.
         /// </summary>   
@@ -365,6 +534,7 @@ namespace JS.World.Map.Generation
         }
         #endregion
 
+        #region - Climate -
         public void GenerateHeatMap(int northLatitude, int southLatitude)
         {
             //Create Heat Map
@@ -383,12 +553,16 @@ namespace JS.World.Map.Generation
             Features.TerrainData.HeatMap = heatMap;
         }
 
-        #region - Precipitation -
+        private void GenerateWindMap()
+        {
+
+        }
+
         public void GeneratePrecipitationMap()
         {
             var heightMap = Features.TerrainData.HeightMap;
             //Create Wind Map
-            Compass[,] windMap = AirPressureData.GetWindMap(heightMap);
+            Compass[,] windMap = ClimateMath.GenerateWindMap(heightMap);
             //Other factors that need to be taken into account
                 //Coriolis effect
                 //Convergence zones
@@ -403,9 +577,86 @@ namespace JS.World.Map.Generation
                 }
             }
 
+            var airPressureMap = ClimateMath.GetAirPressureMap(heightMap);
+
+            // how much water vapor a node can hold before humidity = 100%
+            var waterCapacityMap = new float[mapSize, mapSize];
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    WorldTile node = WorldMap.GetNode(x, y);
+
+                    // Clausius-Clapeyron equation kinda, Temperature needs to be C
+                    float c = Temperature.FloatToCelsius(Features.TerrainData.HeatMap[x, y]);
+                    float pow = (17.67f * c) / (c + 243.5f);
+                    float capacity = 6.112f * Mathf.Exp(pow);
+
+                    // Modify value based on air pressure derived from altitude
+                    // Lower air pressure = less capacity
+                    capacity *= airPressureMap[x, y];
+
+                    waterCapacityMap[x, y] = capacity;
+
+                    node.airPressure = airPressureMap[x, y];
+                    node.WaterCapacity = capacity;
+                }
+            }
+
+            Debug.LogWarning("Pick up work here.");
+            /* Precipitation Generation Rework
+               1) Start with a base precipitation value for each node - based on latitude and proximity to oceans
+                    - use my damped cosine method for initial value
+                    - find nearest ocean tile and get bonus based on distance
+                    - save time by skipping any node that is not land (lakes and rivers can copy surrounding tiles)
+
+               2) Adjust values based on altitude, Adjust base values based on altitude. Higher altitudes receive
+                    more rain due to orographic lift, up to a certain threshold
+                    - create humidity map, set values of all water nodes to 100
+                    - calculate the water capacity for each node - how much water vapor it can hold (before humidity = 100)
+                        - primary factor is temperature - warm air holds more water than cold air
+                        - secondary factor is air pressure - higher pressure = greater capacity
+                        - Clausius-Clapeyron equation
+                        - Relative Humidity (RH) = e / es 
+                            - e = vapor pressure (air pressure?)
+                            - es = 6.112 * 2.71828^(17.67*T / T + 243.5)
+                            - T = degrees Celsius
+                    - run multiple iterations where the prevailing winds move humidity from one tile to the next
+                    - when humidity of a node exceeds 100, it 'rains'
+                        - the precipitation for that node is increased by value - 100, 
+
+                
+               3) Modify values based on prevailing wind direction and proximity to mountain ranges. Areas on 
+                    windward side receive more rainfall, those on leeward side experience a rain shadow effect
+               4) Consider the influence of temperature on precipitation. Warmer areas may experience more 
+                    convective rainfall, while colder areas may have more snowfall.
+               5) Incorporate random variation to add realism and variability to the rainfall patterns
+              
+                Altitude: Higher altitudes tend to receive more rainfall due to orographic lift, where air is 
+                forced upward by mountains, leading to cooling and condensation.
+
+                Prevailing Winds: Winds play a significant role in distributing moisture across the landscape. 
+                Windward sides of mountains usually receive more rainfall, while the leeward sides can be in a 
+                rain shadow, receiving less precipitation.
+
+                Temperature: Warm air can hold more moisture than cold air. Therefore, areas with higher 
+                temperatures may experience more evaporation, leading to more rainfall in certain circumstances, 
+                such as the formation of thunderstorms.
+
+                Ocean Currents: Ocean currents influence the moisture content of the air. Areas near warm ocean 
+                currents tend to have more moisture in the air, leading to higher precipitation rates.
+
+                Latitude: Generally, areas near the equator receive more rainfall due to the convergence of 
+                trade winds and the Intertropical Convergence Zone (ITCZ). However, this can vary based on other 
+                factors like wind patterns and ocean currents.
+
+                Local Geography: Features such as valleys, lakes, and forests can also affect local precipitation 
+                patterns by influencing airflow and moisture retention.   
+             */
+
             //Create Initial Moisture Map - !!!FLAWED!!!
-            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, WorldParameters.SEA_LEVEL, worldGenerator.PRNG);
             //This is entirely onteologic at the moment
+            float[,] moistureMap = DampedCosine.GetMoistureMap(heightMap, WorldParameters.SEA_LEVEL, worldGenerator.PRNG);
 
             //Apply effects of prevailing winds to generate rain shadows
             CreateRainShadows(Features.TerrainData.Mountains, windMap);

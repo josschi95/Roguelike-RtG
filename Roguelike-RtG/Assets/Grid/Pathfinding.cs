@@ -12,8 +12,6 @@ public class Pathfinding : MonoBehaviour
     private Heap<GridNode> openList; //nodes to search
     private HashSet<GridNode> closedList; //already searched
 
-    //[SerializeField] private bool allowDiagonals = false;
-
     private void Awake()
     {
         if (instance !=  null)
